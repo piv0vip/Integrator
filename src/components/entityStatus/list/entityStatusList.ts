@@ -175,7 +175,7 @@ export class EntityStatusListComponent extends Vue {
         this.refreshTable();
     }
 
-    onViewContentClick(content){
+    onViewContentClick(content) {
         
     }
 

@@ -1,6 +1,6 @@
 # vuesource
 
-> A Vue.js project
+> An Teamwork integrator project
 
 ## Build Setup
 

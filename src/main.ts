@@ -8,7 +8,7 @@ import { AppComponent } from './components/common/';
 import { DataTaskListComponent } from './components/dataTask';
 import { EntityStatusListComponent } from './components/entityStatus';
 
-import { store } from './store'
+import { store } from './store';
 
 Vue.use(BootstrapVue);
 Vue.use(Vuetify);
