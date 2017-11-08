@@ -1,0 +1,84 @@
+<div>
+    <div class="my-1 row">
+        <div class="col-md-3">
+            <b-form-fieldset horizontal label="Rows per page" :label-cols="6">
+                <b-form-select :options="pageOptions" v-model="perPage" />
+            </b-form-fieldset>
+        </div>
+        <div class="col-md-3">
+            <b-form-fieldset horizontal label="Filter" :label-cols="3">
+                <b-form-input @keyup.native.enter="onFilterChange" v-model="filter" placeholder="Type to Search" />
+            </b-form-fieldset>
+        </div>
+        <div class="col-md-4">
+            <!-- <b-pagination :total-rows="pagedList.totalItemCount" :per-page="pagedList.pageSize" v-model="currentPage" /> -->
+            <div class="text-xs-center">
+                    <v-pagination :length="pagesCount" v-model="currentPage" circle></v-pagination>
+                </div>
+            </div>
+    </div>
+    <b-table 
+        id="web-tasks"
+        ref="entityStatusesTable" 
+        hover 
+        :busy.sync="isBusy" 
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
+        :current-page="currentPage"
+        :per-page="perPage"
+        :fields="fields" 
+        :items="myProvider">
+        <template slot="InContent" scope="data">
+            <span v-if="data.item.InContent">
+                <v-btn v-b-tooltip.hover.topright
+                    icon
+                    color="indigo lighten-2 white--text"
+                    title="In Content" 
+                    @click='onViewContentClick(data.item.InContent)'><v-icon>assignment</v-icon></v-btn>XML
+            </span>
+        </template>
+        <template slot="OutContent" scope="data">
+            <span v-if="data.item.OutContent">
+                <v-btn v-b-tooltip.hover.topright
+                    icon
+                    color="indigo lighten-2 white--text"
+                    title="In Content" 
+                    @click='onViewContentClick(data.item.OutContent)'><v-icon>assignment</v-icon></v-btn>JSON
+                </span>
+            </template>
+        </b-table>
+    <div class="col-md-4">
+            <b-form-fieldset horizontal label="Total rows:">
+                <span>{{ pagedList.totalItemCount }}</span>
+            </b-form-fieldset>
+        </div>            
+    <b-container>
+        <b-row class="text-center">
+            <b-col class="center">
+                <v-btn v-b-tooltip.hover.topright
+                    round
+                    title="Generate records" 
+                    color="teal lighten-2 white--text"
+                    @click="onGenerateRecordsClick"
+                    ><v-icon class="mr-2">link</v-icon> Generate records </v-btn>
+                <!--v-btn v-b-tooltip.hover.topright
+                       round
+                       color="indigo lighten-2 white--text"
+                       title="Refresh Table" 
+                       @click="refreshTable"
+                       ><v-icon class="mr-2">autorenew</v-icon> Refresh table</v-btn-->
+            </b-col>
+        </b-row>
+    </b-container>
+    <!--edit-task 
+        :show="showEditTask" 
+        :webTask="currentTask"
+        :handlersEnum="handlersEnum" 
+        :handlers="handlers"
+        @onClose="closeEditTask">
+    </edit-task>
+    <execute-task-localy :show="showExecuteTaskLocaly"
+               :webTask="currentTask"
+               @onClose="closeExecuteTaskLocaly">
+    </execute-task-localy> -->
+</div>

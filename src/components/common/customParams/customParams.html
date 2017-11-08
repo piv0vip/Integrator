@@ -1,0 +1,65 @@
+<div>
+    <div style="overflow-y:auto;overflow-x:auto;" v-bind:style="{ height: height }">
+        <b-row>
+            <b-col>
+                <b-table hover ref="customSettingTable" :fields="fields" :items="tableData">
+                    <template slot="name" scope="data">
+                        <span>{{ data.item.name }}</span>
+                    </template>
+                    <template slot="value" scope="data">
+                        <b-form-input v-if="editedName == data.item.name"
+                                        ref="edited-value-input"
+                                        size="sm"
+                                        @keyup.native.enter="onValueEnterPressed($event, data)"
+                                        :value="data.item.Value">
+                        </b-form-input>
+                        <span v-else="editedName == data.item.name" @click="onValueClick(data)">{{ data.item.Value }}</span>
+                    </template>
+                    <template slot="edit" scope="data">
+                        <v-btn v-b-tooltip.hover.topright
+                                flat icon
+                                title="Edit handler setting"
+                                color="indigo"
+                                @click="onValueClick(data)"><v-icon>edit</v-icon></v-btn>
+                    </template>
+                    <template slot="delete" scope="data">
+                        <v-btn v-if="isShowDelete(data)"
+                                flat icon
+                                color="error"
+                                @click="onDeleteClick(data)"><v-icon>delete_forever</v-icon></v-btn>
+                    </template>
+                </b-table>
+            </b-col>
+        </b-row>
+    </div>				                
+    <b-form>
+        <b-container class="mt-3">
+            <b-row>
+                <b-col sm=true cols="5">
+                    <b-form-input 
+                                    :disabled=editedValue.default
+                                    ref="name-input" 
+                                    size="sm"
+                                    v-model="editedValue.name"
+                                    @keyup.native.enter="onAddCustomHandlerClick">{{editedValue.name}}
+                    </b-form-input>
+                </b-col>
+                <b-col sm=true cols="5">
+                    <b-form-input
+                                    ref="value-input" 
+                                    size="sm"
+                                    v-model="editedValue.value"
+                                    @keyup.native.enter="onAddCustomHandlerClick">
+                    </b-form-input>
+                </b-col>
+                <b-col sm=true>
+                    <v-btn
+                            flat icon
+                            @click="onAddCustomHandlerClick"><i class="material-icons">arrow_upward</i>
+                    </v-btn>
+                </b-col>
+
+            </b-row>
+        </b-container>
+    </b-form>
+</div>

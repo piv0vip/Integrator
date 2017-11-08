@@ -1,0 +1,46 @@
+﻿import { CronPart, Minute, Hour, Day, Month, DayOfWeek } from './cronParts';
+import { IServerable } from '../../../interfaces';
+
+export class CronSchedule implements IServerable<string>  {
+
+    minute: CronPart;
+    hour: CronPart;
+    day: CronPart;
+    month: CronPart;
+    dayOfWeek: CronPart;
+
+    constructor() {
+        this.minute = new Minute();
+        this.hour = new Hour();
+        this.day = new Day();
+        this.month = new Month();
+        this.dayOfWeek = new DayOfWeek();
+    }
+
+    toString(): string {
+        return `${this.Minute} ${this.Hour} ${this.Day} ${this.Month} ${this.DayOfWeek}`;
+    }
+
+    get Minute(): string { return this.minute.InputValue; }
+    get Hour(): string { return this.hour.InputValue; }
+    get Day(): string { return this.day.InputValue; }
+    get Month(): string { return this.month.InputValue; }
+    get DayOfWeek(): string { return this.dayOfWeek.InputValue; }
+
+    _parse(str: string) {
+        let arr: string[] = str.split(' ');
+        arr[0] && (this.minute.InputValue = arr[0]);
+        arr[1] && (this.hour.InputValue = arr[1]);
+        arr[2] && (this.day.InputValue = arr[2]);
+        arr[3] && (this.month.InputValue = arr[3]);
+        arr[4] && (this.dayOfWeek.InputValue = arr[4]);
+    }
+
+    toServer(): string {
+        return this.toString();
+    }
+
+    Parse(arg: string) {
+        this._parse(arg || '');
+    }
+}

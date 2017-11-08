@@ -1,0 +1,12 @@
+<b-form-group :label="labelName">
+    <b-form-select size="sm"
+                    v-model.lazy="cronPart.SelectValue"
+                    :options="cronPart.SelectList"
+                    @input="onSelectChanged"></b-form-select>
+    <b-form-input 
+                    class="text-center" 
+                    size="lg" 
+                    v-model.lazy="cronPart.InputValue" 
+                    type="text"
+                    @focusout.native="onFocusOutInput"></b-form-input>
+</b-form-group>

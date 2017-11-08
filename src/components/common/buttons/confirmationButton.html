@@ -1,0 +1,17 @@
+<v-dialog v-model="dialogVisible" lazy absolute>
+    <div slot="activator">
+        <v-btn round v-b-tooltip.hover.topright :title="title" v-if="iconName == ''" color="primary" dark>{{ btnName }}</v-btn>
+        <v-btn v-b-tooltip.hover.topright :title="title" v-else="iconName == ''" flat icon color="primary" dark><v-icon>{{ iconName }}</v-icon></v-btn>
+    </div>
+    <v-card>
+        <v-card-title>
+            <div class="headline">{{ dialogTitle }}</div>
+        </v-card-title>
+        <v-card-text>{{ dialogMessage }}</v-card-text>
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" flat="flat" @click.native="onOkClicked">{{ yesBtnName }}</v-btn>
+            <v-btn color="green darken-1" flat="flat" @click.native="dialogVisible = false">{{ noBtnName }}</v-btn>
+        </v-card-actions>
+    </v-card>
+</v-dialog>

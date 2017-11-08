@@ -1,0 +1,152 @@
+﻿import * as helper  from '../util/helper';
+import { CronSchedule } from '../components/common';
+import { Setting, DataTaskHandlerSettings, HandlerType, HandlerTypes } from '../classes/settings';
+import { TEntity } from './TEntity';
+
+export class DataTask extends TEntity {
+
+    defaultHandlers: HandlerTypes;
+ 
+    protected _HandlerSettings: DataTaskHandlerSettings;
+    protected _TaskType: string;
+    protected _CronSchedule: CronSchedule;
+
+    DataTaskId: string;
+    DisplayName: string;
+    Enabled: boolean;
+    GroupName: string;
+    IsMaintenance: boolean;
+    LastEndTime: string;
+    LastExecutionTime: string;
+    LastStartTime: string;
+    MaxRetries: number;
+    NextStartTime: string;
+    Progress: string;
+    RecCreated: string;
+    RecModified: string;
+    Retries: string;
+    Status: string;
+    
+    constructor(defaultHandlers: HandlerTypes, params: {} = {}) {
+        super();
+        
+        this.defaultHandlers = defaultHandlers;
+
+        this._TaskType = '';
+        this._HandlerSettings = new DataTaskHandlerSettings(new HandlerType());
+        this._CronSchedule = new CronSchedule();
+    }
+
+    get IsNew(): boolean { return false; }
+
+
+    set HandlerType(value: HandlerType) {
+        this._HandlerSettings.setHandlerType(value);
+    }
+
+    get TaskType(): string {
+        return this._TaskType;
+    }
+
+
+    set TaskType(value: string) {
+        this.HandlerType = this.defaultHandlers.getHandlerType(value);
+        this._TaskType = value;
+    }
+
+    set HandlerSettings(value: string) {
+        this._HandlerSettings.Parse(value);
+    }
+
+    get CronString(): string {
+        return this._CronSchedule.toString();
+    }
+
+    set CronSchedule(value: string) {
+        this._CronSchedule.Parse(value);
+    }
+
+    getHandlerSettings(): DataTaskHandlerSettings {
+        return this._HandlerSettings;
+    }
+
+    getCronSchedule(): CronSchedule {
+        return this._CronSchedule;
+    }
+
+    toServer(): {} {
+        return {
+            cronSchedule: this._CronSchedule.toString(),
+            dataTaskId: this.DataTaskId,
+            displayName: this.DisplayName,
+            enabled: this.Enabled,
+            groupName: this.GroupName,
+            handlerSettings: JSON.stringify(this._HandlerSettings.toServer()),
+            isMaintenance: this.IsMaintenance,
+            lastEndTime: this.LastEndTime,
+            lastExecutionTime: this.LastExecutionTime,
+            lastStartTime: this.LastStartTime,
+            maxRetries: this.MaxRetries,
+            nextStartTime: this.NextStartTime,
+            progress: this.Progress,
+            recCreated: this.RecCreated,
+            recModified: this.RecModified,
+            retries: this.Retries,
+            status: this.Status,
+            taskType: this.TaskType
+        };
+    }
+
+    getDefaultSettings() {
+        return this.defaultHandlers.getDefaultSetting(this.TaskType);
+    }
+
+    static createNewDataTask(defaultHandlers) {
+        return new NewDataTask(defaultHandlers);
+    }
+
+    static createEmptyDataTask(): DataTask {
+        return new EmptyDataTask();
+    }
+
+    static createDataTaskFromJson(defaultHandlers, params) {
+        let dataTask = new DataTask(defaultHandlers, params);
+        dataTask.Parse(params);
+        return dataTask;
+    }
+}
+
+export class EmptyDataTask extends DataTask {
+    constructor() {
+        super(new HandlerTypes(), {});
+    }
+}
+
+export class NewDataTask extends DataTask {
+
+    constructor(defaultHandlers) {
+        super(defaultHandlers);
+
+        this.DataTaskId = helper.createGuid();
+
+        this.DisplayName = '';
+        this.GroupName = '';
+
+        this.Enabled = false;
+        this.IsMaintenance = false;
+        this.MaxRetries = 0;
+
+    }
+
+    get IsNew() { return true; }
+
+    set HandlerType(value: HandlerType) {
+        this._HandlerSettings.setHandlerType(value);
+
+        this._HandlerSettings.ClearAll();
+
+        value.DefaultHandlerSettings.asArray().forEach((setting: Setting) => {
+            this._HandlerSettings.Add(setting.clone());
+        });
+    }
+}

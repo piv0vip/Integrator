@@ -1,0 +1,95 @@
+<div>
+    <div class="my-1 row">
+        <div class="col-md-4">
+            <b-form-fieldset horizontal label="Rows per page" :label-cols="6">
+                <b-form-select :options="pageOptions" v-model="perPage" />
+            </b-form-fieldset>
+        </div>
+        <div class="col-md-4">
+            <b-form-fieldset horizontal label="Filter" :label-cols="3">
+                <b-form-input @keyup.native.enter="onFilterChange" v-model="filter" placeholder="Type to Search" />
+            </b-form-fieldset>
+        </div>
+        <div class="col-md-4">
+            <div class="text-xs-center">
+                <v-pagination :length="pagesCount" v-model="currentPage" circle></v-pagination>
+            </div>
+        </div>
+    </div>
+    <b-table 
+        id="web-tasks"
+        ref="dataTasksTable" 
+        hover 
+        no-local-sorting
+        :busy.sync="isBusy" 
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
+        :current-page="currentPage"
+        :per-page="perPage"
+        :fields="fields" 
+        :items="myProvider">
+        <template slot="ExecLoc" scope="data">
+            <v-btn v-b-tooltip.hover.topright
+                icon 
+                color="indigo lighten-2 white--text"
+                title="Execute task localy" 
+                @click='onExecLocalyTaskClick(data.item)'><i class="material-icons">desktop_windows</i></v-btn>
+        </template>
+        <template slot="ExecSch" scope="data">
+            <v-btn v-b-tooltip.hover.topright 
+                icon 
+                color="indigo lighten-2 white--text"
+                title="Execute task in scheduler" 
+                @click='onExecInSchTaskClick(data.item)'><i class="material-icons">alarm</i></v-btn>
+        </template>
+        <template slot="Reset" scope="data">
+            <v-btn v-b-tooltip.hover.topright
+                icon 
+                color="red lighten-2 white--text"
+                title="Reset task" 
+                @click='onResetTaskClick(data.item)'><i class="material-icons">compare_arrows</i></v-btn>
+        </template>
+        <template slot="Config" scope="data">
+            <v-btn v-b-tooltip.hover.topright
+                icon 
+                color="teal lighten-2 white--text"
+                title="Configure task" 
+                @click='onEditTaskClick(data.item)'><v-icon>edit</v-icon></v-btn>
+        </template>
+        <template slot="Delete" scope="data">
+            <confirmation-button title="Delete task" 
+                                 iconName="clear"
+                                 :dialogMessage="'Do you want to Remove \'' + data.item.DisplayName + '\' Task?'"
+                                 @onOkClicked="onDeleteTaskClick(data.item)"></confirmation-button>
+         </template>
+    </b-table>
+    <b-container>
+        <b-row class="text-center">
+            <b-col class="center">
+                <v-btn v-b-tooltip.hover.topright
+                    round
+                    title="Add new task" 
+                    color="teal lighten-2 white--text"
+                    @click="onAddDatataskClick"
+                    ><v-icon class="mr-2">link</v-icon> Add DataTask</v-btn>
+                <v-btn v-b-tooltip.hover.topright
+                       round
+                       color="indigo lighten-2 white--text"
+                       title="Refresh Table" 
+                       @click="refreshTable"
+                       ><v-icon class="mr-2">autorenew</v-icon> Refresh table</v-btn>
+            </b-col>
+        </b-row>
+    </b-container>
+    <edit-task 
+        :show="showEditTask" 
+        :webTask="currentTask"
+        :handlersEnum="handlersEnum" 
+        :handlers="handlers"
+        @onClose="closeEditTask">
+    </edit-task>
+    <execute-task-localy :show="showExecuteTaskLocaly"
+               :webTask="currentTask"
+               @onClose="closeExecuteTaskLocaly">
+    </execute-task-localy>
+</div>

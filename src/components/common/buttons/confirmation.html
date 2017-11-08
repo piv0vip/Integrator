@@ -1,0 +1,13 @@
+<v-dialog v-model="dialogIsVisible" row justify-center>
+    <v-card>
+        <v-card-title>
+            <div class="headline">{{ dialogTitle }}</div>
+        </v-card-title>
+        <v-card-text>{{ dialogMessage }}</v-card-text>
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" flat="flat" @click.native.stop="onOkClicked">Yes</v-btn>
+            <v-btn color="green darken-1" flat="flat" @click.native.stop="onCloseClicked">No</v-btn>
+        </v-card-actions>
+    </v-card>
+</v-dialog>

@@ -1,0 +1,16 @@
+<div>
+    <b-modal ref="execute-task-localy-modal"
+                id="execute-task-localy-modal"
+                size="lg"
+                no-close-on-esc
+                no-close-on-backdrop
+                hide-header-close
+                ok-title="Execute"
+                title="Execute Task Localy"
+                v-model="showModal"
+                @hidden="onModalHidden"
+                @ok="onExecuteClick"
+                >
+        <custom-params :customSettings="handlerSettings"></custom-params>
+    </b-modal>
+</div>
