@@ -16,7 +16,6 @@ export class DataTaskHandlerSettings extends Settings {
 
     constructor(handlerType: HandlerType) {
         super();
-        super();
         this.setHandlerType(handlerType);
     }
 
