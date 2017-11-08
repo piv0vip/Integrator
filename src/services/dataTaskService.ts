@@ -36,6 +36,4 @@ export class DataTaskService extends BaseService<DataTask> {
            } );
         } );
     }
-
-    
 }

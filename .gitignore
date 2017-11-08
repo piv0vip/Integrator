@@ -6,4 +6,7 @@ coverage/
 src/css
 src/**/*.js
 src/**/*.map
+src/components/home/
+src/components/list/
+src/components/about/
 *.log

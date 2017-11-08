@@ -3,3 +3,6 @@ html, body, #app-main {
 }
 
 @import '../components/home/home';
+@import '../components/dataTask/edit/dataTaskEdit';
+@import '../components/dataTask/list/DataTaskList';
+@import '../components/common/customParams/customParams';
