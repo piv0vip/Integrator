@@ -3,11 +3,17 @@ import { IServerable } from '../interfaces';
 
 export abstract class TEntity implements IServerable<{}> {
 
+    EntityId?: number = null;
+
     protected keys: {
         realKey: string,
         camelKey: string,
         capitalKey: string
     }[];
+
+    get IsNew(): boolean {
+        return this.EntityId === null;
+    }
 
     protected params: {};
 

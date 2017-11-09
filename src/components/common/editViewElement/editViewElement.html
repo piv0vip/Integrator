@@ -1,0 +1,10 @@
+<div style="height: 100%; width: 100%; display: inline-block; cursor: pointer" @click="onValueClick">
+    <b-form-input v-show="isEdit"
+                  ref="edited-value-input"
+                  size="sm"
+                  @keyup.native.enter="onValueChanged"
+                  @blur.native="onValueChanged"
+                  v-model="editedValue">
+    </b-form-input>
+    <span v-show="!isEdit">{{ spanValue }}</span>
+</div>

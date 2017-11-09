@@ -11,7 +11,6 @@ export class DataTask extends TEntity {
     protected _TaskType: string;
     protected _CronSchedule: CronSchedule;
 
-    DataTaskId: string;
     DisplayName: string;
     Enabled: boolean;
     GroupName: string;
@@ -37,8 +36,8 @@ export class DataTask extends TEntity {
         this._CronSchedule = new CronSchedule();
     }
 
-    get IsNew(): boolean { return false; }
-
+    get DataTaskId(): number { return this.EntityId };
+    set DataTaskId(value: number) { this.EntityId = value; }
 
     set HandlerType(value: HandlerType) {
         this._HandlerSettings.setHandlerType(value);
@@ -127,8 +126,6 @@ export class NewDataTask extends DataTask {
     constructor(defaultHandlers) {
         super(defaultHandlers);
 
-        this.DataTaskId = helper.createGuid();
-
         this.DisplayName = '';
         this.GroupName = '';
 
@@ -137,8 +134,6 @@ export class NewDataTask extends DataTask {
         this.MaxRetries = 0;
 
     }
-
-    get IsNew() { return true; }
 
     set HandlerType(value: HandlerType) {
         this._HandlerSettings.setHandlerType(value);

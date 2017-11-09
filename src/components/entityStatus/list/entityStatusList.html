@@ -18,7 +18,7 @@
             </div>
     </div>
     <b-table 
-        id="web-tasks"
+        id="entity-statuses"
         ref="entityStatusesTable" 
         hover 
         :busy.sync="isBusy" 
@@ -72,13 +72,13 @@
     </b-container>
     <!--edit-task 
         :show="showEditTask" 
-        :webTask="currentTask"
+        :dataTask="currentTask"
         :handlersEnum="handlersEnum" 
         :handlers="handlers"
         @onClose="closeEditTask">
     </edit-task>
     <execute-task-localy :show="showExecuteTaskLocaly"
-               :webTask="currentTask"
+               :dataTask="currentTask"
                @onClose="closeExecuteTaskLocaly">
     </execute-task-localy> -->
 </div>

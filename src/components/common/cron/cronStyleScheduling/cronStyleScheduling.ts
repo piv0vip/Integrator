@@ -15,9 +15,6 @@ import { DataTask } from '../../../../models/DataTask';
 export class CronStyleSchedulingComponent extends Vue {
 
     @Prop()
-    dataTask: DataTask;
+    cron: CronSchedule;
 
-    get cron(): CronSchedule  {
-        return this.dataTask.getCronSchedule();
-    }
 }

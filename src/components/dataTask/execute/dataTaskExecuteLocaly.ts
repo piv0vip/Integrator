@@ -22,7 +22,7 @@ export class DataTaskExecuteLocalyComponent extends Vue {
     show: Boolean;
 
     @Prop()
-    webTask: DataTask;
+    dataTask: DataTask;
 
     @Watch('show')
     onShowChanged (value: boolean) {
@@ -35,7 +35,7 @@ export class DataTaskExecuteLocalyComponent extends Vue {
         this.$nextTick(() => {
             EventBus.$emit('refresh');
         });
-        return this.webTask.getHandlerSettings();
+        return this.dataTask.getHandlerSettings();
     }
 
     onModalHidden(e) {
@@ -44,7 +44,7 @@ export class DataTaskExecuteLocalyComponent extends Vue {
 
     onExecuteClick() {
         
-        HTTP.post('DataTask/ExecuteTaskWithParams/' + this.webTask.DataTaskId, this.handlerSettings.toServer())
+        HTTP.post('DataTask/ExecuteTaskWithParams/' + this.dataTask.DataTaskId, this.handlerSettings.toServer())
             .then(response => {
                 this.$root.$emit('bv::hide::modal', 'execute-task-localy-modal');
             })

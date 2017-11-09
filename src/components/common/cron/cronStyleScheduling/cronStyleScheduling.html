@@ -1,5 +1,7 @@
 <b-row>
     <b-col cols="2">
+     </b-col>
+    <b-col cols="2">
         <cron-part labelName="Minute(s):" :cronPart="cron.minute"></cron-part>
     </b-col>
     <b-col cols="2">
@@ -13,10 +15,5 @@
     </b-col>
     <b-col cols="2">
         <cron-part labelName="Day(s) of week:" :cronPart="cron.dayOfWeek"></cron-part>
-    </b-col>
-    <b-col cols="2">
-        <b-form-group label="Max Retries:">
-            <b-form-input class="text-center" size="lg" v-model="dataTask.MaxRetries" type="number" style="width:95px"></b-form-input>
-        </b-form-group>
     </b-col>
 </b-row>

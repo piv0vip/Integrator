@@ -1,4 +1,4 @@
-import Vue from 'vue';
+    import Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import { DataTaskHandlerSettings, HandlerTypes } from '../../../classes/settings';
 import { DataTask } from '../../../models';
@@ -8,6 +8,7 @@ import { HTTP } from '../../../util/http-common';
 import { CustomParamsComponent, ConfirmationComponent } from '../../common/';
 import { CronStyleSchedulingComponent }  from '../../../components/common/cron/';
 import { IEnumValues } from '../../../interfaces';
+import { EditViewElementComponent } from '../../common/editViewElement'
 
 
 @Component({
@@ -16,6 +17,7 @@ import { IEnumValues } from '../../../interfaces';
         'cron-style-scheduling': CronStyleSchedulingComponent,
         'custom-params': CustomParamsComponent,
         'confirmation-dialog': ConfirmationComponent,
+        'edit-view-element': EditViewElementComponent
     }
 })
 
@@ -33,7 +35,7 @@ export class DataTaskEditComponent extends Vue {
     show: boolean;
 
     @Prop()
-    webTask: DataTask;
+    dataTask: DataTask;
 
     @Prop({default: () => new CustomEnumValues() })
     handlersEnum: IEnumValues;
@@ -49,14 +51,14 @@ export class DataTaskEditComponent extends Vue {
         // this.showModal = value;
     }
 
-    @Watch('webTask')
+    @Watch('dataTask')
     onWatchChanged (value: DataTask) {
         this.selectedHandler = value ? value.TaskType : '';
     }
 
     @Watch('selectedHandler')
     onSelectedHandlerChanged(value) {
-        if (this.webTask.TaskType !== value) { this.webTask.TaskType = value; }
+        if (this.dataTask.TaskType !== value) { this.dataTask.TaskType = value; }
         EventBus.$emit('refresh');
     }
 
@@ -65,14 +67,14 @@ export class DataTaskEditComponent extends Vue {
     }
 
     get isNew(): boolean {
-        return this.webTask ? this.webTask.IsNew : true;
+        return this.dataTask ? this.dataTask.IsNew : true;
     }
 
     get handlerSettings(): DataTaskHandlerSettings {
         this.$nextTick(() => {
             EventBus.$emit('refresh');
         });
-        return this.webTask.getHandlerSettings();
+        return this.dataTask.getHandlerSettings();
     }
 
     onModalHidden(e) {
@@ -87,7 +89,7 @@ export class DataTaskEditComponent extends Vue {
         let request: {url: string, method: string} = this.isNew ? 
             {url: 'DataTask/Insert', method: 'post'} : 
             {url: 'DataTask/Update', method: 'put'} ;
-        HTTP[request.method](request.url, this.webTask.toServer())
+        HTTP[request.method](request.url, this.dataTask.toServer())
             .then(response => {
                 this.close();
                 this.$emit('onSave', evt);

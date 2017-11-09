@@ -7,20 +7,14 @@
                         <span>{{ data.item.name }}</span>
                     </template>
                     <template slot="value" scope="data">
-                        <b-form-input v-if="editedName == data.item.name"
-                                        ref="edited-value-input"
-                                        size="sm"
-                                        @keyup.native.enter="onValueEnterPressed($event, data)"
-                                        :value="data.item.Value">
-                        </b-form-input>
-                        <span v-else="editedName == data.item.name" @click="onValueClick(data)">{{ data.item.Value }}</span>
+                        <edit-view-element :element="data.item" ></edit-view-element>
                     </template>
                     <template slot="edit" scope="data">
                         <v-btn v-b-tooltip.hover.topright
                                 flat icon
                                 title="Edit handler setting"
                                 color="indigo"
-                                @click="onValueClick(data)"><v-icon>edit</v-icon></v-btn>
+                                @click="onEditClick($event, data)"><v-icon>edit</v-icon></v-btn>
                     </template>
                     <template slot="delete" scope="data">
                         <v-btn v-if="isShowDelete(data)"
@@ -37,11 +31,11 @@
             <b-row>
                 <b-col sm=true cols="5">
                     <b-form-input 
-                                    :disabled=editedValue.default
-                                    ref="name-input" 
-                                    size="sm"
-                                    v-model="editedValue.name"
-                                    @keyup.native.enter="onAddCustomHandlerClick">{{editedValue.name}}
+                                :disabled=editedValue.default
+                                ref="name-input" 
+                                size="sm"
+                                v-model="editedValue.name"
+                                @keyup.native.enter="onAddCustomHandlerClick">{{editedValue.name}}
                     </b-form-input>
                 </b-col>
                 <b-col sm=true cols="5">

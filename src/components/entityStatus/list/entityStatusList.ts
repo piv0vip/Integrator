@@ -147,13 +147,12 @@ export class EntityStatusListComponent extends Vue {
 
         for (let i = 0; i < 100; i++) {
             let entity = new EntityStatus();
-            entity.EntityStatusId = helper.createGuid();
             entity.EntityType = this.chance.word();
             entity.EntityVersion = this.chance.date();
             entity.StatusMessage = this.chance.sentence();
             entity.Status = this.chance.integer({min: 0, max: 4});
-            entity.InDocTransferId = helper.createGuid();
-            entity.OutDocTransferId = helper.createGuid();
+            entity.InDocTransferId = this.chance.natural();
+            entity.OutDocTransferId = this.chance.natural();
             entity.Source = this.chance.country({ full: true });
             entity.Target = this.chance.country({ full: true });
             entity.SourceId = this.chance.word();

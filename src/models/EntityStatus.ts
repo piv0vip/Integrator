@@ -4,7 +4,6 @@ import { TEntity } from './TEntity';
 export class EntityStatus extends TEntity {
 
     // todo: move GUID from string to class
-    EntityStatusId: string;
     EntityType: string;
     EntityVersion: Date;
     StatusMessage: string;
@@ -24,6 +23,9 @@ export class EntityStatus extends TEntity {
         super();
 
     }
+
+    get EntityStatusId(): number { return this.EntityId };
+    set EntityStatusId(value: number) { this.EntityId = value; }
 
     get IsNew(): boolean { return false; }
 
@@ -48,7 +50,7 @@ export class EntityStatus extends TEntity {
     }
 
     static createNew() {
-        return new NewEntityStatus();
+        return new EntityStatus();
     }
 
     static createFromJson(params) {
@@ -58,13 +60,3 @@ export class EntityStatus extends TEntity {
     }
 }
 
-export class NewEntityStatus extends EntityStatus {
-
-    constructor() {
-        super();
-        this.EntityStatusId = helper.createGuid();
-    }
-
-    get IsNew() { return true; }
-
-}

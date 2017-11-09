@@ -83,13 +83,13 @@
     </b-container>
     <edit-task 
         :show="showEditTask" 
-        :webTask="currentTask"
+        :dataTask="currentTask"
         :handlersEnum="handlersEnum" 
         :handlers="handlers"
         @onClose="closeEditTask">
     </edit-task>
     <execute-task-localy :show="showExecuteTaskLocaly"
-               :webTask="currentTask"
+               :dataTask="currentTask"
                @onClose="closeExecuteTaskLocaly">
     </execute-task-localy>
 </div>

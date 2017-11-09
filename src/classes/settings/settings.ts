@@ -1,7 +1,7 @@
 import EventBus from '../../util/EventBus';
-import { IServerable } from '../../interfaces';
+import { IServerable, IEditViewElement } from '../../interfaces';
 
-export class Setting {
+export class Setting implements IEditViewElement {
 
     name: string;
     value: string;
@@ -80,6 +80,14 @@ export abstract class Settings {
             out.push(this._settings[key]);
         }
         return out;
+    }
+
+    setValue(value: string) {
+        this.Value = value;
+    }
+
+    getValue(): string {
+        return this.Value;
     }
 
 }

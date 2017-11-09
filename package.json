@@ -36,6 +36,7 @@
     "axios": "^0.16.2",
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "^1.0.0-beta.9",
+    "cronstrue": "^0.10.10",
     "css-loader": "^0.28.7",
     "font-loader": "^0.1.2",
     "moment": "^2.18.0",

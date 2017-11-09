@@ -4,12 +4,17 @@ import { Component, Prop } from 'vue-property-decorator';
 import { Settings, Setting, CustomHandlerSettings } from '../../../classes/settings';
 import EventBus from '../../../util/EventBus';
 
-import { ITableFields } from '../../../interfaces/ITableFields';
+import { ITableFields, IEditViewElement } from '../../../interfaces';
+
+import { EditViewElementComponent } from '../editViewElement'
 
 import $ from 'jquery';
 
 @Component({
-    template: require('./customParams.html')
+    template: require('./customParams.html'),
+    components: {
+        'edit-view-element': EditViewElementComponent
+    }
 })
 
 export class CustomParamsComponent extends Vue {
@@ -54,6 +59,7 @@ export class CustomParamsComponent extends Vue {
     created() {
         console.log('EventBus.$on(\'refresh\')');
         EventBus.$on('refresh', value => {
+            console.log("EventBus.$off('refresh')");
             this.tableData = this.customSettings.asArray();
             this.editedValue = {
                 name: '',
@@ -64,8 +70,8 @@ export class CustomParamsComponent extends Vue {
     }
 
     beforeDestroy() {
-        // console.log("EventBus.$off('refresh')");
-        // EventBus.$off('refresh');
+        console.log("EventBus.$off('refresh')");
+        EventBus.$off('refresh');
     }
 
     onAddCustomHandlerClick() {
@@ -87,21 +93,9 @@ export class CustomParamsComponent extends Vue {
 
     }
 
-    onEditClick(data) {
-        this.onValueClick(data);
-    }
-
-    onValueClick(data) {
-        this.editedName = (this.editedName === data.item.name) ? '' : data.item.name;
-        let nameEl: Vue = <Vue>this.$refs['edited-value-input'];
-        this.$nextTick(() => {
-            $(nameEl.$el).focus();
-        });
-    }
-
-    onValueEnterPressed(event, data) {
-        data.item.Value = event.target.value;
-        this.editedName = '';
+    onEditClick(event, data) {
+        debugger;
+        // this.onValueClick(data);
     }
 
     onDeleteClick(row) {

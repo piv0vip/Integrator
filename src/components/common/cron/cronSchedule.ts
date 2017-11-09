@@ -1,7 +1,8 @@
 ﻿import { CronPart, Minute, Hour, Day, Month, DayOfWeek } from './cronParts';
-import { IServerable } from '../../../interfaces';
+import { IServerable, IEditViewElement } from '../../../interfaces';
+import cronstrue from 'cronstrue';
 
-export class CronSchedule implements IServerable<string>  {
+export class CronSchedule implements IServerable<string>, IEditViewElement  {
 
     minute: CronPart;
     hour: CronPart;
@@ -21,8 +22,12 @@ export class CronSchedule implements IServerable<string>  {
         return `${this.Minute} ${this.Hour} ${this.Day} ${this.Month} ${this.DayOfWeek}`;
     }
 
+    toHuman(): string {
+        return cronstrue.toString(this.toString());
+    }
+
     get Minute(): string { return this.minute.InputValue; }
-    get Hour(): string { return this.hour.InputValue; }
+    get Hour(): string { return this.hour.InputValue; } 
     get Day(): string { return this.day.InputValue; }
     get Month(): string { return this.month.InputValue; }
     get DayOfWeek(): string { return this.dayOfWeek.InputValue; }
@@ -43,4 +48,13 @@ export class CronSchedule implements IServerable<string>  {
     Parse(arg: string) {
         this._parse(arg || '');
     }
+
+    setValue(value: string) {
+        this._parse(value);
+    }
+    
+    getValue(): string {
+        return this.toString();
+    }
+
 }
