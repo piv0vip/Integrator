@@ -173,7 +173,6 @@ export class DataTaskListComponent extends Vue {
         return DataTaskService.getPagedList(this.handlers, ctx)
         .then( function (response: {data: DataTask[], metadata}) {
             this.pagedList = response.metadata;
-            debugger;
             this.pagesCount = Math.ceil(response.metadata.totalItemCount / this.perPage);
             return response.data;
         }.bind(this))

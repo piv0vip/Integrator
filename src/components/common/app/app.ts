@@ -5,6 +5,4 @@ import Component from 'vue-class-component';
     template: require('./app.html')
 })
 
-export class AppComponent extends Vue {
-
-}
+export class AppComponent extends Vue { }
