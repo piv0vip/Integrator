@@ -3,7 +3,7 @@
         <b-col cols="2" class="pt-3 text-right">New setting:</b-col>
         <b-col cols="3" class="pt-2">
             <b-form-input ref="name-input"
-                          v-model="editedValue.name"
+                          v-model="editingValue.name"
                           @keyup.native.enter="onAddCustomHandlerClick"
                           placeholder="Name">
             </b-form-input>
@@ -11,7 +11,7 @@
 
         <b-col cols="6" class="pt-2">
             <b-form-input ref="value-input"
-                          v-model="editedValue.value"
+                          v-model="editingValue.value"
                           @keyup.native.enter="onAddCustomHandlerClick"
                           placeholder="Value">
             </b-form-input>

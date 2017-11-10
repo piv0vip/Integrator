@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Watch } from 'vue-property-decorator';
 
 import { Setting } from '../../../classes/settings';
 
@@ -11,15 +11,15 @@ import $ from 'jquery';
 
 export class AddNewSettingComponent extends Vue {
     
-    editedValue: { name: string, value: string } = { name: '', value: '' };
+    editingValue: { name: string, value: string } = { name: '', value: '' };
 
     onAddCustomHandlerClick() {
 
-        if (!this.editedValue.name) return;
+        if (!this.editingValue.name) return;
 
-        let setting: Setting = new Setting(this.editedValue.name, this.editedValue.value);
-         
-        this.editedValue = { name: '', value: '' };
+        let setting: Setting = new Setting(this.editingValue.name, this.editingValue.value);
+
+        this.editingValue = { name: '', value: '' };
 
         let nameEl: Vue = <Vue>this.$refs['name-input'];
         $(nameEl.$el).focus();

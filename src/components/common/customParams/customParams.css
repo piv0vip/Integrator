@@ -1,7 +1,0 @@
-.custom-params-component .scroll-box {
-  overflow-y: auto;
-  overflow-x: auto;
-  border: 1px dashed #eee; }
-
-.custom-params-component .scroll-box div.row:nth-child(odd) .cpc-col {
-  background: #f8f9fa; }

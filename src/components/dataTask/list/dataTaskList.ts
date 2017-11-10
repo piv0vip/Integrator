@@ -248,5 +248,4 @@ export class DataTaskListComponent extends Vue {
     onFilterChange(e) {
         this.refreshTable();
     }
-
 }

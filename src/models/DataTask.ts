@@ -18,7 +18,7 @@ export class DataTask extends TEntity {
     MaxRetries: number = 0;
     Progress: string;
     Retries: string;
-    Status: string;
+    Status: string = '0';
     LastEndTime: string;
     LastExecutionTime: string;
     LastStartTime: string;

@@ -22,6 +22,7 @@
         hover 
         no-local-sorting
         :busy.sync="isBusy" 
+        @row-dblclicked="onEditTaskClick"
         :sort-by.sync="sortBy"
         :sort-desc.sync="sortDesc"
         :current-page="currentPage"
