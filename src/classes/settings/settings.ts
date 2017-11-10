@@ -36,6 +36,14 @@ export class Setting implements IEditViewElement {
     isEqual(setting): boolean {
         return this.name === setting.name;
     }
+
+    setValue(value: string) {
+        this.Value = value;
+    }
+
+    getValue(): string {
+        return this.Value;
+    }
 }
 
 export abstract class Settings {
@@ -81,15 +89,6 @@ export abstract class Settings {
         }
         return out;
     }
-
-    setValue(value: string) {
-        this.Value = value;
-    }
-
-    getValue(): string {
-        return this.Value;
-    }
-
 }
 
 export class CustomHandlerSettings extends Settings implements IServerable<{name: string, value: string}[]> {
@@ -110,6 +109,5 @@ export class CustomHandlerSettings extends Settings implements IServerable<{name
         }
         return res;
     }
-    
 }
 
