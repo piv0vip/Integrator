@@ -11,7 +11,7 @@ import $ from 'jquery';
 
 export class EditViewElementComponent extends Vue {
 
-    editedValue: string = ''
+    editedValue: string = '';
 
     isEdit: boolean = false;
 

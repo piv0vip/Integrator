@@ -6,7 +6,7 @@ import EventBus from '../../../util/EventBus';
 
 import { ITableFields, IEditViewElement } from '../../../interfaces';
 
-import { EditViewElementComponent } from '../editViewElement'
+import { EditViewElementComponent } from '../editViewElement';
 
 import $ from 'jquery';
 
@@ -59,7 +59,7 @@ export class CustomParamsComponent extends Vue {
     created() {
         console.log('EventBus.$on(\'refresh\')');
         EventBus.$on('refresh', value => {
-            console.log("EventBus.$off('refresh')");
+            console.log('EventBus.$off("refresh")');
             this.tableData = this.customSettings.asArray();
             this.editedValue = {
                 name: '',
@@ -70,7 +70,7 @@ export class CustomParamsComponent extends Vue {
     }
 
     beforeDestroy() {
-        console.log("EventBus.$off('refresh')");
+        console.log('EventBus.$off("refresh")');
         EventBus.$off('refresh');
     }
 

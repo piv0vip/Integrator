@@ -8,7 +8,7 @@ import { HTTP } from '../../../util/http-common';
 import { CustomParamsComponent, ConfirmationComponent } from '../../common/';
 import { CronStyleSchedulingComponent }  from '../../../components/common/cron/';
 import { IEnumValues } from '../../../interfaces';
-import { EditViewElementComponent } from '../../common/editViewElement'
+import { EditViewElementComponent } from '../../common/editViewElement';
 
 
 @Component({

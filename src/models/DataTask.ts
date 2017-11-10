@@ -36,7 +36,7 @@ export class DataTask extends TEntity {
         this._CronSchedule = new CronSchedule();
     }
 
-    get DataTaskId(): number { return this.EntityId };
+    get DataTaskId(): number { return this.EntityId; }
     set DataTaskId(value: number) { this.EntityId = value; }
 
     set HandlerType(value: HandlerType) {

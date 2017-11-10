@@ -24,7 +24,7 @@ export class EntityStatus extends TEntity {
 
     }
 
-    get EntityStatusId(): number { return this.EntityId };
+    get EntityStatusId(): number { return this.EntityId; }
     set EntityStatusId(value: number) { this.EntityId = value; }
 
     get IsNew(): boolean { return false; }
