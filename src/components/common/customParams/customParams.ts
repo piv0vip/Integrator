@@ -1,23 +1,25 @@
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 
-import { Settings, Setting, CustomHandlerSettings } from '../../../classes/settings';
-import EventBus from '../../../util/EventBus';
+import { Settings, Setting } from '../../../classes/settings';
 
 import { ITableFields, IEditViewElement } from '../../../interfaces';
 
 import { EditViewElementComponent } from '../editViewElement';
 
+import { AddNewSettingComponent } from './addNewSetting';
+ 
 import $ from 'jquery';
 
 @Component({
     template: require('./customParams.html'),
     components: {
-        'edit-view-element': EditViewElementComponent
+        'edit-view-element': EditViewElementComponent,
+        'add-new-setting': AddNewSettingComponent
     }
 })
 
-export class CustomParamsComponent extends Vue {
+export class CustomParamsComponent extends Vue { 
 
     @Prop()
     customSettings: Settings;
@@ -25,85 +27,33 @@ export class CustomParamsComponent extends Vue {
     @Prop({default: '318px'})
     height: string;
 
-    tableData: Setting[] = this.customSettings.asArray();
+    mut: boolean = false; // hack for refresh data
 
-    editedName: string = '';
+    get tableData(): Setting[] { this.mut; return this.customSettings.asArray(); }
 
-    editedValue: { name: string, value: string, default: boolean } = { name: '', value: '', default: false };
+    onCreateSetting(setting: Setting) {
 
-    fields: ITableFields[] = [
-        {
-            key: 'name',
-            label: 'Name',
-            tdClass: 'py-3',
-            sortable: true
-        },
-        {
-            key: 'value',
-            label: 'Value',
-            tdClass: 'py-3',
-            sortable: true
-        },
-        {
-            key: 'edit',
-            label: ' ',
-            tdClass: 'edit-td'
-        },
-        {
-            key: 'delete',
-            label: ' ',
-            tdClass: 'delete-td'
-        }
-    ];
-
-    created() {
-        console.log('EventBus.$on(\'refresh\')');
-        EventBus.$on('refresh', value => {
-            console.log('EventBus.$off("refresh")');
-            this.tableData = this.customSettings.asArray();
-            this.editedValue = {
-                name: '',
-                value: '',
-                default: false
-            };
-        });
-    }
-
-    beforeDestroy() {
-        console.log('EventBus.$off("refresh")');
-        EventBus.$off('refresh');
-    }
-
-    onAddCustomHandlerClick() {
-        if (!(this.editedValue.name || this.editedValue.value)) return;
-
-        let existElement: Setting = this.customSettings.finByName(this.editedValue.name);
+        let existElement: Setting = this.customSettings.finByName(setting.Name);
 
         if (existElement) {
-            existElement.Value = this.editedValue.value;
+            existElement.Value = setting.Value;
         } else {
-            this.customSettings.Add(new Setting(this.editedValue.name, this.editedValue.value));
+            this.customSettings.Add(setting);
         };
 
-        let nameEl: Vue = <Vue>this.$refs['name-input'];
-        
-        $(nameEl.$el).focus();
+        this.customSettings.Add(setting);
 
-        EventBus.$emit('refresh');
-
+        this.refreshList();
     }
 
-    onEditClick(event, data) {
-        debugger;
-        // this.onValueClick(data);
+    onDeleteClick(item) {
+        this.customSettings.Delete(item);
+        this.refreshList();
     }
 
-    onDeleteClick(row) {
-        this.customSettings.Delete(row.item);
+    isShowDelete(item) {
+        return !item.IsDefault;
     }
 
-    isShowDelete(data) {
-        return !data.item.IsDefault;
-    }
-
+    refreshList() { this.mut = !this.mut; }
 }

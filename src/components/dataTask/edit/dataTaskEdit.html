@@ -70,17 +70,11 @@
 
                 </b-row>
 
-                <!-- div class="divider my-2"></div-->
                 <h6 class="pt-4">Task Parameters</h6>
-                <b-row>
-                    <b-col>
-                        <custom-params :customSettings="handlerSettings"
-                                        :height="height"
-                                        @onValueAdded="onAddedCustomParam"></custom-params>
-
-                    </b-col>
-                </b-row>
-
+                
+                    <custom-params :customSettings="handlerSettings"
+                                :height="height"
+                                @onValueAdded="onAddedCustomParam"></custom-params>
             </b-container>
         </b-form>
 

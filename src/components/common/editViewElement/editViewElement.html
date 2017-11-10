@@ -1,4 +1,4 @@
-<div style="height: 100%; width: 100%; display: inline-block; cursor: pointer" @click="onValueClick">
+<div class="edit-view-component" @click="onValueClick">
     <b-form-input v-show="isEdit"
                   ref="edited-value-input"
                   size="sm"
@@ -6,5 +6,5 @@
                   @blur.native="onValueChanged"
                   v-model="editedValue">
     </b-form-input>
-    <span v-show="!isEdit">{{ spanValue }}</span>
+    <span class="plainText" v-show="!isEdit">{{ spanValue }}</span>
 </div>

@@ -1,9 +1,8 @@
-    import Vue from 'vue';
+import Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import { DataTaskHandlerSettings, HandlerTypes } from '../../../classes/settings';
 import { DataTask } from '../../../models';
 import { EnumValues, CustomEnumValues } from '../../../enums';
-import EventBus from '../../../util/EventBus';
 import { HTTP } from '../../../util/http-common';
 import { CustomParamsComponent, ConfirmationComponent } from '../../common/';
 import { CronStyleSchedulingComponent }  from '../../../components/common/cron/';
@@ -59,7 +58,6 @@ export class DataTaskEditComponent extends Vue {
     @Watch('selectedHandler')
     onSelectedHandlerChanged(value) {
         if (this.dataTask.TaskType !== value) { this.dataTask.TaskType = value; }
-        EventBus.$emit('refresh');
     }
 
     get handlerSettingsSelectList(): any[] {
@@ -71,9 +69,6 @@ export class DataTaskEditComponent extends Vue {
     }
 
     get handlerSettings(): DataTaskHandlerSettings {
-        this.$nextTick(() => {
-            EventBus.$emit('refresh');
-        });
         return this.dataTask.getHandlerSettings();
     }
 

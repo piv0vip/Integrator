@@ -1,4 +1,3 @@
-import EventBus from '../../util/EventBus';
 import { IServerable, IEditViewElement } from '../../interfaces';
 
 export class Setting implements IEditViewElement {
@@ -58,14 +57,12 @@ export abstract class Settings {
         if (setting instanceof Setting) {
             this._settings[setting.name] = setting;
         }
-        if (fireEvent) EventBus.$emit('refresh');
     }
 
     Delete(setting, fireEvent = true) {
         if (setting instanceof Setting) {
             if (this._settings[setting.name]) {
                 delete this._settings[setting.name];
-                if (fireEvent) EventBus.$emit('refresh');
             };
         }
     }
@@ -88,6 +85,14 @@ export abstract class Settings {
             out.push(this._settings[key]);
         }
         return out;
+    }
+
+    count(): number {
+        return this.asArray().length;
+    }
+
+    has(setting: Setting): boolean {
+        return (this._settings[setting.Name] === undefined) ? false : true;
     }
 }
 

@@ -1,59 +1,17 @@
-<div>
-    <div style="overflow-y:auto;overflow-x:auto;" v-bind:style="{ height: height }">
-        <b-row>
-            <b-col>
-                <b-table hover ref="customSettingTable" :fields="fields" :items="tableData">
-                    <template slot="name" scope="data">
-                        <span>{{ data.item.name }}</span>
-                    </template>
-                    <template slot="value" scope="data">
-                        <edit-view-element :element="data.item" ></edit-view-element>
-                    </template>
-                    <template slot="edit" scope="data">
-                        <v-btn v-b-tooltip.hover.topright
-                                flat icon
-                                title="Edit handler setting"
-                                color="indigo"
-                                @click="onEditClick($event, data)"><v-icon>edit</v-icon></v-btn>
-                    </template>
-                    <template slot="delete" scope="data">
-                        <v-btn v-if="isShowDelete(data)"
-                                flat icon
-                                color="error"
-                                @click="onDeleteClick(data)"><v-icon>delete_forever</v-icon></v-btn>
-                    </template>
-                </b-table>
+<div class="custom-params-component">
+    <div class="scroll-box" style="height:100%" v-bind:style="{ 'max-height': height }">
+        <b-row class="py-1" style="width:100%" v-for="item in tableData" :key="item.name">
+            <b-col cols="1">
+                <v-btn :disabled="!isShowDelete(item)"
+                       flat icon
+                       color="error"
+                       @click="onDeleteClick(item)"><v-icon>delete_forever</v-icon></v-btn>
+            </b-col>
+            <b-col cols="11" class="pt-1">
+                <span class="mb-1" style="font-weight: bold">{{ item.name }}</span>
+                <edit-view-element :element="item"></edit-view-element>
             </b-col>
         </b-row>
-    </div>				                
-    <b-form>
-        <b-container class="mt-3">
-            <b-row>
-                <b-col sm=true cols="5">
-                    <b-form-input 
-                                :disabled=editedValue.default
-                                ref="name-input" 
-                                size="sm"
-                                v-model="editedValue.name"
-                                @keyup.native.enter="onAddCustomHandlerClick">{{editedValue.name}}
-                    </b-form-input>
-                </b-col>
-                <b-col sm=true cols="5">
-                    <b-form-input
-                                    ref="value-input" 
-                                    size="sm"
-                                    v-model="editedValue.value"
-                                    @keyup.native.enter="onAddCustomHandlerClick">
-                    </b-form-input>
-                </b-col>
-                <b-col sm=true>
-                    <v-btn
-                            flat icon
-                            @click="onAddCustomHandlerClick"><i class="material-icons">arrow_upward</i>
-                    </v-btn>
-                </b-col>
-
-            </b-row>
-        </b-container>
-    </b-form>
+    </div>
+    <add-new-setting @onCreateSetting="onCreateSetting"></add-new-setting>
 </div>

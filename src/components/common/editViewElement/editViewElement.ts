@@ -19,7 +19,7 @@ export class EditViewElementComponent extends Vue {
     element: IEditViewElement;
 
     get spanValue(): string {
-        return this.element.getValue();
+        this.isEdit; return this.element.getValue();
     }
 
     onValueClick() {

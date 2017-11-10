@@ -2,15 +2,26 @@
     <b-modal ref="execute-task-localy-modal"
                 id="execute-task-localy-modal"
                 size="lg"
-                no-close-on-esc
-                no-close-on-backdrop
-                hide-header-close
-                ok-title="Execute"
-                title="Execute Task Localy"
+                header-bg-variant="light"
                 v-model="showModal"
                 @hidden="onModalHidden"
                 @ok="onExecuteClick"
                 >
-        <custom-params :customSettings="handlerSettings"></custom-params>
+        <h6 class="pt-1">Task Parameters</h6>
+        
+        <custom-params height="500px" :customSettings="handlerSettings"></custom-params>
+
+        <template slot="modal-footer">
+
+            <v-btn round v-b-tooltip.hover.topright title="Execute " color="primary" dark @click.native.stop="onExecuteClick">
+                <v-icon class="mr-2">directions_run</v-icon>Execute
+            </v-btn>
+
+            <v-btn round v-b-tooltip.hover.topright title="Discard Data Task Configuration" color="red" dark @click.native.stop="onCloseClick">
+                <v-icon class="mr-2">close</v-icon>Close
+            </v-btn>
+
+        </template>
+
     </b-modal>
 </div>

@@ -1,0 +1,13 @@
+.edit-view-component {
+  height: 100%;
+  width: 100%;
+  display: inline-block;
+  cursor: pointer; }
+
+    .edit-view-component span.plainText {
+        display: block;
+        -ms-text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }

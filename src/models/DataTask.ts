@@ -11,20 +11,20 @@ export class DataTask extends TEntity {
     protected _TaskType: string;
     protected _CronSchedule: CronSchedule;
 
-    DisplayName: string;
-    Enabled: boolean;
-    GroupName: string;
-    IsMaintenance: boolean;
+    DisplayName: string = '';
+    Enabled: boolean = false;
+    GroupName: string = '';
+    IsMaintenance: boolean = false;
+    MaxRetries: number = 0;
+    Progress: string;
+    Retries: string;
+    Status: string;
     LastEndTime: string;
     LastExecutionTime: string;
     LastStartTime: string;
-    MaxRetries: number;
     NextStartTime: string;
-    Progress: string;
     RecCreated: string;
     RecModified: string;
-    Retries: string;
-    Status: string;
     
     constructor(defaultHandlers: HandlerTypes, params: {} = {}) {
         super();
@@ -125,13 +125,6 @@ export class NewDataTask extends DataTask {
 
     constructor(defaultHandlers) {
         super(defaultHandlers);
-
-        this.DisplayName = '';
-        this.GroupName = '';
-
-        this.Enabled = false;
-        this.IsMaintenance = false;
-        this.MaxRetries = 0;
 
     }
 

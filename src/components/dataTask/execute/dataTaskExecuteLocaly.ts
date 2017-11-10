@@ -4,7 +4,6 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { CustomParamsComponent } from '../../common/customParams';
 import { DataTask } from '../../../models';
 import { HTTP } from '../../../util/http-common';
-import EventBus from '../../../util/EventBus';
 
 @Component({
     template: require('./dataTaskExecuteLocaly.html'),
@@ -16,7 +15,6 @@ import EventBus from '../../../util/EventBus';
 export class DataTaskExecuteLocalyComponent extends Vue {
 
     showModal: boolean = false;
-    height: string = '300px';
 
     @Prop({default: false})
     show: Boolean;
@@ -32,9 +30,6 @@ export class DataTaskExecuteLocalyComponent extends Vue {
     }
 
     get handlerSettings() {
-        this.$nextTick(() => {
-            EventBus.$emit('refresh');
-        });
         return this.dataTask.getHandlerSettings();
     }
 
@@ -46,10 +41,18 @@ export class DataTaskExecuteLocalyComponent extends Vue {
         
         HTTP.post('DataTask/ExecuteTaskWithParams/' + this.dataTask.DataTaskId, this.handlerSettings.toServer())
             .then(response => {
-                this.$root.$emit('bv::hide::modal', 'execute-task-localy-modal');
+                this.hideModal();
             })
             .catch(e => {
                 console.log(e);
             });
+    }
+
+    onCloseClick() {
+        this.hideModal();
+    }
+
+    hideModal() {
+        this.$root.$emit('bv::hide::modal', 'execute-task-localy-modal');
     }
 }

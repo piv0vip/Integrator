@@ -1,5 +1,4 @@
-﻿import EventBus from '../../util/EventBus';
-import { Settings, Setting } from './settings';
+﻿import { Settings, Setting } from './settings';
 import { HandlerType } from './handlerTypes';
 
 export class DefaultDataTaskHandlerSettings extends Settings {
@@ -7,7 +6,6 @@ export class DefaultDataTaskHandlerSettings extends Settings {
         for (let key in obj) {
             this.Add(new Setting(key, obj[key], true), false);
         }
-        EventBus.$emit('refresh');
     }
 }
 
@@ -36,6 +34,5 @@ export class DataTaskHandlerSettings extends Settings {
         for (let key in handlerSettings) {
             this.Add( new Setting(key, handlerSettings[key], this._handlerType.isDefaultKey(key)), false);
         }
-        EventBus.$emit('refresh');
     }
 }
