@@ -1,21 +1,35 @@
 ﻿import { expect } from 'chai';
-import { } from './index';
+import { CronSchedule } from './index';
+
+let testValues = {
+    '* * * * *': [
+        '',
+        //'-1',
+        //'sds',
+        //'60',
+        //'60, -1',
+        //'60'
+    ]
+}
 
 describe('Cron Schedule testing', () => {
+
+    let cs = new CronSchedule();
 
     beforeEach(() => {
     })
 
-    //it('Object should be correct', () => {
-    //    expect(setting1.Name).to.equal('testingName');
-    //    expect(setting1.Value).to.equal('testingValue');
-    //    expect(setting1).to.have.property('value');
-    //})
+    it('Initial state of CronSchedule must be "* * * * *"', () => {
+        expect(cs.toString()).to.equal('* * * * *');
+    });
 
-    //it('cloned object should be another object ', () => {
-    //    setting2 = setting1;
-    //    expect(setting1).to.equal(setting2)
-    //    setting2 = setting1.clone();
-    //    expect(setting1).to.not.equal(setting2)
-    //})
+    it('Parser should return correct values', () => {
+        for (let key in testValues) {
+            let arr = testValues[key];
+            for (let i = 0; i < arr.length; i++) {
+                cs.Parse(arr[i]);
+                expect(cs.toString()).to.equal('* * * * *');
+            }
+        }
+    })
 })
