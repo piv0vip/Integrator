@@ -1,5 +1,5 @@
 ﻿import * as Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Watch } from 'vue-property-decorator';
 
 import { IEditViewElement } from '../../../interfaces/';
 
@@ -17,6 +17,14 @@ export class EditViewElementComponent extends Vue {
 
     @Prop()
     element: IEditViewElement;
+
+    @Prop({ default: false })
+    toggleEdit: boolean;
+
+    @Watch('toggleEdit')
+    onToggleEditChange() {
+        this.onValueClick();
+    }
 
     get spanValue(): string {
         this.isEdit; return this.element.getValue();

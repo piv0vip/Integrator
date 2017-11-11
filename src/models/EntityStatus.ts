@@ -3,12 +3,11 @@ import { TEntity } from './TEntity';
 
 export class EntityStatus extends TEntity {
 
-    // todo: move GUID from string to class
     EntityType: string;
     EntityVersion: Date;
     StatusMessage: string;
     Status: number;
-    InDocTransferId: string; // GUID
+    InDocTransferId: string; 
     OutDocTransferId: string;
     Source: string;
     SourceId: string;

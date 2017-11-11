@@ -1,17 +1,18 @@
 <div class="custom-params-component">
     <div class="scroll-box" style="height:100%" v-bind:style="{ 'max-height': height }">
-        <b-row class="py-1" style="width:100%" v-for="item in tableData" :key="item.name">
-            <b-col cols="1">
-                <v-btn :disabled="!isShowDelete(item)"
-                       flat icon
-                       color="error"
-                       @click="onDeleteClick(item)"><v-icon>delete_forever</v-icon></v-btn>
-            </b-col>
-            <b-col cols="11" class="pt-1">
-                <span class="mb-1" style="font-weight: bold">{{ item.name }}</span>
-                <edit-view-element :element="item"></edit-view-element>
-            </b-col>
-        </b-row>
+        <div v-for="item in tableData" :key="item.name">
+            <b-row class="py-1" style="width:100%">
+                <b-col cols="1">
+                    <v-btn :disabled="!isShowDelete(item)"
+                           flat icon
+                           color="error"
+                           @click="onDeleteClick(item)"><v-icon>delete_forever</v-icon></v-btn>
+                </b-col>
+                <b-col cols="11" class="pt-1">
+                    <custom-params-setting :setting="item"></custom-params-setting>
+                </b-col>
+            </b-row>
+        </div>
     </div>
     <add-new-setting @onCreateSetting="onCreateSetting"></add-new-setting>
 </div>

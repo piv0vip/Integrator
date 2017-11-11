@@ -5,7 +5,7 @@ import { Settings, Setting } from '../../../classes/settings';
 
 import { ITableFields, IEditViewElement } from '../../../interfaces';
 
-import { EditViewElementComponent } from '../editViewElement';
+import { CustomParamsSettingComponent } from './customParamsSetting';
 
 import { AddNewSettingComponent } from './addNewSetting';
  
@@ -14,7 +14,7 @@ import $ from 'jquery';
 @Component({
     template: require('./customParams.html'),
     components: {
-        'edit-view-element': EditViewElementComponent,
+        'custom-params-setting': CustomParamsSettingComponent,
         'add-new-setting': AddNewSettingComponent
     }
 })
