@@ -1,20 +1,20 @@
 <div>
     <div class="my-1 row">
-        <div class="col-md-4">
-            <b-form-fieldset horizontal label="Rows per page" :label-cols="6">
+        <b-col class="pt-1" cols="2">
+            <b-form-fieldset horizontal label="Rows per page" :label-cols="5">
                 <b-form-select :options="pageOptions" v-model="perPage" />
             </b-form-fieldset>
-        </div>
-        <div class="col-md-4">
-            <b-form-fieldset horizontal label="Filter" :label-cols="3">
+        </b-col>
+        <b-col class="pt-1" cols="2">
+            <b-form-fieldset horizontal label="Filter" :label-cols="2">
                 <b-form-input @keyup.native.enter="onFilterChange" v-model="filter" placeholder="Type to Search" />
             </b-form-fieldset>
-        </div>
-        <div class="col-md-4">
+        </b-col>
+        <b-col cols="4">
             <div class="text-xs-center">
                 <v-pagination :length="pagesCount" v-model="currentPage" circle></v-pagination>
             </div>
-        </div>
+        </b-col>
     </div>
     <b-table 
         id="web-tasks"

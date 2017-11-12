@@ -1,21 +1,27 @@
 <div>
     <b-container>
         <b-row class="py-0">
-            <b-col class="pt-1" cols="1">
-                <b-form-fieldset horizontal label="Per page" :label-cols="5">
+            <b-col class="pt-1" cols="2">
+                <b-form-fieldset horizontal label="Rows per page" :label-cols="5">
                     <b-form-select :options="pageOptions" v-model="perPage" />
                 </b-form-fieldset>
             </b-col>
-            <b-col class="pt-1" cols="3">
-                <b-form-fieldset horizontal label="Filter" :label-cols="3">
+            <b-col class="pt-1" cols="2">
+                <b-form-fieldset horizontal label="Filter" :label-cols="2">
                     <b-form-input @keyup.native.enter="onFilterChange" v-model="filter" placeholder="Type to Search" />
                 </b-form-fieldset>
             </b-col>
             <b-col cols="4">
-                <!-- <b-pagination :total-rows="pagedList.totalItemCount" :per-page="pagedList.pageSize" v-model="currentPage" /> -->
                 <div class="text-xs-center">
                     <v-pagination :length="pagesCount" v-model="currentPage" circle></v-pagination>
                 </div>
+            </b-col>
+            <b-col>
+                <v-btn v-b-tooltip.hover.topright
+                        round
+                        title="Generate records"
+                        color="teal lighten-2 white--text"
+                        @click="onGenerateRecordsClick"><v-icon class="mr-2">link</v-icon>Generate 100 records</v-btn>
             </b-col>
         </b-row>
     </b-container>
@@ -50,11 +56,11 @@
             </template>
         </b-table>
     <div class="col-md-4">
-            <b-form-fieldset horizontal label="Total rows:">
-                <span>{{ pagedList.totalItemCount }}</span>
+            <b-form-fieldset horizontal label="Total rows:" :label-cols="2">
+                <span class="py-1" style="display:block; font-weight:bold">{{ pagedList.totalItemCount }}</span>
             </b-form-fieldset>
-        </div>            
-    <b-container>
+        </div>              
+    <!--<b-container>
         <b-row class="text-center">
             <b-col class="center">
                 <v-btn v-b-tooltip.hover.topright
@@ -62,16 +68,16 @@
                     title="Generate records" 
                     color="teal lighten-2 white--text"
                     @click="onGenerateRecordsClick"
-                    ><v-icon class="mr-2">link</v-icon> Generate records </v-btn>
+                    ><v-icon class="mr-2">link</v-icon> Generate records </v-btn>-->
                 <!--v-btn v-b-tooltip.hover.topright
                        round
                        color="indigo lighten-2 white--text"
                        title="Refresh Table" 
                        @click="refreshTable"
                        ><v-icon class="mr-2">autorenew</v-icon> Refresh table</v-btn-->
-            </b-col>
+            <!--</b-col>
         </b-row>
-    </b-container>
+    </b-container>-->
     <!--edit-task 
         :show="showEditTask" 
         :dataTask="currentTask"
