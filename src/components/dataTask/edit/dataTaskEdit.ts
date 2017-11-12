@@ -28,7 +28,6 @@ export class DataTaskEditComponent extends Vue {
     height: string = '200px';
     selectedHandler: string = '';
 
-    showModal1: boolean = false;
     showSaveConfirmation: boolean = false;
     showDiscardConfirmation: boolean = false;
 
@@ -52,7 +51,6 @@ export class DataTaskEditComponent extends Vue {
         if (value) {
             this.$root.$emit('bv::show::modal', 'edit-task-modal');
         }
-        // this.showModal = value;
     }
 
     @Watch('dataTask')
@@ -109,10 +107,6 @@ export class DataTaskEditComponent extends Vue {
 
     onShowModal() {
         console.log('modal is show');
-    }
-
-    onmodal1Click() {
-        this.$root.$emit('bv::show::modal', 'modal1');
     }
 
     onCloseSaveConfirmation() {

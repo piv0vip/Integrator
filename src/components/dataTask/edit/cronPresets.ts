@@ -9,7 +9,7 @@ import cronstrue from 'cronstrue';
 
 export class CronPresetsComponent extends Vue {
 
-    cronPresetSelected: string = '';
+    cronPresetSelected: string = '* * * * *';
 
     @Prop({default: []})
     cronPresets: string[];
@@ -19,7 +19,7 @@ export class CronPresetsComponent extends Vue {
 
     @Watch('cronPresets')
     onCronPresetsChanged() {
-        //if (this.cronPresets.length > 0) { this.cronPresetSelected = this.cronPresets[0]; }
+        // if (this.cronPresets.length > 0) { this.cronPresetSelected = this.cronPresets[0]; }
     }
 
     @Watch('cronValue')
@@ -29,8 +29,7 @@ export class CronPresetsComponent extends Vue {
 
     get cronPresetsList(): { value: string, text: string }[] {
         let presetArray: string[] = [].concat(this.cronPresets);
-        if (this.cronPresets.findIndex((preset) => { debugger; return preset == this.cronPresetSelected }) == -1 && this.cronPresetSelected)
-           presetArray.push(this.cronPresetSelected);
+        if (this.cronPresets.findIndex((preset) => preset === this.cronPresetSelected ) === -1 && this.cronPresetSelected) presetArray.push(this.cronPresetSelected);
         return presetArray.map((preset) => {
             return {
                 value: preset,
