@@ -6,7 +6,7 @@ export class EntityStatus extends TEntity {
     EntityType: string;
     EntityVersion: Date;
     StatusMessage: string;
-    Status: number;
+    Status: number = 0;
     InDocTransferId: string; 
     OutDocTransferId: string;
     Source: string;

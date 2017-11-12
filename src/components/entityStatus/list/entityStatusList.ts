@@ -5,7 +5,7 @@ import { EnumValue, CustomEnumValues, Enums, TaskStatusEnum } from '../../../enu
 import { AxiosResponse } from 'axios';
 import { EntityStatus } from '../../../models';
 import * as helper from '../../../util/helper';
-import { IEnumValues, IPagedList, PagedList } from '../../../interfaces';
+import { IEnumValues, IPagedList, PagedList, ITableFields } from '../../../interfaces';
 import { EntityStatusService } from '../../../services';
 import Chance from 'chance';
 
@@ -42,39 +42,8 @@ export class EntityStatusListComponent extends Vue {
 
     chance: Chance =  new Chance();
 
-    fields: {
-        key: string, 
-        tdClass?: string, 
-        label: string, 
-        sortable?: boolean, 
-        formatter?: string
-    }[] = 
+    fields: ITableFields[] = 
     [
-        {
-            key: 'SourceId',
-            tdClass: 'py-3',
-            label: 'Source ID',
-            sortable: true,
-        },
-        {
-            key: 'TargetId',
-            tdClass: 'py-3',
-            label: 'Target ID',
-            sortable: true,
-        },
-        {
-            key: 'EntityType',
-            tdClass: 'py-3',
-            label: 'Entity Type',
-            sortable: true,
-        },
-        {
-            key: 'EntityVersion',
-            tdClass: 'py-3',
-            label: 'Entity version',
-            sortable: true,
-            formatter: 'formatDate'
-        },
         {
             key: 'Status',
             tdClass: 'py-3',
@@ -83,10 +52,16 @@ export class EntityStatusListComponent extends Vue {
             formatter: 'getEnumDescription'
         }, 
         {
-            key: 'StatusMessage',
-            tdClass: 'py-3',
-            label: 'Status Message',
+            key: 'InContent',
+            label: 'In Content',
             sortable: true,
+            thStyle: { width: '140px' }
+        },
+        {
+            key: 'OutContent',
+            label: 'Out Content',
+            sortable: true,
+            thStyle: { width: '140px' }
         },
         {
             key: 'Source',
@@ -101,13 +76,23 @@ export class EntityStatusListComponent extends Vue {
             sortable: true,
         },
         {
-            key: 'InContent',
-            label: 'In Content',
+            key: 'EntityType',
+            tdClass: 'py-3',
+            label: 'Entity Type',
             sortable: true,
         },
         {
-            key: 'OutContent',
-            label: 'Out Content',
+            key: 'EntityVersion',
+            tdClass: 'py-3',
+            label: 'Entity version',
+            sortable: true,
+            formatter: 'formatDate',    
+            thStyle: { width: '180px' }
+        },
+        {
+            key: 'StatusMessage',
+            tdClass: 'py-3',
+            label: 'Status Message',
             sortable: true,
         },
     ];

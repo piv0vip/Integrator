@@ -4,10 +4,11 @@
   display: inline-block;
   cursor: pointer; }
 
-    .edit-view-component span.plainText {
-        display: block;
-        -ms-text-overflow: ellipsis;
-        -o-text-overflow: ellipsis;
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
+.edit-view-component span.plainText {
+    word-wrap: break-word;
+    display: block;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
