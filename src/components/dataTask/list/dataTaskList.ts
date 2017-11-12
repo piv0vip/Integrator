@@ -39,6 +39,8 @@ export class DataTaskListComponent extends Vue {
     handlers: HandlerTypes = new HandlerTypes();
     handlersEnum = new CustomEnumValues();
 
+    cronPresets: string[] = [];
+
     currentTask: DataTask = DataTask.createEmptyDataTask();
 
     showExecuteTaskLocaly: boolean = false;
@@ -142,22 +144,32 @@ export class DataTaskListComponent extends Vue {
 
     created() {
         HTTP.get('DataTask/GetHandlersWithDefaultSettings')
-        .then( function (response: AxiosResponse) {
+            .then(function (response: AxiosResponse) {
 
-            this.handlers.Parse(response.data);
+                this.handlers.Parse(response.data);
 
-            let handlers = response.data.map(function (o) {
-                return {
-                    TaskHandlerName: o.taskHandlerName,
-                    TaskType: o.taskType,
-                    DefaultHandlerSettings: o.defaultHandlerSettings
-                };
-            });
-            this.handlersEnum = Enums.createHandlerEnum(handlers);
-        }.bind(this))
-        .catch( function(e) {
-            console.log(e);
-        }.bind(this));
+                let handlers = response.data.map(function (o) {
+                    return {
+                        TaskHandlerName: o.taskHandlerName,
+                        TaskType: o.taskType,
+                        DefaultHandlerSettings: o.defaultHandlerSettings
+                    };
+                });
+                this.handlersEnum = Enums.createHandlerEnum(handlers);
+            }.bind(this))
+            .catch(function (e) {
+                console.log(e);
+            }.bind(this));
+
+        HTTP.get('DataTask/CrontabPresets')
+            .then(function (response: AxiosResponse) {
+
+                this.cronPresets = response.data;
+
+            }.bind(this))
+            .catch(function (e) {
+                console.log(e);
+            }.bind(this));
 
         this.statusEnum.Load([
             {code: '0', name: 'NotStarted', description: 'Not Started'},

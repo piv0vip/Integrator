@@ -8,6 +8,7 @@ import { CustomParamsComponent, ConfirmationComponent } from '../../common/';
 import { CronStyleSchedulingComponent }  from '../../../components/common/cron/';
 import { IEnumValues } from '../../../interfaces';
 import { EditViewElementComponent } from '../../common/editViewElement';
+import { CronPresetsComponent } from './cronPresets';   
 
 
 @Component({
@@ -16,7 +17,8 @@ import { EditViewElementComponent } from '../../common/editViewElement';
         'cron-style-scheduling': CronStyleSchedulingComponent,
         'custom-params': CustomParamsComponent,
         'confirmation-dialog': ConfirmationComponent,
-        'edit-view-element': EditViewElementComponent
+        'edit-view-element': EditViewElementComponent,
+        'cron-presets': CronPresetsComponent
     }
 })
 
@@ -41,6 +43,9 @@ export class DataTaskEditComponent extends Vue {
 
     @Prop({default: null})
     handlers: HandlerTypes;
+
+    @Prop()
+    cronPresets: string[];
 
     @Watch('show')
     onShowChanged (value: boolean) {
@@ -113,6 +118,10 @@ export class DataTaskEditComponent extends Vue {
     onCloseSaveConfirmation() {
         console.log('onCloseSaveConfirmation');
         this.showSaveConfirmation = false;
+    }
+
+    onCronPresetsChange(value) {
+        this.dataTask.getCronSchedule().Parse(value);
     }
 
     close() {

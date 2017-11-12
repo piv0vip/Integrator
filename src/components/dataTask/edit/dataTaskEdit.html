@@ -55,20 +55,20 @@
 
                 <b-row class="py-1">
                     <b-col cols="2" class="pt-2" style="text-align: right">Scheduling:</b-col>
-                    <b-col cols="9" class="pt-2"> 
+                    <b-col cols="10">
+                        <cron-presets :cronValue="dataTask.getCronSchedule().toString()" :cronPresets="cronPresets" @change="onCronPresetsChange"></cron-presets>
+                    </b-col>
+
+                </b-row>
+
+                <b-row class="py-1">
+                    <b-col cols="2"></b-col>
+                    <b-col cols="10" class="pt-2"> 
                         <edit-view-element :element="dataTask.getCronSchedule()" ></edit-view-element>
                     </b-col>
                 </b-row>
 
                 <!-- cron-style-scheduling :cron="dataTask.getCronSchedule()"></cron-style-scheduling-->
-
-                <b-row class="py-1">
-                    <b-col cols="2"></b-col>
-                    <b-col cols="10">
-                        {{ dataTask.getCronSchedule().toHuman() }}
-                    </b-col>
-
-                </b-row>
 
                 <h6 class="pt-4">Task Parameters</h6>
                 
