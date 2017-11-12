@@ -157,7 +157,22 @@ export class EntityStatusListComponent extends Vue {
             entity.Target = this.chance.country({ full: true });
             entity.SourceId = this.chance.word();
             entity.TargetId = this.chance.word();
-            entity.InContent = this.chance.word();
+            entity.InContent = `<?xml version="1.0" encoding="utf-8"?>
+ <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+   xmlns="urn:enterprise.soap.sforce.com">
+   <soapenv:Body>
+      <createResponse>
+         <result>
+            <id>003D000000OY9omIAD</id>
+            <success>true</success>
+         </result>
+         <result>
+            <id>001D000000HTK3aIAH</id>
+            <success>true</success>
+         </result>
+      </createResponse>
+   </soapenv:Body>
+ </soapenv:Envelope>`;
             entity.OutContent = this.chance.word();
             entities.push(entity);
         }
