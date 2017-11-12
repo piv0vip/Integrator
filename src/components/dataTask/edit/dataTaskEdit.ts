@@ -100,9 +100,9 @@ export class DataTaskEditComponent extends Vue {
     onSaveClick() {
         this.$validator.validateAll()
             .then((isValid) => {
-                if (isValid) this.showSaveConfirmation = true
+                if (isValid) this.showSaveConfirmation = true;
             })
-            .catch((e) => { console.log(e) })
+            .catch((e) => { console.log(e); });
     }
 
     onSaveOkClicked(e) {

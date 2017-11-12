@@ -18,7 +18,7 @@ export class AddNewSettingComponent extends Vue {
 
     @Watch('initToggle')
     onInitToggleChanged() {
-        this.resetEditValue()
+        this.resetEditValue();
     }
 
     onAddCustomHandlerClick() {
