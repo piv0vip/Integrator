@@ -27,6 +27,9 @@ export class CustomParamsComponent extends Vue {
     @Prop({default: '318px'})
     height: string;
 
+    @Prop()
+    initToggle: boolean;
+
     mut: boolean = false; // hack for refresh data
 
     get tableData(): Setting[] { this.mut; return this.customSettings.asArray(); }

@@ -13,17 +13,29 @@ export class AddNewSettingComponent extends Vue {
     
     editingValue: { name: string, value: string } = { name: '', value: '' };
 
+    @Prop()
+    initToggle: boolean;
+
+    @Watch('initToggle')
+    onInitToggleChanged() {
+        this.resetEditValue()
+    }
+
     onAddCustomHandlerClick() {
 
         if (!this.editingValue.name) return;
 
         let setting: Setting = new Setting(this.editingValue.name, this.editingValue.value);
 
-        this.editingValue = { name: '', value: '' };
+        this.resetEditValue();
 
         let nameEl: Vue = <Vue>this.$refs['name-input'];
         $(nameEl.$el).focus();
 
         this.$emit('onCreateSetting', setting); 
+    }
+
+    resetEditValue() {
+        this.editingValue = { name: '', value: '' };
     }
 }

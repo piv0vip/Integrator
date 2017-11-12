@@ -72,9 +72,10 @@
 
                 <h6 class="pt-4">Task Parameters</h6>
                 
-                    <custom-params :customSettings="handlerSettings"
-                                :height="height"
-                                @onValueAdded="onAddedCustomParam"></custom-params>
+                    <custom-params :initToggle="show"
+                        :customSettings="handlerSettings"
+                        :height="height"
+                        @onValueAdded="onAddedCustomParam"></custom-params>
             </b-container>
         </b-form>
 
