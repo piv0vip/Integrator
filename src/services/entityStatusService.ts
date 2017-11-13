@@ -5,7 +5,7 @@ import { AxiosResponse } from 'axios';
 import { HandlerTypes } from '../classes/settings/handlerTypes';
 import { BaseService } from './baseService';
 
-export class EntityStatusService extends BaseService<EntityStatus> {
+export class EntityStatusService extends BaseService {
     
     protected setControllerName() {
         this.ControllerName = 'EntityStatus';

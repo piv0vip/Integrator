@@ -37,29 +37,30 @@
         :fields="fields" 
         :items="myProvider">
         <template slot="InContent" scope="data">
-            <span v-if="data.item.InContent">
+            <span v-if="data.item.getInContent().getContent()">
                 <v-btn v-b-tooltip.hover.topright
                     icon
                     color="indigo lighten-2 white--text"
                     title="In Content" 
-                    @click='onViewContentClick(data.item.InContent)'><v-icon>assignment</v-icon></v-btn>XML
+                    @click='onViewContentClick(data.item.getInContent())'><v-icon>assignment</v-icon></v-btn>{{ data.item.getInContent().getType() }}
             </span>
         </template>
         <template slot="OutContent" scope="data">
-            <span v-if="data.item.OutContent">
+            <span v-if="data.item.getOutContent().getContent()">
                 <v-btn v-b-tooltip.hover.topright
                     icon
                     color="indigo lighten-2 white--text"
                     title="In Content" 
-                    @click='onViewContentClick(data.item.OutContent)'><v-icon>assignment</v-icon></v-btn>JSON
+                    @click='onViewContentClick(data.item.getOutContent())'><v-icon>assignment</v-icon></v-btn>{{ data.item.getOutContent().getType() }}
                 </span>
             </template>
         </b-table>
-    <div class="col-md-4">
+        <div class="col-md-4">
             <b-form-fieldset horizontal label="Total rows:" :label-cols="2">
                 <span class="py-1" style="display:block; font-weight:bold">{{ pagedList.totalItemCount }}</span>
             </b-form-fieldset>
-        </div>              
+        </div>     
+        <content-view :show="showContent" :content="content"></content-view>
     <!--<b-container>
         <b-row class="text-center">
             <b-col class="center">

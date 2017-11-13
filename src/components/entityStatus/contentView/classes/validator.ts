@@ -1,8 +1,27 @@
-import { IValidator } from '../../../../interfaces'
-import $ from 'jquery'
+import { IValidator } from '../../../../interfaces';
+import $ from 'jquery';
 
 export abstract class Validator implements IValidator {
     abstract isValid(content: string): boolean;
+
+    public static isXML(text: string): boolean {
+        try {
+            let xmlDoc = $.parseXML(text);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    public static isJSON(text: string): boolean {
+        try {
+            JSON.parse(text);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
 }
 
 export class TEXTValidator extends Validator {
@@ -13,22 +32,12 @@ export class TEXTValidator extends Validator {
 
 export class XMLValidator extends Validator {
     isValid(content: string): boolean {
-        try {
-            var xmlDoc = $.parseXML(content)
-            return true
-        } catch (e) {
-            return false;
-        }
+        return Validator.isXML(content);
     }
 }
 
 export class JSONValidator extends Validator {
     isValid(content: string): boolean {
-        try {
-            JSON.parse(content);
-            return true
-        } catch (e) {
-            return false;
-        }
+        return Validator.isJSON(content);
     }
 }

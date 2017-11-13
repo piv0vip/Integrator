@@ -1,7 +1,16 @@
-<template>
-    <v-layout row justify-center>
-        <v-dialog v-model="dialogShow" scrollable>
-
-        </v-dialog>
-    </v-layout>
-</template>
+<v-layout row justify-center>
+    <v-dialog v-model="dialogShow" scrollable max-width="1000px">
+        <v-card>
+            <v-card-title>View {{ content.getType() }} document</v-card-title>
+            <v-divider></v-divider>
+            <v-card-text style="height: 700px;">
+                <code class="content-view">{{ content.toHTML() }}</code>
+                <!--<div v-html="content.toHTML()"></div>-->
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions>
+                <v-btn color="blue darken-1" flat @click.native="dialogShow = false">Close</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+</v-layout>

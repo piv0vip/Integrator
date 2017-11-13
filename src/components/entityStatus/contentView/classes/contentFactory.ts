@@ -14,32 +14,15 @@ export abstract class ContentFactory implements IContentFactory {
     abstract createValidator(): IValidator;
 
     static getFactory(content: string): IContentFactory {
-        if (content && this.isXML(content)) {
+        if (content && Contents.Validator.isXML(content)) {
             return new XMLContentFactory(content);
         }
-        if (content && this.isJSON(content)) {
+        if (content && Contents.Validator.isJSON(content)) {
             return new JSONContentFactory(content);
         }
         return new TEXTContentFactory(content); 
     }
 
-    private static isXML(text: string): boolean {
-        try {
-            var xmlDoc = $.parseXML(text)
-            return true
-        } catch (e){
-            return false;
-        }
-    }
-
-    private static isJSON(text: string): boolean {
-        try {
-            JSON.parse(text);
-            return true
-        } catch (e) {
-            return false;
-        }
-    }
 }
 
 export class TEXTContentFactory extends ContentFactory {

@@ -1,12 +1,10 @@
 import { HTTP } from '../util/http-common';
 import { AxiosResponse } from 'axios';
+import { IServerable } from '../interfaces'
+import { TEntity } from '../models'
 
-
-
-export abstract class BaseService<TEntity> {
-
-    protected ttt: { new (): TEntity };
-
+export abstract class BaseService {
+    
     protected _controllerName: string = typeof this.constructor.name;
 
     constructor() {
@@ -31,8 +29,10 @@ export abstract class BaseService<TEntity> {
     }
 
     public createNewEntities(entities: TEntity[]): Promise<AxiosResponse> {
+        let toServerEntities: {}[] = entities.map((entity: TEntity) => entity.toServer())
+        debugger;
         return new Promise( (resolve, reject) => {
-            HTTP.post(`${this.ControllerName}/InsertEntities`, entities )
+            HTTP.post(`${this.ControllerName}/InsertEntities`, toServerEntities )
             .then( response => { resolve(response); } )
             .catch( error => { reject(Error); } );           
         });

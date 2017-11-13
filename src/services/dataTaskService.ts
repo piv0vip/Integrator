@@ -5,7 +5,7 @@ import { AxiosResponse } from 'axios';
 import { HandlerTypes } from '../classes/settings/handlerTypes';
 import { BaseService } from './baseService';
 
-export class DataTaskService extends BaseService<DataTask> {
+export class DataTaskService extends BaseService {
     
     protected setControllerName() {
         this.ControllerName = 'DataTask';

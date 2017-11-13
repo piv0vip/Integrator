@@ -1,6 +1,6 @@
 ﻿import * as helper  from '../util/helper';
 import { TEntity } from './TEntity';
-import { Content, ContentFactory } from '../components/entityStatus/contentView/classes'
+import { Content, ContentFactory } from '../components/entityStatus/contentView/classes';
 
 export class EntityStatus extends TEntity {
 
@@ -19,19 +19,28 @@ export class EntityStatus extends TEntity {
     TargetId: string;
     InDocTransfer: string; // => DocumentTransfer
     OutDocTransfer: string; // => DocumentTransfer
-    OutContent: string;
 
     constructor( ) {
         super();
-        let factory = ContentFactory.getFactory('')
+        let factory = ContentFactory.getFactory('');
+        this._InContent = factory.createContent();
+        this._OutContent = factory.createContent();
     }
 
     set InContent(value: string) {
-        let factory = ContentFactory.getFactory(value)
+        let factory = ContentFactory.getFactory(value);
         this._InContent = factory.createContent();
     }
     get InContent(): string {
         return this._InContent.getContent();
+    }
+
+    set OutContent(value: string) {
+        let factory = ContentFactory.getFactory(value);
+        this._OutContent = factory.createContent();
+    }
+    get OutContent(): string {
+        return this._OutContent.getContent();
     }
 
     get EntityStatusId(): number { return this.EntityId; }
@@ -39,6 +48,10 @@ export class EntityStatus extends TEntity {
 
     getInContent(): Content {
         return this._InContent;
+    }
+
+    getOutContent(): Content {
+        return this._OutContent;
     }
 
     get IsNew(): boolean { return false; }

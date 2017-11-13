@@ -8,10 +8,13 @@ import * as helper from '../../../util/helper';
 import { IEnumValues, IPagedList, PagedList, ITableFields } from '../../../interfaces';
 import { EntityStatusService } from '../../../services';
 import Chance from 'chance';
+import { ContentViewComponent } from '../contentView/contentView'
+import { ContentFactory, Content } from '../contentView/classes'
 
 @Component({
     template: require('./entityStatusList.html'),
     components: {
+        'content-view': ContentViewComponent
     }
 })
 
@@ -20,6 +23,9 @@ export class EntityStatusListComponent extends Vue {
     statusEnum = new CustomEnumValues();
     
     currentEntity: EntityStatus = EntityStatus.createNew();
+
+    content: Content = ContentFactory.getFactory('').createContent();
+    showContent: boolean = false;
 
     isBusy: boolean = false;  
     sortBy: string =  'EntityVersion';
@@ -130,6 +136,21 @@ export class EntityStatusListComponent extends Vue {
     onGenerateRecordsClick() {
         let entities: any[] = [];
 
+        let inXML = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map(() => { return `<result><id>${this.chance.natural()}</id><content>${this.chance.paragraph()}</content><success>${this.chance.bool()}</success></result>` }).join('');
+
+        let contentArray: string[] = [
+            '',
+            this.chance.sentence(),
+            `<?xml version="1.0" encoding="utf-8"?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="urn:enterprise.soap.sforce.com"><soapenv:Body><createResponse>${inXML}</createResponse></soapenv:Body></soapenv:Envelope>`,
+            JSON.stringify([1, 1,1 ,1 ,1, 1, 1, 1, 1,1 ,1, 1, 1].map(() => {
+                return {
+                    text: this.chance.paragraph(),
+                    numb: this.chance.integer(),
+                    boolk: this.chance.bool(),
+                    dat: this.chance.date()
+                } }))
+        ];
+
         for (let i = 0; i < 100; i++) {
             let entity = new EntityStatus();
             entity.EntityType = this.chance.word();
@@ -142,23 +163,8 @@ export class EntityStatusListComponent extends Vue {
             entity.Target = this.chance.country({ full: true });
             entity.SourceId = this.chance.word();
             entity.TargetId = this.chance.word();
-            entity.InContent = `<?xml version="1.0" encoding="utf-8"?>
-                                 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                                   xmlns="urn:enterprise.soap.sforce.com">
-                                   <soapenv:Body>
-                                      <createResponse>
-                                         <result>
-                                            <id>003D000000OY9omIAD</id>
-                                            <success>true</success>
-                                         </result>
-                                         <result>
-                                            <id>001D000000HTK3aIAH</id>
-                                            <success>true</success>
-                                         </result>
-                                      </createResponse>
-                                   </soapenv:Body>
-                                 </soapenv:Envelope>`;
-            entity.OutContent = JSON.stringify({ text: 'kfsjfhdkjfhkdjfh', numb: 7657, boolk: true, dat: new Date()});
+            entity.InContent = contentArray[this.chance.natural({ min: 0, max: 3 })];
+            entity.OutContent = contentArray[this.chance.natural({ min: 0, max: 3 })];
             entities.push(entity);
         }
         
@@ -174,8 +180,9 @@ export class EntityStatusListComponent extends Vue {
         this.refreshTable();
     }
 
-    onViewContentClick(content) {
-        
+    onViewContentClick(content: Content) {
+        this.content = content;
+        this.showContent = !this.showContent;
     }
 
 }
