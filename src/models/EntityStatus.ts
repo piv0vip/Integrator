@@ -1,7 +1,11 @@
 ﻿import * as helper  from '../util/helper';
 import { TEntity } from './TEntity';
+import { Content, ContentFactory } from '../components/entityStatus/contentView/classes'
 
 export class EntityStatus extends TEntity {
+
+    _InContent: Content;
+    _OutContent: Content;
 
     EntityType: string;
     EntityVersion: Date;
@@ -15,16 +19,27 @@ export class EntityStatus extends TEntity {
     TargetId: string;
     InDocTransfer: string; // => DocumentTransfer
     OutDocTransfer: string; // => DocumentTransfer
-    InContent: string;
     OutContent: string;
 
     constructor( ) {
         super();
+        let factory = ContentFactory.getFactory('')
+    }
 
+    set InContent(value: string) {
+        let factory = ContentFactory.getFactory(value)
+        this._InContent = factory.createContent();
+    }
+    get InContent(): string {
+        return this._InContent.getContent();
     }
 
     get EntityStatusId(): number { return this.EntityId; }
     set EntityStatusId(value: number) { this.EntityId = value; }
+
+    getInContent(): Content {
+        return this._InContent;
+    }
 
     get IsNew(): boolean { return false; }
 

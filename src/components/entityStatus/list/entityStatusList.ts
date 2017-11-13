@@ -143,22 +143,22 @@ export class EntityStatusListComponent extends Vue {
             entity.SourceId = this.chance.word();
             entity.TargetId = this.chance.word();
             entity.InContent = `<?xml version="1.0" encoding="utf-8"?>
- <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-   xmlns="urn:enterprise.soap.sforce.com">
-   <soapenv:Body>
-      <createResponse>
-         <result>
-            <id>003D000000OY9omIAD</id>
-            <success>true</success>
-         </result>
-         <result>
-            <id>001D000000HTK3aIAH</id>
-            <success>true</success>
-         </result>
-      </createResponse>
-   </soapenv:Body>
- </soapenv:Envelope>`;
-            entity.OutContent = this.chance.word();
+                                 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                                   xmlns="urn:enterprise.soap.sforce.com">
+                                   <soapenv:Body>
+                                      <createResponse>
+                                         <result>
+                                            <id>003D000000OY9omIAD</id>
+                                            <success>true</success>
+                                         </result>
+                                         <result>
+                                            <id>001D000000HTK3aIAH</id>
+                                            <success>true</success>
+                                         </result>
+                                      </createResponse>
+                                   </soapenv:Body>
+                                 </soapenv:Envelope>`;
+            entity.OutContent = JSON.stringify({ text: 'kfsjfhdkjfhkdjfh', numb: 7657, boolk: true, dat: new Date()});
             entities.push(entity);
         }
         

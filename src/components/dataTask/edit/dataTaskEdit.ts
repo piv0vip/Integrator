@@ -28,6 +28,9 @@ export class DataTaskEditComponent extends Vue {
     height: string = '200px';
     selectedHandler: string = '';
 
+    alertSec: number = 0;
+    alertMessage: string = 'Validation errors...';
+
     showSaveConfirmation: boolean = false;
     showDiscardConfirmation: boolean = false;
 
@@ -79,10 +82,6 @@ export class DataTaskEditComponent extends Vue {
         this.$emit('onClose', e);
     }
 
-    onAddedCustomParam(value) {
-        console.log(value);
-    }
-
     onSaveDialog(evt) {
         let request: {url: string, method: string} = this.isNew ? 
             {url: 'DataTask/Insert', method: 'post'} : 
@@ -100,7 +99,11 @@ export class DataTaskEditComponent extends Vue {
     onSaveClick() {
         this.$validator.validateAll()
             .then((isValid) => {
-                if (isValid) this.showSaveConfirmation = true;
+                if (isValid) {
+                    this.showSaveConfirmation = true;
+                } else {
+                    this.alertSec = 3;
+                }
             })
             .catch((e) => { console.log(e); });
     }

@@ -67,13 +67,7 @@ export class DataTaskListComponent extends Vue {
 
     chance: chance;
 
-    fields: {
-        key: string, 
-        tdClass?: string, 
-        label: string, 
-        sortable?: boolean, 
-        formatter?: string | Function
-    }[] = 
+    fieldds: ITableFields[] = 
     [
         {
             key: 'ExecLoc',

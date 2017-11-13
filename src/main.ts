@@ -14,7 +14,7 @@ import { store } from './store';
 Vue.use(BootstrapVue);
 Vue.use(Vuetify);
 Vue.use(VueRouter);
-Vue.use(VeeValidate);
+Vue.use(VeeValidate, { fieldsBagName: 'formFields' });
 
 let router = new VueRouter({
   routes: [

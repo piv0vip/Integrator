@@ -17,7 +17,7 @@
         </b-col>
     </div>
     <b-table 
-        id="web-tasks"
+        id="data-tasks"
         ref="dataTasksTable" 
         hover 
         no-local-sorting
@@ -27,7 +27,7 @@
         :sort-desc.sync="sortDesc"
         :current-page="currentPage"
         :per-page="perPage"
-        :fields="fields" 
+        :fields="fieldds" 
         :items="myProvider">
         <template slot="ExecLoc" scope="data">
             <v-btn v-b-tooltip.hover.topright
