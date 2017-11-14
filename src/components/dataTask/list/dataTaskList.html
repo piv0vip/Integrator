@@ -31,28 +31,28 @@
         :items="myProvider">
         <template slot="ExecLoc" scope="data">
             <v-btn v-b-tooltip.hover.topright
-                icon 
+                icon flat  
                 color="indigo lighten-2 white--text"
                 title="Execute task localy" 
                 @click='onExecLocalyTaskClick(data.item)'><i class="material-icons">desktop_windows</i></v-btn>
         </template>
         <template slot="ExecSch" scope="data">
             <v-btn v-b-tooltip.hover.topright 
-                icon 
+                icon flat
                 color="indigo lighten-2 white--text"
                 title="Execute task in scheduler" 
                 @click='onExecInSchTaskClick(data.item)'><i class="material-icons">alarm</i></v-btn>
         </template>
         <template slot="Reset" scope="data">
             <v-btn v-b-tooltip.hover.topright
-                icon 
+                icon flat
                 color="red lighten-2 white--text"
                 title="Reset task" 
                 @click='onResetTaskClick(data.item)'><i class="material-icons">compare_arrows</i></v-btn>
         </template>
         <template slot="Config" scope="data">
             <v-btn v-b-tooltip.hover.topright
-                icon 
+                icon flat
                 color="teal lighten-2 white--text"
                 title="Configure task" 
                 @click='onEditTaskClick(data.item)'><v-icon>edit</v-icon></v-btn>
