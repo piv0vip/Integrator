@@ -39,19 +39,20 @@
         <template slot="InContent" scope="data">
             <span v-if="data.item.getInContent().getContent()">
                 <v-btn v-b-tooltip.hover.topright
-                    icon
+                    flat round
                     color="indigo lighten-2 white--text"
                     title="In Content" 
-                    @click='onViewContentClick(data.item.getInContent())'><v-icon>assignment</v-icon></v-btn>{{ data.item.getInContent().getType() }}
+                       value="assignment"
+                    @click='onViewContentClick(data.item.getInContent())'><v-icon class="mr-1">assignment</v-icon>{{ data.item.getInContent().getType() }}</v-btn>
             </span>
         </template>
         <template slot="OutContent" scope="data">
             <span v-if="data.item.getOutContent().getContent()">
                 <v-btn v-b-tooltip.hover.topright
-                    icon
+                    flat round
                     color="indigo lighten-2 white--text"
                     title="In Content" 
-                    @click='onViewContentClick(data.item.getOutContent())'><v-icon>assignment</v-icon></v-btn>{{ data.item.getOutContent().getType() }}
+                    @click='onViewContentClick(data.item.getOutContent())'><v-icon class="mr-1">assignment</v-icon>{{ data.item.getOutContent().getType() }}</v-btn>
                 </span>
             </template>
         </b-table>

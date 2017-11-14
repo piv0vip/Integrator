@@ -8,8 +8,8 @@ import * as helper from '../../../util/helper';
 import { IEnumValues, IPagedList, PagedList, ITableFields } from '../../../interfaces';
 import { EntityStatusService } from '../../../services';
 import Chance from 'chance';
-import { ContentViewComponent } from '../contentView/contentView'
-import { ContentFactory, Content } from '../contentView/classes'
+import { ContentViewComponent } from '../contentView/contentView';
+import { ContentFactory, Content } from '../contentView/classes';
 
 @Component({
     template: require('./entityStatusList.html'),
@@ -136,19 +136,20 @@ export class EntityStatusListComponent extends Vue {
     onGenerateRecordsClick() {
         let entities: any[] = [];
 
-        let inXML = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map(() => { return `<result><id>${this.chance.natural()}</id><content>${this.chance.paragraph()}</content><success>${this.chance.bool()}</success></result>` }).join('');
+        let inXML = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map(() => { return `<result><id>${this.chance.natural()}</id><content>${this.chance.paragraph()}</content><success>${this.chance.bool()}</success></result>`; }).join('');
 
         let contentArray: string[] = [
             '',
             this.chance.sentence(),
             `<?xml version="1.0" encoding="utf-8"?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="urn:enterprise.soap.sforce.com"><soapenv:Body><createResponse>${inXML}</createResponse></soapenv:Body></soapenv:Envelope>`,
-            JSON.stringify([1, 1,1 ,1 ,1, 1, 1, 1, 1,1 ,1, 1, 1].map(() => {
+            JSON.stringify([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map( () => {
                 return {
                     text: this.chance.paragraph(),
                     numb: this.chance.integer(),
                     boolk: this.chance.bool(),
                     dat: this.chance.date()
-                } }))
+                };
+            }))
         ];
 
         for (let i = 0; i < 100; i++) {
@@ -160,7 +161,7 @@ export class EntityStatusListComponent extends Vue {
             entity.InDocTransferId = this.chance.natural();
             entity.OutDocTransferId = this.chance.natural();
             entity.Source = this.chance.country({ full: true });
-            entity.Target = this.chance.country({ full: true });
+            entity.Target = this.chance.country({ full: true }); 
             entity.SourceId = this.chance.word();
             entity.TargetId = this.chance.word();
             entity.InContent = contentArray[this.chance.natural({ min: 0, max: 3 })];

@@ -1,7 +1,7 @@
 import { HTTP } from '../util/http-common';
 import { AxiosResponse } from 'axios';
-import { IServerable } from '../interfaces'
-import { TEntity } from '../models'
+import { IServerable } from '../interfaces';
+import { TEntity } from '../models';
 
 export abstract class BaseService {
     
@@ -29,8 +29,7 @@ export abstract class BaseService {
     }
 
     public createNewEntities(entities: TEntity[]): Promise<AxiosResponse> {
-        let toServerEntities: {}[] = entities.map((entity: TEntity) => entity.toServer())
-        debugger;
+        let toServerEntities: {}[] = entities.map((entity: TEntity) => entity.toServer());
         return new Promise( (resolve, reject) => {
             HTTP.post(`${this.ControllerName}/InsertEntities`, toServerEntities )
             .then( response => { resolve(response); } )

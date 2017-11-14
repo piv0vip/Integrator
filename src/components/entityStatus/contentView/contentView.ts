@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 
-import { IContent } from '../../../interfaces'
-import { Content } from './classes/content'
+import { IContent } from '../../../interfaces';
+import { Content } from './classes/content';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class ContentViewComponent extends Vue {
     content: Content;
 
     @Prop()
-    show: boolean
+    show: boolean;
 
     @Watch('show')
     onShowChange() {
