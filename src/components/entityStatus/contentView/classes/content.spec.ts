@@ -31,6 +31,13 @@ describe('Content class testing', () => {
     let xmlContentFactory: IContentFactory = ContentFactory.getFactory(xmlContent);
     let jsonContentFactory: IContentFactory = ContentFactory.getFactory(jsonContent);
 
+    it('getTypeFormat() should return correct value', () => {
+        expect(emptyContentFactory.createContent().getTypeFormat()).to.be.empty;
+        expect(textContentFactory.createContent().getTypeFormat()).to.be.empty;
+        expect(xmlContentFactory.createContent().getTypeFormat()).to.equal('xml');
+        expect(jsonContentFactory.createContent().getTypeFormat()).to.equal('json');
+    })
+
     it('emptyContentFactory should be instanceof TEXTContentFactory', () => {
         expect(emptyContentFactory).to.be.an.instanceof(TEXTContentFactory)
     })

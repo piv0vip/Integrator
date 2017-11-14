@@ -4,6 +4,7 @@ import BootstrapVue from 'bootstrap-vue';
 import VueRouter from 'vue-router';
 import Vuetify from 'vuetify';
 import VeeValidate from 'vee-validate';
+import VueHighlightJS from 'vue-highlight.js';
 
 import { AppComponent } from './components/common/';
 import { DataTaskListComponent } from './components/dataTask';
@@ -15,6 +16,9 @@ Vue.use(BootstrapVue);
 Vue.use(Vuetify);
 Vue.use(VueRouter);
 Vue.use(VeeValidate, { fieldsBagName: 'formFields' });
+Vue.use(VueHighlightJS);
+
+import 'highlight.js/styles/xcode.css';
 
 let router = new VueRouter({
   routes: [

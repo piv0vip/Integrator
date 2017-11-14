@@ -4,8 +4,9 @@
             <v-card-title>View {{ content.getType() }} document</v-card-title>
             <v-divider></v-divider>
             <v-card-text style="height: 700px;">
-                <code class="content-view">{{ content.toHTML() }}</code>
-                <!--<div v-html="content.toHTML()"></div>-->
+                <highlight-code :lang="content.getTypeFormat()">
+                    {{ content.toHTML() }}
+                </highlight-code>
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>

@@ -3,6 +3,7 @@ import { Content } from '../components/entityStatus/contentView/classes/content'
 export interface IContent {
     getType(): string;
     getContent(): string;
+    getTypeFormat(): string;
     toHTML(): string;
 }
 

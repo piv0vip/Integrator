@@ -14,6 +14,10 @@ export abstract class Content implements IContent, IValidator {
         return this.content;
     }
 
+    public getTypeFormat(): string {
+        return '';
+    }
+
     public toHTML(): string {
         return this.getContent();
     }
@@ -27,6 +31,7 @@ export abstract class Content implements IContent, IValidator {
 
 export class XMLContent extends Content {
     getType(): string { return 'XML'; }
+    getTypeFormat(): string { return 'xml'; }
     public toHTML(): string {
         return beautify(this.getContent());
     }
@@ -34,6 +39,7 @@ export class XMLContent extends Content {
 
 export class JSONContent extends Content {
     getType(): string { return 'JSON'; }
+    getTypeFormat(): string { return 'json'; }
     public toHTML(): string {
         return JSON.stringify(JSON.parse(this.getContent()), null, 3);
     }
