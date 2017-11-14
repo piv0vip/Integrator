@@ -51,6 +51,11 @@ export class EntityStatusListComponent extends Vue {
     fields: ITableFields[] = 
     [
         {
+            key: 'Reset',
+            tdClass: 'td-button',
+            label: ' '
+        },
+        {
             key: 'Status',
             tdClass: 'py-3',
             label: 'Entity Status',
@@ -184,6 +189,18 @@ export class EntityStatusListComponent extends Vue {
     onViewContentClick(content: Content) {
         this.content = content;
         this.showContent = !this.showContent;
+    }
+
+    onResetEntityStatus(entityStatus: EntityStatus) {
+        HTTP.post('EntityStatus/Reset/' + entityStatus.EntityStatusId)
+            .then((response: AxiosResponse) => {
+                console.log(response.data);
+                this.refreshTable();
+            })
+            .catch(e => {
+                console.log(e);
+                this.refreshTable();
+            });
     }
 
 }

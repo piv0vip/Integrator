@@ -36,6 +36,13 @@
         :per-page="perPage"
         :fields="fields" 
         :items="myProvider">
+        <template slot="Reset" scope="data">
+            <v-btn v-b-tooltip.hover.topright
+                   icon flat
+                   color="red lighten-2 white--text"
+                   title="Reset entity status"
+                   @click='onResetEntityStatus(data.item)'><i class="material-icons">compare_arrows</i></v-btn>
+        </template>
         <template slot="InContent" scope="data">
             <span v-if="data.item.getInContent().getContent()">
                 <v-btn v-b-tooltip.hover.topright
