@@ -23,6 +23,8 @@ import { DataTaskService } from '../../../services';
 
 import chance from 'chance';
 
+import * as signalR from "@aspnet/signalr-client"
+
 @Component({
     template: require('./dataTaskList.html'),
     components: {
@@ -64,6 +66,8 @@ export class DataTaskListComponent extends Vue {
     filter: string = '';
 
     pagesCount: number = 1;
+
+    hubConnection: signalR.HubConnection;
 
     chance: chance;
 
@@ -172,6 +176,17 @@ export class DataTaskListComponent extends Vue {
             {code: '3', name: 'Error'},
             {code: '4', name: 'Cancelled'}
         ]);
+
+        let hubUrl = 'http://localhost:5000/hub';
+        let httpConnection = new signalR.HttpConnection(hubUrl);
+        debugger;
+        this.hubConnection = new signalR.HubConnection(httpConnection);
+
+        this.hubConnection.on('Broadcast', (data) => {
+            console.log(data);
+        })
+
+        this.hubConnection.start();
     }
 
     myProvider(ctx) {
@@ -253,5 +268,9 @@ export class DataTaskListComponent extends Vue {
 
     onFilterChange(e) {
         this.refreshTable();
+    }
+
+    sendSignalR() {
+        this.hubConnection.invoke('Send', 'test');
     }
 }
