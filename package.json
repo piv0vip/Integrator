@@ -111,6 +111,7 @@
     "tslint": "~4.5.1",
     "tslint-loader": "~3.4.3",
     "typescript": "~2.2.1",
+    "uglifyjs-webpack-plugin": "^1.0.1",
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",

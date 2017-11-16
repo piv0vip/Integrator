@@ -23,7 +23,7 @@ import { DataTaskService } from '../../../services';
 
 import chance from 'chance';
 
-import * as signalR from "@aspnet/signalr-client"
+import * as signalR from '@aspnet/signalr-client';
 
 @Component({
     template: require('./dataTaskList.html'),
@@ -184,7 +184,7 @@ export class DataTaskListComponent extends Vue {
 
         this.hubConnection.on('Broadcast', (data) => {
             console.log(data);
-        })
+        });
 
         this.hubConnection.start();
     }
