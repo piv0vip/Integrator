@@ -63,10 +63,21 @@ export class EntityStatusListComponent extends Vue {
             formatter: 'getEnumDescription'
         }, 
         {
+            key: 'SourceId',
+            label: 'Source Id',
+            sortable: true,
+        },
+
+        {
             key: 'InContent',
             label: 'In Content',
             sortable: true,
             thStyle: { width: '140px' }
+        },
+        {
+            key: 'TargetId',
+            label: 'Target Id',
+            sortable: true,
         },
         {
             key: 'OutContent',
