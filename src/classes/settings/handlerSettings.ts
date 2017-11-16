@@ -3,9 +3,10 @@ import { HandlerType } from './handlerTypes';
 
 export class DefaultDataTaskHandlerSettings extends Settings {
     Parse(obj) {
-        for (let key in obj) {
-            this.Add(new Setting(key, obj[key], true), false);
-        }
+        let settings: { name: string, isRequired?: boolean, defaultValue?: string, type: number }[] = obj;
+        settings.forEach(setting => {
+            this.Add(new Setting(setting.name, setting.defaultValue, true), false);
+        })
     }
 }
 
