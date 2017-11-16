@@ -269,7 +269,4 @@ export class DataTaskListComponent extends Vue {
         this.refreshTable();
     }
 
-    sendSignalR() {
-        this.hubConnection.invoke('Send', 'test');
-    }
 }
