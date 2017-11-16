@@ -122,10 +122,11 @@ export class EntityStatusListComponent extends Vue {
     created() {
         this.statusEnum.Load([
             { code: '0', name: 'NotFound', description: 'Not Found' },
-            { code: '1', name: 'Confirmed' },
-            { code: '2', name: 'NotConfirmed', description: 'Not Confirmed'},    
-            { code: '3', name: 'Errored' },
-            { code: '4', name: 'Ignored' },
+            { code: '1', name: 'ReadyToSend', description: 'Ready to send' },
+            { code: '2', name: 'Confirmed' },
+            { code: '3', name: 'NotConfirmed', description: 'Not Confirmed'},    
+            { code: '4', name: 'Errored' },
+            { code: '5', name: 'Ignored' },
         ]);
     }
 
@@ -149,49 +150,49 @@ export class EntityStatusListComponent extends Vue {
         ttt.refresh();
     }
     
-    onGenerateRecordsClick() {
-        let entities: any[] = [];
+    //onGenerateRecordsClick() {
+    //    let entities: any[] = [];
 
-        let inXML = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map(() => { return `<result><id>${this.chance.natural()}</id><content>${this.chance.paragraph()}</content><success>${this.chance.bool()}</success></result>`; }).join('');
+    //    let inXML = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map(() => { return `<result><id>${this.chance.natural()}</id><content>${this.chance.paragraph()}</content><success>${this.chance.bool()}</success></result>`; }).join('');
 
-        let contentArray: string[] = [
-            '',
-            this.chance.sentence(),
-            `<?xml version="1.0" encoding="utf-8"?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="urn:enterprise.soap.sforce.com"><soapenv:Body><createResponse>${inXML}</createResponse></soapenv:Body></soapenv:Envelope>`,
-            JSON.stringify([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map( () => {
-                return {
-                    text: this.chance.paragraph(),
-                    numb: this.chance.integer(),
-                    boolk: this.chance.bool(),
-                    dat: this.chance.date()
-                };
-            }))
-        ];
+    //    let contentArray: string[] = [
+    //        '',
+    //        this.chance.sentence(),
+    //        `<?xml version="1.0" encoding="utf-8"?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="urn:enterprise.soap.sforce.com"><soapenv:Body><createResponse>${inXML}</createResponse></soapenv:Body></soapenv:Envelope>`,
+    //        JSON.stringify([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map( () => {
+    //            return {
+    //                text: this.chance.paragraph(),
+    //                numb: this.chance.integer(),
+    //                boolk: this.chance.bool(),
+    //                dat: this.chance.date()
+    //            };
+    //        }))
+    //    ];
 
-        for (let i = 0; i < 100; i++) {
-            let entity = new EntityStatus();
-            entity.EntityType = this.chance.word();
-            entity.EntityVersion = this.chance.date();
-            entity.StatusMessage = this.chance.sentence();
-            entity.Status = this.chance.integer({min: 0, max: 4});
-            entity.InDocTransferId = this.chance.natural();
-            entity.OutDocTransferId = this.chance.natural();
-            entity.Source = this.chance.country({ full: true });
-            entity.Target = this.chance.country({ full: true }); 
-            entity.SourceId = this.chance.word();
-            entity.TargetId = this.chance.word();
-            entity.InContent = contentArray[this.chance.natural({ min: 0, max: 3 })];
-            entity.OutContent = contentArray[this.chance.natural({ min: 0, max: 3 })];
-            entities.push(entity);
-        }
+    //    for (let i = 0; i < 100; i++) {
+    //        let entity = new EntityStatus();
+    //        entity.EntityType = this.chance.word();
+    //        entity.EntityVersion = this.chance.date();
+    //        entity.StatusMessage = this.chance.sentence();
+    //        entity.Status = this.chance.integer({min: 0, max: 4});
+    //        entity.InDocTransferId = this.chance.natural();
+    //        entity.OutDocTransferId = this.chance.natural();
+    //        entity.Source = this.chance.country({ full: true });
+    //        entity.Target = this.chance.country({ full: true }); 
+    //        entity.SourceId = this.chance.word();
+    //        entity.TargetId = this.chance.word();
+    //        entity.InContent = contentArray[this.chance.natural({ min: 0, max: 3 })];
+    //        entity.OutContent = contentArray[this.chance.natural({ min: 0, max: 3 })];
+    //        entities.push(entity);
+    //    }
         
-        EntityStatusService.createEntities(entities)
-        .then( (response) => {
-            this.refreshTable();
-        })
-        .catch( e => console.log(e) );
+    //    EntityStatusService.createEntities(entities)
+    //    .then( (response) => {
+    //        this.refreshTable();
+    //    })
+    //    .catch( e => console.log(e) );
         
-    }
+    //}
 
     onFilterChange(e) {
         this.refreshTable();
