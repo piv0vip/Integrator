@@ -179,9 +179,8 @@ export class DataTaskListComponent extends Vue {
 
         let hubUrl = 'http://localhost:5000/hub';
         let httpConnection = new signalR.HttpConnection(hubUrl);
-        debugger;
+        
         this.hubConnection = new signalR.HubConnection(httpConnection);
-
         this.hubConnection.on('Broadcast', (data) => {
             console.log(data);
         });
