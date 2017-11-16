@@ -25,6 +25,8 @@ import chance from 'chance';
 
 import * as signalR from '@aspnet/signalr-client';
 
+import { Queue, util } from 'typescript-collections'
+
 @Component({
     template: require('./dataTaskList.html'),
     components: {
@@ -38,10 +40,15 @@ export class DataTaskListComponent extends Vue {
 
     statusEnum = new CustomEnumValues();
 
+    queue: Queue<string> = new Queue<string>();
+
     handlers: HandlerTypes = new HandlerTypes();
     handlersEnum = new CustomEnumValues();
 
     cronPresets: string[] = [];
+
+    showConsole: boolean = false; 
+    consoleMessages: string[] = [];
 
     currentTask: DataTask = DataTask.createEmptyDataTask();
 
@@ -183,6 +190,10 @@ export class DataTaskListComponent extends Vue {
         this.hubConnection = new signalR.HubConnection(httpConnection);
         this.hubConnection.on('Broadcast', (data) => {
             console.log(data);
+            this.queue.enqueue(data)
+            if (this.queue.size() > 20) this.queue.dequeue();
+            this.consoleMessages = [];
+            this.queue.forEach(elem => { this.consoleMessages.push(elem) });
         });
 
         this.hubConnection.start();
