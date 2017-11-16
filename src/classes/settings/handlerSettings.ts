@@ -6,7 +6,7 @@ export class DefaultDataTaskHandlerSettings extends Settings {
         let settings: { name: string, isRequired?: boolean, defaultValue?: string, type: number }[] = obj;
         settings.forEach(setting => {
             this.Add(new Setting(setting.name, setting.defaultValue, true), false);
-        })
+        });
     }
 }
 

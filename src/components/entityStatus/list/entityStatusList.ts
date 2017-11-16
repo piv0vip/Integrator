@@ -150,7 +150,7 @@ export class EntityStatusListComponent extends Vue {
         ttt.refresh();
     }
     
-    //onGenerateRecordsClick() {
+    // onGenerateRecordsClick() {
     //    let entities: any[] = [];
 
     //    let inXML = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map(() => { return `<result><id>${this.chance.natural()}</id><content>${this.chance.paragraph()}</content><success>${this.chance.bool()}</success></result>`; }).join('');
@@ -192,7 +192,7 @@ export class EntityStatusListComponent extends Vue {
     //    })
     //    .catch( e => console.log(e) );
         
-    //}
+    // }
 
     onFilterChange(e) {
         this.refreshTable();
