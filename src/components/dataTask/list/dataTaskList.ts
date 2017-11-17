@@ -25,7 +25,7 @@ import chance from 'chance';
 
 import * as signalR from '@aspnet/signalr-client';
 
-import _ from 'lodash'
+import _ from 'lodash';
 
 @Component({
     template: require('./dataTaskList.html'),
@@ -46,7 +46,7 @@ export class DataTaskListComponent extends Vue {
     cronPresets: string[] = [];
 
     showConsole: boolean = false; 
-    consoleMessages: string[] = [];
+    consoleMessages: string[] = ['SignalR console:', '================'];
 
     currentTask: DataTask = DataTask.createEmptyDataTask();
 

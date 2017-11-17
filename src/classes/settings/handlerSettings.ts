@@ -1,12 +1,41 @@
 ﻿import { Settings, Setting } from './settings';
 import { HandlerType } from './handlerTypes';
 
-export class DefaultDataTaskHandlerSettings extends Settings {
+import { SettingTypeEnum } from '../../enums';
+
+interface IHandlerSetting {
+    getType(): SettingTypeEnum;
+    getDefaultValue(): any;
+}
+
+export class DefaultDataTaskHandlerSettings extends Settings implements IHandlerSetting {
+
+    name: string = '';
+    isRequired: boolean = false;
+    defaultValue: string = '';
+    type: SettingTypeEnum = SettingTypeEnum.SelectBox;
+    options: string[] = [];
+
+    getType(): SettingTypeEnum {
+        throw new Error('Method not implemented.');
+    }
+    getDefaultValue(): any {
+    };
     Parse(obj) {
-        let settings: { name: string, isRequired?: boolean, defaultValue?: string, type: number }[] = obj;
+        let settings: { name: string, isRequired?: boolean, defaultValue?: string, type: SettingTypeEnum, options?: string[] }[] = obj;
         settings.forEach(setting => {
             this.Add(new Setting(setting.name, setting.defaultValue, true), false);
         });
+    }
+}
+
+export class HandlerSetting extends Setting implements IHandlerSetting {
+
+    getType(): SettingTypeEnum {
+        throw new Error('Method not implemented.');
+    }
+    getDefaultValue() {
+        throw new Error('Method not implemented.');
     }
 }
 

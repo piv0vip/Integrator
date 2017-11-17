@@ -1,7 +1,7 @@
 ﻿import * as helper  from '../util/helper';
 import { TEntity } from './TEntity';
 import { Content, ContentFactory } from '../components/entityStatus/contentView/classes';
-import { EntityStatusEnum } from '../enums'
+import { EntityStatusEnum } from '../enums';
 
 export class EntityStatus extends TEntity {
 
