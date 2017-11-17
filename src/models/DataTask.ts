@@ -2,6 +2,7 @@
 import { CronSchedule } from '../components/common';
 import { Setting, DataTaskHandlerSettings, HandlerType, HandlerTypes } from '../classes/settings';
 import { TEntity } from './TEntity';
+import { TaskStatusEnum } from '../enums';
 
 export class DataTask extends TEntity {
 
@@ -18,7 +19,7 @@ export class DataTask extends TEntity {
     MaxRetries: number = 0;
     Progress: string;
     Retries: string;
-    Status: string = '0';
+    Status: TaskStatusEnum = TaskStatusEnum.NotStarted;
     LastEndTime: string;
     LastExecutionTime: string;
     LastStartTime: string;

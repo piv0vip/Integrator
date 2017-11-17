@@ -1,13 +1,5 @@
 import { IEnumValue } from '../interfaces';
 
-export enum TaskStatusEnum {
-    NotStarted = 0,
-    Running,
-    Successful,
-    Error,
-    Cancelled
-}
-
 export class EnumValue implements IEnumValue {
     
     code: string;

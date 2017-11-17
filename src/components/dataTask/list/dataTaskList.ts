@@ -25,7 +25,7 @@ import chance from 'chance';
 
 import * as signalR from '@aspnet/signalr-client';
 
-import { Queue, util } from 'typescript-collections'
+import _ from 'lodash'
 
 @Component({
     template: require('./dataTaskList.html'),
@@ -39,8 +39,6 @@ import { Queue, util } from 'typescript-collections'
 export class DataTaskListComponent extends Vue {
 
     statusEnum = new CustomEnumValues();
-
-    queue: Queue<string> = new Queue<string>();
 
     handlers: HandlerTypes = new HandlerTypes();
     handlersEnum = new CustomEnumValues();
@@ -177,26 +175,29 @@ export class DataTaskListComponent extends Vue {
             }.bind(this));
 
         this.statusEnum.Load([
-            {code: '0', name: 'NotStarted', description: 'Not Started'},
-            {code: '1', name: 'Running'},
-            {code: '2', name: 'Successful'},
-            {code: '3', name: 'Error'},
-            {code: '4', name: 'Cancelled'}
+            { code: 'NotStarted', name: 'NotStarted', description: 'Not Started'},
+            { code: 'Running', name: 'Running'},
+            { code: 'Successful', name: 'Successful'},
+            { code: 'Error', name: 'Error'},
+            { code: 'Cancelled', name: 'Cancelled'}
         ]);
 
         let hubUrl = 'http://localhost:5000/hub';
         let httpConnection = new signalR.HttpConnection(hubUrl);
         
         this.hubConnection = new signalR.HubConnection(httpConnection);
-        this.hubConnection.on('Broadcast', (data) => {
-            console.log(data);
-            this.queue.enqueue(data)
-            if (this.queue.size() > 20) this.queue.dequeue();
-            this.consoleMessages = [];
-            this.queue.forEach(elem => { this.consoleMessages.push(elem) });
-        });
+        this.hubConnection.on('Broadcast', this.handler);
 
         this.hubConnection.start();
+    }
+
+    handler(data) {
+        this.consoleMessages.push(data);
+        if (this.consoleMessages.length > 200) _.drop(this.consoleMessages);
+    }
+
+    destroyed() {
+        this.hubConnection.off('Broadcast', this.handler);
     }
 
     myProvider(ctx) {

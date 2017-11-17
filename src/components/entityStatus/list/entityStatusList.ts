@@ -121,12 +121,12 @@ export class EntityStatusListComponent extends Vue {
 
     created() {
         this.statusEnum.Load([
-            { code: '0', name: 'NotFound', description: 'Not Found' },
-            { code: '1', name: 'ReadyToSend', description: 'Ready to send' },
-            { code: '2', name: 'Confirmed' },
-            { code: '3', name: 'NotConfirmed', description: 'Not Confirmed'},    
-            { code: '4', name: 'Errored' },
-            { code: '5', name: 'Ignored' },
+            { code: 'NotFound', name: 'NotFound', description: 'Not Found' },
+            { code: 'ReadyToSend', name: 'ReadyToSend', description: 'Ready to send' },
+            { code: 'Confirmed', name: 'Confirmed' },
+            { code: 'NotConfirmed', name: 'NotConfirmed', description: 'Not Confirmed'},    
+            { code: 'Errored', name: 'Errored' },
+            { code: 'Ignored', name: 'Ignored' },
         ]);
     }
 

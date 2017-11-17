@@ -1,6 +1,7 @@
 ﻿import * as helper  from '../util/helper';
 import { TEntity } from './TEntity';
 import { Content, ContentFactory } from '../components/entityStatus/contentView/classes';
+import { EntityStatusEnum } from '../enums'
 
 export class EntityStatus extends TEntity {
 
@@ -10,7 +11,7 @@ export class EntityStatus extends TEntity {
     EntityType: string;
     EntityVersion: Date;
     StatusMessage: string;
-    Status: number = 0;
+    Status: EntityStatusEnum = EntityStatusEnum.NotFound;
     InDocTransferId: string; 
     OutDocTransferId: string;
     Source: string;
