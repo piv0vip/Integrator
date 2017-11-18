@@ -148,7 +148,6 @@ export class DataTaskListComponent extends Vue {
     created() {
         HTTP.get('DataTask/GetHandlersWithDefaultSettings')
             .then(function (response: AxiosResponse) {
-
                 this.handlers.Parse(response.data);
 
                 let handlers = response.data.map(function (o) {

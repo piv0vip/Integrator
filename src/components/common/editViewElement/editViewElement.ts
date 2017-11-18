@@ -31,8 +31,8 @@ export class EditViewElementComponent extends Vue {
     }
 
     onValueClick() {
-        this.editedValue = this.element.getValue();
         this.isEdit = true;
+        this.editedValue = this.element.getValue();
         let nameEl: Vue = <Vue>this.$refs['edited-value-input'];
         this.$nextTick(() => {
             $(nameEl.$el).focus();
@@ -40,7 +40,7 @@ export class EditViewElementComponent extends Vue {
     }
 
     onValueChanged() {
-        this.element.setValue(this.editedValue);
         this.isEdit = false;
+        this.element.setValue(this.editedValue);
     }
 }

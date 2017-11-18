@@ -33,7 +33,7 @@ export class DataTask extends TEntity {
         this.defaultHandlers = defaultHandlers;
 
         this._TaskType = '';
-        this._HandlerSettings = new DataTaskHandlerSettings(new HandlerType());
+        this._HandlerSettings = new DataTaskHandlerSettings(HandlerType.CreateFromServer({ taskType: '', taskHandlerName: '', defaultHandlerSettings:[]})); // ????????????????????????????
         this._CronSchedule = new CronSchedule();
     }
 
@@ -95,10 +95,6 @@ export class DataTask extends TEntity {
             status: this.Status,
             taskType: this.TaskType
         };
-    }
-
-    getDefaultSettings() {
-        return this.defaultHandlers.getDefaultSetting(this.TaskType);
     }
 
     static createNewDataTask(defaultHandlers) {

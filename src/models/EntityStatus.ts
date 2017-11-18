@@ -1,10 +1,9 @@
-﻿import * as helper  from '../util/helper';
+﻿import * as helper from '../util/helper';
 import { TEntity } from './TEntity';
 import { Content, ContentFactory } from '../components/entityStatus/contentView/classes';
 import { EntityStatusEnum } from '../enums';
 
 export class EntityStatus extends TEntity {
-
     _InContent: Content;
     _OutContent: Content;
 
@@ -12,7 +11,7 @@ export class EntityStatus extends TEntity {
     EntityVersion: Date;
     StatusMessage: string;
     Status: EntityStatusEnum = EntityStatusEnum.NotFound;
-    InDocTransferId: string; 
+    InDocTransferId: string;
     OutDocTransferId: string;
     Source: string;
     SourceId: string;
@@ -21,7 +20,7 @@ export class EntityStatus extends TEntity {
     InDocTransfer: string; // => DocumentTransfer
     OutDocTransfer: string; // => DocumentTransfer
 
-    constructor( ) {
+    constructor() {
         super();
         let factory = ContentFactory.getFactory('');
         this._InContent = factory.createContent();
@@ -87,4 +86,3 @@ export class EntityStatus extends TEntity {
         return dataTask;
     }
 }
-

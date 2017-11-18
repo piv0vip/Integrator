@@ -3,7 +3,9 @@ import { IServerable, IEditViewElement } from '../../interfaces';
 export class Setting implements IEditViewElement {
 
     name: string;
+
     value: string;
+
     isDefault: boolean;
 
     constructor(name: string, value: string, isDefault: boolean = false) {

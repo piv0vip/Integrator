@@ -1,38 +1,37 @@
 ﻿import { DefaultDataTaskHandlerSettings } from './handlerSettings';
 import { Setting } from './settings';
 
-export class HandlerType {
+export interface IHandlerType {
+    readonly TaskType: string;
 
-    _taskType: string;
-    _taskHandlerName: string;
-    _defaultHandlerSettings: DefaultDataTaskHandlerSettings;
+    readonly TaskHandlerName: string;
 
-    constructor(taskType = 'dafault', taskHandlerName = '') {
-        this._taskType = taskType;
-        this._taskHandlerName = taskHandlerName;
-        this._defaultHandlerSettings = new DefaultDataTaskHandlerSettings();
+    readonly DefaultHandlerSettings: DefaultDataTaskHandlerSettings;
+}
+
+export class HandlerType implements IHandlerType {
+    readonly TaskType: string;
+
+    readonly TaskHandlerName: string;
+
+    readonly DefaultHandlerSettings: DefaultDataTaskHandlerSettings;
+
+    constructor(taskType: string, taskHandlerName: string, handlerSettings: DefaultDataTaskHandlerSettings) {
+        this.TaskType = taskType;
+
+        this.TaskHandlerName = taskHandlerName;
+
+        this.DefaultHandlerSettings = handlerSettings;
     }
-
-    set TaskType(value) { this._taskType = value; }
-    set TaskHandlerName(value) { this._taskHandlerName = value; }
-    set DefaultHandlerSettings(value) { this._defaultHandlerSettings.Parse(value); }
-
-    get TaskType() { return this._taskType; }
-    get TaskHandlerName() { return this._taskHandlerName; }
-    get DefaultHandlerSettings() { return this._defaultHandlerSettings; }
 
     isDefaultKey(key) {
         return this.DefaultHandlerSettings.hasKey(key);
     }
 
-    static CreateFromServer(obj) {
-        let handlerSetting = new HandlerType();
-        if (obj.TaskType || obj.taskType) {
-            handlerSetting.TaskType = obj.TaskType || obj.taskType;
-            handlerSetting.TaskHandlerName = obj.TaskHandlerName || obj.taskHandlerName;
-            handlerSetting.DefaultHandlerSettings = obj.DefaultHandlerSettings || obj.defaultHandlerSettings;
-        }
-        return handlerSetting;
+    static CreateFromServer(obj: { taskType: string, taskHandlerName: string, defaultHandlerSettings: {}[] }): HandlerType {
+        let handlerSettings: DefaultDataTaskHandlerSettings = new DefaultDataTaskHandlerSettings();
+        handlerSettings.Parse(obj.defaultHandlerSettings);
+        return new HandlerType(obj.taskType, obj.taskHandlerName, handlerSettings);
     }
 }
 
@@ -43,18 +42,8 @@ export class HandlerTypes {
         this._handlerTypes = {};
     }
     
-    getDefaultSetting(name): Setting[] {
-        return (name && this._handlerTypes[name]) ? this._handlerTypes[name].DefaultHandlerSettings.asArray() : [];
-    }
-
     getHandlerType(name): HandlerType {
-        return (name && this._handlerTypes[name]) ? this._handlerTypes[name] : new HandlerType();
-    }
-
-    getFirst() {
-        for (let key in this._handlerTypes) {
-            return this._handlerTypes[key];
-        }
+        return (name && this._handlerTypes[name]) ? this._handlerTypes[name] : HandlerType.CreateFromServer({ taskType:'', taskHandlerName:'', defaultHandlerSettings:[] });
     }
 
     Parse(handlerTypes) {

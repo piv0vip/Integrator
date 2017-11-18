@@ -1,26 +1,41 @@
 ﻿import { Settings, Setting } from './settings';
 import { HandlerType } from './handlerTypes';
+import _ from 'lodash';
 
 import { SettingTypeEnum } from '../../enums';
 
-interface IHandlerSetting {
-    getType(): SettingTypeEnum;
-    getDefaultValue(): any;
+export interface IValidable {
+    isValid(): boolean;
 }
 
-export class DefaultDataTaskHandlerSettings extends Settings implements IHandlerSetting {
+export interface IHandlerSetting {
+
+    readonly name: string;
+
+    readonly defaultValue: string;
+
+    readonly type: SettingTypeEnum;
+
+    readonly options: string[];
+
+    readonly isRequired: boolean;
+
+    Value: string;
+
+}
+
+export class DefaultDataTaskHandlerSettings extends Settings {
 
     name: string = '';
+
     isRequired: boolean = false;
+
     defaultValue: string = '';
+
     type: SettingTypeEnum = SettingTypeEnum.SelectBox;
+
     options: string[] = [];
 
-    getType(): SettingTypeEnum {
-        throw new Error('Method not implemented.');
-    }
-    getDefaultValue(): any {
-    };
     Parse(obj) {
         let settings: { name: string, isRequired?: boolean, defaultValue?: string, type: SettingTypeEnum, options?: string[] }[] = obj;
         settings.forEach(setting => {
@@ -29,13 +44,39 @@ export class DefaultDataTaskHandlerSettings extends Settings implements IHandler
     }
 }
 
-export class HandlerSetting extends Setting implements IHandlerSetting {
+export class HandlerSetting implements IHandlerSetting, IValidable {
 
-    getType(): SettingTypeEnum {
-        throw new Error('Method not implemented.');
+    name: string;
+
+    type: SettingTypeEnum;
+
+    defaultValue: string;
+
+    options: string[];
+
+    isRequired: boolean;
+
+    private _value: string;
+
+    constructor(name: string, type: SettingTypeEnum, defaultValue: string = '', options: string[] = [], isRequired: boolean = false) {
+        this.name = name;
+        this.type = type;
+        this.defaultValue = defaultValue;
+        this.options = options;
+        this.isRequired = isRequired;
+        this.Value = defaultValue;
     }
-    getDefaultValue() {
-        throw new Error('Method not implemented.');
+
+    set Value(val: string) {
+        this._value = val;
+    }
+
+    get Value(): string {
+        return this._value;
+    }
+
+    isValid(): boolean {
+        return this.isRequired ? !_.isEmpty(_.trim(this.Value)) : true;
     }
 }
 
@@ -62,7 +103,7 @@ export class DataTaskHandlerSettings extends Settings {
     Parse(obj) {
         let handlerSettings = JSON.parse(obj);
         for (let key in handlerSettings) {
-            this.Add( new Setting(key, handlerSettings[key], this._handlerType.isDefaultKey(key)), false);
+            this.Add(new Setting(key, handlerSettings[key], this._handlerType.isDefaultKey(key)), false);
         }
     }
 }
