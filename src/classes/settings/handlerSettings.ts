@@ -3,67 +3,40 @@ import { HandlerType } from './handlerTypes';
 import _ from 'lodash';
 
 import { SettingTypeEnum } from '../../enums';
+import { IHandlerSetting, IValidable, IClonable } from '../../interfaces';
 
-export interface IValidable {
-    isValid(): boolean;
-}
-
-export interface IHandlerSetting {
-
-    readonly name: string;
-
-    readonly defaultValue: string;
-
-    readonly type: SettingTypeEnum;
-
-    readonly options: string[];
-
-    readonly isRequired: boolean;
-
-    Value: string;
-
-}
+import { Dictionary } from 'typescript-collections';
 
 export class DefaultDataTaskHandlerSettings extends Settings {
-
-    name: string = '';
-
-    isRequired: boolean = false;
-
-    defaultValue: string = '';
-
-    type: SettingTypeEnum = SettingTypeEnum.SelectBox;
-
-    options: string[] = [];
 
     Parse(obj) {
         let settings: { name: string, isRequired?: boolean, defaultValue?: string, type: SettingTypeEnum, options?: string[] }[] = obj;
         settings.forEach(setting => {
-            this.Add(new Setting(setting.name, setting.defaultValue, true), false);
+            this.Add(new Setting(setting.name, setting.defaultValue), false);
         });
     }
 }
 
-export class HandlerSetting implements IHandlerSetting, IValidable {
+export class HandlerSetting implements IHandlerSetting, IValidable, IClonable<HandlerSetting> {
 
-    name: string;
+    readonly Name: string;
 
-    type: SettingTypeEnum;
+    readonly Type: SettingTypeEnum;
 
-    defaultValue: string;
+    readonly DefaultValue: string;
 
-    options: string[];
+    readonly Options: string[];
 
-    isRequired: boolean;
+    readonly IsRequired: boolean;
 
     private _value: string;
 
     constructor(name: string, type: SettingTypeEnum, defaultValue: string = '', options: string[] = [], isRequired: boolean = false) {
-        this.name = name;
-        this.type = type;
-        this.defaultValue = defaultValue;
-        this.options = options;
-        this.isRequired = isRequired;
+        this.Name = name;
+        this.Type = type;
+        this.DefaultValue = defaultValue;
+        this.Options = options;
+        this.IsRequired = isRequired;
         this.Value = defaultValue;
     }
 
@@ -76,7 +49,17 @@ export class HandlerSetting implements IHandlerSetting, IValidable {
     }
 
     isValid(): boolean {
-        return this.isRequired ? !_.isEmpty(_.trim(this.Value)) : true;
+        return this.IsRequired ? !_.isEmpty(_.trim(this.Value)) : true;
+    }
+
+    clone(): HandlerSetting {
+        return new HandlerSetting(this.Name, this.Type, this.DefaultValue, this.Options, this.IsRequired);
+    }
+}
+
+export class HandlerSettings extends Dictionary<string, HandlerSetting> {
+    add(value: HandlerSetting) {
+        this.setValue(value.Name, value);
     }
 }
 
@@ -103,7 +86,7 @@ export class DataTaskHandlerSettings extends Settings {
     Parse(obj) {
         let handlerSettings = JSON.parse(obj);
         for (let key in handlerSettings) {
-            this.Add(new Setting(key, handlerSettings[key], this._handlerType.isDefaultKey(key)), false);
+            this.Add(new Setting(key, handlerSettings[key]));
         }
     }
 }

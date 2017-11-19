@@ -1,5 +1,6 @@
-﻿import { DefaultDataTaskHandlerSettings } from './handlerSettings';
+﻿import { DefaultDataTaskHandlerSettings, HandlerSettings } from './handlerSettings';
 import { Setting } from './settings';
+import { Dictionary } from 'typescript-collections';
 
 export interface IHandlerType {
     readonly TaskType: string;
@@ -35,26 +36,17 @@ export class HandlerType implements IHandlerType {
     }
 }
 
-export class HandlerTypes {
-    _handlerTypes: {};
+export class HandlerTypes extends Dictionary<string, HandlerType> {
 
-    constructor() {
-        this._handlerTypes = {};
-    }
-    
     getHandlerType(name): HandlerType {
-        return (name && this._handlerTypes[name]) ? this._handlerTypes[name] : HandlerType.CreateFromServer({ taskType:'', taskHandlerName:'', defaultHandlerSettings:[] });
+        return (name && this.containsKey(name)) ? this.getValue(name) : HandlerType.CreateFromServer({ taskType: '', taskHandlerName: '', defaultHandlerSettings: [] });
     }
 
     Parse(handlerTypes) {
-
-        this._handlerTypes = {};
-
+        this.clear();
         handlerTypes.forEach((handlerType) => {
-            this._handlerTypes[handlerType.taskType] = HandlerType.CreateFromServer(handlerType);
+            let ht: HandlerType = HandlerType.CreateFromServer(handlerType);
+            this.setValue(ht.TaskType, ht);
         });
     }
 }
-
-// min: 3 5 10 30
-// hour: 2 3 
