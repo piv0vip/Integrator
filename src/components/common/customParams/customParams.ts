@@ -24,7 +24,7 @@ export class CustomParamsComponent extends Vue {
     @Prop()
     customSettings: HandlerSettings;
 
-    @Prop({default: '318px'})
+    @Prop({default: '418px'})
     height: string;
 
     @Prop()
@@ -32,7 +32,7 @@ export class CustomParamsComponent extends Vue {
 
     mut: boolean = false; // hack for refresh data
 
-    get tableData(): HandlerSetting[] { this.mut; return this.customSettings.values(); }
+    get handlerSettings(): HandlerSetting[] { this.mut; return this.customSettings.values(); }
     
     // onCreateSetting(setting: Setting) {
 

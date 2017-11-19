@@ -1,4 +1,5 @@
 <div @click="onClick">
-    <span class="mb-1" style="font-weight: bold">{{ setting.Name }}</span>
-    <edit-view-element :toggleEdit="toggleEdit" :element="setting"></edit-view-element>
+    <span class="mb-1" style="font-weight: bold">{{ handlerSetting.Name }}</span>
+    <bool-edit-view-element v-if="isBool" :element="handlerSetting"></bool-edit-view-element>
+    <edit-view-element v-else :toggleEdit="toggleEdit" :element="handlerSetting"></edit-view-element>
 </div>

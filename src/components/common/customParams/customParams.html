@@ -1,6 +1,6 @@
 <div class="custom-params-component">
     <div class="scroll-box" style="height:100%" v-bind:style="{ 'max-height': height }">
-        <div v-for="item in tableData" :key="item.Name">
+        <div v-for="handlerSetting in handlerSettings" :key="handlerSetting.Name">
             <b-row class="py-1" style="width:100%">
                 <b-col cols="1">
                     <!--v-btn flat icon
@@ -8,7 +8,7 @@
                            @click="onDeleteClick(item)"><v-icon>delete_forever</v-icon></v-btn>-->
                 </b-col>
                 <b-col cols="11" class="pt-1">
-                    <custom-params-setting :setting="item"></custom-params-setting>
+                    <custom-params-setting :handlerSetting="handlerSetting"></custom-params-setting>
                 </b-col>
             </b-row>
         </div>
