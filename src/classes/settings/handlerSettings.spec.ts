@@ -1,8 +1,8 @@
 import { expect } from 'chai';
-import { HandlerSetting, IHandlerSetting } from './handlerSettings';
+import { HandlerSetting, HandlerSettings, DefaultDataTaskHandlerSettings } from './handlerSettings';
 import { SettingTypeEnum } from '../../enums'
 
-describe('Handler setting testing', () => {
+describe('HandlerSetting testing', () => {
 
     let hs: HandlerSetting, hs1: HandlerSetting, hs2: HandlerSetting;
 
@@ -32,4 +32,26 @@ describe('Handler setting testing', () => {
         expect(hs2.isValid()).to.be.true;
     })
 
+    it('cloned object should be another object ', () => {
+        hs = hs1;
+        expect(hs).to.equal(hs1);
+        hs = hs1.clone();
+        expect(hs).to.not.equal(hs1)
+    })
+
+});
+
+describe('HandlerSettings testing', () => {
+
+    let hs: HandlerSetting, hss: HandlerSettings;
+
+    beforeEach(() => {
+        hss = new HandlerSettings();
+        hss.add(new HandlerSetting('testName', SettingTypeEnum.String, 'testValue', null, true));
+        hss.add(new HandlerSetting('test2Name', SettingTypeEnum.Url));
+    });
+
+    it('size() shoud be retutn correct value', () => {
+        expect(hss.size()).to.equal(2);
+    })
 });
