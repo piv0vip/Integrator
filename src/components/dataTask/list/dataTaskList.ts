@@ -241,7 +241,7 @@ export class DataTaskListComponent extends Vue {
     }
 
     onAddDatataskClick() {
-        this.currentTask = new DataTask(this.handlerTypes);
+        this.currentTask = new DataTask();
         this.showEditTask = true;
     }
 

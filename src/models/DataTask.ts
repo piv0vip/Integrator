@@ -106,7 +106,7 @@ export class DataTask extends TEntity {
     static createDataTaskFromJson(handlerTypes: HandlerTypes, params) {
         let dataTask = new DataTask();
         let taskType = params['TaskType'] || params['taskType'];
-        if(taskType && handlerTypes.containsKey(taskType)) dataTask.HandlerType = handlerTypes.getValue(taskType);
+        if (taskType && handlerTypes.containsKey(taskType)) dataTask.HandlerType = handlerTypes.getValue(taskType);
         dataTask.Parse(params);
         return dataTask;
     }

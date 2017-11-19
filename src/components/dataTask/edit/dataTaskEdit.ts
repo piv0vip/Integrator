@@ -63,7 +63,7 @@ export class DataTaskEditComponent extends Vue {
 
     @Watch('selectedHandler')
     onSelectedHandlerChanged(value) {
-        if (this.handlerTypes.containsKey(value)) { this.dataTask.HandlerType = this.handlerTypes.getValue(value) }
+        if (this.handlerTypes.containsKey(value)) { this.dataTask.HandlerType = this.handlerTypes.getValue(value); }
         if (this.dataTask.TaskType !== value) { this.dataTask.TaskType = value; }
     }
 
