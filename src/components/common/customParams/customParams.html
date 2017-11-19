@@ -3,10 +3,9 @@
         <div v-for="item in tableData" :key="item.name">
             <b-row class="py-1" style="width:100%">
                 <b-col cols="1">
-                    <v-btn :disabled="!isShowDelete(item)"
-                           flat icon
+                    <!--v-btn flat icon
                            color="error"
-                           @click="onDeleteClick(item)"><v-icon>delete_forever</v-icon></v-btn>
+                           @click="onDeleteClick(item)"><v-icon>delete_forever</v-icon></v-btn>-->
                 </b-col>
                 <b-col cols="11" class="pt-1">
                     <custom-params-setting :setting="item"></custom-params-setting>
@@ -14,5 +13,5 @@
             </b-row>
         </div>
     </div>
-    <add-new-setting :initToggle="initToggle" @onCreateSetting="onCreateSetting"></add-new-setting>
+    <!--add-new-setting :initToggle="initToggle" @onCreateSetting="onCreateSetting"></add-new-setting>-->
 </div>

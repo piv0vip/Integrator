@@ -54,9 +54,5 @@ export class CustomParamsComponent extends Vue {
         this.refreshList();
     }
 
-    isShowDelete(item) {
-        return !item.IsDefault;
-    }
-
     refreshList() { this.mut = !this.mut; }
 }
