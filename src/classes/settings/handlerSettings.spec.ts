@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { HandlerSetting, HandlerSettings, DefaultDataTaskHandlerSettings } from './handlerSettings';
+import { HandlerSetting, HandlerSettings, DefaultHandlerSettings } from './handlerSettings';
 import { SettingTypeEnum } from '../../enums'
 
 describe('HandlerSetting testing', () => {

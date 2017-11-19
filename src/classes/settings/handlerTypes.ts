@@ -1,4 +1,4 @@
-﻿import { DefaultDataTaskHandlerSettings, HandlerSettings } from './handlerSettings';
+﻿import { DefaultHandlerSettings, HandlerSettings } from './handlerSettings';
 import { Setting } from './settings';
 import { Dictionary } from 'typescript-collections';
 
@@ -7,7 +7,7 @@ export interface IHandlerType {
 
     readonly TaskHandlerName: string;
 
-    readonly DefaultHandlerSettings: DefaultDataTaskHandlerSettings;
+    readonly DefaultHandlerSettings: DefaultHandlerSettings;
 }
 
 export class HandlerType implements IHandlerType {
@@ -15,9 +15,9 @@ export class HandlerType implements IHandlerType {
 
     readonly TaskHandlerName: string;
 
-    readonly DefaultHandlerSettings: DefaultDataTaskHandlerSettings;
+    readonly DefaultHandlerSettings: DefaultHandlerSettings;
 
-    constructor(taskType: string, taskHandlerName: string, handlerSettings: DefaultDataTaskHandlerSettings) {
+    constructor(taskType: string, taskHandlerName: string, handlerSettings: DefaultHandlerSettings) {
         this.TaskType = taskType;
 
         this.TaskHandlerName = taskHandlerName;
@@ -25,21 +25,21 @@ export class HandlerType implements IHandlerType {
         this.DefaultHandlerSettings = handlerSettings;
     }
 
-    isDefaultKey(key) {
-        return this.DefaultHandlerSettings.hasKey(key);
-    }
-
     static CreateFromServer(obj: { taskType: string, taskHandlerName: string, defaultHandlerSettings: {}[] }): HandlerType {
-        let handlerSettings: DefaultDataTaskHandlerSettings = new DefaultDataTaskHandlerSettings();
+        let handlerSettings: DefaultHandlerSettings = new DefaultHandlerSettings();
         handlerSettings.Parse(obj.defaultHandlerSettings);
         return new HandlerType(obj.taskType, obj.taskHandlerName, handlerSettings);
+    }
+
+    static CreateEmpty(): HandlerType {
+        return new HandlerType('', '', new DefaultHandlerSettings);
     }
 }
 
 export class HandlerTypes extends Dictionary<string, HandlerType> {
 
-    getHandlerType(name): HandlerType {
-        return (name && this.containsKey(name)) ? this.getValue(name) : HandlerType.CreateFromServer({ taskType: '', taskHandlerName: '', defaultHandlerSettings: [] });
+    getHandlerType(name: string): HandlerType {
+        return (this.containsKey(name)) ? this.getValue(name) : HandlerType.CreateEmpty();
     }
 
     Parse(handlerTypes) {

@@ -81,8 +81,8 @@ export class EntityStatus extends TEntity {
     }
 
     static createFromJson(params) {
-        let dataTask = new EntityStatus();
-        dataTask.Parse(params);
-        return dataTask;
+        let entityStatus = new EntityStatus();
+        entityStatus.Parse(params);
+        return entityStatus;
     }
 }

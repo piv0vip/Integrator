@@ -6,7 +6,7 @@ import {
     IEqualable
 } from '../../interfaces';
 
-export class Setting implements ISetting, IClonable<ISetting>, IEqualable<Setting>, IEditViewElement {
+export class Setting implements ISetting, IClonable<Setting>, IEqualable<Setting>, IEditViewElement {
 
     _value: string;
 

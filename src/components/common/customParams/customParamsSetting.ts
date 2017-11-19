@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 
-import { Setting } from '../../../classes/settings';
+import { HandlerSetting } from '../../../classes/settings';
 
 import { EditViewElementComponent } from '../editViewElement';
 
@@ -17,7 +17,7 @@ export class CustomParamsSettingComponent extends Vue {
     toggleEdit: boolean = false;
 
     @Prop()
-    setting: Setting;
+    setting: HandlerSetting;
 
     onClick() {
         this.toggleEdit = !this.toggleEdit;

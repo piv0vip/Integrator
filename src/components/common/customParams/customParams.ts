@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 
-import { Settings, Setting } from '../../../classes/settings';
+import { HandlerSettings, HandlerSetting } from '../../../classes/settings';
 
 import { ITableFields, IEditViewElement } from '../../../interfaces';
 
@@ -22,7 +22,7 @@ import $ from 'jquery';
 export class CustomParamsComponent extends Vue { 
 
     @Prop()
-    customSettings: Settings;
+    customSettings: HandlerSettings;
 
     @Prop({default: '318px'})
     height: string;
@@ -32,27 +32,27 @@ export class CustomParamsComponent extends Vue {
 
     mut: boolean = false; // hack for refresh data
 
-    get tableData(): Setting[] { this.mut; return this.customSettings.asArray(); }
+    get tableData(): HandlerSetting[] { this.mut; return this.customSettings.values(); }
+    
+    // onCreateSetting(setting: Setting) {
 
-    onCreateSetting(setting: Setting) {
+    //    let existElement: Setting = this.customSettings.finByName(setting.Name);
 
-        let existElement: Setting = this.customSettings.finByName(setting.Name);
+    //    if (existElement) {
+    //        existElement.Value = setting.Value;
+    //    } else {
+    //        this.customSettings.Add(setting);
+    //    };
 
-        if (existElement) {
-            existElement.Value = setting.Value;
-        } else {
-            this.customSettings.Add(setting);
-        };
+    //    this.customSettings.Add(setting);
 
-        this.customSettings.Add(setting);
+    //    this.refreshList();
+    // }
 
-        this.refreshList();
-    }
-
-    onDeleteClick(item) {
-        this.customSettings.Delete(item);
-        this.refreshList();
-    }
+    // onDeleteClick(item) {
+    //    this.customSettings.Delete(item);
+    //    this.refreshList();
+    // }
 
     refreshList() { this.mut = !this.mut; }
 }

@@ -1,13 +1,12 @@
 ﻿import * as helper  from '../util/helper';
 import { CronSchedule } from '../components/common';
-import { Setting, DataTaskHandlerSettings, HandlerType, HandlerTypes } from '../classes/settings';
+import { Setting, DataTaskHandlerSettings, HandlerType, HandlerTypes, HandlerSettings } from '../classes/settings';
 import { TEntity } from './TEntity';
 import { TaskStatusEnum } from '../enums';
 
 export class DataTask extends TEntity {
 
-    defaultHandlers: HandlerTypes;
- 
+    protected _HandlerType: HandlerType;
     protected _HandlerSettings: DataTaskHandlerSettings;
     protected _TaskType: string;
     protected _CronSchedule: CronSchedule;
@@ -27,31 +26,34 @@ export class DataTask extends TEntity {
     RecCreated: string;
     RecModified: string;
     
-    constructor(defaultHandlers: HandlerTypes, params: {} = {}) {
+    constructor() {
         super();
         
-        this.defaultHandlers = defaultHandlers;
-
         this._TaskType = '';
-        this._HandlerSettings = new DataTaskHandlerSettings(HandlerType.CreateFromServer({ taskType: '', taskHandlerName: '', defaultHandlerSettings: []})); // ????????????????????????????
+        this._HandlerSettings = new DataTaskHandlerSettings();
         this._CronSchedule = new CronSchedule();
+        this._HandlerType = HandlerType.CreateEmpty();
     }
 
     get DataTaskId(): number { return this.EntityId; }
+
     set DataTaskId(value: number) { this.EntityId = value; }
 
-    set HandlerType(value: HandlerType) {
-        this._HandlerSettings.setHandlerType(value);
+    set HandlerType(handlerType: HandlerType) {
+        this._HandlerType = handlerType;
+        this._HandlerSettings.setHandlerSettings(handlerType.DefaultHandlerSettings);
     }
 
     get TaskType(): string {
-        return this._TaskType;
+        return this._HandlerType.TaskType;
     }
 
-
     set TaskType(value: string) {
-        this.HandlerType = this.defaultHandlers.getHandlerType(value);
         this._TaskType = value;
+    }
+
+    get HandlerSettings(): string{
+        return JSON.stringify(this._HandlerSettings.toServer());
     }
 
     set HandlerSettings(value: string) {
@@ -59,6 +61,10 @@ export class DataTask extends TEntity {
     }
 
     get CronString(): string {
+        return this._CronSchedule.toString();
+    }
+
+    get CronSchedule(): string {
         return this._CronSchedule.toString();
     }
 
@@ -76,12 +82,12 @@ export class DataTask extends TEntity {
 
     toServer(): {} {
         return {
-            cronSchedule: this._CronSchedule.toString(),
+            cronSchedule: this.CronSchedule,
             dataTaskId: this.DataTaskId,
             displayName: this.DisplayName,
             enabled: this.Enabled,
             groupName: this.GroupName,
-            handlerSettings: JSON.stringify(this._HandlerSettings.toServer()),
+            handlerSettings: this.HandlerSettings,
             isMaintenance: this.IsMaintenance,
             lastEndTime: this.LastEndTime,
             lastExecutionTime: this.LastExecutionTime,
@@ -97,41 +103,11 @@ export class DataTask extends TEntity {
         };
     }
 
-    static createNewDataTask(defaultHandlers) {
-        return new NewDataTask(defaultHandlers);
-    }
-
-    static createEmptyDataTask(): DataTask {
-        return new EmptyDataTask();
-    }
-
-    static createDataTaskFromJson(defaultHandlers, params) {
-        let dataTask = new DataTask(defaultHandlers, params);
+    static createDataTaskFromJson(handlerTypes: HandlerTypes, params) {
+        let dataTask = new DataTask();
+        let taskType = params['TaskType'] || params['taskType'];
+        if(taskType && handlerTypes.containsKey(taskType)) dataTask.HandlerType = handlerTypes.getValue(taskType);
         dataTask.Parse(params);
         return dataTask;
-    }
-}
-
-export class EmptyDataTask extends DataTask {
-    constructor() {
-        super(new HandlerTypes(), {});
-    }
-}
-
-export class NewDataTask extends DataTask {
-
-    constructor(defaultHandlers) {
-        super(defaultHandlers);
-
-    }
-
-    set HandlerType(value: HandlerType) {
-        this._HandlerSettings.setHandlerType(value);
-
-        this._HandlerSettings.ClearAll();
-
-        value.DefaultHandlerSettings.asArray().forEach((setting: Setting) => {
-            this._HandlerSettings.Add(setting.clone());
-        });
     }
 }

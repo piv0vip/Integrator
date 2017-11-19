@@ -40,7 +40,7 @@ export class DataTaskListComponent extends Vue {
 
     statusEnum = new CustomEnumValues();
 
-    handlers: HandlerTypes = new HandlerTypes();
+    handlerTypes: HandlerTypes = new HandlerTypes();
     handlersEnum = new CustomEnumValues();
 
     cronPresets: string[] = [];
@@ -48,7 +48,7 @@ export class DataTaskListComponent extends Vue {
     showConsole: boolean = false; 
     consoleMessages: string[] = ['SignalR console:', '================'];
 
-    currentTask: DataTask = DataTask.createEmptyDataTask();
+    currentTask: DataTask = new DataTask();
 
     showExecuteTaskLocaly: boolean = false;
     showEditTask: boolean = false;
@@ -148,7 +148,7 @@ export class DataTaskListComponent extends Vue {
     created() {
         HTTP.get('DataTask/GetHandlersWithDefaultSettings')
             .then(function (response: AxiosResponse) {
-                this.handlers.Parse(response.data);
+                this.handlerTypes.Parse(response.data);
 
                 let handlers = response.data.map(function (o) {
                     return {
@@ -201,7 +201,7 @@ export class DataTaskListComponent extends Vue {
 
     myProvider(ctx) {
         ctx.filter = this.filter;
-        return DataTaskService.getPagedList(this.handlers, ctx)
+        return DataTaskService.getPagedList(this.handlerTypes, ctx)
         .then( function (response: {data: DataTask[], metadata}) {
             this.pagedList = response.metadata;
             this.pagesCount = Math.ceil(response.metadata.totalItemCount / this.perPage);
@@ -241,13 +241,13 @@ export class DataTaskListComponent extends Vue {
     }
 
     onAddDatataskClick() {
-        this.currentTask = DataTask.createNewDataTask(this.handlers);
+        this.currentTask = new DataTask(this.handlerTypes);
         this.showEditTask = true;
     }
 
     refreshTable() {
-        let ttt: any = this.$refs['dataTasksTable'];
-        ttt.refresh();
+        let table: any = this.$refs['dataTasksTable'];
+        table.refresh();
     }
 
     onEditTaskClick(dataTask: DataTask) {

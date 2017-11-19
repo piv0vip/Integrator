@@ -3,21 +3,11 @@ import { HandlerType } from './handlerTypes';
 import _ from 'lodash';
 
 import { SettingTypeEnum } from '../../enums';
-import { IHandlerSetting, IValidable, IClonable } from '../../interfaces';
+import { IHandlerSetting, IValidable, IClonable, IEditViewElement, IServerable } from '../../interfaces';
 
 import { Dictionary } from 'typescript-collections';
 
-export class DefaultDataTaskHandlerSettings extends Settings {
-
-    Parse(obj) {
-        let settings: { name: string, isRequired?: boolean, defaultValue?: string, type: SettingTypeEnum, options?: string[] }[] = obj;
-        settings.forEach(setting => {
-            this.Add(new Setting(setting.name, setting.defaultValue), false);
-        });
-    }
-}
-
-export class HandlerSetting implements IHandlerSetting, IValidable, IClonable<HandlerSetting> {
+export class HandlerSetting implements IHandlerSetting, IValidable, IClonable<HandlerSetting>, IEditViewElement {
 
     readonly Name: string;
 
@@ -55,38 +45,60 @@ export class HandlerSetting implements IHandlerSetting, IValidable, IClonable<Ha
     clone(): HandlerSetting {
         return new HandlerSetting(this.Name, this.Type, this.DefaultValue, this.Options, this.IsRequired);
     }
+
+    setValue(value: string) {
+        this.Value = value;
+    }
+
+    getValue(): string {
+        return this.Value;
+    }
 }
 
-export class HandlerSettings extends Dictionary<string, HandlerSetting> {
+export class HandlerSettings extends Dictionary<string, HandlerSetting>  {
     add(value: HandlerSetting) {
         this.setValue(value.Name, value);
     }
 }
 
-export class DataTaskHandlerSettings extends Settings {
-    _handlerType: HandlerType;
+export class DefaultHandlerSettings extends HandlerSettings {
 
-    constructor(handlerType: HandlerType) {
+    Parse(obj) {
+        let settings: { name: string, isRequired?: boolean, defaultValue?: string, type: SettingTypeEnum, options?: string[] }[] = obj;
+        settings.forEach(setting => {
+            this.add(new HandlerSetting(setting.name, setting.type, setting.defaultValue, setting.options, setting.isRequired));
+        });
+    }
+}
+
+export class DataTaskHandlerSettings extends HandlerSettings implements IServerable<object> {
+
+    constructor(handlerSettings?: HandlerSettings) {
         super();
-        this.setHandlerType(handlerType);
+        if (handlerSettings !== undefined) this.setHandlerSettings(handlerSettings);
     }
 
-    setHandlerType(handlerType: HandlerType) {
-        this._handlerType = handlerType;
+    setHandlerSettings(handlerSettings: HandlerSettings) {
+        this.clear();
+        handlerSettings.forEach((key, value) => {
+            this.add(value.clone());
+        });
     }
 
     toServer(): {} {
         let out = {};
-        for (let key in this._settings) {
-            out[key] = this._settings[key].Value;
-        }
+        this.forEach((key, value) => {
+            out[key] = value.Value;
+        });
         return out;
     }
 
     Parse(obj) {
         let handlerSettings = JSON.parse(obj);
         for (let key in handlerSettings) {
-            this.Add(new Setting(key, handlerSettings[key]));
+            if (this.containsKey(key)) {
+                this.getValue(key).Value = handlerSettings[key];
+            }
         }
     }
 }

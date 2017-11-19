@@ -1,7 +1,7 @@
 import * as helper  from '../util/helper';
 import { IServerable } from '../interfaces';
 
-export abstract class TEntity implements IServerable<{}> {
+export abstract class TEntity implements IServerable<object> {
 
     EntityId?: number = null;
 
@@ -15,13 +15,12 @@ export abstract class TEntity implements IServerable<{}> {
         return this.EntityId === null;
     }
 
-    protected params: {};
+    protected params: object;
 
-    Parse(params: {}) {
+    Parse(params: object) {
         
         this.params = params;
         let keys: string[] = Object.keys(params);
-        
         this.keys = keys.map((key) => {
             return {
                 realKey: key,

@@ -43,8 +43,8 @@ export class DataTaskEditComponent extends Vue {
     @Prop({default: () => new CustomEnumValues() })
     handlersEnum: IEnumValues;
 
-    @Prop({default: null})
-    handlers: HandlerTypes;
+    @Prop()
+    handlerTypes: HandlerTypes;
 
     @Prop()
     cronPresets: string[];
@@ -63,6 +63,7 @@ export class DataTaskEditComponent extends Vue {
 
     @Watch('selectedHandler')
     onSelectedHandlerChanged(value) {
+        if (this.handlerTypes.containsKey(value)) { this.dataTask.HandlerType = this.handlerTypes.getValue(value) }
         if (this.dataTask.TaskType !== value) { this.dataTask.TaskType = value; }
     }
 
@@ -116,12 +117,9 @@ export class DataTaskEditComponent extends Vue {
         this.close();
     }
 
-    onShowModal() {
-        console.log('modal is show');
-    }
+    onShowModal() { }
 
     onCloseSaveConfirmation() {
-        console.log('onCloseSaveConfirmation');
         this.showSaveConfirmation = false;
     }
 
