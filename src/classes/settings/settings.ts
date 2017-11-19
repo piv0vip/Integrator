@@ -1,41 +1,36 @@
-import { IServerable, IEditViewElement } from '../../interfaces';
+import {
+    IServerable,
+    IEditViewElement,
+    ISetting,
+    IClonable,
+    IEqualable
+} from '../../interfaces';
 
-export class Setting implements IEditViewElement {
+export class Setting implements ISetting, IClonable<ISetting>, IEqualable<Setting>, IEditViewElement {
 
-    name: string;
+    _value: string;
 
-    value: string;
+    readonly Name: string;
 
-    isDefault: boolean;
-
-    constructor(name: string, value: string, isDefault: boolean = false) {
-        this.name = name;
-        this.value = value;
-        this.isDefault = isDefault;
-    }
-
-    get Name(): string {
-        return this.name;
+    constructor(name: string, value: string) {
+        this.Name = name;
+        this.Value = value;
     }
 
     get Value(): string {
-        return this.value;
+        return this._value;
     }
 
     set Value(value: string) {
-        this.value = value;
-    }
-
-    get IsDefault(): boolean {
-        return this.isDefault;
+        this._value = value;
     }
 
     clone(): Setting {
-        return new Setting(this.name, this.value, this.isDefault);
+        return new Setting(this.Name, this.Value);
     }
 
-    isEqual(setting): boolean {
-        return this.name === setting.name;
+    isEqual(setting: Setting): boolean {
+        return this.Name === setting.Name;
     }
 
     setValue(value: string) {
@@ -57,14 +52,14 @@ export abstract class Settings {
 
     Add(setting, fireEvent = true) {
         if (setting instanceof Setting) {
-            this._settings[setting.name] = setting;
+            this._settings[setting.Name] = setting;
         }
     }
 
     Delete(setting, fireEvent = true) {
         if (setting instanceof Setting) {
-            if (this._settings[setting.name]) {
-                delete this._settings[setting.name];
+            if (this._settings[setting.Name]) {
+                delete this._settings[setting.Name];
             };
         }
     }

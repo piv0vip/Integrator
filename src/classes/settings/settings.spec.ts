@@ -3,7 +3,7 @@ import { Setting, Settings, CustomHandlerSettings } from './settings'
 
 describe('Setting testing', () => {
 
-    let setting1, setting2
+    let setting1: Setting, setting2: Setting
 
     beforeEach(() => {
         setting1 = new Setting('testingName', 'testingValue');
@@ -12,7 +12,7 @@ describe('Setting testing', () => {
     it('Object should be correct', () => {
         expect(setting1.Name).to.equal('testingName');
         expect(setting1.Value).to.equal('testingValue');
-        expect(setting1).to.have.property('value');
+        expect(setting1).to.have.property('Value');
     })
 
     it('cloned object should be another object ', () => {
