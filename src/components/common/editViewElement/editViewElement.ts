@@ -25,7 +25,13 @@ export class EditViewElementComponent extends Vue {
         this.onValueClick();
     }
 
-    get spanValue(): string {
+    @Prop() initToggle: boolean;
+
+    @Watch('initToggle') onInitToggleChange() {
+        this.editedValue = this.element.getValue();
+    }
+
+   get spanValue(): string {
         this.isEdit; return this.element.getValue();
     }
 
@@ -43,15 +49,19 @@ export class EditViewElementComponent extends Vue {
         this.element.setValue(this.editedValue);
     }
 
+    get inputType() {
+        return this.isNumber ? 'number' : 'text';
+    }
+
     get isGuid(): boolean {
-        return this.element.getType() == SettingTypeEnum.Guid;
+        return this.element.getType() === SettingTypeEnum.Guid;
     }
 
     get isNumber(): boolean {
-        return this.element.getType() == SettingTypeEnum.Number;
+        return this.element.getType() === SettingTypeEnum.Number;
     }
 
     get isUrl(): boolean {
-        return this.element.getType() == SettingTypeEnum.Url;
+        return this.element.getType() === SettingTypeEnum.Url;
     }
 }

@@ -1,7 +1,7 @@
 ﻿import { CronPart, Minute, Hour, Day, Month, DayOfWeek } from './cronParts';
 import { IServerable, IEditViewElement } from '../../../interfaces';
 import cronstrue from 'cronstrue';
-import { SettingTypeEnum } from '../../../enums'
+import { SettingTypeEnum } from '../../../enums';
 
 export class CronSchedule implements IServerable<string>, IEditViewElement  {
 

@@ -3,54 +3,40 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 
 import { IEditViewElement } from '../../../interfaces/';
 
-import { SettingTypeEnum } from '../../../enums';
-
 import $ from 'jquery';
 
 @Component({
-    template: require('./selectBoxEditViewElement.html')
+    template: require('./numberEditViewElement.html')
 })
 
-export class SelectBoxEditViewElementComponent extends Vue {
+export class NumberEditViewElementComponent extends Vue {
 
     editedValue: string = '';
 
     isEdit: boolean = false;
 
-    @Prop()
-    element: IEditViewElement;
+    @Prop() element: IEditViewElement;
 
-    @Prop()
-    options: string[];
+    @Prop({ default: false }) toggleEdit: boolean;
 
-    @Prop({ default: false })
-    toggleEdit: boolean;
-
-    @Watch('toggleEdit')
-    onToggleEditChange() {
+    @Watch('toggleEdit') onToggleEditChange() {
         this.onValueClick();
     }
 
     @Prop() initToggle: boolean;
 
     @Watch('initToggle') onInitToggleChange() {
-        this.$nextTick(() => {
-            this.editedValue = this.element.getValue();
-        });
+        this.editedValue = this.element.getValue();
     }
 
-    get spanValue(): string {
+   get spanValue(): string {
         this.isEdit; return this.element.getValue();
-    }
-
-    get selectOptions(): string[] {
-        this.isEdit; return this.options ? this.options : []; 
     }
 
     onValueClick() {
         this.isEdit = true;
         this.editedValue = this.element.getValue();
-        let nameEl: Vue = <Vue>this.$refs['edited-value-selectbox'];
+        let nameEl: Vue = <Vue>this.$refs['number-edited-value-input'];
         this.$nextTick(() => {
             $(nameEl.$el).focus();
         });
@@ -60,4 +46,5 @@ export class SelectBoxEditViewElementComponent extends Vue {
         this.isEdit = false;
         this.element.setValue(this.editedValue);
     }
+
 }

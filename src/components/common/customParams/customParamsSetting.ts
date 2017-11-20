@@ -26,24 +26,41 @@ export class CustomParamsSettingComponent extends Vue {
 
     @Prop() handlerSetting: HandlerSetting;
 
+    @Prop() initToggle: boolean;
+
     get selectOptions(): string[] {
         return this.handlerSetting ? this.handlerSetting.Options : [];
     }
 
     get isBool(): boolean {
-        return this.handlerSetting.Type == SettingTypeEnum.Bool;
+        return this.handlerSetting.Type === SettingTypeEnum.Bool;
     }
 
     get isSelectBox(): boolean {
-        return this.handlerSetting.Type == SettingTypeEnum.SelectBox;
+        return this.handlerSetting.Type === SettingTypeEnum.SelectBox;
+    }
+
+    get isNumber(): boolean {
+        return this.handlerSetting.Type === SettingTypeEnum.Number;
     }
 
     get isDate(): boolean {
-        return this.handlerSetting.Type == SettingTypeEnum.Date;
+        return this.handlerSetting.Type === SettingTypeEnum.Date;
     }
 
     get isDateTyme(): boolean {
-        return this.handlerSetting.Type == SettingTypeEnum.DateTime;
+        return this.handlerSetting.Type === SettingTypeEnum.DateTime;
+    }
+
+    get getIcon(): string {
+        let iconStr: string = this.isSelectBox ? '<i class="material-icons">format_list_bulleted</i>' :
+            this.isNumber ? '123' :
+            (this.handlerSetting.Type === SettingTypeEnum.Url) ? 'URL' :
+            (this.handlerSetting.Type === SettingTypeEnum.Guid) ? 'GUID' :
+            this.isDate ? '<i class="material-icons">event</i>' :
+            this.isDateTyme ? '<i class="material-icons">alarm</i>' :
+            this.isBool ? '<i class="material-icons">check_box</i>' : '<i class="material-icons">short_text</i>';
+        return iconStr;
     }
 
     onClick() {

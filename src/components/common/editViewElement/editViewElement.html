@@ -1,10 +1,11 @@
 <div class="edit-view-component" @click="onValueClick">
     <b-form-input v-show="isEdit"
                   ref="edited-value-input"
-                  size="sm"
-                  @keyup.native.enter="onValueChanged"
-                  @blur.native="onValueChanged"
-                  v-model="editedValue">
+                  @keyup.native.enter.stop="onValueChanged"
+                  @blur.native.stop="onValueChanged"
+                  @change.native.stop="onValueChanged"
+                  v-model="editedValue"
+                  :type="inputType">
     </b-form-input>
     <span class="plainText" v-show="!isEdit">{{ spanValue }}</span>
 </div>

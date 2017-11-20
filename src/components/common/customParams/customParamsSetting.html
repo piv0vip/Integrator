@@ -1,6 +1,17 @@
-<div @click="onClick">
-    <span class="mb-1" style="font-weight: bold">{{ handlerSetting.Name }}</span><span style="color:red" v-show="handlerSetting.IsRequired"> - required</span>
-    <bool-edit-view-element v-if="isBool" :element="handlerSetting"></bool-edit-view-element>
-    <selectbox-edit-view-element v-else-if="isSelectBox" :element="handlerSetting" :options="selectOptions"></selectbox-edit-view-element>
-    <edit-view-element v-else :toggleEdit="toggleEdit" :element="handlerSetting"></edit-view-element>
-</div>
+<b-row class="py-1" style="width:100%">
+    <b-col cols="1" class="pl-3 pr-1">
+        <v-btn flat icon
+               color="indigo lighten-2"
+               @click="onClick"><span v-html="getIcon"></span></v-btn>
+    </b-col>
+    <b-col cols="11" class="p-2">
+        <div>
+            <div class="py-1"><span class="blue-grey--text text--darken3" style="font-weight: bold; font-size:larger">{{ handlerSetting.Name }}</span><span class="red--text text--lighten" v-show="handlerSetting.IsRequired"> - required</span></div>
+            <div @click="onClick">
+                <bool-edit-view-element v-if="isBool" :initToggle="initToggle" :toggleEdit="toggleEdit" :element="handlerSetting"></bool-edit-view-element>
+                <selectbox-edit-view-element v-else-if="isSelectBox" :initToggle="initToggle" :toggleEdit="toggleEdit" :element="handlerSetting" :options="selectOptions"></selectbox-edit-view-element>
+                <edit-view-element v-else :initToggle="initToggle" :toggleEdit="toggleEdit" :element="handlerSetting"></edit-view-element>
+            </div>
+        </div>
+    </b-col>
+</b-row>

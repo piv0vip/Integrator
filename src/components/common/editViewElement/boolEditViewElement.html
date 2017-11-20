@@ -1,10 +1,9 @@
 <div class="bool-edit-view-component">
-    <b-form-checkbox id="checkbox1"
-                     ref="bool-edited-value-input"
-                     v-model="editedValue"
-                     value="true"
-                     unchecked-value="false"
-                     @input="onValueChanged">
-        {{ spanValue }}
-    </b-form-checkbox>
+    <v-switch :label="editedValue" 
+              ref="bool-edited-value-input"
+              v-model="editedValue" 
+              color="info"
+              true-value="true"
+              false-value="false"
+              hide-details></v-switch>
 </div>
