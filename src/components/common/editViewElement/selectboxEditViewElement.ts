@@ -8,20 +8,26 @@ import { SettingTypeEnum } from '../../../enums';
 import $ from 'jquery';
 
 @Component({
-    template: require('./editViewElement.html')
+    template: require('./selectBoxEditViewElement.html')
 })
 
-export class EditViewElementComponent extends Vue {
+export class SelectBoxEditViewElementComponent extends Vue {
 
     editedValue: string = '';
 
     isEdit: boolean = false;
 
-    @Prop() element: IEditViewElement;
+    @Prop()
+    element: IEditViewElement;
 
-    @Prop({ default: false }) toggleEdit: boolean;
+    @Prop()
+    options: string[];
 
-    @Watch('toggleEdit') onToggleEditChange() {
+    @Prop({ default: false })
+    toggleEdit: boolean;
+
+    @Watch('toggleEdit')
+    onToggleEditChange() {
         this.onValueClick();
     }
 
@@ -29,10 +35,14 @@ export class EditViewElementComponent extends Vue {
         this.isEdit; return this.element.getValue();
     }
 
+    get selectOptions(): string[] {
+        this.isEdit; return this.options ? this.options : []; 
+    }
+
     onValueClick() {
         this.isEdit = true;
         this.editedValue = this.element.getValue();
-        let nameEl: Vue = <Vue>this.$refs['edited-value-input'];
+        let nameEl: Vue = <Vue>this.$refs['edited-value-selectbox'];
         this.$nextTick(() => {
             $(nameEl.$el).focus();
         });
@@ -41,17 +51,5 @@ export class EditViewElementComponent extends Vue {
     onValueChanged() {
         this.isEdit = false;
         this.element.setValue(this.editedValue);
-    }
-
-    get isGuid(): boolean {
-        return this.element.getType() == SettingTypeEnum.Guid;
-    }
-
-    get isNumber(): boolean {
-        return this.element.getType() == SettingTypeEnum.Number;
-    }
-
-    get isUrl(): boolean {
-        return this.element.getType() == SettingTypeEnum.Url;
     }
 }

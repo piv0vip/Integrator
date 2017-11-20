@@ -1,0 +1,9 @@
+<div class="selectbox-edit-view-component" @click="onValueClick">
+    <b-form-select v-show="isEdit" name="task handler"
+                   ref="edited-value-selectbox"
+                   v-model="editedValue" 
+                   :options="selectOptions"
+                   @blur.native="onValueChanged"
+                   @change="onValueChanged"></b-form-select>
+    <span class="plainText" v-show="!isEdit">{{ spanValue }}</span>
+</div>

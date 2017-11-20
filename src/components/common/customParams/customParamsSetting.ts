@@ -7,14 +7,16 @@ import { SettingTypeEnum } from '../../../enums';
 
 import { 
     EditViewElementComponent,
-    BoolEditViewElementComponent
+    BoolEditViewElementComponent,
+    SelectBoxEditViewElementComponent
 } from '../editViewElement';
 
 @Component({
     template: require('./customParamsSetting.html'),
     components: {
         'edit-view-element': EditViewElementComponent,
-        'bool-edit-view-element': BoolEditViewElementComponent
+        'bool-edit-view-element': BoolEditViewElementComponent,
+        'selectbox-edit-view-element': SelectBoxEditViewElementComponent
     }
 })
 
@@ -24,12 +26,16 @@ export class CustomParamsSettingComponent extends Vue {
 
     @Prop() handlerSetting: HandlerSetting;
 
-    get isString(): boolean {
-        return this.handlerSetting.Type == SettingTypeEnum.String;
+    get selectOptions(): string[] {
+        return this.handlerSetting ? this.handlerSetting.Options : [];
     }
 
     get isBool(): boolean {
         return this.handlerSetting.Type == SettingTypeEnum.Bool;
+    }
+
+    get isSelectBox(): boolean {
+        return this.handlerSetting.Type == SettingTypeEnum.SelectBox;
     }
 
     get isDate(): boolean {
@@ -38,22 +44,6 @@ export class CustomParamsSettingComponent extends Vue {
 
     get isDateTyme(): boolean {
         return this.handlerSetting.Type == SettingTypeEnum.DateTime;
-    }
-
-    get isGuid(): boolean {
-        return this.handlerSetting.Type == SettingTypeEnum.Guid;
-    }
-
-    get isNumber(): boolean {
-        return this.handlerSetting.Type == SettingTypeEnum.Number;
-    }
-
-    get isSelectBox(): boolean {
-        return this.handlerSetting.Type == SettingTypeEnum.SelectBox;
-    }
-
-    get isUrl(): boolean {
-        return this.handlerSetting.Type == SettingTypeEnum.Url;
     }
 
     onClick() {

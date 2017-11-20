@@ -1,5 +1,6 @@
 <div @click="onClick">
-    <span class="mb-1" style="font-weight: bold">{{ handlerSetting.Name }}</span>
+    <span class="mb-1" style="font-weight: bold">{{ handlerSetting.Name }}</span><span style="color:red" v-show="handlerSetting.IsRequired"> - required</span>
     <bool-edit-view-element v-if="isBool" :element="handlerSetting"></bool-edit-view-element>
+    <selectbox-edit-view-element v-else-if="isSelectBox" :element="handlerSetting" :options="selectOptions"></selectbox-edit-view-element>
     <edit-view-element v-else :toggleEdit="toggleEdit" :element="handlerSetting"></edit-view-element>
 </div>

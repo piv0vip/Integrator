@@ -53,6 +53,10 @@ export class HandlerSetting implements IHandlerSetting, IValidable, IClonable<Ha
     getValue(): string {
         return this.Value;
     }
+
+    getType(): SettingTypeEnum {
+        return this.Type;
+    }
 }
 
 export class HandlerSettings extends Dictionary<string, HandlerSetting>  {

@@ -6,6 +6,8 @@ import {
     IEqualable
 } from '../../interfaces';
 
+import { SettingTypeEnum } from '../../enums';
+
 export class Setting implements ISetting, IClonable<Setting>, IEqualable<Setting>, IEditViewElement {
 
     _value: string;
@@ -39,6 +41,10 @@ export class Setting implements ISetting, IClonable<Setting>, IEqualable<Setting
 
     getValue(): string {
         return this.Value;
+    }
+
+    getType(): SettingTypeEnum {
+        return SettingTypeEnum.String;
     }
 }
 
