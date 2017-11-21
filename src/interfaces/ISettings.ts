@@ -17,7 +17,12 @@ export interface ISetting {
     Value: string;
 }
 
-export interface IHandlerSetting extends ISetting {
+export interface IDefaultable {
+    resetToDefault(): void;
+    isDefault(): boolean;
+}
+
+export interface IHandlerSetting extends ISetting, IDefaultable {
 
     readonly DefaultValue: string;
 
@@ -26,6 +31,9 @@ export interface IHandlerSetting extends ISetting {
     readonly Options: string[];
 
     readonly IsRequired: boolean;
+}
 
+export interface IHandlerSettings<T> extends IDefaultable {
+    add(handlerSetting: T);
 }
 

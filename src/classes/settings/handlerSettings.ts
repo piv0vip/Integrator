@@ -3,7 +3,7 @@ import { HandlerType } from './handlerTypes';
 import _ from 'lodash';
 
 import { SettingTypeEnum } from '../../enums';
-import { IHandlerSetting, IValidable, IClonable, IEditViewElement, IServerable } from '../../interfaces';
+import { IHandlerSetting, IValidable, IClonable, IEditViewElement, IServerable, IHandlerSettings } from '../../interfaces';
 
 import { Dictionary } from 'typescript-collections';
 
@@ -57,12 +57,32 @@ export class HandlerSetting implements IHandlerSetting, IValidable, IClonable<Ha
     getType(): SettingTypeEnum {
         return this.Type;
     }
+
+    resetToDefault(): void {
+        this.Value = this.DefaultValue;
+    }
+
+    isDefault(): boolean {
+        return this.Value === this.DefaultValue;
+    }
 }
 
-export class HandlerSettings extends Dictionary<string, HandlerSetting>  {
-    add(value: HandlerSetting) {
-        this.setValue(value.Name, value);
+export class HandlerSettings extends Dictionary<string, HandlerSetting> implements IHandlerSettings<HandlerSetting>   {
+
+    add(handlerSetting: HandlerSetting) {
+        this.setValue(handlerSetting.Name, handlerSetting);
     }
+
+    resetToDefault(): void {
+        this.forEach((key, value) => {
+            value.resetToDefault();
+        });
+    }
+
+    isDefault(): boolean {
+        return _.every(this.values(), value => value.isDefault());
+    }
+
 }
 
 export class DefaultHandlerSettings extends HandlerSettings {

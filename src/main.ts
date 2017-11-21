@@ -3,8 +3,10 @@ import * as Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
 import VueRouter from 'vue-router';
 import Vuetify from 'vuetify';
-import VeeValidate from 'vee-validate';
+import VeeValidate, { Validator } from 'vee-validate';
 import VueHighlightJS from 'vue-highlight.js';
+
+// import ar from 'vee-validate/dist/locale/ar';
 
 import { AppComponent } from './components/common/';
 import { DataTaskListComponent } from './components/dataTask';
@@ -12,10 +14,18 @@ import { EntityStatusListComponent } from './components/entityStatus';
 
 import { store } from './store';
 
+Validator.extend('guid', {
+    getMessage: field => 'Wrong GUID format',
+    validate: value => /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/.test(value)
+});
+
 Vue.use(BootstrapVue);
 Vue.use(Vuetify);
 Vue.use(VueRouter);
-Vue.use(VeeValidate, { fieldsBagName: 'formFields' });
+Vue.use(VeeValidate, {
+    fieldsBagName: 'formFields',
+    // locale: 'ru'
+});
 Vue.use(VueHighlightJS);
 
 import 'highlight.js/styles/xcode.css';

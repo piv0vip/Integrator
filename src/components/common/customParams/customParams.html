@@ -1,7 +1,7 @@
 <div class="custom-params-component">
     <div class="scroll-box" style="height:100%" v-bind:style="{ 'max-height': height }">
-        <div v-for="handlerSetting in handlerSettings" :key="handlerSetting.Name">
-            <custom-params-setting :initToggle="initToggle" :handlerSetting="handlerSetting"></custom-params-setting>
+        <div v-for="(handlerSetting, key, index) in handlerSettings" :key="handlerSetting.Name">
+            <custom-params-setting :initToggle="initToggle" :orderNum="index" :handlerSetting="handlerSetting"></custom-params-setting>
         </div>
     </div>
     <!--add-new-setting :initToggle="initToggle" @onCreateSetting="onCreateSetting"></add-new-setting>-->

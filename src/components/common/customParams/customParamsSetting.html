@@ -10,7 +10,8 @@
             <div @click="onClick">
                 <bool-edit-view-element v-if="isBool" :initToggle="initToggle" :toggleEdit="toggleEdit" :element="handlerSetting"></bool-edit-view-element>
                 <selectbox-edit-view-element v-else-if="isSelectBox" :initToggle="initToggle" :toggleEdit="toggleEdit" :element="handlerSetting" :options="selectOptions"></selectbox-edit-view-element>
-                <edit-view-element v-else :initToggle="initToggle" :toggleEdit="toggleEdit" :element="handlerSetting"></edit-view-element>
+                <date-edit-view-element v-else-if="isDateTime||isDate" :initToggle="initToggle" :toggleEdit="toggleEdit" :element="handlerSetting"></date-edit-view-element>
+                <edit-view-element v-else :initToggle="initToggle" :orderNum="orderNum" :toggleEdit="toggleEdit" :element="handlerSetting"></edit-view-element>
             </div>
         </div>
     </b-col>

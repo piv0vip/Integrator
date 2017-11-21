@@ -9,6 +9,7 @@ import { CronStyleSchedulingComponent }  from '../../../components/common/cron/'
 import { IEnumValues } from '../../../interfaces';
 import { EditViewElementComponent } from '../../common/editViewElement';
 import { CronPresetsComponent } from './cronPresets';   
+import { Validator } from 'vee-validate';
 
 
 @Component({
@@ -27,12 +28,15 @@ export class DataTaskEditComponent extends Vue {
     showModal: boolean = false;
     height: string = '300px';
     selectedHandler: string = '';
+    initToggle: boolean = false;
 
     alertSec: number = 0;
     alertMessage: string = 'Validation errors...';
 
     showSaveConfirmation: boolean = false;
     showDiscardConfirmation: boolean = false;
+
+    validator: Validator = null;
 
     @Prop({default: true})
     show: boolean;
@@ -52,6 +56,7 @@ export class DataTaskEditComponent extends Vue {
     @Watch('show')
     onShowChanged (value: boolean) {
         if (value) {
+            this.initToggle = !this.initToggle;
             this.$root.$emit('bv::show::modal', 'edit-task-modal');
         }
     }
@@ -65,6 +70,11 @@ export class DataTaskEditComponent extends Vue {
     onSelectedHandlerChanged(value) {
         if (this.handlerTypes.containsKey(value) && this.dataTask.IsNew) { this.dataTask.HandlerType = this.handlerTypes.getValue(value); }
         if (this.dataTask.TaskType !== value) { this.dataTask.TaskType = value; }
+    }
+
+    created() {
+        //this.
+        this.$validator.attach('task_handler', 'required', {alias: 'Task Handler'});
     }
 
     get handlerSettingsSelectList(): any[] {

@@ -27,11 +27,17 @@ export class EditViewElementComponent extends Vue {
 
     @Prop() initToggle: boolean;
 
+    @Prop() orderNum: number;
+
     @Watch('initToggle') onInitToggleChange() {
         this.editedValue = this.element.getValue();
     }
 
-   get spanValue(): string {
+    get cName(): string {
+        return 'editView' + (this.orderNum || 1);
+    }
+
+    get spanValue(): string {
         this.isEdit; return this.element.getValue();
     }
 

@@ -26,7 +26,6 @@ describe('HandlerSetting testing', () => {
         expect(hs1.isValid()).to.be.true;
         hs1.Value = '   ';
         expect(hs1.isValid()).to.be.false;
-
         expect(hs2.isValid()).to.be.false;
         hs2.Value = '45';
         expect(hs2.isValid()).to.be.true;
@@ -37,6 +36,17 @@ describe('HandlerSetting testing', () => {
         expect(hs).to.equal(hs1);
         hs = hs1.clone();
         expect(hs).to.not.equal(hs1)
+    })
+
+    it('resetToDefault() should be reset value to default state', () => {
+        expect(hs1.isDefault()).to.be.true;
+        expect(hs1.Value).to.equal('32');
+        hs1.setValue('44');
+        expect(hs1.isDefault()).to.be.false;
+        expect(hs1.Value).to.equal('44');
+        hs1.resetToDefault();
+        expect(hs1.Value).to.equal('32');
+        expect(hs1.isDefault()).to.be.true;
     })
 
 });
@@ -53,5 +63,13 @@ describe('HandlerSettings testing', () => {
 
     it('size() shoud be retutn correct value', () => {
         expect(hss.size()).to.equal(2);
+    })
+
+    it('resetToDefault() should be reset values to default states', () => {
+        expect(hss.isDefault()).to.be.true;
+        hss.getValue('testName').setValue('jhg');
+        expect(hss.isDefault()).to.be.false;
+        hss.resetToDefault();
+        expect(hss.isDefault()).to.be.true;
     })
 });

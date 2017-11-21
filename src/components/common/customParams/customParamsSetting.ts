@@ -8,7 +8,8 @@ import { SettingTypeEnum } from '../../../enums';
 import { 
     EditViewElementComponent,
     BoolEditViewElementComponent,
-    SelectBoxEditViewElementComponent
+    SelectBoxEditViewElementComponent,
+    DateEditViewElementComponent
 } from '../editViewElement';
 
 @Component({
@@ -16,7 +17,8 @@ import {
     components: {
         'edit-view-element': EditViewElementComponent,
         'bool-edit-view-element': BoolEditViewElementComponent,
-        'selectbox-edit-view-element': SelectBoxEditViewElementComponent
+        'selectbox-edit-view-element': SelectBoxEditViewElementComponent,
+        'date-edit-view-element': DateEditViewElementComponent
     }
 })
 
@@ -27,6 +29,8 @@ export class CustomParamsSettingComponent extends Vue {
     @Prop() handlerSetting: HandlerSetting;
 
     @Prop() initToggle: boolean;
+
+    @Prop() orderNum: number;
 
     get selectOptions(): string[] {
         return this.handlerSetting ? this.handlerSetting.Options : [];
@@ -48,7 +52,7 @@ export class CustomParamsSettingComponent extends Vue {
         return this.handlerSetting.Type === SettingTypeEnum.Date;
     }
 
-    get isDateTyme(): boolean {
+    get isDateTime(): boolean {
         return this.handlerSetting.Type === SettingTypeEnum.DateTime;
     }
 
@@ -58,7 +62,7 @@ export class CustomParamsSettingComponent extends Vue {
             (this.handlerSetting.Type === SettingTypeEnum.Url) ? 'URL' :
             (this.handlerSetting.Type === SettingTypeEnum.Guid) ? 'GUID' :
             this.isDate ? '<i class="material-icons">event</i>' :
-            this.isDateTyme ? '<i class="material-icons">alarm</i>' :
+            this.isDateTime ? '<i class="material-icons">alarm</i>' :
             this.isBool ? '<i class="material-icons">check_box</i>' : '<i class="material-icons">short_text</i>';
         return iconStr;
     }

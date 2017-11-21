@@ -6,10 +6,10 @@ import { IEditViewElement } from '../../../interfaces/';
 import $ from 'jquery';
 
 @Component({
-    template: require('./numberEditViewElement.html')
+    template: require('./dateEditViewElement.html')
 })
 
-export class NumberEditViewElementComponent extends Vue {
+export class DateEditViewElementComponent extends Vue {
 
     editedValue: string = '';
 
@@ -29,17 +29,17 @@ export class NumberEditViewElementComponent extends Vue {
         this.editedValue = this.element.getValue();
     }
 
-   get spanValue(): string {
+    @Watch('editedValue') onEditedValueChanged(value, oldValue) {
+        this.element.setValue(value);
+    }
+
+    get spanValue(): string {
         this.isEdit; return this.element.getValue();
     }
 
     onValueClick() {
         this.isEdit = true;
         this.editedValue = this.element.getValue();
-        let nameEl: Vue = <Vue>this.$refs['number-edited-value-input'];
-        this.$nextTick(() => {
-            $(nameEl.$el).focus();
-        });
     }
 
     onValueChanged() {
