@@ -1,8 +1,8 @@
 <div class="edit-view-component" @click="onValueClick">
     <b-form-input v-show="isEdit"
                   v-validate="'required'"
-                  :name="cName"
-                  :state="!errors.has(cName)"
+                  :name="orderNum"
+                  :state="!errors.has(orderNum)"
                   ref="edited-value-input"
                   @keyup.native.enter.stop="onValueChanged"
                   @blur.native.stop="onValueChanged"
@@ -10,6 +10,6 @@
                   v-model="editedValue"
                   :type="inputType">
     </b-form-input>
-    <span v-show="errors.has(cName)" class="pt-2 text-danger" style="display:block">{{ errors.first(cName) }}</span>
+    <span v-show="errors.has(orderNum)" class="pt-2 text-danger" style="display:block">{{ errors.first(orderNum) }}</span>
     <span class="plainText" v-show="!isEdit">{{ spanValue }}</span>
 </div>

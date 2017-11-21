@@ -34,25 +34,5 @@ export class CustomParamsComponent extends Vue {
 
     get handlerSettings(): HandlerSetting[] { this.mut; return this.customSettings.values(); }
     
-    // onCreateSetting(setting: Setting) {
-
-    //    let existElement: Setting = this.customSettings.finByName(setting.Name);
-
-    //    if (existElement) {
-    //        existElement.Value = setting.Value;
-    //    } else {
-    //        this.customSettings.Add(setting);
-    //    };
-
-    //    this.customSettings.Add(setting);
-
-    //    this.refreshList();
-    // }
-
-    // onDeleteClick(item) {
-    //    this.customSettings.Delete(item);
-    //    this.refreshList();
-    // }
-
     refreshList() { this.mut = !this.mut; }
 }

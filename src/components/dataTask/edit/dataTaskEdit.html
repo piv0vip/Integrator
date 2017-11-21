@@ -4,6 +4,7 @@
              size="lg"
              header-bg-variant="light"
              footer-bg-variant="light"
+             body-bg-variant="light"
              no-close-on-esc
              no-close-on-backdrop
              width="600px"
@@ -13,104 +14,134 @@
              @hidden="onModalHidden"
              @show="onShowModal">
 
-        <b-alert :show="alertSec"
+        <!--<b-alert :show="alertSec"
                  dismissible
                  @dismissed="alertSec=0"
                  class="text-danger"
                  variant="warning">
             {{ alertMessage }}
-        </b-alert>
+        </b-alert>-->
 
-        <b-container class="bv-example-row" >
+        <v-container>
+            <v-layout row>
+                <v-flex xs12  class="px-2">
+                    
+                    <v-select v-bind:items="handlerSettingsSelectList"
+                              v-model="selectedHandler"
+                              label="Task Handler"
+                              :error-messages="errors.collect('taskHandler')"
+                              v-validate="'required'"
+                              data-vv-name="taskHandler"
+                              data-vv-as="Task Handler"
+                              required></v-select>
+                
+                </v-flex>
+            </v-layout>
+            <v-layout row>
+                <v-flex xs6 class="px-2">
+                    
+                    <v-text-field v-model="dataTask.DisplayName"
+                                  label="Task Name"
+                                  :error-messages="errors.collect('taskName')"
+                                  v-validate="'required'"
+                                  data-vv-name="taskName"
+                                  data-vv-as="Task Name"
+                                  required></v-text-field>
+                
+                </v-flex>
+                <v-flex xs6 class="px-2">
 
-            <b-row class="py-1">
-                <b-col cols="2" class="pt-2" style="text-align: right">Task Handler:<i class="fa fa-warning"></i></b-col>
-                <b-col cols="10">
-                    <b-form-select v-validate name="task_handler" :state="!errors.has('task_handler')" :disabled="!isNew" v-model="selectedHandler" :options="handlerSettingsSelectList"></b-form-select>
-                    <span v-show="errors.has('task_handler')" class="pt-2 text-danger" style="display:block">{{ errors.first('task_handler') }}</span>
-                </b-col>
-            </b-row>
- 
-            <b-row class="py-1">
-                <b-col cols="2" class="pt-2" style="text-align: right">Task Name:</b-col>
-                <b-col cols="10">
-                    <b-form-input v-validate="'required'" data-vv-as="Task Name" name="task_name" :state="!errors.has('task_name')" v-model="dataTask.DisplayName" id="task-name-input" type="text" placeholder="Enter Task Name"></b-form-input>
-                    <span v-show="errors.has('task_name')" class="pt-2 text-danger" style="display:block">{{ errors.first('task_name') }}</span>
-                </b-col>
-            </b-row>
- 
-            <b-row class="py-1">
-                <b-col cols="2" class="pt-2" style="text-align: right">Group Name:</b-col>
-                <b-col cols="10">
-                    <b-form-input v-validate="'required'" data-vv-as="Group Name" name="group_name" :state="!errors.has('group_name')" v-model="dataTask.GroupName" id="task-name-input" type="text" placeholder="Enter Group Name"></b-form-input>
-                    <span v-show="errors.has('group_name')" class="pt-2 text-danger" style="display:block">{{ errors.first('group_name') }}</span>
-                </b-col>
-            </b-row>
-        
-            <b-row class="py-1 my-2">
-                <b-col cols="2" class="pt-2" style="text-align: right">Max Retries:</b-col>
-                <b-col cols="2" style="text-align: right">
-                    <b-form-input  v-model="dataTask.MaxRetries" class="text-center" style="width:100%" type="number"></b-form-input>
-                </b-col>
-                <b-col cols="1">
-                </b-col>
-                <b-col cols="3">
+                    <v-text-field v-model="dataTask.GroupName"
+                                    label="Group Name"
+                                    :error-messages="errors.collect('groupName')"
+                                    v-validate="'required'"
+                                    data-vv-name="groupName"
+                                    data-vv-as="Group Name"
+                                    required></v-text-field>
+
+                </v-flex>
+            </v-layout>
+            <v-layout row>
+                <v-flex xs4 class="px-2">
+
+                    <v-text-field v-model="dataTask.MaxRetries"
+                                  label="Max Retries"
+                                  :error-messages="errors.collect('maxRetries')"
+                                  v-validate="'required|numeric'"
+                                  data-vv-name="maxRetries"
+                                  data-vv-as="Max Retries"
+                                  typeof="number"
+                                  required></v-text-field>
+                    <b-form-input v-model="dataTask.MaxRetries" class="text-center" style="width:100%" type="number"></b-form-input>
+                </v-flex>
+                <v-flex xs4 class="px-2">
+                    <v-checkbox v-model="dataTask.Enabled"
+                                value="1"
+                                label="Option"
+                                :error-messages="errors.collect('checkbox')"
+                                v-validate="'required'"
+                                data-vv-name="checkbox"
+                                type="checkbox"
+                                required></v-checkbox>
                     <v-switch label="Is Enabled" v-model="dataTask.Enabled" color="info" hide-details></v-switch>
-                </b-col>
-                <b-col cols="4">
+                </v-flex>
+                <v-flex xs4 class="px-2">
                     <v-switch label="Is Maintenance" v-model="dataTask.IsMaintenance" color="info" hide-details></v-switch>
-                </b-col>
-            </b-row>
+                </v-flex>
+            </v-layout>
+            <v-layout row>
+                <v-flex xs12>
 
-            <b-row class="py-1">
-                <b-col cols="2" class="pt-2" style="text-align: right">Scheduling:</b-col>
-                <b-col cols="10">
-                    <cron-presets :cronValue="dataTask.getCronSchedule().toString()" :cronPresets="cronPresets" @change="onCronPresetsChange"></cron-presets>
-                </b-col>
+                    <b-row class="py-1">
+                        <b-col cols="2" class="pt-2" style="text-align: right">Scheduling:</b-col>
+                        <b-col cols="10">
+                            <cron-presets :cronValue="dataTask.getCronSchedule().toString()" :cronPresets="cronPresets" @change="onCronPresetsChange"></cron-presets>
+                        </b-col>
 
-            </b-row>
+                    </b-row>
 
-            <b-row class="py-1">
-                <b-col cols="2"></b-col>
-                <b-col cols="10" class="pt-2"> 
-                    <edit-view-element :element="dataTask.getCronSchedule()" ></edit-view-element>
-                </b-col>
-            </b-row>
+                    <b-row class="py-1">
+                        <b-col cols="2"></b-col>
+                        <b-col cols="10" class="pt-2">
+                            <edit-view-element orderNum="Cron" :element="dataTask.getCronSchedule()"></edit-view-element>
+                        </b-col>
+                    </b-row>
 
-            <!-- cron-style-scheduling :cron="dataTask.getCronSchedule()"></cron-style-scheduling-->
+                    <!-- cron-style-scheduling :cron="dataTask.getCronSchedule()"></cron-style-scheduling-->
 
-            <b-row class="pb-1 pt-3">
-                <b-col cols="3">
-                    <h6 style="padding-top:13px !important;">Task Parameters</h6>
-                </b-col>
-                <b-col>
-                    <v-btn flat round outline color="primary" dark :disabled="handlerSettings.isDefault()" @click.native.stop="handlerSettings.resetToDefault(); initToggle=!initToggle">
-                        reset to default
-                    </v-btn>
-                </b-col>
-            </b-row>
+                    <b-row class="pb-1 pt-3">
+                        <b-col cols="3">
+                            <h6 style="padding-top:13px !important;">Task Parameters</h6>
+                        </b-col>
+                        <b-col>
+                            <v-btn flat round outline color="primary" dark :disabled="handlerSettings.isDefault()" @click.native.stop="handlerSettings.resetToDefault(); initToggle=!initToggle">
+                                reset to default
+                            </v-btn>
+                        </b-col>
+                    </b-row>
 
-                <custom-params :initToggle="initToggle" :customSettings="handlerSettings" :height="height"></custom-params>
+                    <custom-params :initToggle="initToggle" :customSettings="handlerSettings" :height="height"></custom-params>
 
-            </b-container>
-
+                </v-flex>
+            </v-layout>
+        </v-container>
         <template slot="modal-footer">
 
             <v-btn round v-b-tooltip.hover.topright title="Save Data Task Configuration" color="primary" dark @click.native.stop="onSaveClick">
                 <v-icon class="mr-2">save</v-icon>Save
             </v-btn>
-            <confirmation-dialog :dialogVisible="showSaveConfirmation" 
-                dialogMessage="Do you want to SAVE Changes and Close?"
-                @onOkClicked="onSaveOkClicked" 
-                @onCloseDialog="showSaveConfirmation = false"> </confirmation-dialog>
+            <confirmation-dialog :dialogVisible="showSaveConfirmation"
+                                 dialogMessage="Do you want to SAVE Changes and Close?"
+                                 @onOkClicked="onSaveOkClicked"
+                                 @onCloseDialog="showSaveConfirmation = false"></confirmation-dialog>
 
             <v-btn round v-b-tooltip.hover.topright title="Discard Data Task Configuration" color="red" dark @click.native.stop="showDiscardConfirmation = true">
                 <v-icon class="mr-2">close</v-icon>Discard
             </v-btn>
-            <confirmation-dialog :dialogVisible="showDiscardConfirmation" 
-                dialogMessage="Do you want to DISCARD Changes and Close?"
-                @onOkClicked="onDiscardOkClicked" 
-                @onCloseDialog="showDiscardConfirmation = false"> </confirmation-dialog>
+            <confirmation-dialog :dialogVisible="showDiscardConfirmation"
+                                 dialogMessage="Do you want to DISCARD Changes and Close?"
+                                 @onOkClicked="onDiscardOkClicked"
+                                 @onCloseDialog="showDiscardConfirmation = false"></confirmation-dialog>
 
         </template>
 

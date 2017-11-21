@@ -30,7 +30,7 @@ export class CustomParamsSettingComponent extends Vue {
 
     @Prop() initToggle: boolean;
 
-    @Prop() orderNum: number;
+    @Prop() orderNum: string;
 
     get selectOptions(): string[] {
         return this.handlerSetting ? this.handlerSetting.Options : [];

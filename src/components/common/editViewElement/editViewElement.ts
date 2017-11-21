@@ -20,22 +20,16 @@ export class EditViewElementComponent extends Vue {
     @Prop() element: IEditViewElement;
 
     @Prop({ default: false }) toggleEdit: boolean;
-
     @Watch('toggleEdit') onToggleEditChange() {
         this.onValueClick();
     }
 
     @Prop() initToggle: boolean;
-
-    @Prop() orderNum: number;
-
     @Watch('initToggle') onInitToggleChange() {
         this.editedValue = this.element.getValue();
     }
 
-    get cName(): string {
-        return 'editView' + (this.orderNum || 1);
-    }
+    @Prop() orderNum: string;
 
     get spanValue(): string {
         this.isEdit; return this.element.getValue();
