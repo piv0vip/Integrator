@@ -4,7 +4,6 @@
              size="lg"
              header-bg-variant="light"
              footer-bg-variant="light"
-             body-bg-variant="light"
              no-close-on-esc
              no-close-on-backdrop
              width="600px"
@@ -23,9 +22,25 @@
         </b-alert>-->
 
         <v-container>
+
+            <v-layout row>
+
+                <v-flex xs3 offset-xs3 class="px-2 pb-1">
+                    <v-switch label="Is Enabled" v-model="dataTask.Enabled" color="info" hide-details></v-switch>
+                </v-flex>
+
+                <v-flex xs3 class="px-2 pb-1">
+                    <v-switch label="Is Maintenance" v-model="dataTask.IsMaintenance" color="info" hide-details></v-switch>
+                </v-flex>
+
+                <v-flex xs3 class="px-2 pt-0">
+                    <v-switch label="Inactive" v-model="dataTask.Enabled" color="info" hide-details></v-switch>
+                </v-flex>
+
+            </v-layout>
+
             <v-layout row>
                 <v-flex xs12  class="px-2">
-                    
                     <v-select v-bind:items="handlerSettingsSelectList"
                               v-model="selectedHandler"
                               label="Task Handler"
@@ -34,12 +49,11 @@
                               data-vv-name="taskHandler"
                               data-vv-as="Task Handler"
                               required></v-select>
-                
                 </v-flex>
             </v-layout>
+
             <v-layout row>
                 <v-flex xs6 class="px-2">
-                    
                     <v-text-field v-model="dataTask.DisplayName"
                                   label="Task Name"
                                   :error-messages="errors.collect('taskName')"
@@ -50,7 +64,6 @@
                 
                 </v-flex>
                 <v-flex xs6 class="px-2">
-
                     <v-text-field v-model="dataTask.GroupName"
                                     label="Group Name"
                                     :error-messages="errors.collect('groupName')"
@@ -58,41 +71,51 @@
                                     data-vv-name="groupName"
                                     data-vv-as="Group Name"
                                     required></v-text-field>
-
                 </v-flex>
             </v-layout>
+
             <v-layout row>
-                <v-flex xs4 class="px-2">
-
-                    <v-text-field v-model="dataTask.MaxRetries"
-                                  label="Max Retries"
-                                  :error-messages="errors.collect('maxRetries')"
-                                  v-validate="'required|numeric'"
-                                  data-vv-name="maxRetries"
-                                  data-vv-as="Max Retries"
-                                  typeof="number"
+                <v-flex xs3 class="px-2">
+                    <v-text-field v-model="cronString"
+                                  label="Cron string"
+                                  :error-messages="errors.collect('Cron')"
+                                  v-validate="'cron|required'"
+                                  data-vv-name="Cron"
+                                  data-vv-as="Cron string"
                                   required></v-text-field>
-                    <b-form-input v-model="dataTask.MaxRetries" class="text-center" style="width:100%" type="number"></b-form-input>
                 </v-flex>
-                <v-flex xs4 class="px-2">
-                    <v-checkbox v-model="dataTask.Enabled"
-                                value="1"
-                                label="Option"
-                                :error-messages="errors.collect('checkbox')"
-                                v-validate="'required'"
-                                data-vv-name="checkbox"
-                                type="checkbox"
-                                required></v-checkbox>
-                    <v-switch label="Is Enabled" v-model="dataTask.Enabled" color="info" hide-details></v-switch>
+
+                <v-flex xs7 class="px-2">
+                    <cron-presets :cronValue="cronString" :cronPresets="cronPresets" @change="onCronPresetsChange"></cron-presets>
                 </v-flex>
-                <v-flex xs4 class="px-2">
-                    <v-switch label="Is Maintenance" v-model="dataTask.IsMaintenance" color="info" hide-details></v-switch>
+
+                 <v-flex xs2 class="px-2">
+                    <v-text-field v-model="dataTask.MaxRetries"
+                                    label="Max Retries"
+                                    :error-messages="errors.collect('maxRetries')"
+                                    v-validate="'required|numeric'"
+                                    data-vv-name="maxRetries"
+                                    data-vv-as="Max Retries"
+                                    typeof="number"
+                                    required></v-text-field>
                 </v-flex>
             </v-layout>
+
+            <v-layout row class="pt-1">
+                <v-flex xs3 class="pt-2">
+                    <h6>Task Parameters</h6>
+                </v-flex>
+                <v-flex xs7>
+                    <v-btn flat round outline color="primary" dark :disabled="handlerSettings.isDefault()" @click.native.stop="handlerSettings.resetToDefault(); initToggle=!initToggle">
+                        reset to default
+                    </v-btn>
+                </v-flex>
+            </v-layout>
+
             <v-layout row>
                 <v-flex xs12>
 
-                    <b-row class="py-1">
+                    <!--<b-row class="py-1">
                         <b-col cols="2" class="pt-2" style="text-align: right">Scheduling:</b-col>
                         <b-col cols="10">
                             <cron-presets :cronValue="dataTask.getCronSchedule().toString()" :cronPresets="cronPresets" @change="onCronPresetsChange"></cron-presets>
@@ -105,11 +128,11 @@
                         <b-col cols="10" class="pt-2">
                             <edit-view-element orderNum="Cron" :element="dataTask.getCronSchedule()"></edit-view-element>
                         </b-col>
-                    </b-row>
+                    </b-row>-->
 
                     <!-- cron-style-scheduling :cron="dataTask.getCronSchedule()"></cron-style-scheduling-->
 
-                    <b-row class="pb-1 pt-3">
+                    <!--<b-row class="pb-1 pt-3">
                         <b-col cols="3">
                             <h6 style="padding-top:13px !important;">Task Parameters</h6>
                         </b-col>
@@ -118,18 +141,20 @@
                                 reset to default
                             </v-btn>
                         </b-col>
-                    </b-row>
+                    </b-row>-->
 
-                    <custom-params :initToggle="initToggle" :customSettings="handlerSettings" :height="height"></custom-params>
+                    <handler-settings :initToggle="initToggle" :handlerSettings="handlerSettings" :height="height"></handler-settings>
 
                 </v-flex>
             </v-layout>
         </v-container>
+
         <template slot="modal-footer">
 
             <v-btn round v-b-tooltip.hover.topright title="Save Data Task Configuration" color="primary" dark @click.native.stop="onSaveClick">
                 <v-icon class="mr-2">save</v-icon>Save
             </v-btn>
+
             <confirmation-dialog :dialogVisible="showSaveConfirmation"
                                  dialogMessage="Do you want to SAVE Changes and Close?"
                                  @onOkClicked="onSaveOkClicked"
@@ -138,6 +163,7 @@
             <v-btn round v-b-tooltip.hover.topright title="Discard Data Task Configuration" color="red" dark @click.native.stop="showDiscardConfirmation = true">
                 <v-icon class="mr-2">close</v-icon>Discard
             </v-btn>
+
             <confirmation-dialog :dialogVisible="showDiscardConfirmation"
                                  dialogMessage="Do you want to DISCARD Changes and Close?"
                                  @onOkClicked="onDiscardOkClicked"

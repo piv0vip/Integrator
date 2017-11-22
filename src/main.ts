@@ -6,6 +6,8 @@ import Vuetify from 'vuetify';
 import VeeValidate, { Validator } from 'vee-validate';
 import VueHighlightJS from 'vue-highlight.js';
 
+import * as helper from './util/helper'
+
 // import ar from 'vee-validate/dist/locale/ar';
 
 import { AppComponent } from './components/common/';
@@ -18,6 +20,11 @@ Validator.extend('guid', {
     getMessage: field => 'Wrong GUID format',
     validate: value => /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/.test(value)
 });
+
+Validator.extend('cron', {
+    getMessage: field => 'Wrong CRON format',
+    validate: value => helper.isCronString(value)
+})
 
 Vue.use(BootstrapVue);
 Vue.use(Vuetify, {

@@ -2,6 +2,7 @@ import { SettingTypeEnum } from '../enums'
 
 export interface IValidable {
     isValid(): boolean;
+    getValidationString(): string;
 }
 
 export interface IClonable<T> {

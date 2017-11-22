@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 
+import * as helper from '../../../util/helper'
+
 import cronstrue from 'cronstrue';
 
 @Component({
@@ -8,6 +10,8 @@ import cronstrue from 'cronstrue';
 })
 
 export class CronPresetsComponent extends Vue {
+
+    mut: boolean = false;
 
     cronPresetSelected: string = '* * * * *';
 
@@ -25,11 +29,26 @@ export class CronPresetsComponent extends Vue {
     @Watch('cronValue')
     onCronValueChanged(value) {
         if (value !== this.cronPresetSelected) this.cronPresetSelected = value;
+        this.mut = !this.mut;
+    }
+
+    @Watch('cronPresetSelected') onCronPresetSelectedChange(value) {
+        if (value != this.cronValue) { this.$emit('change', value);  }
+    }
+
+    created() {
+        this.$validator.attach('Cron', 'cron')
     }
 
     get cronPresetsList(): { value: string, text: string }[] {
+        this.mut;
         let presetArray: string[] = [].concat(this.cronPresets);
-        if (this.cronPresets.findIndex((preset) => preset === this.cronPresetSelected ) === -1 && this.cronPresetSelected) presetArray.push(this.cronPresetSelected);
+        if (this.cronPresets.findIndex((preset) => preset === this.cronPresetSelected) === -1
+            && this.cronPresetSelected
+            && helper.isCronString(this.cronPresetSelected))
+        {
+            presetArray.push(this.cronPresetSelected)
+        };
         return presetArray.map((preset) => {
             return {
                 value: preset,
@@ -38,7 +57,4 @@ export class CronPresetsComponent extends Vue {
         });
     }
 
-    onUserChangeSelect(value) {
-        this.$emit('change', value);
-    }
 }

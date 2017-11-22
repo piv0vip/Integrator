@@ -5,24 +5,21 @@ import { HandlerSettings, HandlerSetting } from '../../../classes/settings';
 
 import { ITableFields, IEditViewElement } from '../../../interfaces';
 
-import { CustomParamsSettingComponent } from './customParamsSetting';
-
-import { AddNewSettingComponent } from './addNewSetting';
+import { HandlerSettingComponent } from './customParamsSetting';
  
 import $ from 'jquery';
 
 @Component({
-    template: require('./customParams.html'),
+    template: require('./handlerSettings.html'),
     components: {
-        'custom-params-setting': CustomParamsSettingComponent,
-        'add-new-setting': AddNewSettingComponent
+        'handler-setting': HandlerSettingComponent,
     }
 })
 
-export class CustomParamsComponent extends Vue { 
+export class HandlerSettingsComponent extends Vue { 
 
     @Prop()
-    customSettings: HandlerSettings;
+    handlerSettings: HandlerSettings;
 
     @Prop({default: '418px'})
     height: string;
@@ -32,7 +29,7 @@ export class CustomParamsComponent extends Vue {
 
     mut: boolean = false; // hack for refresh data
 
-    get handlerSettings(): HandlerSetting[] { this.mut; return this.customSettings.values(); }
+    get handlerSettingsList(): HandlerSetting[] { this.mut; return this.handlerSettings.values(); }
     
     refreshList() { this.mut = !this.mut; }
-}
+}   

@@ -1,14 +1,12 @@
-<div class="number-edit-view-component" @click="onValueClick">
-            <v-menu lazy
-                    :close-on-content-click="true"
-                    v-model="isEdit"
-                    transition="scale-transition"
-                    offset-y
-                    full-width
-                    :nudge-right="40"
-                    max-width="290px"
-                    min-width="290px">
-                <span class="plainText" slot="activator">{{ spanValue }}</span>
-                <v-date-picker v-model="editedValue" no-title scrollable actions> </v-date-picker>
-            </v-menu>
-</div>
+<v-menu lazy
+        :close-on-content-click="true"
+        v-model="isEdit"
+        transition="scale-transition"
+        offset-y
+        full-width
+        :nudge-right="40"
+        max-width="290px"
+        min-width="290px">
+    <span class="plainText" slot="activator">{{ spanValue }}</span>
+    <v-date-picker v-model="editedValue" no-title scrollable actions> </v-date-picker>
+</v-menu>

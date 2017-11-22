@@ -4,7 +4,7 @@ import { DataTaskHandlerSettings, HandlerTypes } from '../../../classes/settings
 import { DataTask } from '../../../models';
 import { EnumValues, CustomEnumValues } from '../../../enums';
 import { HTTP } from '../../../util/http-common';
-import { CustomParamsComponent, ConfirmationComponent } from '../../common/';
+import { HandlerSettingsComponent, ConfirmationComponent } from '../../common/';
 import { CronStyleSchedulingComponent }  from '../../../components/common/cron/';
 import { IEnumValues } from '../../../interfaces';
 import { EditViewElementComponent } from '../../common/editViewElement';
@@ -16,7 +16,7 @@ import { Validator } from 'vee-validate';
     template: require('./dataTaskEdit.html'),
     components: {
         'cron-style-scheduling': CronStyleSchedulingComponent,
-        'custom-params': CustomParamsComponent,
+        'handler-settings': HandlerSettingsComponent,
         'confirmation-dialog': ConfirmationComponent,
         'edit-view-element': EditViewElementComponent,
         'cron-presets': CronPresetsComponent
@@ -29,6 +29,8 @@ export class DataTaskEditComponent extends Vue {
     height: string = '300px';
     selectedHandler: string = '';
     initToggle: boolean = false;
+
+    cronString: string = '* * * * *';
 
     alertSec: number = 0;
     alertMessage: string = 'Validation errors...';
@@ -64,6 +66,7 @@ export class DataTaskEditComponent extends Vue {
     @Watch('dataTask')
     onWatchChanged (value: DataTask) {
         this.selectedHandler = value ? value.TaskType : '';
+        this.cronString = value.getCronSchedule().toString();
     }
 
     @Watch('selectedHandler')
@@ -74,7 +77,6 @@ export class DataTaskEditComponent extends Vue {
 
     created() {
         //this.
-        this.$validator.attach('task_handler', 'required', {alias: 'Task Handler'});
     }
 
     get handlerSettingsSelectList(): any[] {
@@ -109,13 +111,13 @@ export class DataTaskEditComponent extends Vue {
 
     onSaveClick() {
         this.$validator.validateAll()
-            .then((isValid) => {
+            .then(function(isValid) {
                 if (isValid) {
                     this.showSaveConfirmation = true;
                 } else {
                     this.alertSec = 3;
                 }
-            })
+            }.bind(this))
             .catch((e) => { console.log(e); });
     }
 
@@ -134,7 +136,7 @@ export class DataTaskEditComponent extends Vue {
     }
 
     onCronPresetsChange(value) {
-        this.dataTask.getCronSchedule().Parse(value);
+        this.cronString = value;
     }
 
     close() {

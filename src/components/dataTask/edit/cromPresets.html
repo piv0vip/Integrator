@@ -1,1 +1,3 @@
-<b-form-select v-model="cronPresetSelected" :options="cronPresetsList" @input="onUserChangeSelect"></b-form-select>
+<v-select v-bind:items="cronPresetsList" v-model="cronPresetSelected" label="Cron Presets"></v-select>
+
+<!--<b-form-select v-model="cronPresetSelected" :options="cronPresetsList" @input="onUserChangeSelect"></b-form-select>-->

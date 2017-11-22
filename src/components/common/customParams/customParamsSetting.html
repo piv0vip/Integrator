@@ -1,18 +1,56 @@
-<b-row class="py-1" style="width:100%">
-    <b-col cols="1" class="pl-3 pr-1">
+<v-layout row>
+    
+    <v-flex xs1 class="pl-3 pr-1">
         <v-btn flat icon
                color="indigo lighten-2"
                @click="onClick"><span v-html="getIcon"></span></v-btn>
-    </b-col>
-    <b-col cols="11" class="p-2">
-        <div>
-            <div class="py-1"><span class="blue-grey--text text--darken3" style="font-weight: bold; font-size:larger">{{ handlerSetting.Name }}</span><span class="red--text text--lighten" v-show="handlerSetting.IsRequired"> - required</span></div>
-            <div @click="onClick">
-                <bool-edit-view-element v-if="isBool" :initToggle="initToggle" :toggleEdit="toggleEdit" :element="handlerSetting"></bool-edit-view-element>
-                <selectbox-edit-view-element v-else-if="isSelectBox" :initToggle="initToggle" :toggleEdit="toggleEdit" :element="handlerSetting" :options="selectOptions"></selectbox-edit-view-element>
-                <date-edit-view-element v-else-if="isDateTime||isDate" :initToggle="initToggle" :toggleEdit="toggleEdit" :element="handlerSetting"></date-edit-view-element>
-                <edit-view-element v-else :initToggle="initToggle" :orderNum="orderNum" :toggleEdit="toggleEdit" :element="handlerSetting"></edit-view-element>
-            </div>
-        </div>
-    </b-col>
-</b-row>
+    </v-flex>
+    
+    <v-flex xs10 class="p-2">
+        
+        <v-switch v-if="isBool"
+                  :label="handlerSetting.Name"
+                  v-model="editValue"
+                  color="info"
+                  true-value="true"
+                  false-value="false"
+                  hide-details></v-switch>
+
+        <v-select v-else-if="isSelectBox" 
+                  :items="handlerSetting.Options"
+                  v-model="editValue"
+                  :label="handlerSetting.Name"
+                  v-validate="validationString"
+                  :data-vv-name="handlerSetting.Name"
+                  :data-vv-as="handlerSetting.Name"
+                  :required="handlerSetting.IsRequired"></v-select>
+
+        <v-menu lazy
+                v-else-if="isDateTime||isDate" 
+                :close-on-content-click="true"
+                transition="scale-transition"
+                offset-y
+                full-width
+                :nudge-right="40"
+                max-width="290px"
+                min-width="290px">
+            <v-text-field slot="activator"
+                          :label="handlerSetting.Name"
+                          v-model="editValue"
+                          :required="handlerSetting.IsRequired"
+                          readonly></v-text-field>
+            <v-date-picker v-model="editValue" no-title scrollable actions> </v-date-picker>
+        </v-menu>
+
+        <v-text-field v-else
+                      v-model="editValue"
+                      :label="handlerSetting.Name"
+                      :error-messages="errors.collect(orderNum)"
+                      v-validate="validationString"
+                      :data-vv-name="orderNum"
+                      :data-vv-as="handlerSetting.Name"
+                      :required="handlerSetting.IsRequired"></v-text-field>
+
+    </v-flex>
+
+</v-layout>

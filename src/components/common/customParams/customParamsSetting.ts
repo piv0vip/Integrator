@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Watch } from 'vue-property-decorator';
 
 import { HandlerSetting } from '../../../classes/settings';
 
@@ -22,15 +22,31 @@ import {
     }
 })
 
-export class CustomParamsSettingComponent extends Vue {
+export class HandlerSettingComponent extends Vue {
 
     toggleEdit: boolean = false;
+
+    editValue: string = '';
 
     @Prop() handlerSetting: HandlerSetting;
 
     @Prop() initToggle: boolean;
 
     @Prop() orderNum: string;
+
+    @Watch('initToggle') onHandlerSettingChange(value) {
+        console.log(value); 
+        if (this.handlerSetting) this.editValue = this.handlerSetting.Value; 
+        //this.$nextTick(() => { if (this.handlerSetting) this.editValue = this.handlerSetting.Value; })
+    }
+
+    @Watch('editValue') onEditValueChanged() {
+        console.log('--===---');
+    }
+
+    get validationString(): string {
+        return this.handlerSetting.getValidationString();
+    }
 
     get selectOptions(): string[] {
         return this.handlerSetting ? this.handlerSetting.Options : [];
@@ -61,8 +77,7 @@ export class CustomParamsSettingComponent extends Vue {
             this.isNumber ? '123' :
             (this.handlerSetting.Type === SettingTypeEnum.Url) ? 'URL' :
             (this.handlerSetting.Type === SettingTypeEnum.Guid) ? 'GUID' :
-            this.isDate ? '<i class="material-icons">event</i>' :
-            this.isDateTime ? '<i class="material-icons">alarm</i>' :
+            this.isDate || this.isDateTime ? '<i class="material-icons">event</i>' :
             this.isBool ? '<i class="material-icons">check_box</i>' : '<i class="material-icons">short_text</i>';
         return iconStr;
     }

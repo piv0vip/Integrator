@@ -1,7 +1,7 @@
 import * as Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 
-import { IEditViewElement } from '../../../interfaces/';
+import { HandlerSetting } from '../../../classes/settings/handlerSettings';
 
 import $ from 'jquery';
 
@@ -13,7 +13,7 @@ export class BoolEditViewElementComponent extends Vue {
 
     editedValue: string = '';
 
-    @Prop() element: IEditViewElement;
+    @Prop() element: HandlerSetting;
 
     @Prop() initToggle: boolean;
 

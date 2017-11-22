@@ -1,4 +1,6 @@
 import moment from 'moment';
+import cronParse from 'cron-parser';
+import _ from 'lodash';
 
 export function createGuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
@@ -17,4 +19,17 @@ export function firstCharToLower(str: string): string {
 
 export function firstCharToUpper (str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export function isCronString(cronstring: string): boolean {
+    try {
+        var parserCronString = cronParse.parseString(cronstring);
+        if (_.isEmpty(parserCronString.errors)) {
+            return true;
+        }
+        throw "Invalid Cron string!"
+    }
+    catch (ex) {
+        return false;
+    }
 }

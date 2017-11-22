@@ -1,2 +1,1 @@
-export * from './customParams'
-export * from './addNewSetting'
+export * from './handlerSettings'

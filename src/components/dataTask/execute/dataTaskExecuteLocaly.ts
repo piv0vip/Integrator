@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 
-import { CustomParamsComponent } from '../../common/customParams';
+import { HandlerSettingsComponent } from '../../common/customParams';
 import { DataTask } from '../../../models';
 import { HTTP } from '../../../util/http-common';
 
 @Component({
     template: require('./dataTaskExecuteLocaly.html'),
     components: {
-        'custom-params': CustomParamsComponent
+        'handler-settings': HandlerSettingsComponent
     }
 })
 

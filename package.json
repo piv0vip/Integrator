@@ -72,6 +72,7 @@
     "compression-webpack-plugin": "~0.3.2",
     "concurrently": "~3.4.0",
     "copy-webpack-plugin": "~4.0.1",
+    "cron-parser": "^2.4.3",
     "cross-env": "~3.2.4",
     "css-loader": "^0.28.7",
     "es6-promise": "~4.1.0",

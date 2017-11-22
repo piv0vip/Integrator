@@ -65,6 +65,17 @@ export class HandlerSetting implements IHandlerSetting, IValidable, IClonable<Ha
     isDefault(): boolean {
         return this.Value === this.DefaultValue;
     }
+
+    // todo: strong refactor this !!!!!!!!!!!!
+    getValidationString(): string {
+        let resArr: string[] = [];
+        this.IsRequired && resArr.push('required');
+        (this.Type == SettingTypeEnum.Guid) && resArr.push('guid');
+        (this.Type == SettingTypeEnum.Url) && resArr.push('url');
+        (this.Type == SettingTypeEnum.Number) && resArr.push('numeric');
+        return resArr.join('|');
+    }
+
 }
 
 export class HandlerSettings extends Dictionary<string, HandlerSetting> implements IHandlerSettings<HandlerSetting>   {

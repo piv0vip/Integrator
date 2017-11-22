@@ -1,0 +1,7 @@
+<div class="scroll-box" style="height:100%" v-bind:style="{ 'max-height': height }">
+    <v-container>
+        <template v-for="(handlerSetting, index) in handlerSettingsList">
+            <handler-setting :initToggle="initToggle" :orderNum="'handlerSetting'+index" :handlerSetting="handlerSetting"></handler-setting>
+        </template>
+    </v-container>
+</div>
