@@ -59,6 +59,7 @@ export class DataTaskEditComponent extends Vue {
     onShowChanged (value: boolean) {
         if (value) {
             this.initToggle = !this.initToggle;
+            this.showModal = true;
             this.$root.$emit('bv::show::modal', 'edit-task-modal');
         }
     }
@@ -73,6 +74,11 @@ export class DataTaskEditComponent extends Vue {
     onSelectedHandlerChanged(value) {
         if (this.handlerTypes.containsKey(value) && this.dataTask.IsNew) { this.dataTask.HandlerType = this.handlerTypes.getValue(value); }
         if (this.dataTask.TaskType !== value) { this.dataTask.TaskType = value; }
+    }
+
+    @Watch('cronString')
+    onCronStringChange(value){
+        this.dataTask.CronSchedule = value;
     }
 
     created() {
@@ -140,6 +146,7 @@ export class DataTaskEditComponent extends Vue {
     }
 
     close() {
+            this.showModal = false;
         this.$root.$emit('bv::hide::modal', 'edit-task-modal');
     }
 }
