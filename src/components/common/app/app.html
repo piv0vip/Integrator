@@ -1,21 +1,21 @@
 <div>
     <v-app>
         <v-container class="mt-4">
-        <v-toolbar fixed toggleable type="light" variant="light">
-            <v-toolbar-title href="#/">Scheduler console</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-                <v-btn flat href="#/">Scheduling Task Configuration</v-btn>
-                <v-btn flat href="#/entity-statuses">Entity statuses</v-btn>
-            </v-toolbar-items>
-        </v-toolbar>
-        <v-container fluid class="mt-3">
-            <router-view></router-view>
+            <v-toolbar fixed toggleable type="light" variant="light">
+                <v-toolbar-title href="#/">Scheduler console</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-toolbar-items>
+                    <v-btn flat href="#/">Scheduling Task Configuration</v-btn>
+                    <v-btn flat href="#/entity-statuses">Entity statuses</v-btn>
+                </v-toolbar-items>
+            </v-toolbar>
+            <v-container fluid class="mt-3">
+                <router-view></router-view>
+            </v-container>
+            <v-footer :fixed=true class="pa-3" variant="light">
+                <v-spacer></v-spacer>
+                <div>© Clouworks Ltd., {{ new Date().getFullYear() }}</div>
+            </v-footer>
         </v-container>
-        <v-footer :fixed=true class="pa-3">
-            <v-spacer></v-spacer>
-            <div>© Clouworks Ltd., {{ new Date().getFullYear() }}</div>
-        </v-footer>
-    </v-container>
     </v-app>
 </div>

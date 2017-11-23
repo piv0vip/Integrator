@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Component, Prop, Watch } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 
 import { HandlerSettings, HandlerSetting } from '../../../classes/settings';
 
@@ -29,17 +29,7 @@ export class HandlerSettingsComponent extends Vue {
 
     mut: boolean = false; // hack for refresh data
 
-    @Watch('initToggle')
-    onInitToggleChange(value) {
-        this.mut = !this.mut;
-    }
-
-    get handlerSettingsList(): HandlerSetting[] {
-        this.$nextTick(() => {
-            this.refreshList();
-        });
-        return this.handlerSettings && this.handlerSettings.values();
-    }
+    get handlerSettingsList(): HandlerSetting[] { this.mut; return this.handlerSettings.values(); }
     
     refreshList() { this.mut = !this.mut; }
 }   

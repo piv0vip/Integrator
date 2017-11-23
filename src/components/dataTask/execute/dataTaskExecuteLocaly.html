@@ -1,16 +1,15 @@
-    <div>
+<div>
     <b-modal ref="execute-task-localy-modal"
-                id="execute-task-localy-modal"
-                size="lg"
-                header-bg-variant="light"
-                v-model="showModal"
-                title="Execute Task Localy"
-                @hidden="onModalHidden"
-                @ok="onExecuteClick"
-                >
+             id="execute-task-localy-modal"
+             size="lg"
+             header-bg-variant="light"
+             v-model="showModal"
+             title="Execute Task Localy"
+             @hidden="onModalHidden"
+             @ok="onExecuteClick">
         <h6 class="pt-1">Task Parameters</h6>
-        
-        <handler-settings v-model="handlerSettings" :initToggle="show" height="500px"></handler-settings>
+
+        <handler-settings :initToggle="show" height="500px" :handlerSettings="handlerSettings"></handler-settings>
 
         <template slot="modal-footer">
 
