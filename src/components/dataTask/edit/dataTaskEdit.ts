@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
-import { DataTaskHandlerSettings, HandlerTypes } from '../../../classes/settings';
+import { DataTaskHandlerSettings, HandlerTypes, HandlerSetting } from '../../../classes/settings';
 import { DataTask } from '../../../models';
 import { EnumValues, CustomEnumValues } from '../../../enums';
 import { HTTP } from '../../../util/http-common';
-import { HandlerSettingsComponent, ConfirmationComponent } from '../../common/';
+import { HandlerSettingComponent, ConfirmationComponent } from '../../common/';
 import { CronStyleSchedulingComponent }  from '../../../components/common/cron/';
 import { IEnumValues } from '../../../interfaces';
 import { EditViewElementComponent } from '../../common/editViewElement';
@@ -12,23 +12,30 @@ import { CronPresetsComponent } from './cronPresets';
 import { Validator } from 'vee-validate';
 
 
+
 @Component({
     template: require('./dataTaskEdit.html'),
     components: {
         'cron-style-scheduling': CronStyleSchedulingComponent,
-        'handler-settings': HandlerSettingsComponent,
+        'handler-setting': HandlerSettingComponent,
         'confirmation-dialog': ConfirmationComponent,
         'edit-view-element': EditViewElementComponent,
         'cron-presets': CronPresetsComponent
-    }
+    },
+    inject: ['$validator'],
 })
 
 export class DataTaskEditComponent extends Vue {
 
     showModal: boolean = false;
+
     height: string = '300px';
+
     selectedHandler: string = '';
+
     initToggle: boolean = false;
+
+    mut: boolean = false; // hack for refresh data
 
     cronString: string = '* * * * *';
 
@@ -40,8 +47,13 @@ export class DataTaskEditComponent extends Vue {
 
     validator: Validator = null;
 
-    @Prop({default: true})
-    show: boolean;
+    @Prop()
+    value: boolean;
+
+    @Watch('value')
+    onValueChanged(value) {
+        this.showModal = value;
+    }
 
     @Prop()
     dataTask: DataTask;
@@ -55,34 +67,24 @@ export class DataTaskEditComponent extends Vue {
     @Prop()
     cronPresets: string[];
 
-    @Watch('show')
-    onShowChanged (value: boolean) {
-        if (value) {
-            this.initToggle = !this.initToggle;
-            this.showModal = true;
-            this.$root.$emit('bv::show::modal', 'edit-task-modal');
-        }
-    }
-
     @Watch('dataTask')
     onWatchChanged (value: DataTask) {
-        this.selectedHandler = value ? value.TaskType : '';
+        this.selectedHandler = (value ? value.TaskType : '');
         this.cronString = value.getCronSchedule().toString();
     }
 
     @Watch('selectedHandler')
-    onSelectedHandlerChanged(value) {
-        if (this.handlerTypes.containsKey(value) && this.dataTask.IsNew) { this.dataTask.HandlerType = this.handlerTypes.getValue(value); }
+    onSelectedHandlerChanged(value: string) {
+        if (this.handlerTypes.containsKey(value) && this.dataTask.IsNew) {
+            this.dataTask.HandlerType = this.handlerTypes.getValue(value);
+        }
         if (this.dataTask.TaskType !== value) { this.dataTask.TaskType = value; }
+        this.$nextTick(() => { this.refreshList(); });
     }
 
     @Watch('cronString')
-    onCronStringChange(value){
+    onCronStringChange(value) {
         this.dataTask.CronSchedule = value;
-    }
-
-    created() {
-        //this.
     }
 
     get handlerSettingsSelectList(): any[] {
@@ -97,6 +99,10 @@ export class DataTaskEditComponent extends Vue {
         return this.dataTask.getHandlerSettings();
     }
 
+    get handlerSettingsList(): HandlerSetting[] {
+        this.mut; return this.dataTask.getHandlerSettings().values();
+    }
+
     onModalHidden(e) {
         this.$emit('onClose', e);
     }
@@ -106,22 +112,21 @@ export class DataTaskEditComponent extends Vue {
             {url: 'DataTask/Insert', method: 'post'} : 
             {url: 'DataTask/Update', method: 'put'} ;
         HTTP[request.method](request.url, this.dataTask.toServer())
-            .then(response => {
-                this.close();
+            .then(function(response) {
+                this.closeEditTask();
                 this.$emit('onSave', evt);
-            })
+            }.bind(this))
             .catch(e => {
                 console.log(e);
             });
     }
 
     onSaveClick() {
+        this.$validator.reset();
         this.$validator.validateAll()
             .then(function(isValid) {
                 if (isValid) {
                     this.showSaveConfirmation = true;
-                } else {
-                    this.alertSec = 3;
                 }
             }.bind(this))
             .catch((e) => { console.log(e); });
@@ -132,7 +137,7 @@ export class DataTaskEditComponent extends Vue {
     }
 
     onDiscardOkClicked(e) {
-        this.close();
+        this.closeEditTask();
     }
 
     onShowModal() { }
@@ -145,8 +150,12 @@ export class DataTaskEditComponent extends Vue {
         this.cronString = value;
     }
 
-    close() {
-            this.showModal = false;
-        this.$root.$emit('bv::hide::modal', 'edit-task-modal');
+    closeEditTask() {
+        this.$validator.reset();
+        this.$emit('input', false);
+    }
+
+    refreshList() {
+        this.mut = !this.mut;
     }
 }

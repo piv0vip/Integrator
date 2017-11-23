@@ -36,9 +36,13 @@
                 min-width="290px">
             <v-text-field slot="activator"
                           :label="handlerSetting.Name"
+                          :error-messages="errors.collect(orderNum)"
+                          v-validate="validationString"
                           v-model="editValue"
+                          :data-vv-name="orderNum"
+                          :data-vv-as="handlerSetting.Name"
                           :required="handlerSetting.IsRequired"
-                          readonly></v-text-field>
+                          ></v-text-field>
             <v-date-picker v-model="editValue" no-title scrollable actions> </v-date-picker>
         </v-menu>
 

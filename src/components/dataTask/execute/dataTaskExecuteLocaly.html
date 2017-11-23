@@ -1,4 +1,4 @@
-<div>
+    <div>
     <b-modal ref="execute-task-localy-modal"
                 id="execute-task-localy-modal"
                 size="lg"
@@ -10,7 +10,7 @@
                 >
         <h6 class="pt-1">Task Parameters</h6>
         
-        <handler-settings :initToggle="show" height="500px" :handlerSettings="handlerSettings"></handler-settings>
+        <handler-settings v-model="handlerSettings" :initToggle="show" height="500px"></handler-settings>
 
         <template slot="modal-footer">
 

@@ -25,6 +25,7 @@ export class DataTask extends TEntity {
     NextStartTime: string;
     RecCreated: string;
     RecModified: string;
+    protected _cronString: string;
     
     constructor() {
         super();
@@ -33,6 +34,7 @@ export class DataTask extends TEntity {
         this._HandlerSettings = new DataTaskHandlerSettings();
         this._CronSchedule = new CronSchedule();
         this._HandlerType = HandlerType.CreateEmpty();
+        this._cronString = '* * * * *';
     }
 
     get DataTaskId(): number { return this.EntityId; }
@@ -65,11 +67,13 @@ export class DataTask extends TEntity {
     }
 
     get CronSchedule(): string {
-        return this._CronSchedule.toString();
+        // return this._CronSchedule.toString();
+        return this._cronString;
     }
 
     set CronSchedule(value: string) {
-        this._CronSchedule.Parse(value);
+        // this._CronSchedule.Parse(value);
+        this._cronString = value;
     }
 
     getHandlerSettings(): DataTaskHandlerSettings {

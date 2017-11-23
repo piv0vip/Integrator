@@ -1,11 +1,11 @@
 import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Watch } from 'vue-property-decorator';
 
 import { HandlerSettings, HandlerSetting } from '../../../classes/settings';
 
 import { ITableFields, IEditViewElement } from '../../../interfaces';
 
-import { HandlerSettingComponent } from './customParamsSetting';
+import { HandlerSettingComponent } from './handlerSetting';
  
 import $ from 'jquery';
 
@@ -29,7 +29,17 @@ export class HandlerSettingsComponent extends Vue {
 
     mut: boolean = false; // hack for refresh data
 
-    get handlerSettingsList(): HandlerSetting[] { this.mut; return this.handlerSettings.values(); }
+    @Watch('initToggle')
+    onInitToggleChange(value) {
+        this.mut = !this.mut;
+    }
+
+    get handlerSettingsList(): HandlerSetting[] {
+        this.$nextTick(() => {
+            this.refreshList();
+        });
+        return this.handlerSettings && this.handlerSettings.values();
+    }
     
     refreshList() { this.mut = !this.mut; }
 }   

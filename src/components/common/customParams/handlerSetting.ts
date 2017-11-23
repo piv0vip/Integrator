@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Component, Prop, Watch } from 'vue-property-decorator';
+import { Component, Prop, Watch, Inject } from 'vue-property-decorator';
 
 import { HandlerSetting } from '../../../classes/settings';
 
@@ -13,20 +13,23 @@ import {
 } from '../editViewElement';
 
 @Component({
-    template: require('./customParamsSetting.html'),
+    template: require('./handlerSetting.html'),
     components: {
         'edit-view-element': EditViewElementComponent,
         'bool-edit-view-element': BoolEditViewElementComponent,
         'selectbox-edit-view-element': SelectBoxEditViewElementComponent,
         'date-edit-view-element': DateEditViewElementComponent
-    }
+    },
+    inject: ['$validator']
 })
 
 export class HandlerSettingComponent extends Vue {
 
     toggleEdit: boolean = false;
 
-    editValue: string = '';
+    editValue: string = 's';
+
+    @Prop() value: string;
 
     @Prop() handlerSetting: HandlerSetting;
 
@@ -35,13 +38,20 @@ export class HandlerSettingComponent extends Vue {
     @Prop() orderNum: string;
 
     @Watch('initToggle') onHandlerSettingChange(value) {
-        console.log(value); 
-        if (this.handlerSetting) this.editValue = this.handlerSetting.Value; 
-        //this.$nextTick(() => { if (this.handlerSetting) this.editValue = this.handlerSetting.Value; })
+//        if (this.handlerSetting) this.editValue = this.handlerSetting.Value;
+        // this.$nextTick(() => { if (this.handlerSetting) this.editValue = this.handlerSetting.Value; })
     }
 
-    @Watch('editValue') onEditValueChanged() {
-        console.log('--===---');
+    @Watch('value') onValueChanged(value) {
+        this.editValue = value;
+    }
+
+    @Watch('editValue') onEditValueChanged(value) {
+        this.$emit('input', value);
+    }
+
+    mounted() {
+        this.editValue = this.value;
     }
 
     get validationString(): string {

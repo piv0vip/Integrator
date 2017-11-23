@@ -90,7 +90,7 @@
     </b-container>
     <edit-task 
         :cronPresets="cronPresets"
-        :show="showEditTask" 
+        v-model="showEditTask" 
         :dataTask="currentTask"
         :handlersEnum="handlersEnum" 
         :handlerTypes="handlerTypes"

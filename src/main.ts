@@ -6,7 +6,7 @@ import Vuetify from 'vuetify';
 import VeeValidate, { Validator } from 'vee-validate';
 import VueHighlightJS from 'vue-highlight.js';
 
-import * as helper from './util/helper'
+import * as helper from './util/helper';
 
 // import ar from 'vee-validate/dist/locale/ar';
 
@@ -24,22 +24,26 @@ Validator.extend('guid', {
 Validator.extend('cron', {
     getMessage: field => 'Wrong CRON format',
     validate: value => helper.isCronString(value)
-})
+});
 
 Vue.use(BootstrapVue);
 Vue.use(Vuetify, {
-  theme: {
-    primary: '#3f51b5',
-    secondary: '#b0bec5',
-    accent: '#8c9eff',
-    error: '#b71c1c'
-  }
-})
+    theme: {
+        primary: '#3f51b5',
+        secondary: '#b0bec5',
+        accent: '#8c9eff',
+        error: '#b71c1c'
+    }
+});
+
 Vue.use(VueRouter);
+
 Vue.use(VeeValidate, {
     fieldsBagName: 'formFields',
+    inject: false
     // locale: 'ru'
 });
+
 Vue.use(VueHighlightJS);
 
 import 'highlight.js/styles/xcode.css';

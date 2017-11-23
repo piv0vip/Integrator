@@ -23,11 +23,11 @@ export function firstCharToUpper (str: string): string {
 
 export function isCronString(cronstring: string): boolean {
     try {
-        var parserCronString = cronParse.parseString(cronstring);
+        let parserCronString = cronParse.parseString(cronstring);
         if (_.isEmpty(parserCronString.errors)) {
             return true;
         }
-        throw "Invalid Cron string!"
+        throw 'Invalid Cron string!';
     }
     catch (ex) {
         return false;

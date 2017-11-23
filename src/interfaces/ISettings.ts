@@ -32,6 +32,8 @@ export interface IHandlerSetting extends ISetting, IDefaultable {
     readonly Options: string[];
 
     readonly IsRequired: boolean;
+
+    Value: string;
 }
 
 export interface IHandlerSettings<T> extends IDefaultable {

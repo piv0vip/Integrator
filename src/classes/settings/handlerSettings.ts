@@ -70,9 +70,10 @@ export class HandlerSetting implements IHandlerSetting, IValidable, IClonable<Ha
     getValidationString(): string {
         let resArr: string[] = [];
         this.IsRequired && resArr.push('required');
-        (this.Type == SettingTypeEnum.Guid) && resArr.push('guid');
-        (this.Type == SettingTypeEnum.Url) && resArr.push('url');
-        (this.Type == SettingTypeEnum.Number) && resArr.push('numeric');
+        (this.Type === SettingTypeEnum.Guid) && resArr.push('guid');
+        (this.Type === SettingTypeEnum.Url) && resArr.push('url');
+        (this.Type === SettingTypeEnum.Number) && resArr.push('numeric');
+        (this.Type === SettingTypeEnum.Date || this.Type === SettingTypeEnum.DateTime) && resArr.push('date_format:YYYY-MM-DD');
         return resArr.join('|');
     }
 
