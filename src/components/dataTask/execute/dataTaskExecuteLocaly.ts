@@ -9,12 +9,15 @@ import { HTTP } from '../../../util/http-common';
     template: require('./dataTaskExecuteLocaly.html'),
     components: {
         'handler-settings': HandlerSettingsComponent
-    }
+    },
+    inject: ['$validator']
 })
 
 export class DataTaskExecuteLocalyComponent extends Vue {
 
     showModal: boolean = false;
+
+    scope: string = 'taskExecute';
 
     @Prop({default: false})
     show: Boolean;
@@ -38,14 +41,26 @@ export class DataTaskExecuteLocalyComponent extends Vue {
     }
 
     onExecuteClick() {
-        
-        HTTP.post('DataTask/ExecuteTaskWithParams/' + this.dataTask.DataTaskId, this.handlerSettings.toServer())
-            .then(response => {
-                this.hideModal();
-            })
-            .catch(e => {
-                console.log(e);
-            });
+
+        this.$validator.reset();
+        this.$validator.validateAll(this.scope)
+            .then(function(isValid) {
+                if (isValid) {
+
+                    HTTP.post('DataTask/ExecuteTaskWithParams/' + this.dataTask.DataTaskId, this.handlerSettings.toServer())
+                        .then(response => {
+                            this.hideModal();
+                        })
+                        .catch(e => {
+                            console.log(e);
+                        });
+
+
+                }
+            }.bind(this))
+            .catch((e) => { console.log(e); });
+
+
     }
 
     onCloseClick() {

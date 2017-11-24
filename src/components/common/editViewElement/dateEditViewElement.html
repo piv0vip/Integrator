@@ -1,12 +1,21 @@
 <v-menu lazy
         :close-on-content-click="true"
-        v-model="isEdit"
         transition="scale-transition"
         offset-y
         full-width
         :nudge-right="40"
         max-width="290px"
         min-width="290px">
-    <span class="plainText" slot="activator">{{ spanValue }}</span>
-    <v-date-picker v-model="editedValue" no-title scrollable actions> </v-date-picker>
+    <v-text-field slot="activator" prepend-icon="event"
+                  :label="handlerSetting.Name"
+                  :error-messages="errors.collect(orderNum)"
+                  v-validate="handlerSetting.getValidationString()"
+                  v-model="editValue"
+                  :data-vv-scope="scope"
+                  :data-vv-name="orderNum"
+                  :data-vv-as="handlerSetting.Name"
+                  :required="handlerSetting.IsRequired"
+                  readonly></v-text-field>
+    <v-date-picker v-model="calDate" no-title scrollable actions> </v-date-picker>
 </v-menu>
+

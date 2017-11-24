@@ -5,11 +5,13 @@ import { HandlerSetting } from '../../../classes/settings';
 
 import { SettingTypeEnum } from '../../../enums';
 
+import moment from 'moment';
+
 import { 
     EditViewElementComponent,
     BoolEditViewElementComponent,
     SelectBoxEditViewElementComponent,
-    DateEditViewElementComponent
+    DateHandlerSettingComponent
 } from '../editViewElement';
 
 @Component({
@@ -18,7 +20,7 @@ import {
         'edit-view-element': EditViewElementComponent,
         'bool-edit-view-element': BoolEditViewElementComponent,
         'selectbox-edit-view-element': SelectBoxEditViewElementComponent,
-        'date-edit-view-element': DateEditViewElementComponent
+        'date-handler-setting': DateHandlerSettingComponent
     },
     inject: ['$validator']
 })
@@ -27,7 +29,11 @@ export class HandlerSettingComponent extends Vue {
 
     toggleEdit: boolean = false;
 
-    editValue: string = 's';
+    editValue: string = '';
+
+    calDate: string = moment().format('YYYY-MM-DD');
+
+    @Prop({ default: 'defaultScope' }) scope: string;
 
     @Prop() value: string;
 
@@ -83,12 +89,12 @@ export class HandlerSettingComponent extends Vue {
     }
 
     get getIcon(): string {
-        let iconStr: string = this.isSelectBox ? '<i class="material-icons">format_list_bulleted</i>' :
-            this.isNumber ? '123' :
-            (this.handlerSetting.Type === SettingTypeEnum.Url) ? 'URL' :
-            (this.handlerSetting.Type === SettingTypeEnum.Guid) ? 'GUID' :
+        let iconStr: string = this.isSelectBox ? 'format_list_bulleted' :
+            this.isNumber ? 'text_fields' :
+            (this.handlerSetting.Type === SettingTypeEnum.Url) ? 'public' :
+            (this.handlerSetting.Type === SettingTypeEnum.Guid) ? 'G' :
             this.isDate || this.isDateTime ? '<i class="material-icons">event</i>' :
-            this.isBool ? '<i class="material-icons">check_box</i>' : '<i class="material-icons">short_text</i>';
+            this.isBool ? 'check_box' : 'text_fields';
         return iconStr;
     }
 

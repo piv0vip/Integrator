@@ -17,12 +17,12 @@ import { EntityStatusListComponent } from './components/entityStatus';
 import { store } from './store';
 
 Validator.extend('guid', {
-    getMessage: field => 'Wrong GUID format',
+    getMessage: field => `Value must be in 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX' format`,
     validate: value => /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/.test(value)
 });
 
 Validator.extend('cron', {
-    getMessage: field => 'Wrong CRON format',
+    getMessage: field => `Value should be in CRON format. For example '* * * * *'`,
     validate: value => helper.isCronString(value)
 });
 

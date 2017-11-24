@@ -7,7 +7,7 @@ import { ITableFields, IEditViewElement } from '../../../interfaces';
 
 import { HandlerSettingComponent } from './handlerSetting';
  
-import $ from 'jquery';
+import $ from 'jquery'; 
 
 @Component({
     template: require('./handlerSettings.html'),
@@ -26,6 +26,9 @@ export class HandlerSettingsComponent extends Vue {
 
     @Prop()
     initToggle: boolean;
+
+    @Prop()
+    scope: string;
 
     mut: boolean = false; // hack for refresh data
 

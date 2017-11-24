@@ -1,14 +1,14 @@
 <v-layout row>
     
-    <v-flex xs1 class="pl-3 pr-1">
+    <!--<v-flex xs1 class="px-2">
         <v-btn flat icon
-               color="indigo lighten-2"
+               color="indigo lighten-1"
                @click="onClick"><span v-html="getIcon"></span></v-btn>
-    </v-flex>
+    </v-flex>-->
     
-    <v-flex xs10 class="p-2">
+    <v-flex xs12 class="px-4">
         
-        <v-switch v-if="isBool"
+        <v-switch class="my-3" v-if="isBool"
                   :label="handlerSetting.Name"
                   v-model="editValue"
                   color="info"
@@ -16,43 +16,31 @@
                   false-value="false"
                   hide-details></v-switch>
 
-        <v-select v-else-if="isSelectBox" 
+        <v-select v-else-if="isSelectBox" :prepend-icon="getIcon"
                   :items="handlerSetting.Options"
                   v-model="editValue"
                   :label="handlerSetting.Name"
                   v-validate="validationString"
+                  :data-vv-scope="scope"
                   :data-vv-name="handlerSetting.Name"
                   :data-vv-as="handlerSetting.Name"
                   :required="handlerSetting.IsRequired"></v-select>
 
-        <v-menu lazy
-                v-else-if="isDateTime||isDate" 
-                :close-on-content-click="true"
-                transition="scale-transition"
-                offset-y
-                full-width
-                :nudge-right="40"
-                max-width="290px"
-                min-width="290px">
-            <v-text-field slot="activator"
-                          :label="handlerSetting.Name"
-                          :error-messages="errors.collect(orderNum)"
-                          v-validate="validationString"
-                          v-model="editValue"
-                          :data-vv-name="orderNum"
-                          :data-vv-as="handlerSetting.Name"
-                          :required="handlerSetting.IsRequired"
-                          ></v-text-field>
-            <v-date-picker v-model="editValue" no-title scrollable actions> </v-date-picker>
-        </v-menu>
+        <date-handler-setting v-else-if="isDateTime||isDate" 
+                              v-model="editValue"
+                              :scope="scope"
+                              :handlerSetting="handlerSetting"
+                              :orderNum="orderNum"></date-handler-setting>
 
-        <v-text-field v-else
+        <v-text-field v-else :prepend-icon="getIcon"
                       v-model="editValue"
                       :label="handlerSetting.Name"
                       :error-messages="errors.collect(orderNum)"
                       v-validate="validationString"
+                      :data-vv-scope="scope"
                       :data-vv-name="orderNum"
                       :data-vv-as="handlerSetting.Name"
+                      :type="isNumber?'number':'text'"
                       :required="handlerSetting.IsRequired"></v-text-field>
 
     </v-flex>

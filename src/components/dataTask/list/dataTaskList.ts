@@ -145,6 +145,10 @@ export class DataTaskListComponent extends Vue {
         },
     ];
 
+    get CronPresets(): string[] {
+        return this.cronPresets;
+    }
+
     created() {
         HTTP.get('DataTask/GetHandlersWithDefaultSettings')
             .then(function (response: AxiosResponse) {
@@ -158,16 +162,6 @@ export class DataTaskListComponent extends Vue {
                     };
                 });
                 this.handlersEnum = Enums.createHandlerEnum(handlers);
-            }.bind(this))
-            .catch(function (e) {
-                console.log(e);
-            }.bind(this));
-
-        HTTP.get('DataTask/CrontabPresets')
-            .then(function (response: AxiosResponse) {
-
-                this.cronPresets = response.data;
-
             }.bind(this))
             .catch(function (e) {
                 console.log(e);
@@ -246,6 +240,16 @@ export class DataTaskListComponent extends Vue {
     }
 
     refreshTable() {
+        HTTP.get('DataTask/CrontabPresets')
+            .then(function(response: AxiosResponse) {
+
+                this.cronPresets = response.data;
+
+            }.bind(this))
+            .catch(function(e) {
+                console.log(e);
+            }.bind(this));
+
         let table: any = this.$refs['dataTasksTable'];
         table.refresh();
     }

@@ -63,7 +63,8 @@ export class DataTask extends TEntity {
     }
 
     get CronString(): string {
-        return this._CronSchedule.toString();
+        // return this._CronSchedule.toString();
+        return this._cronString;
     }
 
     get CronSchedule(): string {
@@ -73,7 +74,7 @@ export class DataTask extends TEntity {
 
     set CronSchedule(value: string) {
         // this._CronSchedule.Parse(value);
-        this._cronString = value;
+        this._cronString = value.toUpperCase();
     }
 
     getHandlerSettings(): DataTaskHandlerSettings {

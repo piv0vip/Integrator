@@ -1,50 +1,39 @@
 ﻿import * as Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 
-import { IEditViewElement } from '../../../interfaces/';
+import { HandlerSetting } from '../../../classes/settings';
 
-import $ from 'jquery';
+import moment from 'moment';
 
 @Component({
-    template: require('./dateEditViewElement.html')
+    template: require('./dateEditViewElement.html'),
+    inject: ['$validator']
 })
 
-export class DateEditViewElementComponent extends Vue {
+export class DateHandlerSettingComponent extends Vue {
 
-    editedValue: string = '';
+    editValue: string = '';
 
-    isEdit: boolean = false;
+    calDate: string = moment().format('YYYY-MM-DD');
 
-    @Prop() element: IEditViewElement;
+    @Prop() value: string;
 
-    @Prop({ default: false }) toggleEdit: boolean;
+    @Prop() scope: string;
 
-    @Watch('toggleEdit') onToggleEditChange() {
-        this.onValueClick();
+    @Prop() handlerSetting: HandlerSetting;
+
+    @Prop() orderNum: string;
+
+    @Watch('value') onValueChanged(value) {
+        if (value !== this.editValue) this.editValue = value;
     }
 
-    @Prop() initToggle: boolean;
-
-    @Watch('initToggle') onInitToggleChange() {
-        this.editedValue = this.element.getValue();
+    @Watch('editValue') onEditedValueChanged(value, oldValue) {
+        this.calDate = value ? value : oldValue;
+        this.$emit('input', value);
     }
 
-    @Watch('editedValue') onEditedValueChanged(value, oldValue) {
-        this.element.setValue(value);
+    @Watch('calDate') onCalDateChanged(value: string) {
+        this.editValue = value;
     }
-
-    get spanValue(): string {
-        this.isEdit; return this.element.getValue();
-    }
-
-    onValueClick() {
-        this.isEdit = true;
-        this.editedValue = this.element.getValue();
-    }
-
-    onValueChanged() {
-        this.isEdit = false;
-        this.element.setValue(this.editedValue);
-    }
-
 }

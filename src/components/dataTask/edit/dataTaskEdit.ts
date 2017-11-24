@@ -31,6 +31,8 @@ export class DataTaskEditComponent extends Vue {
 
     height: string = '300px';
 
+    scope: string = 'dataTaskEditScope';
+
     selectedHandler: string = '';
 
     initToggle: boolean = false;
@@ -70,7 +72,7 @@ export class DataTaskEditComponent extends Vue {
     @Watch('dataTask')
     onWatchChanged (value: DataTask) {
         this.selectedHandler = (value ? value.TaskType : '');
-        this.cronString = value.getCronSchedule().toString();
+        this.cronString = value.CronSchedule;
     }
 
     @Watch('selectedHandler')
@@ -103,8 +105,11 @@ export class DataTaskEditComponent extends Vue {
         this.mut; return this.dataTask.getHandlerSettings().values();
     }
 
+    get handlerSettingsIsDafault(): boolean {
+        this.mut; return this.handlerSettings.isDefault();
+    }
+
     onModalHidden(e) {
-        this.$emit('onClose', e);
     }
 
     onSaveDialog(evt) {
@@ -123,7 +128,7 @@ export class DataTaskEditComponent extends Vue {
 
     onSaveClick() {
         this.$validator.reset();
-        this.$validator.validateAll()
+        this.$validator.validateAll(this.scope)
             .then(function(isValid) {
                 if (isValid) {
                     this.showSaveConfirmation = true;
@@ -153,6 +158,7 @@ export class DataTaskEditComponent extends Vue {
     closeEditTask() {
         this.$validator.reset();
         this.$emit('input', false);
+        this.$emit('onClose');
     }
 
     refreshList() {

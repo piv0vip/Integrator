@@ -44,10 +44,10 @@ export class CronPresetsComponent extends Vue {
             && helper.isCronString(this.cronPresetSelected)) {
             presetArray.push(this.cronPresetSelected);
         };
-        return presetArray.map((preset) => {
+        return presetArray.map((preset: string) => {
             return {
                 value: preset,
-                text: cronstrue.toString(preset)
+                text: cronstrue.toString(preset.toUpperCase())
             };
         });
     }
