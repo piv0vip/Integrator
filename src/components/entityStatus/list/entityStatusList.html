@@ -17,8 +17,7 @@
                 </div>
             </b-col>
             <!--<b-col>
-                <v-btn v-b-tooltip.hover.topright
-                        round
+                <v-btn round
                         title="Generate records"
                         color="teal lighten-2 white--text"
                         @click="onGenerateRecordsClick"><v-icon class="mr-2">link</v-icon>Generate 100 records</v-btn>
@@ -37,16 +36,14 @@
         :fields="fields" 
         :items="myProvider">
         <template slot="Reset" scope="data">
-            <v-btn v-b-tooltip.hover.topright
-                   icon flat
+            <v-btn icon flat
                    color="red lighten-2 white--text"
                    title="Reset entity status"
                    @click='onResetEntityStatus(data.item)'><i class="material-icons">compare_arrows</i></v-btn>
         </template>
         <template slot="InContent" scope="data">
             <span v-if="data.item.getInContent().getContent()">
-                <v-btn v-b-tooltip.hover.topright
-                    flat round
+                <v-btn flat round
                     color="indigo lighten-2 white--text"
                     title="In Content" 
                        value="assignment"
@@ -55,8 +52,7 @@
         </template>
         <template slot="OutContent" scope="data">
             <span v-if="data.item.getOutContent().getContent()">
-                <v-btn v-b-tooltip.hover.topright
-                    flat round
+                <v-btn flat round
                     color="indigo lighten-2 white--text"
                     title="In Content" 
                     @click='onViewContentClick(data.item.getOutContent())'><v-icon class="mr-1">assignment</v-icon>{{ data.item.getOutContent().getType() }}</v-btn>
@@ -72,14 +68,12 @@
     <!--<b-container>
         <b-row class="text-center">
             <b-col class="center">
-                <v-btn v-b-tooltip.hover.topright
-                    round
+                <v-btn round
                     title="Generate records" 
                     color="teal lighten-2 white--text"
                     @click="onGenerateRecordsClick"
                     ><v-icon class="mr-2">link</v-icon> Generate records </v-btn>-->
-                <!--v-btn v-b-tooltip.hover.topright
-                       round
+                <!--v-btn round
                        color="indigo lighten-2 white--text"
                        title="Refresh Table" 
                        @click="refreshTable"

@@ -9,19 +9,19 @@ export class ConfirmationComponent extends Vue {
 
     dialogIsVisible: boolean = false;
 
-    @Prop({default: false})
-    dialogVisible: boolean;
+    @Prop({ default: false })
+    value: boolean;
 
-    @Prop({default: 'Question'})
-    dialogTitle: String;
-
-    @Prop({default: 'Message'})
-    dialogMessage: String;
-
-    @Watch('dialogVisible')
-    onDialogVisibleChanged (value: boolean) {
+    @Watch('value')
+    onValueChanged(value){
         this.dialogIsVisible = value;
     }
+
+    @Prop({default: 'Question'})
+    title: String;
+
+    @Prop({default: 'Message'})
+    message: String;
 
     onOkClicked(e) {
         this.$emit('onOkClicked');
@@ -34,6 +34,6 @@ export class ConfirmationComponent extends Vue {
     }
 
     emitCloseClicked() { 
-        this.$emit('onCloseDialog');
+        this.$emit('input', false);
     }
 }    

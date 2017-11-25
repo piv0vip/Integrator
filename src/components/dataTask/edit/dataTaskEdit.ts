@@ -5,21 +5,14 @@ import { DataTask } from '../../../models';
 import { EnumValues, CustomEnumValues } from '../../../enums';
 import { HTTP } from '../../../util/http-common';
 import { HandlerSettingComponent, ConfirmationComponent } from '../../common/';
-import { CronStyleSchedulingComponent }  from '../../../components/common/cron/';
 import { IEnumValues } from '../../../interfaces';
-import { EditViewElementComponent } from '../../common/editViewElement';
 import { CronPresetsComponent } from './cronPresets';   
-import { Validator } from 'vee-validate';
-
-
 
 @Component({
     template: require('./dataTaskEdit.html'),
     components: {
-        'cron-style-scheduling': CronStyleSchedulingComponent,
         'handler-setting': HandlerSettingComponent,
-        'confirmation-dialog': ConfirmationComponent,
-        'edit-view-element': EditViewElementComponent,
+        'confirmation': ConfirmationComponent,
         'cron-presets': CronPresetsComponent
     },
     inject: ['$validator'],
@@ -46,8 +39,6 @@ export class DataTaskEditComponent extends Vue {
 
     showSaveConfirmation: boolean = false;
     showDiscardConfirmation: boolean = false;
-
-    validator: Validator = null;
 
     @Prop()
     value: boolean;

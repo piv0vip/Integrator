@@ -1,6 +1,6 @@
 <v-dialog v-model="showModal" persistent max-width="960px">
     <v-card>
-        <v-card-title class="headline grey lighten-2">
+        <v-card-title class="headline grey lighten-0 white--text">
             <v-icon x-large dark class="mr-3">settings</v-icon>
             Data Task Configuration
         </v-card-title>
@@ -125,28 +125,30 @@
 
             </v-container>
         </v-card-text>
+
         <v-card-actions class="p-3 grey lighten-3">
 
             <v-spacer></v-spacer>   
 
-            <v-btn round v-b-tooltip.hover.topright title="Save Data Task Configuration" color="primary" dark @click.native.stop="onSaveClick">
+            <v-btn round title="Save Data Task Configuration" color="primary" dark @click.native.stop="onSaveClick">
                 <v-icon class="mr-2">save</v-icon>Save
             </v-btn>
 
-            <confirmation-dialog :dialogVisible="showSaveConfirmation"
-                                 dialogMessage="Do you want to SAVE Changes and Close?"
-                                 @onOkClicked="onSaveOkClicked"
-                                 @onCloseDialog="showSaveConfirmation = false"></confirmation-dialog>
+            <confirmation v-model="showSaveConfirmation"
+                          message="Do you want to SAVE Changes and Close?"
+                          @onOkClicked="onSaveOkClicked">
+            </confirmation>
 
-            <v-btn round v-b-tooltip.hover.topright title="Discard Data Task Configuration" color="red" dark @click.native.stop="showDiscardConfirmation = true">
+            <v-btn round title="Discard Data Task Configuration" color="red" dark @click.native.stop="showDiscardConfirmation = true">
                 <v-icon class="mr-2">close</v-icon>Discard
             </v-btn>
 
-            <confirmation-dialog :dialogVisible="showDiscardConfirmation"
-                                 dialogMessage="Do you want to DISCARD Changes and Close?"
-                                 @onOkClicked="onDiscardOkClicked"
-                                 @onCloseDialog="showDiscardConfirmation = false"></confirmation-dialog>
+            <confirmation v-model="showDiscardConfirmation"
+                          message="Do you want to DISCARD Changes and Close?"
+                          @onOkClicked="onDiscardOkClicked">
+            </confirmation>
 
         </v-card-actions>
+
     </v-card>
 </v-dialog>
