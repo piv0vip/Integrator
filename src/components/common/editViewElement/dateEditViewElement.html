@@ -8,7 +8,7 @@
         min-width="290px">
     <v-text-field slot="activator" prepend-icon="event"
                   :label="handlerSetting.Name"
-                  :error-messages="errors.collect(orderNum)"
+                  :error-messages="errors.collect(orderNum, scope)"
                   v-validate="handlerSetting.getValidationString()"
                   v-model="editValue"
                   :data-vv-scope="scope"

@@ -33,7 +33,7 @@ export class HandlerSettingComponent extends Vue {
 
     calDate: string = moment().format('YYYY-MM-DD');
 
-    @Prop({ default: 'defaultScope' }) scope: string;
+    @Prop() scope: string;
 
     @Prop() value: string;
 
