@@ -27,6 +27,7 @@ Validator.extend('cron', {
 });
 
 Vue.use(BootstrapVue);
+
 Vue.use(Vuetify, {
     theme: {
         primary: '#3f51b5',
@@ -47,6 +48,10 @@ Vue.use(VeeValidate, {
 Vue.use(VueHighlightJS);
 
 import 'highlight.js/styles/xcode.css';
+
+import Icon from 'vue-awesome';
+
+Vue.component('icon', Icon)
 
 let router = new VueRouter({
   routes: [
