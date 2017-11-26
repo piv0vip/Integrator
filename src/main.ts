@@ -49,10 +49,6 @@ Vue.use(VueHighlightJS);
 
 import 'highlight.js/styles/xcode.css';
 
-import Icon from 'vue-awesome';
-
-Vue.component('icon', Icon)
-
 let router = new VueRouter({
   routes: [
     { path: '/', component: DataTaskListComponent },

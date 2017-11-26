@@ -1,4 +1,5 @@
 import Vue from 'vue';
+
 import { Component, Watch } from 'vue-property-decorator';
 
 import { HTTP } from '../../../util/http-common';
@@ -41,7 +42,6 @@ export class DataTaskListComponent extends Vue {
     statusEnum = new CustomEnumValues();
 
     handlerTypes: HandlerTypes = new HandlerTypes();
-    handlersEnum = new CustomEnumValues();
 
     cronPresets: string[] = [];
 
@@ -60,17 +60,6 @@ export class DataTaskListComponent extends Vue {
     formatDate: Function = helper.formatDate;
 
     getEnumDescription: Function = (val) => { return this.statusEnum.getEnumValueByCode(val).getDescription(); };
-
-    pageOptions: {text: number, value: number}[] = [{text: 5, value: 5}, {text: 10, value: 10}, {text: 15, value: 15}];
-
-    pagedList: IPagedList = new PagedList(); 
-    
-    perPage: number = 5;
-    totalRows: number = 0;
-    currentPage: number = 1;
-    filter: string = '';
-
-    pagesCount: number = 1;
 
     hubConnection: signalR.HubConnection;
 
@@ -145,27 +134,9 @@ export class DataTaskListComponent extends Vue {
         },
     ];
 
-    get CronPresets(): string[] {
-        return this.cronPresets;
-    }
-
     created() {
-        HTTP.get('DataTask/GetHandlersWithDefaultSettings')
-            .then(function (response: AxiosResponse) {
-                this.handlerTypes.Parse(response.data);
 
-                let handlers = response.data.map(function (o) {
-                    return {
-                        TaskHandlerName: o.taskHandlerName,
-                        TaskType: o.taskType,
-                        DefaultHandlerSettings: o.defaultHandlerSettings
-                    };
-                });
-                this.handlersEnum = Enums.createHandlerEnum(handlers);
-            }.bind(this))
-            .catch(function (e) {
-                console.log(e);
-            }.bind(this));
+        this.$store.dispatch('getDataTasks');
 
         this.statusEnum.Load([
             { code: 'NotStarted', name: 'NotStarted', description: 'Not Started'},
@@ -184,27 +155,17 @@ export class DataTaskListComponent extends Vue {
         this.hubConnection.start();
     }
 
+    destroyed() {
+        this.hubConnection.off('Broadcast', this.handler);
+    }
+
     handler(data) {
         this.consoleMessages.push(data);
         if (this.consoleMessages.length > 200) _.drop(this.consoleMessages);
     }
 
-    destroyed() {
-        this.hubConnection.off('Broadcast', this.handler);
-    }
-
-    myProvider(ctx) {
-        ctx.filter = this.filter;
-        return DataTaskService.getPagedList(this.handlerTypes, ctx)
-        .then( function (response: {data: DataTask[], metadata}) {
-            this.pagedList = response.metadata;
-            this.pagesCount = Math.ceil(response.metadata.totalItemCount / this.perPage);
-            return response.data;
-        }.bind(this))
-        .catch( (e) => {
-            console.log(e);
-            return [];
-        });
+    get dataTasks(): DataTask[] {
+        return this.$store.getters.dataTasksArray;
     }
 
     onExecLocalyTaskClick(dataTask: DataTask) {
@@ -240,18 +201,11 @@ export class DataTaskListComponent extends Vue {
     }
 
     refreshTable() {
-        HTTP.get('DataTask/CrontabPresets')
-            .then(function(response: AxiosResponse) {
+        this.$store.dispatch('getDataTasks');
+    }
 
-                this.cronPresets = response.data;
-
-            }.bind(this))
-            .catch(function(e) {
-                console.log(e);
-            }.bind(this));
-
-        let table: any = this.$refs['dataTasksTable'];
-        table.refresh();
+    onRefreshTableClick() {
+        this.$store.commit('setDataTaskStatus', TaskStatusEnum.NotStarted);
     }
 
     onEditTaskClick(dataTask: DataTask) {

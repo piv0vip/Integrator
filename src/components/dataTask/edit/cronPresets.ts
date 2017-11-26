@@ -15,25 +15,21 @@ export class CronPresetsComponent extends Vue {
 
     cronPresetSelected: string = '* * * * *';
 
-    @Prop({default: []})
-    cronPresets: string[];
-
     @Prop()
-    cronValue: string;
+    value: string;
 
-    @Watch('cronPresets')
-    onCronPresetsChanged() {
-        // if (this.cronPresets.length > 0) { this.cronPresetSelected = this.cronPresets[0]; }
+    get cronPresets(): string[] {
+        return this.$store.state.cronPresets;
     }
 
-    @Watch('cronValue')
-    onCronValueChanged(value) {
+    @Watch('value')
+    onValueChanged(value) {
         if (value !== this.cronPresetSelected) this.cronPresetSelected = value;
         this.mut = !this.mut;
     }
 
     @Watch('cronPresetSelected') onCronPresetSelectedChange(value) {
-        if (value !== this.cronValue) { this.$emit('change', value);  }
+        this.$emit('input', value);
     }
 
     get cronPresetsList(): { value: string, text: string }[] {

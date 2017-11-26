@@ -2,7 +2,7 @@
     <div v-show="showConsole" class="p-2" style="height:300px; overflow-y:auto; background-color:black; color:white ">
         <div v-for="message in consoleMessages">{{ message }}</div>
     </div>
-    <div class="my-1 row">
+    <!--<div class="my-1 row">
         <b-col class="pt-1" cols="2">
             <b-form-fieldset horizontal label="Rows per page" :label-cols="5">
                 <b-form-select :options="pageOptions" v-model="perPage" />
@@ -18,7 +18,7 @@
                 <v-pagination :length="pagesCount" v-model="currentPage" circle></v-pagination>
             </div>
         </b-col>
-    </div>
+    </div>-->
     <b-table 
         id="data-tasks"
         ref="dataTasksTable" 
@@ -28,10 +28,8 @@
         @row-dblclicked="onEditTaskClick"
         :sort-by.sync="sortBy"
         :sort-desc.sync="sortDesc"
-        :current-page="currentPage"
-        :per-page="perPage"
         :fields="fieldds" 
-        :items="myProvider">
+        :items="dataTasks">
         <template slot="ExecLoc" scope="data">
             <v-btn icon flat  
                 color="indigo lighten-2 white--text"
@@ -63,18 +61,21 @@
                                  @onOkClicked="onDeleteTaskClick(data.item)"></confirmation-button>
          </template>
     </b-table>
+    
     <b-container>
         <b-row class="text-center">
             <b-col class="center">
+                
                 <v-btn round
                     title="Add new task" 
                     color="teal lighten-2 white--text"
                     @click="onAddDatataskClick"
                     ><v-icon class="mr-2">link</v-icon> Add DataTask</v-btn>
+                
                 <v-btn round
                        color="indigo lighten-2 white--text"
                        title="Refresh Table" 
-                       @click="refreshTable"
+                       @click="onRefreshTableClick"
                        ><v-icon class="mr-2">autorenew</v-icon> Refresh table</v-btn>
 
                 <v-btn round color="green lighten-2 white--text"
@@ -82,16 +83,9 @@
             </b-col>
         </b-row>
     </b-container>
-    <edit-task 
-        :cronPresets="CronPresets"
-        v-model="showEditTask" 
-        :dataTask="currentTask"
-        :handlersEnum="handlersEnum" 
-        :handlerTypes="handlerTypes"
-        @onClose="closeEditTask">
-    </edit-task>
-    <execute-task-localy :show="showExecuteTaskLocaly"
-               :dataTask="currentTask"
-               @onClose="closeExecuteTaskLocaly">
-    </execute-task-localy>
+    
+    <edit-task v-model="showEditTask" :dataTask="currentTask" @onClose="closeEditTask"> </edit-task>
+    
+    <execute-task-localy :show="showExecuteTaskLocaly" :dataTask="currentTask" @onClose="closeExecuteTaskLocaly"> </execute-task-localy>
+
 </div>

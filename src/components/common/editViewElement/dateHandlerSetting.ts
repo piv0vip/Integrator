@@ -6,7 +6,7 @@ import { HandlerSetting } from '../../../classes/settings';
 import moment from 'moment';
 
 @Component({
-    template: require('./dateEditViewElement.html'),
+    template: require('./dateHandlerSetting.html'),
     inject: ['$validator']
 })
 

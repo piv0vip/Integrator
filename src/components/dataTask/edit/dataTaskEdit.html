@@ -77,7 +77,7 @@
                     </v-flex>
 
                     <v-flex xs7 class="px-4">
-                        <cron-presets :cronValue="cronString" :cronPresets="cronPresets" @change="onCronPresetsChange"></cron-presets>
+                        <cron-presets v-model="cronString"></cron-presets>
                     </v-flex>
 
                     <v-flex xs2 class="px-4">
@@ -130,7 +130,7 @@
 
             <v-spacer></v-spacer>   
 
-            <v-btn round title="Save Data Task Configuration" color="primary" dark @click.native.stop="onSaveClick">
+            <v-btn round title="Save Data Task Configuration" color="primary" dark @click="onSaveClick">
                 <v-icon class="mr-2">save</v-icon>Save
             </v-btn>
 
@@ -139,7 +139,7 @@
                           @onOkClicked="onSaveOkClicked">
             </confirmation>
 
-            <v-btn round title="Discard Data Task Configuration" color="red" dark @click.native.stop="showDiscardConfirmation = true">
+            <v-btn round title="Discard Data Task Configuration" color="red" dark @click="showDiscardConfirmation = !showDiscardConfirmation">
                 <v-icon class="mr-2">close</v-icon>Discard
             </v-btn>
 

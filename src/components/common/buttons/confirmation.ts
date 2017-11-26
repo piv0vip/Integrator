@@ -13,7 +13,7 @@ export class ConfirmationComponent extends Vue {
     value: boolean;
 
     @Watch('value')
-    onValueChanged(value){
+    onValueChanged(value) {
         this.dialogIsVisible = value;
     }
 

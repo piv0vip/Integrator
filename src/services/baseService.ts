@@ -27,6 +27,14 @@ export abstract class BaseService {
         });
     }
 
+    public getList(): Promise<AxiosResponse> {
+        return new Promise((resolve, reject) => {
+            HTTP.get(`${this.ControllerName}/GetList`)
+                .then(response => { resolve(response); })
+                .catch(error => { reject(Error); });
+        });
+    }
+
     public createNewEntities(entities: TEntity[]): Promise<AxiosResponse> {
         let toServerEntities: {}[] = entities.map((entity: TEntity) => entity.toServer());
         return new Promise((resolve, reject) => {

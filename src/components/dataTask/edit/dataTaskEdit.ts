@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
-import { DataTaskHandlerSettings, HandlerTypes, HandlerSetting } from '../../../classes/settings';
+import { DataTaskHandlerSettings, HandlerTypes, HandlerType, HandlerSetting } from '../../../classes/settings';
 import { DataTask } from '../../../models';
 import { EnumValues, CustomEnumValues } from '../../../enums';
 import { HTTP } from '../../../util/http-common';
@@ -34,9 +34,6 @@ export class DataTaskEditComponent extends Vue {
 
     cronString: string = '* * * * *';
 
-    alertSec: number = 0;
-    alertMessage: string = 'Validation errors...';
-
     showSaveConfirmation: boolean = false;
     showDiscardConfirmation: boolean = false;
 
@@ -51,17 +48,16 @@ export class DataTaskEditComponent extends Vue {
     @Prop()
     dataTask: DataTask;
 
-    @Prop({default: () => new CustomEnumValues() })
-    handlersEnum: IEnumValues;
+    get handlerTypes(): HandlerTypes {
+        return this.$store.state.handlerTypes;
+    }
 
-    @Prop()
-    handlerTypes: HandlerTypes;
-
-    @Prop()
-    cronPresets: string[];
+    get handlerSettingsSelectList(): any[] {
+        return this.handlerTypes.asSelectBoxList();
+    }
 
     @Watch('dataTask')
-    onWatchChanged (value: DataTask) {
+    onDataTaskChanged (value: DataTask) {
         this.selectedHandler = (value ? value.TaskType : '');
         this.cronString = value.CronSchedule;
     }
@@ -78,10 +74,6 @@ export class DataTaskEditComponent extends Vue {
     @Watch('cronString')
     onCronStringChange(value) {
         this.dataTask.CronSchedule = value;
-    }
-
-    get handlerSettingsSelectList(): any[] {
-        return this.handlersEnum ? this.handlersEnum.asSelectList() : [];
     }
 
     get isNew(): boolean {
@@ -140,10 +132,6 @@ export class DataTaskEditComponent extends Vue {
 
     onCloseSaveConfirmation() {
         this.showSaveConfirmation = false;
-    }
-
-    onCronPresetsChange(value) {
-        this.cronString = value;
     }
 
     closeEditTask() {

@@ -49,4 +49,13 @@ export class HandlerTypes extends Dictionary<string, HandlerType> {
             this.setValue(ht.TaskType, ht);
         });
     }
+
+    asSelectBoxList(): any[] {
+        return this.values().map((obj: HandlerType) => {
+            return {
+                text: obj.TaskHandlerName,
+                value: obj.TaskType
+            };
+        });
+    }
 }

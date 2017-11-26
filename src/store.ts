@@ -1,15 +1,87 @@
 import * as Vue from 'vue';
 import Vuex from 'vuex';
 import { HandlerTypes } from './classes/settings/handlerTypes';
+import { HTTP } from './util/http-common';
+import { AxiosResponse } from 'axios';
+import { DataTaskService } from './services';
+import { DataTask } from './models/DataTask';
+
+import { Dictionary } from 'typescript-collections';
+
+import { TaskStatusEnum } from './enums';
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
+    strict: true,
     state: {
-        handlerTypes: HandlerTypes
+        handlerTypes: new HandlerTypes(),
+        cronPresets: new Array<string>(),
+        dataTasks: new Array<DataTask>()
     },
-    actions: {},
-    mutations: {},
-    getters: {},
+    
+    getters: {
+        dataTasksArray: state => state.dataTasks
+    },
+    
+    mutations: {
+        setCronPresets(state, cronPresets: string[]) {
+            state.cronPresets = cronPresets;
+        },
+
+        sethandlerTypes(state, handlerTypesJson) {
+            state.handlerTypes.Parse(handlerTypesJson);
+        },
+
+        setDataTasks(state, dataTasks: DataTask[]) {
+            state.dataTasks = dataTasks;
+        },
+
+        setDataTaskStatus(state, status: TaskStatusEnum) {
+            state.dataTasks[0].Status = status;
+        }
+
+    },
+    
+    actions: {
+        
+        getHandlerTypes({ commit }) {
+            return new Promise( (resolve, reject) => {
+                HTTP.get('DataTask/GetHandlersWithDefaultSettings')
+                .then( (response: AxiosResponse) => {
+                    commit('sethandlerTypes', response.data);
+                    resolve();
+                })
+                .catch( e => { reject(e); });
+            });
+        },
+
+        getCronPresets({ commit }) {
+            return new Promise( (resolve, reject) => {
+                HTTP.get('DataTask/CrontabPresets')
+                .then( (response: AxiosResponse) => {
+                    commit('setCronPresets', response.data);
+                    resolve();
+                })
+                .catch( e => { reject(e); });
+            });
+        },
+
+        getDataTasks({ dispatch, commit }) {
+            return new Promise( (resolve, reject) => {
+                dispatch('getHandlerTypes').then( () => {
+                    dispatch('getCronPresets').then( () => {
+                        DataTaskService.getList()
+                        .then( ( response: DataTask[] ) => {
+                            commit('setDataTasks', response);
+                            resolve();
+                        })
+                        .catch( (e) => { console.log(e); });
+                    });
+                });
+            });
+        }
+    },
+    
     modules: {},
 });
