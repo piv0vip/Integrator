@@ -1,27 +1,35 @@
-<div>
-    <b-modal ref="execute-task-localy-modal"
-             id="execute-task-localy-modal"
-             size="lg"
-             header-bg-variant="light"
-             v-model="showModal"
-             title="Execute Task Localy"
-             @hidden="onModalHidden"
-             @ok="onExecuteClick">
-        <h6 class="pt-1">Task Parameters</h6>
+<v-dialog v-model="value" persistent max-width="800px">
+    <v-card>
+        <v-card-title class="headline grey lighten-0 white--text">
+            <v-icon x-large dark class="mr-3">flash_on</v-icon>
+            Execute Task with custom parameters
+        </v-card-title>
+        <v-card-text>
 
-        <handler-settings :scope="scope" :initToggle="show" height="500px" :handlerSettings="handlerSettings"></handler-settings>
+            <h6 class="pt-1">Task Parameters</h6>
 
-        <template slot="modal-footer">
+            <handler-settings :scope="scope" :initToggle="value" height="500px" :handlerSettings="handlerSettings"></handler-settings>
 
-            <v-btn round title="Execute " color="primary" dark @click.native.stop="onExecuteClick">
+        </v-card-text>
+
+        <v-card-actions class="p-3 grey lighten-3">
+
+            <v-spacer></v-spacer>
+
+            <v-btn round title="Execute " color="primary" dark @click="onExecuteClick">
                 <v-icon class="mr-2">directions_run</v-icon>Execute
             </v-btn>
 
-            <v-btn round title="Discard Data Task Configuration" color="red" dark @click.native.stop="onCloseClick">
+            <confirmation v-model="showConfirmation"
+                          message="Do you really want to execute task?"
+                          @onOkClicked="Execute">
+            </confirmation>
+
+            <v-btn round title="Discard Data Task Configuration" color="red" dark @click="onCloseClick">
                 <v-icon class="mr-2">close</v-icon>Close
             </v-btn>
 
-        </template>
+        </v-card-actions>
 
-    </b-modal>
-</div>
+    </v-card>
+</v-dialog>

@@ -77,6 +77,10 @@ export class DataTask extends TEntity {
         this._cronString = value.toUpperCase();
     }
 
+    get IsRunning(): boolean {
+        return this.Status == TaskStatusEnum.Running;
+    }
+
     getHandlerSettings(): DataTaskHandlerSettings {
         return this._HandlerSettings;
     }

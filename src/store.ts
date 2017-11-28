@@ -17,7 +17,9 @@ export const store = new Vuex.Store({
     state: {
         handlerTypes: new HandlerTypes(),
         cronPresets: new Array<string>(),
-        dataTasks: new Array<DataTask>()
+        dataTasks: new Array<DataTask>(),
+
+        entityStatuses: ''
     },
     
     getters: {
@@ -39,6 +41,10 @@ export const store = new Vuex.Store({
 
         setDataTaskStatus(state, status: TaskStatusEnum) {
             state.dataTasks[0].Status = status;
+        },
+
+        setEntityStatuses(state, statuses: string) {
+            state.entityStatuses = statuses;
         }
 
     },
@@ -79,6 +85,17 @@ export const store = new Vuex.Store({
                         .catch( (e) => { console.log(e); });
                     });
                 });
+            });
+        },
+
+        getEntityStatuses({ dispatch, commit }) {
+            return new Promise((resolve, reject) => {
+                HTTP.get('EntityStatus/GetFilterValues')
+                    .then((response: AxiosResponse) => {
+                        commit('setEntityStatuses', response.data);
+                        resolve();
+                    })
+                    .catch(e => { reject(e); });
             });
         }
     },

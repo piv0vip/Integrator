@@ -225,7 +225,6 @@ export class DataTaskListComponent extends Vue {
     }
 
     closeExecuteTaskLocaly(e) {
-        this.showExecuteTaskLocaly = false;
         this.refreshTable();
     }
 

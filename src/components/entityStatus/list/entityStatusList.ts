@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import { HTTP } from '../../../util/http-common';
-import { EnumValue, CustomEnumValues, Enums, TaskStatusEnum } from '../../../enums';
+import { EnumValue, CustomEnumValues, Enums, TaskStatusEnum, EntityStatusEnum } from '../../../enums';
 import { AxiosResponse } from 'axios';
 import { EntityStatus } from '../../../models';
 import * as helper from '../../../util/helper';
@@ -11,15 +11,28 @@ import Chance from 'chance';
 import { ContentViewComponent } from '../contentView/contentView';
 import { ContentFactory, Content } from '../contentView/classes';
 
+import { CheckBoxFilterComponent, ContainFilterComponent } from '../../common/filter';
+import { CheckBoxFilter, Filters, EntityStateFilters, ContainFilter } from '../../../classes/filter';
+import { EnumValues } from 'enum-values';
+
 @Component({
     template: require('./entityStatusList.html'),
     components: {
-        'content-view': ContentViewComponent
+        'content-view': ContentViewComponent,
+        'checkbox-filter': CheckBoxFilterComponent,
+        'contain-filter': ContainFilterComponent
     }
 })
 
 export class EntityStatusListComponent extends Vue {
 
+    cb: string[] = [];
+
+    filters: EntityStateFilters = new EntityStateFilters();
+
+    keyword: ContainFilter = this.filters.Keyword;
+    cbFilter: CheckBoxFilter = this.filters.EntityStatuses;
+    
     statusEnum = new CustomEnumValues();
     
     currentEntity: EntityStatus = EntityStatus.createNew();
@@ -120,6 +133,10 @@ export class EntityStatusListComponent extends Vue {
     ];
 
     created() {
+
+        this.$store.dispatch('getEntityStatuses');
+
+
         this.statusEnum.Load([
             { code: 'NotFound', name: 'NotFound', description: 'Not Found' },
             { code: 'ReadyToSend', name: 'ReadyToSend', description: 'Ready to send' },
@@ -131,7 +148,7 @@ export class EntityStatusListComponent extends Vue {
     }
 
     myProvider(ctx) {
-        ctx.filter = this.filter;
+        ctx.filter = this.filters;
         return EntityStatusService.getPagedList(ctx)
         .then( function(response: {data: EntityStatus[], metadata}) {
             this.pagedList = response.metadata;
@@ -213,6 +230,14 @@ export class EntityStatusListComponent extends Vue {
                 console.log(e);
                 this.refreshTable();
             });
+    }
+
+    onApplyFilter() {
+        this.refreshTable();
+    }
+
+    onResetFilter() {
+        this.filters.reset();
     }
 
 }

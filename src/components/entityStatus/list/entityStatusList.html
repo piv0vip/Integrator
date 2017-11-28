@@ -8,7 +8,7 @@
             </b-col>
             <b-col class="pt-1" cols="2">
                 <b-form-fieldset horizontal label="Filter" :label-cols="2">
-                    <b-form-input @keyup.native.enter="onFilterChange" v-model="filter" placeholder="Type to Search" />
+                    <b-form-input @keyup.native.enter="onFilterChange" v-model="keyword.Value" placeholder="Type to Search" />
                 </b-form-fieldset>
             </b-col>
             <b-col cols="4">
@@ -65,6 +65,27 @@
             </b-form-fieldset>
         </div>     
         <content-view :show="showContent" :content="content"></content-view>
+
+
+    <v-container fluid>
+        <v-layout>
+            <v-flex xs12>
+                <v-btn @click="onApplyFilter">Apply filter</v-btn>
+                <v-btn @click="onResetFilter">Reset filter</v-btn>
+            </v-flex>
+        </v-layout>
+        <v-layout row wrap>
+            <v-flex xs2>
+                <checkbox-filter v-model="cbFilter.CheckedValues" :cbFilter="cbFilter"></checkbox-filter>
+            </v-flex>
+            <v-flex xs2>
+                <contain-filter v-model="keyword.Value" :cbFilter="keyword"></contain-filter>
+            </v-flex>
+        </v-layout>
+    </v-container>
+
+
+    
     <!--<b-container>
         <b-row class="text-center">
             <b-col class="center">

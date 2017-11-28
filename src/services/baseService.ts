@@ -3,6 +3,8 @@ import { AxiosResponse } from 'axios';
 import { IServerable } from '../interfaces';
 import { TEntity } from '../models';
 
+import { Filters } from '../classes/filter'
+
 export abstract class BaseService {
     protected _controllerName: string = typeof this.constructor.name;
 
@@ -10,18 +12,9 @@ export abstract class BaseService {
         this.setControllerName();
     }
 
-    public getPagedList(ctx: { currentPage: number, filter: string, perPage: number, sortBy: string, sortDesc: boolean }): Promise<AxiosResponse> {
+    public getPagedList(ctx: { currentPage: number, filter: Filters, perPage: number, sortBy: string, sortDesc: boolean }): Promise<AxiosResponse> {
         return new Promise((resolve, reject) => {
-            HTTP.get(`${this.ControllerName}/GetPagedList?pageSize=${ctx.perPage}&pageNumber=${ctx.currentPage}&sortBy=${ctx.sortBy}&sortDesc=${ctx.sortDesc}&filter=${ctx.filter || ''}`,
-                {
-                    headers: {
-                        'pageSize': ctx.perPage,
-                        'pageNumber': ctx.currentPage,
-                        'filter': ctx.filter,
-                        'sortBy': ctx.sortBy,
-                        'sortDesc': ctx.sortDesc
-                    }
-                })
+            HTTP.post(`${this.ControllerName}/GetPagedList?pageSize=${ctx.perPage}&pageNumber=${ctx.currentPage}&sortBy=${ctx.sortBy}&sortDesc=${ctx.sortDesc}`, ctx.filter.toServer())
                 .then(response => { resolve(response); })
                 .catch(error => { reject(Error); });
         });

@@ -29,3 +29,10 @@ export enum EntityStatusEnum {
     Errored         = 'Errored',
     Ignored         = 'Ignored',
 }
+
+export enum FilterTypeEnum {
+    EnumCheckBoxes = 1,
+    StringList,
+    Date,
+    StringContains
+}
