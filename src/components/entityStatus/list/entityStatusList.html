@@ -16,12 +16,6 @@
                     <v-pagination :length="pagesCount" v-model="currentPage" circle></v-pagination>
                 </div>
             </b-col>
-            <!--<b-col>
-                <v-btn round
-                        title="Generate records"
-                        color="teal lighten-2 white--text"
-                        @click="onGenerateRecordsClick"><v-icon class="mr-2">link</v-icon>Generate 100 records</v-btn>
-            </b-col>-->
         </b-row>
     </b-container>
     <b-table 
@@ -75,42 +69,19 @@
             </v-flex>
         </v-layout>
         <v-layout row wrap>
+
             <v-flex xs2>
                 <checkbox-filter v-model="cbFilter.CheckedValues" :cbFilter="cbFilter"></checkbox-filter>
             </v-flex>
+
             <v-flex xs2>
                 <contain-filter v-model="keyword.Value" :cbFilter="keyword"></contain-filter>
             </v-flex>
+
+            <v-flex xs2>
+
+            </v-flex>
+
         </v-layout>
     </v-container>
-
-
-    
-    <!--<b-container>
-        <b-row class="text-center">
-            <b-col class="center">
-                <v-btn round
-                    title="Generate records" 
-                    color="teal lighten-2 white--text"
-                    @click="onGenerateRecordsClick"
-                    ><v-icon class="mr-2">link</v-icon> Generate records </v-btn>-->
-                <!--v-btn round
-                       color="indigo lighten-2 white--text"
-                       title="Refresh Table" 
-                       @click="refreshTable"
-                       ><v-icon class="mr-2">autorenew</v-icon> Refresh table</v-btn-->
-            <!--</b-col>
-        </b-row>
-    </b-container>-->
-    <!--edit-task 
-        :show="showEditTask" 
-        :dataTask="currentTask"
-        :handlersEnum="handlersEnum" 
-        :handlers="handlers"
-        @onClose="closeEditTask">
-    </edit-task>
-    <execute-task-localy :show="showExecuteTaskLocaly"
-               :dataTask="currentTask"
-               @onClose="closeExecuteTaskLocaly">
-    </execute-task-localy> -->
 </div>

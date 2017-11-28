@@ -19,7 +19,9 @@ export const store = new Vuex.Store({
         cronPresets: new Array<string>(),
         dataTasks: new Array<DataTask>(),
 
-        entityStatuses: ''
+        entityStatuses: {
+            statuses: []
+        }
     },
     
     getters: {
@@ -43,7 +45,7 @@ export const store = new Vuex.Store({
             state.dataTasks[0].Status = status;
         },
 
-        setEntityStatuses(state, statuses: string) {
+        setEntityStatuses(state, statuses: any) {
             state.entityStatuses = statuses;
         }
 

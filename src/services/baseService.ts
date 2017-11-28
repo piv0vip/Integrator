@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios';
 import { IServerable } from '../interfaces';
 import { TEntity } from '../models';
 
-import { Filters } from '../classes/filter'
+import { Filters } from '../classes/filter';
 
 export abstract class BaseService {
     protected _controllerName: string = typeof this.constructor.name;

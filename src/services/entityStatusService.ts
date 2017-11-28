@@ -5,7 +5,7 @@ import { AxiosResponse } from 'axios';
 import { HandlerTypes } from '../classes/settings/handlerTypes';
 import { BaseService } from './baseService';
 
-import { Filters } from '../classes/filter'
+import { Filters } from '../classes/filter';
 
 export class EntityStatusService extends BaseService {
     

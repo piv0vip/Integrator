@@ -6,7 +6,7 @@ import { HandlerTypes } from '../classes/settings/handlerTypes';
 import { BaseService } from './baseService';
 import { store } from '../store';
 
-import { Filters } from '../classes/filter'
+import { Filters } from '../classes/filter';
 
 export class DataTaskService extends BaseService {
     protected setControllerName() {

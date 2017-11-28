@@ -56,7 +56,7 @@ export class ContainFilter extends Filter {
     }
 
     reset(): void {
-        this.Value='';
+        this.Value = '';
     }
 }
 
@@ -95,11 +95,11 @@ export class Filters extends Dictionary<string, IFilter> implements IServerable,
     get Keyword(): ContainFilter { return this.getValue('Keyword') as ContainFilter; }
 
     toServer(): any {
-        var obj = {};
+        let obj = {};
  
         this.forEach((key, value) => {
             obj[key] = value.toServer();
-        })
+        });
 
         return obj;
     }
@@ -107,17 +107,17 @@ export class Filters extends Dictionary<string, IFilter> implements IServerable,
     reset(): void {
         this.forEach((key, value) => {
             value.reset();
-        })
+        });
     }
     
 }
 
 export class EntityStateFilters extends Filters {
 
-    get EntityStatuses(): CheckBoxFilter { return this.getValue('EntityStatuses') as CheckBoxFilter }
+    get EntityStatuses(): CheckBoxFilter { return this.getValue('EntityStatuses') as CheckBoxFilter; }
 
     constructor() {
         super();
-        this.setValue('EntityStatuses', new CheckBoxFilter(EnumValues.getNames(EntityStatusEnum)))
+        this.setValue('EntityStatuses', new CheckBoxFilter(EnumValues.getNames(EntityStatusEnum)));
     }
 }

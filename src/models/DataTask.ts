@@ -78,7 +78,7 @@ export class DataTask extends TEntity {
     }
 
     get IsRunning(): boolean {
-        return this.Status == TaskStatusEnum.Running;
+        return this.Status === TaskStatusEnum.Running;
     }
 
     getHandlerSettings(): DataTaskHandlerSettings {

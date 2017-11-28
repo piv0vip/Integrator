@@ -17,7 +17,7 @@ export class ContainFilterComponent extends Vue {
 
     @Watch('value')
     onValueChanged(value) {
-        if (this.containValue != value) { this.containValue = value; }
+        if (this.containValue !== value) { this.containValue = value; }
     }
 
     @Watch('containValue')

@@ -17,7 +17,7 @@ export class CheckBoxFilterComponent extends Vue {
 
     @Watch('value')
     onValueChanged(value) {
-        if (this.checkedValues != value) { this.checkedValues = value }
+        if (this.checkedValues !== value) { this.checkedValues = value; }
     }
 
     @Watch('checkedValues')
