@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import { HTTP } from '../../../util/http-common';
 import { EnumValue, CustomEnumValues, Enums, TaskStatusEnum, EntityStatusEnum } from '../../../enums';
 import { AxiosResponse } from 'axios';
@@ -11,12 +11,15 @@ import { ContentViewComponent } from '../contentView/contentView';
 import { ContentFactory, Content } from '../contentView/classes';
 
 import { CheckBoxFilterComponent, ContainFilterComponent } from '../../common/filter';
-import { CheckBoxFilter, Filters, EntityStateFilters, ContainFilter } from '../../../classes/filter';
+import { CheckBoxFilter, Filters, EntityStatatusFilters, ContainFilter } from '../../../classes/filter';
 import { EnumValues } from 'enum-values';
+
+import Multiselect from 'vue-multiselect';
 
 @Component({
     template: require('./entityStatusList.html'),
     components: {
+        Multiselect,
         'content-view': ContentViewComponent,
         'checkbox-filter': CheckBoxFilterComponent,
         'contain-filter': ContainFilterComponent
@@ -25,10 +28,17 @@ import { EnumValues } from 'enum-values';
 
 export class EntityStatusListComponent extends Vue {
 
-    filters: EntityStateFilters = new EntityStateFilters();
+    filters: EntityStatatusFilters = new EntityStatatusFilters();
+
+    menu: boolean = false;
 
     keyword: ContainFilter = this.filters.Keyword;
-    cbFilter: CheckBoxFilter = this.filters.EntityStatuses;
+    entityStatusFilter: CheckBoxFilter = this.filters.EntityStatuses;
+    statusMessageFilter: CheckBoxFilter = this.filters.StatusMessages;
+    entityTypeFilter: CheckBoxFilter = this.filters.EntityTypes;
+    sourceFilter: CheckBoxFilter = this.filters.Sources;
+    targetFilter: CheckBoxFilter = this.filters.Targets;
+    versionFilter: CheckBoxFilter = this.filters.Versions;
     
     statusEnum = new CustomEnumValues();
     
@@ -72,6 +82,7 @@ export class EntityStatusListComponent extends Vue {
         }, 
         {
             key: 'SourceId',
+            tdClass: 'py-3',
             label: 'Source Id',
             sortable: true,
         },
@@ -129,7 +140,15 @@ export class EntityStatusListComponent extends Vue {
 
     created() {
 
-        this.$store.dispatch('getEntityStatuses');
+        this.$store.dispatch('getEntityStatuses').then(() => {
+            let filterPresets = this.$store.state['entityStatus'].entityStatuses;
+            this.filters.EntityStatuses.Values = filterPresets.statuses;
+            this.filters.StatusMessages.Values = filterPresets.statusMessages;
+            this.filters.EntityTypes.Values = filterPresets.entityTypes;
+            this.filters.Sources.Values = filterPresets.sources;
+            this.filters.Targets.Values = filterPresets.targets;
+            this.filters.Versions.Values = filterPresets.versions;
+        });
 
         this.statusEnum.Load([
             { code: 'NotFound', name: 'NotFound', description: 'Not Found' },
@@ -188,6 +207,16 @@ export class EntityStatusListComponent extends Vue {
 
     onResetFilter() {
         this.filters.reset();
+        this.onApplyFilter();
+    }
+
+    customLabel(option) {
+        return option.displayName;
+    }
+
+    onCClick(data) {
+        debugger;
+        this.menu = !this.menu;
     }
 
 }

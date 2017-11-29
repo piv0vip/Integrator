@@ -4,7 +4,7 @@ import { HTTP } from '../util/http-common';
 import { AxiosResponse } from 'axios';
 import { HandlerTypes } from '../classes/settings/handlerTypes';
 import { BaseService } from './baseService';
-import { store } from '../store';
+import store from '../store';
 
 import { Filters } from '../classes/filter';
 
@@ -21,7 +21,7 @@ export class DataTaskService extends BaseService {
                 .then((response: AxiosResponse) => {
 
                     response.data.forEach((dataTask) => {
-                        dataTasks.push(DataTask.createDataTaskFromJson(store.state.handlerTypes, dataTask));
+                        dataTasks.push(DataTask.createDataTaskFromJson(store.state['dataTask'].handlerTypes, dataTask));
                     });
 
                     resolve(dataTasks);

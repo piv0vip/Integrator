@@ -112,12 +112,27 @@ export class Filters extends Dictionary<string, IFilter> implements IServerable,
     
 }
 
-export class EntityStateFilters extends Filters {
+export class EntityStatatusFilters extends Filters {
 
     get EntityStatuses(): CheckBoxFilter { return this.getValue('EntityStatuses') as CheckBoxFilter; }
+
+    get StatusMessages(): CheckBoxFilter { return this.getValue('StatusMessages') as CheckBoxFilter; }
+
+    get EntityTypes(): CheckBoxFilter { return this.getValue('EntityTypes') as CheckBoxFilter; }
+
+    get Sources(): CheckBoxFilter { return this.getValue('Sources') as CheckBoxFilter; }
+
+    get Targets(): CheckBoxFilter { return this.getValue('Targets') as CheckBoxFilter; }
+
+    get Versions(): CheckBoxFilter { return this.getValue('Versions') as CheckBoxFilter; }
 
     constructor() {
         super();
         this.setValue('EntityStatuses', new CheckBoxFilter(EnumValues.getNames(EntityStatusEnum)));
+        this.setValue('StatusMessages', new CheckBoxFilter([]));
+        this.setValue('EntityTypes', new CheckBoxFilter([]));
+        this.setValue('Sources', new CheckBoxFilter([]));
+        this.setValue('Targets', new CheckBoxFilter([]));
+        this.setValue('Versions', new CheckBoxFilter([]));
     }
 }

@@ -49,7 +49,7 @@ export class DataTaskEditComponent extends Vue {
     dataTask: DataTask;
 
     get handlerTypes(): HandlerTypes {
-        return this.$store.state.handlerTypes;
+        return this.$store.state['dataTask'].handlerTypes;
     }
 
     get handlerSettingsSelectList(): any[] {

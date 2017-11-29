@@ -21,7 +21,7 @@ export class CheckBoxFilterComponent extends Vue {
     }
 
     @Watch('checkedValues')
-    onEx5Changed(value) {
+    onCheckedValuesChanged(value) {
         this.$emit('input', value);
     }
 }

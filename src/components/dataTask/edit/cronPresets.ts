@@ -19,7 +19,7 @@ export class CronPresetsComponent extends Vue {
     value: string;
 
     get cronPresets(): string[] {
-        return this.$store.state.cronPresets;
+        return this.$store.state['dataTask'].cronPresets;
     }
 
     @Watch('value')
