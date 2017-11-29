@@ -14,7 +14,7 @@ import { AppComponent } from './components/common/';
 import { DataTaskListComponent } from './components/dataTask';
 import { EntityStatusListComponent } from './components/entityStatus';
 
-import { store } from './store';
+import store from './store';
 
 Validator.extend('guid', {
     getMessage: field => `Value must be in 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX' format`,
@@ -48,6 +48,8 @@ Vue.use(VeeValidate, {
 Vue.use(VueHighlightJS);
 
 import 'highlight.js/styles/xcode.css';
+
+import 'vue-multiselect/dist/vue-multiselect.min.css';
 
 let router = new VueRouter({
   routes: [
