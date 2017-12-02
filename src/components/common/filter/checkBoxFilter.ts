@@ -1,44 +1,39 @@
 import * as Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 
-import { CheckBoxFilter } from '../../../classes/filter';
+import { CheckBoxFilter, IFilter, Filter } from '../../../classes/filter';
 
 @Component({
-    template: require('./checkBoxFilter.html')
+    template: require('./checkBoxFilter.html'),
 })
 
 export class CheckBoxFilterComponent extends Vue {
 
-    menuActive: boolean = false;
-
     checkedValues: string[] = [];
 
-    @Prop() value: string[];
+    filter: CheckBoxFilter = new CheckBoxFilter([]);
 
-    @Prop() items: string[];
+    items: string[] = [];
 
-    @Prop({default: 'Filter by'}) name: string;
+    @Prop() value: IFilter;
 
-    @Watch('value')
-    onValueChanged(value) {
-        if (this.checkedValues !== value) { this.checkedValues = value; }
+    @Watch('value.Values')
+    onVValuesChansged(values) {
+        this.filter.Values = (this.value as CheckBoxFilter).Values;
     }
 
-    onIconClick() {
-        this.menuActive = !this.menuActive;
+    @Watch('value.CheckedValues')
+    onCValuesChansged(values) {
+        if (values !== this.filter.CheckedValues)
+            this.filter.CheckedValues = values;
     }
 
-    onCancelClick() {
-        this.checkedValues = this.value;
-        this.closeDialog();
-    }
-    
-    onApplyClick() {
-        this.$emit('input', this.checkedValues);
-        this.closeDialog();
+    @Watch('filter.CheckedValues')
+    onCVValuesChansged() {
+        this.$emit('input', this.filter);
     }
 
-    closeDialog() {
-        this.menuActive = false;
+    mounted() {
+        this.filter.Values = (this.value as CheckBoxFilter).Values;
     }
 }

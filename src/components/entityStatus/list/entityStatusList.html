@@ -12,8 +12,8 @@
                               @keyup.native.enter="onFilterChange"></v-text-field>
             </v-flex>
             <v-flex xs8>
-                <v-btn @click="onApplyFilter">Apply filter</v-btn>
-                <v-btn @click="onResetFilter">Reset filter</v-btn>
+                <!--<v-btn @click="onApplyFilter">Apply filter</v-btn>-->
+                <v-btn @click="onResetFilter" :disabled="filters.isDefault()==true">Reset filter</v-btn>
             </v-flex>
         </v-layout>
     </v-container>
@@ -29,41 +29,14 @@
              :items="myProvider">
         <template slot="top-row" scope="data" :test="test(data)">
             <td v-for="field in data.fields">
-                
-                <checkbox-filter v-if="field.key=='Status'" 
-                                 v-model="entityStatusFilter.CheckedValues"
-                                 :name="'By ' + field.label"
-                                 :items="entityStatusFilter.Values"
-                                 @input="refreshTable"></checkbox-filter>
-                
-                <checkbox-filter v-if="field.key=='EntityType'"
-                                 v-model="entityTypeFilter.CheckedValues" 
-                                 :name="'By ' + field.label"
-                                 :items="entityTypeFilter.Values"
-                                 @input="refreshTable"></checkbox-filter>
 
-                <checkbox-filter v-if="field.key=='Source'"
-                                 v-model="sourceFilter.CheckedValues" 
-                                 :name="'By ' + field.label"
-                                 :items="sourceFilter.Values"
-                                 @input="refreshTable"></checkbox-filter>
-
-                <checkbox-filter v-if="field.key=='Target'"
-                                 v-model="targetFilter.CheckedValues" 
-                                 :name="'By ' + field.label"
-                                 :items="targetFilter.Values"
-                                 @input="refreshTable"></checkbox-filter>
-            
+                <ifilter v-if="field.filter" 
+                         :value="filters[field.filter]"
+                         :name="field.label" 
+                         @input="onFFilterChange($event, field.filter)"
+                         @change="refreshTable"></ifilter>
+                
             </td>
-        </template>
-        <!--<template slot="bottom-row" scope="data">
-            <td :span="data.columns">Something special here</td>
-        </template>--> 
-        <template slot="emptyfiltered" scope="data">
-            There is nothing to find
-        </template>
-        <template slot="empty" scope="data">
-            No rows
         </template>
         <template slot="Reset" scope="data">
             <v-btn icon flat
@@ -88,6 +61,12 @@
                        @click='onViewContentClick(data.item.getOutContent())'><v-icon class="mr-1">assignment</v-icon>{{ data.item.getOutContent().getType() }}</v-btn>
             </span>
         </template>
+        <template slot="StatusMessage" scope="data">
+                <v-btn icon flat
+                       color="indigo lighten-2 white--text"
+                       title="In Content"
+                       @click='onStatusMessageClick(data.item)'><filter-remove-icon /></v-btn>{{ data.item.StatusMessage }}
+        </template>
     </b-table>
 
     <v-container fluid>
@@ -106,26 +85,26 @@
 
     <content-view :show="showContent" :content="content"></content-view>
 
-
+    
     <v-container fluid>
 
         <v-layout row wrap>
 
             <v-flex xs7>
-                <multiselect v-model="statusMessageFilter.CheckedValues"
+                <!--<multiselect v-model="statusMessageFilter.CheckedValues"
                              :options="statusMessageFilter.Values"
                              :close-on-select="false"
                              :multiple="true">
-                </multiselect>
+                </multiselect>-->
                 <!--<checkbox-filter v-model="statusMessageFilter.CheckedValues" :cbFilter="statusMessageFilter"></checkbox-filter>-->
             </v-flex>
 
             <v-flex xs5>
-                <multiselect v-model="versionFilter.CheckedValues"
+                <!--<multiselect v-model="versionFilter.CheckedValues"
                              :options="versionFilter.Values"
                              :close-on-select="false"
                              :multiple="true">
-                </multiselect>
+                </multiselect>-->
                 <!--<checkbox-filter v-model="statusMessageFilter.CheckedValues" :cbFilter="statusMessageFilter"></checkbox-filter>-->
             </v-flex>
 
@@ -134,7 +113,7 @@
         <v-layout row wrap>
 
             <v-flex xs2>
-                <contain-filter v-model="keyword.Value" :cbFilter="keyword"></contain-filter>
+                <!--<contain-filter v-model="keyword.Value" :cbFilter="keyword"></contain-filter>-->
             </v-flex>
 
             <!--<v-flex xs2>

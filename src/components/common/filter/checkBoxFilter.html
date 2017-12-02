@@ -1,18 +1,8 @@
-<v-menu offset-x
-        :close-on-content-click="false"
-        v-model="menuActive">
-    <v-icon class="pr-3" color="indigo" dark slot="activator">signal_cellular_null</v-icon>
-    <v-card>
-        <v-card-title class="headline grey lighten-0 white--text">
-            {{ name }}
-        </v-card-title>
-        <v-card-text>
-            <v-checkbox v-for="(item, i) in items" :key="i" :label="item" v-model="checkedValues" :value="item" hide-details></v-checkbox>
-        </v-card-text>
-        <v-card-actions class="p-3 grey lighten-3">
-            <v-spacer></v-spacer>
-            <v-btn color="primary" flat @click="onApplyClick">Apply</v-btn>
-            <v-btn flat @click="onCancelClick">Cancel</v-btn>
-        </v-card-actions>
-    </v-card>
-</v-menu>
+<v-card-text>
+    <v-checkbox v-for="(item, i) in filter.Values" 
+                :key="i" 
+                :label="item" 
+                v-model="filter.CheckedValues" 
+                :value="item" 
+                hide-details></v-checkbox>
+</v-card-text>

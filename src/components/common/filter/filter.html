@@ -1,0 +1,39 @@
+<span>
+    <v-menu offset-x
+            :close-on-content-click="false"
+            :full-width="true"
+            :nudge-width="600"
+            :max-width="600"
+            v-model="menuActive">
+        <v-btn icon slot="activator">
+            <filter-icon v-if="!value.isDefault()" />
+            <filter-outline-icon v-if="value.isDefault()" />
+        </v-btn>
+        <v-card>
+            <v-card-title class="headline grey lighten-0 white--text">
+                <filter-icon :width="36" :height="36" class="mr-3" style="fill:#fff" />
+                {{ name }}
+            </v-card-title>
+
+            <multiselect-filter v-if="isMultiselectFilter()"
+                                :value="value"></multiselect-filter>
+            <date-filter v-if="isDateFilter()"
+                                v-model="filter"></date-filter>
+            <checkbox-filter v-if="isCheckBoxFilter()"
+                             v-model="filter"></checkbox-filter>
+            <contain-filter v-if="isContainFilter()"
+                            v-model="filter"></contain-filter>
+
+            <!--<v-card-text>
+                <v-checkbox v-for="(item, i) in items" :key="i" :label="item" v-model="checkedValues" :value="item" hide-details></v-checkbox>
+            </v-card-text>-->
+            <v-card-actions class="p-3 grey lighten-3">
+                <v-spacer></v-spacer>
+                <v-btn color="primary" flat @click="onApplyClick">Apply</v-btn>
+                <v-btn flat @click="onCancelClick">Cancel</v-btn>
+                <v-btn flat @click="onResetClick" v-if="!value.isDefault()"><filter-remove-icon /></v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-menu>
+    
+</span>

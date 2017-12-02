@@ -10,19 +10,23 @@ import { EntityStatusService } from '../../../services';
 import { ContentViewComponent } from '../contentView/contentView';
 import { ContentFactory, Content } from '../contentView/classes';
 
-import { CheckBoxFilterComponent, ContainFilterComponent } from '../../common/filter';
-import { CheckBoxFilter, Filters, EntityStatatusFilters, ContainFilter } from '../../../classes/filter';
+import { FilterComponent, CheckBoxFilterComponent, ContainFilterComponent } from '../../common/filter';
+import { IFilter, CheckBoxFilter, MultiselectFilter, Filters, EntityStatatusFilters, ContainFilter } from '../../../classes/filter';
 import { EnumValues } from 'enum-values';
 
 import Multiselect from 'vue-multiselect';
+
+import FilterRemoveIcon from 'mdi-vue/FilterRemoveIcon';
 
 @Component({
     template: require('./entityStatusList.html'),
     components: {
         Multiselect,
+        FilterRemoveIcon,
         'content-view': ContentViewComponent,
         'checkbox-filter': CheckBoxFilterComponent,
-        'contain-filter': ContainFilterComponent
+        'contain-filter': ContainFilterComponent,
+        'ifilter': FilterComponent
     }
 })
 
@@ -32,6 +36,8 @@ export class EntityStatusListComponent extends Vue {
 
     menu: boolean = false;
 
+    mut: boolean = false;
+
     keyword: ContainFilter = this.filters.Keyword;
     entityStatusFilter: CheckBoxFilter = this.filters.EntityStatuses;
     statusMessageFilter: CheckBoxFilter = this.filters.StatusMessages;
@@ -39,6 +45,16 @@ export class EntityStatusListComponent extends Vue {
     sourceFilter: CheckBoxFilter = this.filters.Sources;
     targetFilter: CheckBoxFilter = this.filters.Targets;
     versionFilter: CheckBoxFilter = this.filters.Versions;
+
+    // get entityStatusFilter(): IFilter {
+    //    this.mut;
+    //    return this.filters.getValue('EntityStatuses');
+    // }
+
+    // set entityStatusFilter(value: IFilter) {
+    //    this.filters.setValue('EntityStatuses', value);
+    //    this.mut = !this.mut;
+    // }
     
     statusEnum = new CustomEnumValues();
     
@@ -61,7 +77,7 @@ export class EntityStatusListComponent extends Vue {
 
     pagesCount: number = 1;
     
-    perPage: number = 5;
+    perPage: number = 10;
     totalRows: number = 0;
     currentPage: number = 1;
     filter: string = '';
@@ -78,7 +94,8 @@ export class EntityStatusListComponent extends Vue {
             tdClass: 'py-3',
             label: 'Entity Status',
             sortable: true,
-            formatter: 'getEnumDescription'
+            formatter: 'getEnumDescription',
+            filter: 'EntityStatuses'
         }, 
         {
             key: 'SourceId',
@@ -109,18 +126,21 @@ export class EntityStatusListComponent extends Vue {
             tdClass: 'py-3',
             label: 'Source',
             sortable: true,
+            filter: 'Sources'
         },
         {
             key: 'Target',
             tdClass: 'py-3',
             label: 'Target',
             sortable: true,
+            filter: 'Targets'
         },
         {
             key: 'EntityType',
             tdClass: 'py-3',
             label: 'Entity Type',
             sortable: true,
+            filter: 'EntityTypes'
         },
         {
             key: 'EntityVersion',
@@ -128,13 +148,14 @@ export class EntityStatusListComponent extends Vue {
             label: 'Entity version',
             sortable: true,
             formatter: 'formatDate',    
-            thStyle: { width: '180px' }
+            thStyle: { width: '180px' },
+            filter: 'Versions'
         },
         {
             key: 'StatusMessage',
-            tdClass: 'py-3',
             label: 'Status Message',
             sortable: true,
+            filter: 'StatusMessages'
         },
     ];
 
@@ -214,9 +235,14 @@ export class EntityStatusListComponent extends Vue {
         return option.displayName;
     }
 
-    onCClick(data) {
-        debugger;
-        this.menu = !this.menu;
+    onFFilterChange(filter: IFilter, filterName: string) {
+        this.filters.setValue(filterName, filter);
+        this.refreshTable();
     }
 
+    onStatusMessageClick(item) {
+        this.filters.StatusMessages.CheckedValues.push(item.StatusMessage);
+        this.refreshTable();
+        console.log(item);
+    }
 }

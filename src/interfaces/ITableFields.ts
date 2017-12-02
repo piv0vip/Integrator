@@ -1,3 +1,5 @@
+import { IFilter } from '../classes/filter';
+
 export interface ITableFields {
     key: string;
     label: string;
@@ -8,4 +10,5 @@ export interface ITableFields {
     thClass?: string|any[];
     thStyle?: {};
     variant?: string;
+    filter?: string;
 }

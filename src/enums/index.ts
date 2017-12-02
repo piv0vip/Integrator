@@ -31,8 +31,10 @@ export enum EntityStatusEnum {
 }
 
 export enum FilterTypeEnum {
-    EnumCheckBoxes = 1,
+    Null = 0,
+    EnumCheckBoxes,
     StringList,
     Date,
-    StringContains
+    StringContains,
+    Multiselect
 }

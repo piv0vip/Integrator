@@ -1,7 +1,7 @@
 import * as Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 
-import { ContainFilter } from '../../../classes/filter';
+import { ContainFilter, IFilter } from '../../../classes/filter';
 
 @Component({
     template: require('./containFilter.html')
@@ -11,17 +11,16 @@ export class ContainFilterComponent extends Vue {
 
     containValue: string = '';
 
-    @Prop() value: string;
+    filter: ContainFilter = new ContainFilter();
 
-    @Prop() containFilter: ContainFilter;
+    @Prop() value: IFilter;
 
-    @Watch('value')
-    onValueChanged(value) {
-        if (this.containValue !== value) { this.containValue = value; }
+    @Watch('value.Value')
+    onFValueChanged(value) {
+        this.filter = this.value as ContainFilter;
     }
 
-    @Watch('containValue')
-    onEx5Changed(value) {
-        this.$emit('input', value);
+    mounted() {
+        this.filter = this.value as ContainFilter;
     }
 }

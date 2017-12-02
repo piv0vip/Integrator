@@ -1,0 +1,18 @@
+<v-card-text>
+    <v-menu lazy
+            :close-on-content-click="true"
+            transition="scale-transition"
+            offset-y
+            full-width
+            :nudge-right="40"
+            max-width="290px"
+            min-width="290px">
+        <v-text-field slot="activator" prepend-icon="event"
+                      label="Select Entity Version"
+                      v-model="filter.CheckedValues[0]"
+                      readonly></v-text-field>
+        <v-date-picker v-model="calDate"
+                       :allowedDates="filter.Values"
+                       no-title scrollable actions> </v-date-picker>
+    </v-menu>
+</v-card-text>
