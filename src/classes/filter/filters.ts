@@ -227,3 +227,32 @@ export class EntityStatatusFilters extends Filters {
         this.setValue('Versions', new DateFilter([]));
     }
 }
+
+interface IESF {
+    FieldName: string;
+    ContainValues?: { Values: string[] };
+    ExistsValues?: { Values: string[] };
+    IgnoredValues?: { Values: string[] };
+}
+
+export class EntityStatatusDecorator {
+
+    _esf: EntityStatatusFilters;
+
+    constructor(esf: EntityStatatusFilters) {
+        this._esf = esf;
+    }
+
+    toServer(): IESF[] {
+        return [
+            {
+                FieldName: 'Status',
+                ExistsValues: { Values: this._esf.EntityStatuses.CheckedValues }
+            },
+            {
+                FieldName: 'StatusMessage',
+                IgnoredValues: { Values: this._esf.StatusMessages.CheckedValues }
+            },
+        ]
+    }
+}

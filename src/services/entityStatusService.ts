@@ -5,7 +5,7 @@ import { AxiosResponse } from 'axios';
 import { HandlerTypes } from '../classes/settings/handlerTypes';
 import { BaseService } from './baseService';
 
-import { Filters } from '../classes/filter';
+import { EntityStatatusDecorator } from '../classes/filter';
 
 export class EntityStatusService extends BaseService {
     
@@ -13,7 +13,7 @@ export class EntityStatusService extends BaseService {
         this.ControllerName = 'EntityStatus';
     }
 
-    public static getPagedList(ctx: { currentPage: number, filter: Filters, perPage: number, sortBy: string, sortDesc: boolean }): Promise<{metadata: IPagedList, data: EntityStatus[]}> {
+    public static getPagedList(ctx: { currentPage: number, filter: EntityStatatusDecorator, perPage: number, sortBy: string, sortDesc: boolean }): Promise<{metadata: IPagedList, data: EntityStatus[]}> {
 
         let service = new EntityStatusService();
 

@@ -11,7 +11,7 @@ import { ContentViewComponent } from '../contentView/contentView';
 import { ContentFactory, Content } from '../contentView/classes';
 
 import { FilterComponent, CheckBoxFilterComponent, ContainFilterComponent } from '../../common/filter';
-import { IFilter, CheckBoxFilter, MultiselectFilter, Filters, EntityStatatusFilters, ContainFilter } from '../../../classes/filter';
+import { IFilter, CheckBoxFilter, MultiselectFilter, Filters, EntityStatatusFilters, ContainFilter, EntityStatatusDecorator } from '../../../classes/filter';
 import { EnumValues } from 'enum-values';
 
 import Multiselect from 'vue-multiselect';
@@ -33,6 +33,7 @@ import FilterRemoveIcon from 'mdi-vue/FilterRemoveIcon';
 export class EntityStatusListComponent extends Vue {
 
     filters: EntityStatatusFilters = new EntityStatatusFilters();
+    filtersDecorator: EntityStatatusDecorator = new EntityStatatusDecorator(this.filters);
 
     menu: boolean = false;
 
@@ -182,7 +183,7 @@ export class EntityStatusListComponent extends Vue {
     }
 
     myProvider(ctx) {
-        ctx.filter = this.filters;
+        ctx.filter = this.filtersDecorator.toServer();
         return EntityStatusService.getPagedList(ctx)
         .then( function(response: {data: EntityStatus[], metadata}) {
             this.pagedList = response.metadata;

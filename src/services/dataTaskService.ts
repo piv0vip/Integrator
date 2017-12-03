@@ -6,7 +6,7 @@ import { HandlerTypes } from '../classes/settings/handlerTypes';
 import { BaseService } from './baseService';
 import store from '../store';
 
-import { Filters } from '../classes/filter';
+import { EntityStatatusDecorator } from '../classes/filter';
 
 export class DataTaskService extends BaseService {
     protected setControllerName() {
@@ -32,7 +32,7 @@ export class DataTaskService extends BaseService {
         });
     }
 
-    public static getPagedList(handlers: HandlerTypes, ctx: { currentPage: number, filter: Filters, perPage: number, sortBy: string, sortDesc: boolean }): Promise<{ metadata: IPagedList, data: DataTask[] }> {
+    public static getPagedList(handlers: HandlerTypes, ctx: { currentPage: number, filter: EntityStatatusDecorator, perPage: number, sortBy: string, sortDesc: boolean }): Promise<{ metadata: IPagedList, data: DataTask[] }> {
         let service = new DataTaskService();
 
         let dataTasks: DataTask[] = [];
