@@ -2,6 +2,9 @@ import { Dictionary } from 'typescript-collections';
 import { FilterTypeEnum, EntityStatusEnum } from '../../enums';
 import { EnumValues } from 'enum-values';
 import _ from 'lodash';
+import moment from 'moment';
+
+import store from '../../store';
 
 
 export interface IServerable {
@@ -48,7 +51,7 @@ export abstract class Filter implements IFilter {
             case FilterTypeEnum.Multiselect:
                 return new MultiselectFilter([]);
             case FilterTypeEnum.Date:
-                return new DateFilter([]);
+                return new DateFilter();
             case FilterTypeEnum.StringContains:
                 return new ContainFilter();
             default:
@@ -63,7 +66,9 @@ export abstract class Filter implements IFilter {
             case FilterTypeEnum.Multiselect:
                 return new MultiselectFilter((filter as MultiselectFilter).Values);
             case FilterTypeEnum.Date:
-                return new DateFilter((filter as DateFilter).Values);
+                let dateFilter = new DateFilter()
+                dateFilter.Values = (filter as DateFilter).Values
+                return dateFilter;
             case FilterTypeEnum.StringContains:
                 return new ContainFilter();
             default:
@@ -144,7 +149,7 @@ export class CheckBoxFilter extends Filter {
     }
 
     toServer() {
-        return this.CheckedValues;
+        return { values: this.CheckedValues };
     }
 
     setToDefault(): void {
@@ -163,11 +168,82 @@ export class MultiselectFilter extends CheckBoxFilter {
     }
 }
 
-export class DateFilter extends CheckBoxFilter {
+export class PeriodFilter extends Filter {
+
+    readonly format: string = 'YYYY-MM-DD';
+
+    private _from: Date;
+    private _to: Date;
+
+    public Values: string[] = [];
+
+    constructor() {
+        super();
+    }
+
+    get FormatStr(): string { return this.format }
+
+    set From(value: string) {
+        console.log(value)
+        this._from = moment(value).hour(0).minute(0).second(0).toDate();
+    }
+
+    get From(): string {
+        return moment(this._from).format('YYYY-MM-DD');
+    }
+
+    set To(value: string) {
+        this._to = moment(value).hour(23).minute(59).second(59).toDate();
+    }
+
+    get To(): string {
+        return moment(this._to).format('YYYY-MM-DD');
+    }
 
     setType() {
         this._type = FilterTypeEnum.Date;
     }
+
+    toServer() {
+        return {
+            from: moment(this._from).hour(0).minute(0).second(0).format(`YYYY-MM-DD HH:mm:ss`),
+            to: moment(this._to).hour(23).minute(59).second(59).format(`YYYY-MM-DD HH:mm:ss`)
+        }
+    }
+
+    setToDefault() {
+        let curDate = moment(new Date()).utc().format('YYYY-MM-DD');
+        this.From = curDate;
+        this.To = curDate;
+    }
+
+    isDefault(): boolean {
+        let curDate = moment(new Date()).utc().format('YYYY-MM-DD');
+        return this.From == curDate && this.To == curDate;
+    }
+}
+
+export class DateFilter extends PeriodFilter {
+
+    setType() {
+        this._type = FilterTypeEnum.Date;
+    }
+
+    set Date(value: string) {
+        this.From = value;
+        this.To = value;
+    }
+
+    get Date(): string {
+        return this.From;
+    }
+
+    //toServer() {
+    //    return {
+    //        from: moment(),
+    //        to: moment()
+    //    }
+    //}
 
 }
 
@@ -219,20 +295,21 @@ export class EntityStatatusFilters extends Filters {
 
     constructor() {
         super();
-        this.setValue('EntityStatuses', new CheckBoxFilter(EnumValues.getNames(EntityStatusEnum)));
+        this.setValue('EntityStatuses', store.getters.filters.Status);
         this.setValue('StatusMessages', new MultiselectFilter([]));
         this.setValue('EntityTypes', new CheckBoxFilter([]));
         this.setValue('Sources', new CheckBoxFilter([]));
         this.setValue('Targets', new CheckBoxFilter([]));
-        this.setValue('Versions', new DateFilter([]));
+        this.setValue('Versions', new DateFilter());
     }
 }
 
 interface IESF {
     FieldName: string;
-    ContainValues?: { Values: string[] };
-    ExistsValues?: { Values: string[] };
-    IgnoredValues?: { Values: string[] };
+    ContainValues?: { values: string[] };
+    ExistsValues?: { values: string[] };
+    IgnoredValues?: { values: string[] };
+    Period?: { from: string, to: string };
 }
 
 export class EntityStatatusDecorator {
@@ -247,11 +324,15 @@ export class EntityStatatusDecorator {
         return [
             {
                 FieldName: 'Status',
-                ExistsValues: { Values: this._esf.EntityStatuses.CheckedValues }
+                ExistsValues: this._esf.EntityStatuses.toServer()
             },
             {
                 FieldName: 'StatusMessage',
-                IgnoredValues: { Values: this._esf.StatusMessages.CheckedValues }
+                IgnoredValues: this._esf.StatusMessages.toServer()
+            },
+            {
+                FieldName: 'EntityVersion',
+                Period: this._esf.Versions.isDefault() ? null : this._esf.Versions.toServer()
             },
         ]
     }

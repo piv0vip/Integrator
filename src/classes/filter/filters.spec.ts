@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { CheckBoxFilter, IFilter, ContainFilter, EntityStatatusFilters } from './index';
+import { DateFilter, PeriodFilter, CheckBoxFilter, IFilter, ContainFilter, EntityStatatusFilters } from './index';
 import { EntityStatusEnum, FilterTypeEnum } from '../../enums'
 
 import { EnumValues } from 'enum-values';
@@ -39,6 +39,48 @@ describe('EntityStatusFilter testing', () => {
         expect(esf.isDefault()).to.be.false;
         esf.reset();
         expect(esf.isDefault()).to.be.true;
+    })
+})
+
+describe('PeriodFilter testing', () => {
+    let datePeriod: PeriodFilter;
+
+    beforeEach(() => {
+        datePeriod = new DateFilter();
+    });
+
+    it('init values testing', () => {
+        datePeriod.From = '2017-12-01'
+        datePeriod.To = '2017-12-04'
+        expect(datePeriod.toServer().from).to.equal('2017-12-01 00:00:00');
+        expect(datePeriod.toServer().to).to.equal('2017-12-04 23:59:59');
+    })
+
+    it('isDefault should be current date', () => {
+
+    })
+})
+
+describe('DateFilter testing', () => {
+    let datePeriod: DateFilter;
+
+    beforeEach(() => {
+        datePeriod = new DateFilter();
+    });
+
+    it('init values testing', () => {
+        datePeriod.From = '2017-12-01'
+        datePeriod.To = '2017-12-04'
+        expect(datePeriod.toServer().from).to.equal('2017-12-01 00:00:00');
+        expect(datePeriod.toServer().to).to.equal('2017-12-04 23:59:59');
+    })
+
+    it('isDefault testing', () => {
+        expect(datePeriod.isDefault()).to.be.true;
+        datePeriod.Date = '2017-12-01';
+        expect(datePeriod.isDefault()).to.be.false;
+        datePeriod.setToDefault();
+        expect(datePeriod.isDefault()).to.be.true;
     })
 })
 

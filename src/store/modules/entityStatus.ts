@@ -1,20 +1,28 @@
 import { HTTP } from '../../util/http-common';
 import { AxiosResponse } from 'axios';
-import { EntityStatatusFilters } from '../../classes/filter';
+import { CheckBoxFilter } from '../../classes/filter';
+import { EnumValues } from 'enum-values';
+import { EntityStatusEnum } from '../../enums';
 
 const state = {
-    entityStatuses: {
+    filterPresets: {
         statuses: []
     },
+    filters: {
+        Status: new CheckBoxFilter(EnumValues.getNames(EntityStatusEnum))
+    }
 };
 
 const getters = {
-    filterPresets: state => state.entityStatuses
+    filterPresets: state => state.filterPresets,
+    filters: state => state.filters
 };
 
 const mutations = {
-    setEntityStatuses(state, statuses: any) {
-        state.entityStatuses = statuses;
+    setEntityStatuses(state, filterPresets: any) {
+        state.filterPresets = filterPresets;
+        if (state.filterPresets.statuses.length > 0)
+            state.filters.Status.Values = state.filterPresets.statuses;
     },
 };
 

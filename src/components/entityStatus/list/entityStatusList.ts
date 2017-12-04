@@ -11,7 +11,7 @@ import { ContentViewComponent } from '../contentView/contentView';
 import { ContentFactory, Content } from '../contentView/classes';
 
 import { FilterComponent, CheckBoxFilterComponent, ContainFilterComponent } from '../../common/filter';
-import { IFilter, CheckBoxFilter, MultiselectFilter, Filters, EntityStatatusFilters, ContainFilter, EntityStatatusDecorator } from '../../../classes/filter';
+import { IFilter, DateFilter, CheckBoxFilter, MultiselectFilter, Filters, EntityStatatusFilters, ContainFilter, EntityStatatusDecorator } from '../../../classes/filter';
 import { EnumValues } from 'enum-values';
 
 import Multiselect from 'vue-multiselect';
@@ -40,12 +40,12 @@ export class EntityStatusListComponent extends Vue {
     mut: boolean = false;
 
     keyword: ContainFilter = this.filters.Keyword;
-    entityStatusFilter: CheckBoxFilter = this.filters.EntityStatuses;
+    entityStatusFilter: CheckBoxFilter = this.$store.getters.filters.Status;
     statusMessageFilter: CheckBoxFilter = this.filters.StatusMessages;
     entityTypeFilter: CheckBoxFilter = this.filters.EntityTypes;
     sourceFilter: CheckBoxFilter = this.filters.Sources;
     targetFilter: CheckBoxFilter = this.filters.Targets;
-    versionFilter: CheckBoxFilter = this.filters.Versions;
+    versionFilter: DateFilter = this.filters.Versions;
 
     // get entityStatusFilter(): IFilter {
     //    this.mut;
@@ -163,8 +163,8 @@ export class EntityStatusListComponent extends Vue {
     created() {
 
         this.$store.dispatch('getEntityStatuses').then(() => {
-            let filterPresets = this.$store.state['entityStatus'].entityStatuses;
-            this.filters.EntityStatuses.Values = filterPresets.statuses;
+            let filterPresets = this.$store.state['entityStatus'].filterPresets;
+            //this.filters.EntityStatuses.Values = filterPresets.statuses;
             this.filters.StatusMessages.Values = filterPresets.statusMessages;
             this.filters.EntityTypes.Values = filterPresets.entityTypes;
             this.filters.Sources.Values = filterPresets.sources;

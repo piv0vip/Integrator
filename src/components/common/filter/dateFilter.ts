@@ -16,7 +16,7 @@ export class DateFilterComponent extends Vue {
     editValue: string;
     calDate: string = moment().format('YYYY-MM-DD');
 
-    filter: DateFilter = new DateFilter([]);
+    filter: DateFilter = new DateFilter();
 
     items: string[] = [];
 
@@ -25,12 +25,12 @@ export class DateFilterComponent extends Vue {
     @Watch('value.Values')
     onVValuesChansged(values) {
         console.log('dateFilter.Values');
-        this.filter.Values = (this.value as DateFilter).Values;
+        if ((this.value as DateFilter).Values != this.filter.Values) this.filter.Values = (this.value as DateFilter).Values;
     }
 
     @Watch('calDate')
     onWatchCalldate(value) {
-        this.filter.CheckedValues = [value];
+        this.filter.Date = value;
         this.$emit('input', this.filter);
     }
 
