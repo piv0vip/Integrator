@@ -17,24 +17,46 @@ export interface IResetable {
 }
 
 export interface IFilter extends IServerable, IResetable {
-    ChangesToggle: boolean;
     readonly Type: FilterTypeEnum;
     setToDefault();
+    FilterData: any;
 }
 
-export abstract class Filter implements IFilter {
-    ChangesToggle: boolean = false;
+export class FilterFactory {
+    public static getFilter(filterType: FilterTypeEnum = FilterTypeEnum.Null): IFilter {
+        switch (filterType) {
+            case FilterTypeEnum.StringList:
+                return new CheckBoxFilter();
+            case FilterTypeEnum.Multiselect:
+                return new MultiselectFilter();
+            case FilterTypeEnum.Date:
+                return new DateFilter();
+            case FilterTypeEnum.StringContains:
+                return new ContainFilter();
+            default:
+                return new NullFilter();
+        }
+    }
+}
+
+export abstract class Filter<T> implements IFilter {
+
+    protected _filterData: T;
+
+    abstract FilterData: T;
 
     protected _type: FilterTypeEnum;
 
     constructor() {
         this.setType();
+        this.init();
         this.reset();
     }
 
     get Type(): FilterTypeEnum { return this._type; }
 
     abstract setType();
+    init() { };
     abstract toServer();
 
     reset(): void {
@@ -44,66 +66,33 @@ export abstract class Filter implements IFilter {
     abstract setToDefault();
     abstract isDefault(): boolean;
 
-    static getFilter(filterType: FilterTypeEnum = FilterTypeEnum.Null): IFilter {
-        switch (filterType) {
-            case FilterTypeEnum.StringList:
-                return new CheckBoxFilter([]);
-            case FilterTypeEnum.Multiselect:
-                return new MultiselectFilter([]);
-            case FilterTypeEnum.Date:
-                return new DateFilter();
-            case FilterTypeEnum.StringContains:
-                return new ContainFilter();
-            default:
-                return new NullFilter();
-        }
-    }
-// ZHaXXX
-    static getFilterFromFilter(filter: IFilter): IFilter {
-        switch (filter.Type) {
-            case FilterTypeEnum.StringList:
-                return new CheckBoxFilter((filter as CheckBoxFilter).Values);
-            case FilterTypeEnum.Multiselect:
-                return new MultiselectFilter((filter as MultiselectFilter).Values);
-            case FilterTypeEnum.Date:
-                let dateFilter = new DateFilter()
-                dateFilter.Values = (filter as DateFilter).Values
-                return dateFilter;
-            case FilterTypeEnum.StringContains:
-                return new ContainFilter();
-            default:
-                return new NullFilter();
-        }
-    }
-
-    protected toggleChanges() {
-        this.ChangesToggle = !this.ChangesToggle;
-    }
 }
 
-export class NullFilter extends Filter {
+export class NullFilter extends Filter<string> {
+
+    FilterData: string;
+
     setType() {
         this._type = FilterTypeEnum.Null;
     }
+
     toServer() {
         return '';
     }
+
     setToDefault() { }
 
     isDefault(): boolean { return true; }
 }
 
-export class ContainFilter extends Filter {
+export class ContainFilter extends Filter<string> {
 
-    private _value: string;
-
-    get Value(): string {
-        return this._value || '';
+    get FilterData(): string {
+        return this._filterData || '';
     };
 
-    set Value(value: string) {
-        this._value = value;
-        this.toggleChanges();
+    set FilterData(value: string) {
+        this._filterData = value;
     }
 
     setType() {
@@ -111,53 +100,50 @@ export class ContainFilter extends Filter {
     }
 
     toServer() {
-        return this.Value;
+        return this.FilterData;
     }
 
     setToDefault(): void {
-        this.Value = '';
+        this.FilterData = '';
     }
 
     isDefault(): boolean {
-        return this.Value === '';
+        return this.FilterData === '';
     }
 }
 
-export class CheckBoxFilter extends Filter {
-
-    private _checkedValues: string[]; 
+export class CheckBoxFilter extends Filter<string[]> {
 
     public Values: string[] = [];
 
-    get CheckedValues(): string[] {
-        return this._checkedValues || [];
-    }
-
-    set CheckedValues(values: string[]) {
-        this._checkedValues = values;
-        this.toggleChanges();
-    }
-
-    constructor(values: string[]) {
+    constructor(values?: string[]) {
         super();
         this.Values = values || [];
-        this.CheckedValues = [];
+        this.FilterData = [];
     }
+
+    get FilterData(): string[] {
+        return this._filterData || [];
+    };
+
+    set FilterData(value: string[]) {
+        this._filterData = value;
+    };
 
     setType() {
         this._type = FilterTypeEnum.StringList;
     }
 
     toServer() {
-        return { values: this.CheckedValues };
+        return { values: this.FilterData };
     }
 
     setToDefault(): void {
-        this.CheckedValues = [];
+        this.FilterData = [];
     }
 
     isDefault(): boolean {
-        return _.isArray(this.CheckedValues) && this.CheckedValues.length === 0;
+        return _.isArray(this.FilterData) && this.FilterData.length === 0;
     }
 }
 
@@ -168,7 +154,7 @@ export class MultiselectFilter extends CheckBoxFilter {
     }
 }
 
-export class PeriodFilter extends Filter {
+export class PeriodFilter extends Filter<{From: string, To: string}> {
 
     readonly format: string = 'YYYY-MM-DD';
 
@@ -181,10 +167,25 @@ export class PeriodFilter extends Filter {
         super();
     }
 
-    get FormatStr(): string { return this.format }
+    get FilterData(): {
+        From: string;
+        To: string;
+    } {
+        return { From: this.From, To: this.To };
+    };
+
+    set FilterData(value: {
+        From: string;
+        To: string;
+    }) {
+        this.From = value.From;
+        this.To = value.To;
+    };
+
+    get FormatStr(): string { return this.format; }
 
     set From(value: string) {
-        console.log(value)
+        console.log(value);
         this._from = moment(value).hour(0).minute(0).second(0).toDate();
     }
 
@@ -201,14 +202,14 @@ export class PeriodFilter extends Filter {
     }
 
     setType() {
-        this._type = FilterTypeEnum.Date;
+        this._type = FilterTypeEnum.Period;
     }
 
     toServer() {
         return {
             from: moment(this._from).hour(0).minute(0).second(0).format(`YYYY-MM-DD HH:mm:ss`),
             to: moment(this._to).hour(23).minute(59).second(59).format(`YYYY-MM-DD HH:mm:ss`)
-        }
+        };
     }
 
     setToDefault() {
@@ -219,32 +220,45 @@ export class PeriodFilter extends Filter {
 
     isDefault(): boolean {
         let curDate = moment(new Date()).utc().format('YYYY-MM-DD');
-        return this.From == curDate && this.To == curDate;
+        return this.From === curDate && this.To === curDate;
     }
 }
 
-export class DateFilter extends PeriodFilter {
+export class DateFilter extends Filter<string> {
+
+    private _date: PeriodFilter;
+
+    constructor() {
+        super();
+    }
+
+    init() {
+        this._date = new PeriodFilter();
+    }
 
     setType() {
         this._type = FilterTypeEnum.Date;
     }
 
-    set Date(value: string) {
-        this.From = value;
-        this.To = value;
+    get FilterData(): string {
+        return this._date.FilterData.From;
+    };
+
+    set FilterData(value: string) {
+        this._date.FilterData = { From: value, To: value };
+    };
+
+    toServer() {
+        return this._date.toServer();
     }
 
-    get Date(): string {
-        return this.From;
+    setToDefault() {
+        this._date.setToDefault();
     }
 
-    //toServer() {
-    //    return {
-    //        from: moment(),
-    //        to: moment()
-    //    }
-    //}
-
+    isDefault(): boolean {
+        return this._date.isDefault();
+    }
 }
 
 export class Filters extends Dictionary<string, IFilter> implements IServerable, IResetable {
@@ -314,26 +328,32 @@ interface IESF {
 
 export class EntityStatatusDecorator {
 
-    _esf: EntityStatatusFilters;
-
-    constructor(esf: EntityStatatusFilters) {
-        this._esf = esf;
-    }
-
     toServer(): IESF[] {
         return [
             {
                 FieldName: 'Status',
-                ExistsValues: this._esf.EntityStatuses.toServer()
+                ExistsValues: store.getters.filters.Status.toServer()
+            },
+            {
+                FieldName: 'EntityType',
+                ExistsValues: store.getters.filters.EntityType.toServer()
+            },
+            {
+                FieldName: 'Source',
+                ExistsValues: store.getters.filters.Source.toServer()
+            },
+            {
+                FieldName: 'Target',
+                ExistsValues: store.getters.filters.Target.toServer()
             },
             {
                 FieldName: 'StatusMessage',
-                IgnoredValues: this._esf.StatusMessages.toServer()
+                IgnoredValues: store.getters.filters.StatusMessage.isDefault() ? null : store.getters.filters.StatusMessage.toServer()
             },
             {
                 FieldName: 'EntityVersion',
-                Period: this._esf.Versions.isDefault() ? null : this._esf.Versions.toServer()
+                Period: store.getters.filters.EntityVersion.isDefault() ? null : store.getters.filters.EntityVersion.toServer()
             },
-        ]
+        ];
     }
 }

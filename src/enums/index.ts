@@ -35,6 +35,7 @@ export enum FilterTypeEnum {
     EnumCheckBoxes,
     StringList,
     Date,
+    Period,
     StringContains,
     Multiselect
 }

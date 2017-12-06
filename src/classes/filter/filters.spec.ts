@@ -1,16 +1,18 @@
 import { expect } from 'chai';
-import { DateFilter, PeriodFilter, CheckBoxFilter, IFilter, ContainFilter, EntityStatatusFilters } from './index';
+import { FilterFactory, DateFilter, PeriodFilter, CheckBoxFilter, IFilter, ContainFilter, EntityStatatusFilters } from './index';
 import { EntityStatusEnum, FilterTypeEnum } from '../../enums'
 
 import { EnumValues } from 'enum-values';
 
+import moment from 'moment';
+
 describe('ContainFilter testing', () => {
 
-    let cf = new ContainFilter();
+    let cf = FilterFactory.getFilter(FilterTypeEnum.StringContains);
 
     it('isDefault testing', () => {
         expect(cf.isDefault()).to.be.true;
-        cf.Value = 'test';
+        cf.FilterData = 'test';
         expect(cf.isDefault()).to.be.false;
         cf.reset();
         expect(cf.isDefault()).to.be.true;
@@ -23,22 +25,10 @@ describe('CheckBoxFilter testing', () => {
 
     it('isDefault testing', () => {
         expect(cbf.isDefault()).to.be.true;
-        cbf.CheckedValues = ['test'];
+        cbf.FilterData = ['test'];
         expect(cbf.isDefault()).to.be.false;
         cbf.reset();
         expect(cbf.isDefault()).to.be.true;
-    })
-})
-
-describe('EntityStatusFilter testing', () => {
-    let esf = new EntityStatatusFilters();
-
-    it('isDefault testing', () => {
-        expect(esf.isDefault()).to.be.true;
-        esf.EntityStatuses.CheckedValues = [EntityStatusEnum.Confirmed.toString(), EntityStatusEnum.Ignored.toString()];
-        expect(esf.isDefault()).to.be.false;
-        esf.reset();
-        expect(esf.isDefault()).to.be.true;
     })
 })
 
@@ -46,45 +36,54 @@ describe('PeriodFilter testing', () => {
     let datePeriod: PeriodFilter;
 
     beforeEach(() => {
-        datePeriod = new DateFilter();
+        datePeriod = new PeriodFilter();
     });
 
     it('init values testing', () => {
-        datePeriod.From = '2017-12-01'
-        datePeriod.To = '2017-12-04'
+        datePeriod.FilterData = { From: '2017-12-01', To: '2017-12-04' };
         expect(datePeriod.toServer().from).to.equal('2017-12-01 00:00:00');
         expect(datePeriod.toServer().to).to.equal('2017-12-04 23:59:59');
     })
 
     it('isDefault should be current date', () => {
+        let currentDate = moment(new Date()).utc().format('YYYY-MM-DD');
+        expect(datePeriod.FilterData).to.have.property('From', currentDate); 
+        expect(datePeriod.FilterData).to.have.property('To', currentDate); 
 
+        datePeriod.FilterData = { From: '2017-12-01', To: '2017-12-04' };
+        expect(datePeriod.FilterData).to.have.property('From', '2017-12-01');
+        expect(datePeriod.FilterData).to.have.property('To', '2017-12-04'); 
+
+        datePeriod.setToDefault();
+        expect(datePeriod.FilterData).to.have.property('From', currentDate);
+        expect(datePeriod.FilterData).to.have.property('To', currentDate); 
     })
 })
 
 describe('DateFilter testing', () => {
-    let datePeriod: DateFilter;
+    let dateFilter: DateFilter;
 
     beforeEach(() => {
-        datePeriod = new DateFilter();
+        dateFilter = new DateFilter();
     });
 
     it('init values testing', () => {
-        datePeriod.From = '2017-12-01'
-        datePeriod.To = '2017-12-04'
-        expect(datePeriod.toServer().from).to.equal('2017-12-01 00:00:00');
-        expect(datePeriod.toServer().to).to.equal('2017-12-04 23:59:59');
+        dateFilter.FilterData = '2017-12-01'
+        expect(dateFilter.toServer().from).to.equal('2017-12-01 00:00:00');
+        expect(dateFilter.toServer().to).to.equal('2017-12-01 23:59:59');
     })
 
     it('isDefault testing', () => {
-        expect(datePeriod.isDefault()).to.be.true;
-        datePeriod.Date = '2017-12-01';
-        expect(datePeriod.isDefault()).to.be.false;
-        datePeriod.setToDefault();
-        expect(datePeriod.isDefault()).to.be.true;
+        expect(dateFilter.isDefault()).to.be.true;
+        dateFilter.FilterData = '2017-12-01';
+        expect(dateFilter.isDefault()).to.be.false;
+        dateFilter.setToDefault();
+        expect(dateFilter.isDefault()).to.be.true;
     })
 })
 
 describe('Enum filter testing', () => {
+    debugger;
     let enumFilter: IFilter = new CheckBoxFilter(EnumValues.getNames(EntityStatusEnum));
     it('Type should be correct', () => {
         expect(enumFilter.Type).to.equal(FilterTypeEnum.StringList);

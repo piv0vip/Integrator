@@ -3,6 +3,8 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 
 import { CheckBoxFilter, IFilter, Filter } from '../../../classes/filter';
 
+import { ITableFields } from '../../../interfaces';
+
 @Component({
     template: require('./checkBoxFilter.html'),
 })
@@ -11,29 +13,20 @@ export class CheckBoxFilterComponent extends Vue {
 
     checkedValues: string[] = [];
 
-    filter: CheckBoxFilter = new CheckBoxFilter([]);
+    @Prop() items: string[];
 
-    items: string[] = [];
+    @Prop() value: string[];
 
-    @Prop() value: IFilter;
-
-    @Watch('value.Values')
-    onVValuesChansged(values) {
-        this.filter.Values = (this.value as CheckBoxFilter).Values;
+    @Watch('value')
+    onCValuesChansged(value: string[]) {
+        if (value !== this.checkedValues)
+            this.checkedValues = value;
     }
 
-    @Watch('value.CheckedValues')
-    onCValuesChansged(values) {
-        if (values !== this.filter.CheckedValues)
-            this.filter.CheckedValues = values;
+    @Watch('checkedValues')
+    onCheckedValues(checkedValues: string[]) {
+        if (checkedValues !== this.value)
+            this.$emit('input', checkedValues);
     }
 
-    @Watch('filter.CheckedValues')
-    onCVValuesChansged() {
-        this.$emit('input', this.filter);
-    }
-
-    mounted() {
-        this.filter.Values = (this.value as CheckBoxFilter).Values;
-    }
 }

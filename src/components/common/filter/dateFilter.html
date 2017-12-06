@@ -9,10 +9,10 @@
             min-width="290px">
         <v-text-field slot="activator" prepend-icon="event"
                       label="Select Entity Version"
-                      v-model="filter.Date"
+                      :value="value"
                       readonly></v-text-field>
         <v-date-picker v-model="calDate"
-                       :allowedDates="filter.Values"
+                       :allowedDates="dates"
                        no-title scrollable actions> </v-date-picker>
     </v-menu>
 </v-card-text>

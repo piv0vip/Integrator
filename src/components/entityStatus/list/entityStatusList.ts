@@ -32,30 +32,17 @@ import FilterRemoveIcon from 'mdi-vue/FilterRemoveIcon';
 
 export class EntityStatusListComponent extends Vue {
 
-    filters: EntityStatatusFilters = new EntityStatatusFilters();
-    filtersDecorator: EntityStatatusDecorator = new EntityStatatusDecorator(this.filters);
+    filtersDecorator: EntityStatatusDecorator = new EntityStatatusDecorator();
 
-    menu: boolean = false;
+    storeFilters: any = this.$store.getters.filters;
 
-    mut: boolean = false;
+    get filtersIsDefault(): boolean {
+        return this.$store.getters.filtersIsDefault;
+    }
 
-    keyword: ContainFilter = this.filters.Keyword;
-    entityStatusFilter: CheckBoxFilter = this.$store.getters.filters.Status;
-    statusMessageFilter: CheckBoxFilter = this.filters.StatusMessages;
-    entityTypeFilter: CheckBoxFilter = this.filters.EntityTypes;
-    sourceFilter: CheckBoxFilter = this.filters.Sources;
-    targetFilter: CheckBoxFilter = this.filters.Targets;
-    versionFilter: DateFilter = this.filters.Versions;
+    search: string = '';
 
-    // get entityStatusFilter(): IFilter {
-    //    this.mut;
-    //    return this.filters.getValue('EntityStatuses');
-    // }
-
-    // set entityStatusFilter(value: IFilter) {
-    //    this.filters.setValue('EntityStatuses', value);
-    //    this.mut = !this.mut;
-    // }
+    // keyword: ContainFilter = this.filters.Keyword;
     
     statusEnum = new CustomEnumValues();
     
@@ -96,7 +83,6 @@ export class EntityStatusListComponent extends Vue {
             label: 'Entity Status',
             sortable: true,
             formatter: 'getEnumDescription',
-            filter: 'EntityStatuses'
         }, 
         {
             key: 'SourceId',
@@ -127,21 +113,18 @@ export class EntityStatusListComponent extends Vue {
             tdClass: 'py-3',
             label: 'Source',
             sortable: true,
-            filter: 'Sources'
         },
         {
             key: 'Target',
             tdClass: 'py-3',
             label: 'Target',
             sortable: true,
-            filter: 'Targets'
         },
         {
             key: 'EntityType',
             tdClass: 'py-3',
             label: 'Entity Type',
             sortable: true,
-            filter: 'EntityTypes'
         },
         {
             key: 'EntityVersion',
@@ -150,27 +133,17 @@ export class EntityStatusListComponent extends Vue {
             sortable: true,
             formatter: 'formatDate',    
             thStyle: { width: '180px' },
-            filter: 'Versions'
         },
         {
             key: 'StatusMessage',
             label: 'Status Message',
             sortable: true,
-            filter: 'StatusMessages'
         },
     ];
 
     created() {
 
-        this.$store.dispatch('getEntityStatuses').then(() => {
-            let filterPresets = this.$store.state['entityStatus'].filterPresets;
-            //this.filters.EntityStatuses.Values = filterPresets.statuses;
-            this.filters.StatusMessages.Values = filterPresets.statusMessages;
-            this.filters.EntityTypes.Values = filterPresets.entityTypes;
-            this.filters.Sources.Values = filterPresets.sources;
-            this.filters.Targets.Values = filterPresets.targets;
-            this.filters.Versions.Values = filterPresets.versions;
-        });
+        this.$store.dispatch('getEntityStatuses');
 
         this.statusEnum.Load([
             { code: 'NotFound', name: 'NotFound', description: 'Not Found' },
@@ -228,7 +201,8 @@ export class EntityStatusListComponent extends Vue {
     }
 
     onResetFilter() {
-        this.filters.reset();
+        this.$store.commit('resetAllFilters');
+        // this.filters.reset();
         this.onApplyFilter();
     }
 
@@ -236,13 +210,12 @@ export class EntityStatusListComponent extends Vue {
         return option.displayName;
     }
 
-    onFFilterChange(filter: IFilter, filterName: string) {
-        this.filters.setValue(filterName, filter);
-        this.refreshTable();
-    }
-
     onStatusMessageClick(item) {
-        this.filters.StatusMessages.CheckedValues.push(item.StatusMessage);
+        let filterData: string[] = this.storeFilters.StatusMessage.FilterData;
+        this.$store.commit('updateFilterValue', {
+            filterName: 'StatusMessage',
+            values: filterData.concat([item.StatusMessage])
+        });
         this.refreshTable();
         console.log(item);
     }

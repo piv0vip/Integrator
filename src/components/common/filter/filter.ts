@@ -1,5 +1,5 @@
 import * as Vue from 'vue';
-import { Component, Prop, Watch } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 
 import { IFilter, Filter } from '../../../classes/filter';
 import { DateFilterComponent, CheckBoxFilterComponent, ContainFilterComponent, MultiSelectComponent } from './';
@@ -9,6 +9,8 @@ import { FilterTypeEnum } from '../../../enums';
 import FilterIcon from 'mdi-vue/FilterIcon';
 import FilterOutlineIcon from 'mdi-vue/FilterOutlineIcon';
 import FilterRemoveIcon from 'mdi-vue/FilterRemoveIcon';
+
+import { ITableFields } from '../../../interfaces';
 
 @Component({
     template: require('./filter.html'),
@@ -27,38 +29,36 @@ export class FilterComponent extends Vue {
 
     menuActive: boolean = false;
 
-    filter: IFilter = Filter.getFilter();
+    @Prop() value: ITableFields;
 
-    @Prop() value: IFilter;
+    filterData: any = this.$store.getters.filters[this.value.key].FilterData;
 
-    @Prop() name: string;
-    
-    mounted() {
-        this.filter = Filter.getFilterFromFilter(this.value);
+    get filter(): IFilter {
+        return this.$store.getters.filters[this.value.key];
     }
 
     onApplyClick() {
-        this.$emit('input', this.filter);
+        this.$store.commit('updateFilterValue', { filterName: this.value.key, values: this.filterData });
+        this.$emit('change', this.filter);
         this.closeDialog();
-    }
-
-    @Watch('value.Values')
-    listnValueValues() {
-        this.filter = Filter.getFilterFromFilter(this.value);
     }
 
     onCancelClick() {
-        // this.checkedValues = this.value;
         this.closeDialog();
     }
 
+    mounted() {
+        this.filterData = this.filter.FilterData;
+    }
+
     closeDialog() {
+        this.filterData = this.filter.FilterData;
         this.menuActive = false;
     }
 
     onResetClick() {
-        this.filter.reset();
-        this.$emit('input', this.filter);
+        this.$store.commit('resetFilter', { filterName: this.value.key });
+        this.$emit('change', this.filter);
         this.closeDialog();
     }
 
@@ -76,9 +76,5 @@ export class FilterComponent extends Vue {
 
     isDateFilter(): boolean {
         return this.filter.Type === FilterTypeEnum.Date;
-    }
-
-    onChangeFilter(filter: IFilter) {
-        console.log(filter);
     }
 }

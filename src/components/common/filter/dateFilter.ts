@@ -1,8 +1,6 @@
 import * as Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 
-import { DateFilter, IFilter, Filter } from '../../../classes/filter';
-
 import moment from 'moment';
 
 @Component({
@@ -11,35 +9,15 @@ import moment from 'moment';
 
 export class DateFilterComponent extends Vue {
 
-    checkedValues: string[] = [];
-
-    editValue: string;
     calDate: string = moment().format('YYYY-MM-DD');
 
-    filter: DateFilter = new DateFilter();
+    @Prop() dates: string[];
 
-    items: string[] = [];
-
-    @Prop() value: IFilter;
-
-    @Watch('value.Values')
-    onVValuesChansged(values) {
-        console.log('dateFilter.Values');
-        if ((this.value as DateFilter).Values != this.filter.Values) this.filter.Values = (this.value as DateFilter).Values;
-    }
+    @Prop() value: string;
 
     @Watch('calDate')
     onWatchCalldate(value) {
-        this.filter.Date = value;
-        this.$emit('input', this.filter);
+        this.$emit('input', value);
     }
 
-    // @Watch('filter.CheckedValues')
-    // onCVValuesChansged() {
-    //    this.$emit('input', this.filter)
-    // }
-
-    mounted() {
-        this.filter.Values = (this.value as DateFilter).Values;
-    }
 }

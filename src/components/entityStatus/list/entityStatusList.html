@@ -7,13 +7,13 @@
                           label="Rows per page"></v-select>
             </v-flex>
             <v-flex xs2 class="mx-4">
-                <v-text-field v-model="keyword.Value"
+                <v-text-field v-model="search"
                               label="Search"
                               @keyup.native.enter="onFilterChange"></v-text-field>
             </v-flex>
             <v-flex xs8>
                 <!--<v-btn @click="onApplyFilter">Apply filter</v-btn>-->
-                <v-btn @click="onResetFilter" :disabled="filters.isDefault()==true">Reset filter</v-btn>
+                <v-btn @click="onResetFilter" :disabled="filtersIsDefault">Reset all filters</v-btn>
             </v-flex>
         </v-layout>
     </v-container>
@@ -30,11 +30,7 @@
         <template slot="top-row" scope="data" :test="test(data)">
             <td v-for="field in data.fields">
 
-                <ifilter v-if="field.filter" 
-                         :value="filters[field.filter]"
-                         :name="field.label" 
-                         @input="onFFilterChange($event, field.filter)"
-                         @change="refreshTable"></ifilter>
+                <ifilter v-if="storeFilters[field.key]" :value="field" @change="refreshTable"></ifilter>
                 
             </td>
         </template>
