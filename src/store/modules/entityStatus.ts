@@ -48,16 +48,21 @@ const mutations = {
 
     setEntityStatuses(state, filterPresets: any) {
         state.filterPresets = filterPresets;
+
         if (state.filterPresets.statuses.length > 0)
             state.filters.Status.Values = state.filterPresets.statuses;
         else
             state.filters.Status.Values = EnumValues.getNames(EntityStatusEnum);
+
         if (state.filterPresets.entityTypes.length > 0)
             state.filters.EntityType.Values = state.filterPresets.entityTypes;
+
         if (state.filterPresets.sources.length > 0)
             state.filters.Source.Values = state.filterPresets.sources;
+
         if (state.filterPresets.targets.length > 0)
             state.filters.Target.Values = state.filterPresets.targets;
+
         if (state.filterPresets.versions.length > 0)
             state.filters.EntityVersion.Values = state.filterPresets.versions;
     },
@@ -69,7 +74,7 @@ const actions = {
             HTTP.get('EntityStatus/GetFilterValues')
                 .then((response: AxiosResponse) => {
                     commit('setEntityStatuses', response.data);
-                    resolve();
+                    resolve();  
                 })
                 .catch(e => { reject(e); });
         });

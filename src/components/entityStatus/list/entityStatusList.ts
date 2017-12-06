@@ -156,15 +156,18 @@ export class EntityStatusListComponent extends Vue {
     }
 
     myProvider(ctx) {
+        this.$store.commit('loading', true);
         ctx.filter = this.filtersDecorator.toServer();
         return EntityStatusService.getPagedList(ctx)
         .then( function(response: {data: EntityStatus[], metadata}) {
             this.pagedList = response.metadata;
             this.pagesCount = Math.ceil(response.metadata.totalItemCount / this.perPage);
            
+            this.$store.commit('loading', false);
             return response.data;
         }.bind(this) )
         .catch( (e) => {
+            this.$store.commit('loading', false);
             console.log(e);
             return [];
         });
@@ -187,7 +190,6 @@ export class EntityStatusListComponent extends Vue {
     onResetEntityStatus(entityStatus: EntityStatus) {
         HTTP.post('EntityStatus/Reset/' + entityStatus.EntityStatusId)
             .then((response: AxiosResponse) => {
-                console.log(response.data);
                 this.refreshTable();
             })
             .catch(e => {

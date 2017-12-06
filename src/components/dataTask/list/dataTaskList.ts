@@ -136,7 +136,7 @@ export class DataTaskListComponent extends Vue {
 
     created() {
 
-        this.$store.dispatch('getDataTasks');
+        this.refreshTable();
 
         this.statusEnum.Load([
             { code: 'NotStarted', name: 'NotStarted', description: 'Not Started'},

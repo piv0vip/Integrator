@@ -96,15 +96,17 @@ export class DataTaskEditComponent extends Vue {
     }
 
     onSaveDialog(evt) {
+        this.$store.commit('loading', true);
         let request: {url: string, method: string} = this.isNew ? 
             {url: 'DataTask/Insert', method: 'post'} : 
             {url: 'DataTask/Update', method: 'put'} ;
         HTTP[request.method](request.url, this.dataTask.toServer())
             .then(function(response) {
+                this.$store.commit('loading', false);
                 this.closeEditTask();
-                this.$emit('onSave', evt);
             }.bind(this))
             .catch(e => {
+                this.$store.commit('loading', false);
                 console.log(e);
             });
     }

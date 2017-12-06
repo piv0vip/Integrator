@@ -47,10 +47,6 @@ Vue.use(VeeValidate, {
 
 Vue.use(VueHighlightJS);
 
-import 'highlight.js/styles/xcode.css';
-
-import 'vue-multiselect/dist/vue-multiselect.min.css';
-
 let router = new VueRouter({
   routes: [
     { path: '/', component: DataTaskListComponent },

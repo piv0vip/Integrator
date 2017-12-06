@@ -15,7 +15,7 @@ export abstract class BaseService {
     public getPagedList(ctx: { currentPage: number, filter: EntityStatatusDecorator, perPage: number, sortBy: string, sortDesc: boolean }): Promise<AxiosResponse> {
         return new Promise((resolve, reject) => {
             HTTP.post(`${this.ControllerName}/GetPagedList?pageSize=${ctx.perPage}&pageNumber=${ctx.currentPage}&sortBy=${ctx.sortBy}&sortDesc=${ctx.sortDesc}`, ctx.filter)
-                .then(response => { resolve(response); })
+                .then(response => { debugger; resolve(response); })
                 .catch(error => { reject(Error); });
         });
     }

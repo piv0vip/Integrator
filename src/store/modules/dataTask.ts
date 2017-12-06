@@ -58,15 +58,20 @@ const actions = {
     },
 
     getDataTasks({ dispatch, commit }) {
+        commit('loading', true);
         return new Promise((resolve, reject) => {
             dispatch('getHandlerTypes').then(() => {
                 dispatch('getCronPresets').then(() => {
                     DataTaskService.getList()
                         .then((response: DataTask[]) => {
                             commit('setDataTasks', response);
+                            commit('loading', false);
                             resolve();
                         })
-                        .catch((e) => { console.log(e); });
+                        .catch((e) => {
+                            commit('loading', false);
+                            console.log(e);
+                        });
                 });
             });
         });
