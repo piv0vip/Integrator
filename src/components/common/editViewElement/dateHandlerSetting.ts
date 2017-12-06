@@ -25,11 +25,12 @@ export class DateHandlerSettingComponent extends Vue {
     @Prop() orderNum: string;
 
     @Watch('value') onValueChanged(value) {
-        if (value !== this.editValue) this.editValue = value;
+        let tempValue = /\d{4}-\d{2}-\d{2}/.test(value) ? value : moment(value).format('YYYY-MM-DD');
+        if (tempValue !== this.editValue) this.editValue = tempValue;
     }
 
-    @Watch('editValue') onEditedValueChanged(value, oldValue) {
-        this.calDate = value ? value : oldValue;
+    @Watch('editValue') onEditedValueChanged(value) {
+        this.calDate = /\d{4}-\d{2}-\d{2}/.test(value) ? value : moment().format('YYYY-MM-DD');
         this.$emit('input', value);
     }
 
