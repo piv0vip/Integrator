@@ -146,7 +146,7 @@ export class DataTaskListComponent extends Vue {
             { code: 'Cancelled', name: 'Cancelled'}
         ]);
 
-        let hubUrl = 'http://localhost:5000/hub';
+        let hubUrl = process.env.NODE_ENV === 'production' ? `/hub` : `http://localhost:5000/hub`;
         let httpConnection = new signalR.HttpConnection(hubUrl);
         
         this.hubConnection = new signalR.HubConnection(httpConnection);
@@ -205,7 +205,7 @@ export class DataTaskListComponent extends Vue {
     }
 
     onRefreshTableClick() {
-        this.$store.commit('setDataTaskStatus', TaskStatusEnum.NotStarted);
+        this.refreshTable();
     }
 
     onEditTaskClick(dataTask: DataTask) {
