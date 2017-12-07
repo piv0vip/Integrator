@@ -24,8 +24,6 @@ import { DataTaskService } from '../../../services';
 
 import chance from 'chance';
 
-import * as signalR from '@aspnet/signalr-client';
-
 import _ from 'lodash';
 
 @Component({
@@ -45,8 +43,8 @@ export class DataTaskListComponent extends Vue {
 
     cronPresets: string[] = [];
 
-    showConsole: boolean = false; 
-    consoleMessages: string[] = ['SignalR console:', '================'];
+    showConsole: boolean = false;
+    get consoleMessages(): string[] { return ['SignalR console:', '================'].concat(this.$store.getters.broadcastMessages) };
 
     currentTask: DataTask = new DataTask();
 
@@ -60,8 +58,6 @@ export class DataTaskListComponent extends Vue {
     formatDate: Function = helper.formatDate;
 
     getEnumDescription: Function = (val) => { return this.statusEnum.getEnumValueByCode(val).getDescription(); };
-
-    hubConnection: signalR.HubConnection;
 
     chance: chance;
 
@@ -146,22 +142,7 @@ export class DataTaskListComponent extends Vue {
             { code: 'Cancelled', name: 'Cancelled'}
         ]);
 
-        let hubUrl = process.env.NODE_ENV === 'production' ? `/hub` : `http://localhost:5000/hub`;
-        let httpConnection = new signalR.HttpConnection(hubUrl);
-        
-        this.hubConnection = new signalR.HubConnection(httpConnection);
-        this.hubConnection.on('Broadcast', this.handler);
 
-        this.hubConnection.start();
-    }
-
-    destroyed() {
-        this.hubConnection.off('Broadcast', this.handler);
-    }
-
-    handler(data) {
-        this.consoleMessages.push(data);
-        if (this.consoleMessages.length > 200) _.drop(this.consoleMessages);
     }
 
     get dataTasks(): DataTask[] {

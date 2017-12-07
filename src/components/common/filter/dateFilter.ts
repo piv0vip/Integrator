@@ -1,12 +1,11 @@
-import * as Vue from 'vue';
+import Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 
 import moment from 'moment';
 
 @Component({
-    template: require('./dateFilter.html'),
+    template: require('./dateFilter.html')
 })
-
 export class DateFilterComponent extends Vue {
 
     calDate: string = moment().format('YYYY-MM-DD');

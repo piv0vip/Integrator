@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 // import * as getters from './getters';
 import dataTask from './modules/dataTask';
 import entityStatus from './modules/entityStatus';
+import signalR from './modules/signalR';
 // import createLogger from '../../../src/plugins/logger'
 
 Vue.use(Vuex);
@@ -27,7 +28,8 @@ export default new Vuex.Store({
     },
     modules: {
         dataTask,
-        entityStatus
+        entityStatus,
+        signalR
     },
     strict: debug,
     //    plugins: debug ? [createLogger()] : []

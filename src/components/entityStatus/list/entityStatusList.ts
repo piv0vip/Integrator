@@ -11,7 +11,7 @@ import { ContentViewComponent } from '../contentView/contentView';
 import { ContentFactory, Content } from '../contentView/classes';
 
 import { FilterComponent, CheckBoxFilterComponent, ContainFilterComponent } from '../../common/filter';
-import { IFilter, DateFilter, CheckBoxFilter, MultiselectFilter, Filters, EntityStatatusFilters, ContainFilter, EntityStatatusDecorator } from '../../../classes/filter';
+import { IFilter, DateFilter, CheckBoxFilter, MultiselectFilter, Filters, ContainFilter, EntityStatatusDecorator } from '../../../classes/filter';
 import { EnumValues } from 'enum-values';
 
 import Multiselect from 'vue-multiselect';

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { FilterFactory, DateFilter, PeriodFilter, CheckBoxFilter, IFilter, ContainFilter, EntityStatatusFilters } from './index';
+import { FilterFactory, DateFilter, PeriodFilter, CheckBoxFilter, IFilter, ContainFilter } from './index';
 import { EntityStatusEnum, FilterTypeEnum } from '../../enums'
 
 import { EnumValues } from 'enum-values';

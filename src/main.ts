@@ -14,6 +14,8 @@ import { AppComponent } from './components/common/';
 import { DataTaskListComponent } from './components/dataTask';
 import { EntityStatusListComponent } from './components/entityStatus';
 
+import { HUB } from './util/http-common';
+
 import store from './store';
 
 Validator.extend('guid', {
@@ -58,6 +60,11 @@ new Vue({
   el: '#app-main',
   router,
   store,
+  created() {
+      HUB.start();
+      store.dispatch('connectToHub');
+      console.log('create vue application');
+  },
   components: {
     'app': AppComponent
   }

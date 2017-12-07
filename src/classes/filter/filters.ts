@@ -293,31 +293,6 @@ export class Filters extends Dictionary<string, IFilter> implements IServerable,
     }
 }
 
-export class EntityStatatusFilters extends Filters {
-
-    get EntityStatuses(): CheckBoxFilter { return this.getValue('EntityStatuses') as CheckBoxFilter; }
-
-    get StatusMessages(): MultiselectFilter { return this.getValue('StatusMessages') as MultiselectFilter; }
-
-    get EntityTypes(): CheckBoxFilter { return this.getValue('EntityTypes') as CheckBoxFilter; }
-
-    get Sources(): CheckBoxFilter { return this.getValue('Sources') as CheckBoxFilter; }
-
-    get Targets(): CheckBoxFilter { return this.getValue('Targets') as CheckBoxFilter; }
-
-    get Versions(): DateFilter { return this.getValue('Versions') as DateFilter; }
-
-    constructor() {
-        super();
-        this.setValue('EntityStatuses', store.getters.filters.Status);
-        this.setValue('StatusMessages', new MultiselectFilter([]));
-        this.setValue('EntityTypes', new CheckBoxFilter([]));
-        this.setValue('Sources', new CheckBoxFilter([]));
-        this.setValue('Targets', new CheckBoxFilter([]));
-        this.setValue('Versions', new DateFilter());
-    }
-}
-
 interface IESF {
     FieldName: string;
     ContainValues?: { values: string[] };
