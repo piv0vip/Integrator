@@ -44,7 +44,7 @@ export class DataTaskListComponent extends Vue {
     cronPresets: string[] = [];
 
     showConsole: boolean = false;
-    get consoleMessages(): string[] { return ['SignalR console:', '================'].concat(this.$store.getters.broadcastMessages) };
+    get consoleMessages(): string[] { return ['SignalR console:', '================'].concat(this.$store.getters.broadcastMessages); }
 
     currentTask: DataTask = new DataTask();
 
@@ -216,6 +216,12 @@ export class DataTaskListComponent extends Vue {
 
     onFilterChange(e) {
         this.refreshTable();
+    }
+
+    get isAuthenticate() { return this.$store.getters.isAuthenticate; }
+
+    auth(provider: string) {
+       // if (this)
     }
 
 }

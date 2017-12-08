@@ -1,4 +1,4 @@
-import * as Vue from 'vue';
+import Vue from 'vue';
 
 import BootstrapVue from 'bootstrap-vue';
 import VueRouter from 'vue-router';

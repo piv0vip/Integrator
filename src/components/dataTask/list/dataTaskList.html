@@ -83,6 +83,9 @@
 
                 <v-btn round color="green lighten-2 white--text"
                        @click="showConsole = !showConsole"><v-icon class="mr-2">clear_all</v-icon>Show console</v-btn>
+            
+                <v-btn v-if="!isAuthenticate" round @click="auth('google')" >auth Google</v-btn>
+                <v-btn v-if="isAuthenticate" round color="red lighten-2 white--text" @click="auth('google')" >Logout</v-btn>
             </b-col>
         </b-row>
     </b-container>

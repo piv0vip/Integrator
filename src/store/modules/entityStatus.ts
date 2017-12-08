@@ -7,9 +7,11 @@ import { EntityStatusEnum, FilterTypeEnum } from '../../enums';
 import _ from 'lodash';
 
 const state = {
+
     filterPresets: {
         statuses: []
     },
+
     filters: {
         Status:         FilterFactory.getFilter(FilterTypeEnum.StringList),
         EntityType:     FilterFactory.getFilter(FilterTypeEnum.StringList),
@@ -21,8 +23,11 @@ const state = {
 };
 
 const getters = {
+
     filterPresets:      state => state.filterPresets,
+
     filters:            state => state.filters,
+
     filtersIsDefault:   state => {
         return _.every(state.filters, (value: IFilter) => {
             return value.isDefault();
@@ -69,6 +74,7 @@ const mutations = {
 };
 
 const actions = {
+
     getEntityStatuses({ dispatch, commit }) {
         return new Promise((resolve, reject) => {
             HTTP.get('EntityStatus/GetFilterValues')

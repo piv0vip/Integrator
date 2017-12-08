@@ -6,8 +6,11 @@ import { DataTask } from '../../models/DataTask';
 import { TaskStatusEnum } from '../../enums';
 
 const state = {
+
     handlerTypes: new HandlerTypes(),
+
     cronPresets: new Array<string>(),
+
     dataTasks: new Array<DataTask>(),
 };
 
@@ -35,6 +38,7 @@ const mutations = {
 };
 
 const actions = {
+
     getHandlerTypes({ commit }) {
         return new Promise((resolve, reject) => {
             HTTP.get('DataTask/GetHandlersWithDefaultSettings')

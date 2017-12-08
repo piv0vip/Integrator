@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as signalR from '@aspnet/signalr-client';
 
 export const HTTP = axios.create({
-    baseURL: process.env.NODE_ENV === 'production' ? `/rest/` : `http://localhost:5000/rest/` // `https://qa03int.teamworkinsight.com/rest/`
+    baseURL: process.env.NODE_ENV === 'production' ? `/rest/` : `http://localhost:5000/rest/`
     // headers: {
     //    	Authorization: 'Bearer {token}'
     //  	}
