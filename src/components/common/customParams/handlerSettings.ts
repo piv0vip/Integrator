@@ -7,8 +7,6 @@ import { ITableFields, IEditViewElement } from '../../../interfaces';
 
 import { HandlerSettingComponent } from './handlerSetting';
  
-import $ from 'jquery'; 
-
 @Component({
     template: require('./handlerSettings.html'),
     components: {

@@ -4,7 +4,7 @@
             <handler-setting :scope="scope"
                              v-model="handlerSetting.Value" 
                              :initToggle="initToggle" 
-                             :orderNum="'handlerSetting'+index" 
+                             :orderNum="scope+'_'+index" 
                              :handlerSetting="handlerSetting"></handler-setting>
         </template>
     </v-container>

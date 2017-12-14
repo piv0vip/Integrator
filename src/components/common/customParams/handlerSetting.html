@@ -21,6 +21,7 @@
                   v-model="editValue"
                   :label="handlerSetting.Name"
                   :error-messages="errors.collect(orderNum, scope)"
+                  combobox
                   v-validate="validationString"
                   :data-vv-scope="scope"
                   :data-vv-name="handlerSetting.Name"
@@ -41,7 +42,8 @@
                       :data-vv-scope="scope"
                       :data-vv-name="orderNum"
                       :data-vv-as="handlerSetting.Name"
-                      :type="isNumber?'number':'text'"
+                      :type="'text'"
+                      :clearable="!handlerSetting.IsRequired"
                       :required="handlerSetting.IsRequired"></v-text-field>
 
     </v-flex>
