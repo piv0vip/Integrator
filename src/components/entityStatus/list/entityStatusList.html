@@ -17,54 +17,55 @@
             </v-flex>
         </v-layout>
     </v-container>
-    <b-table id="entity-statuses"
-             ref="entityStatusesTable"
-             hover
-             :busy.sync="isBusy"
-             :sort-by.sync="sortBy"
-             :sort-desc.sync="sortDesc"
-             :current-page="currentPage"
-             :per-page="perPage"
-             :fields="fields"
-             :items="myProvider">
-        <template slot="top-row" scope="data" :test="test(data)">
-            <td v-for="field in data.fields">
+    <div style="overflow-x:auto">
+        <b-table id="entity-statuses"
+                 ref="entityStatusesTable"
+                 hover
+                 :busy.sync="isBusy"
+                 :sort-by.sync="sortBy"
+                 :sort-desc.sync="sortDesc"
+                 :current-page="currentPage"
+                 :per-page="perPage"
+                 :fields="fields"
+                 :items="myProvider">
+            <template slot="top-row" scope="data" :test="test(data)">
+                <td v-for="field in data.fields">
 
-                <ifilter v-if="storeFilters[field.key]" :value="field" @change="refreshTable"></ifilter>
-                
-            </td>
-        </template>
-        <template slot="Reset" scope="data">
-            <v-btn icon flat
-                   color="red lighten-2 white--text"
-                   title="Reset entity status"
-                   @click='onResetEntityStatus(data.item)'><i class="material-icons">compare_arrows</i></v-btn>
-        </template>
-        <template slot="InContent" scope="data">
-            <span v-if="data.item.getInContent().getContent()">
-                <v-btn flat round
-                       color="indigo lighten-2 white--text"
-                       title="In Content"
-                       value="assignment"
-                       @click='onViewContentClick(data.item.getInContent())'><v-icon class="mr-1">assignment</v-icon>{{ data.item.getInContent().getType() }}</v-btn>
-            </span>
-        </template>
-        <template slot="OutContent" scope="data">
-            <span v-if="data.item.getOutContent().getContent()">
-                <v-btn flat round
-                       color="indigo lighten-2 white--text"
-                       title="In Content"
-                       @click='onViewContentClick(data.item.getOutContent())'><v-icon class="mr-1">assignment</v-icon>{{ data.item.getOutContent().getType() }}</v-btn>
-            </span>
-        </template>
-        <template slot="StatusMessage" scope="data">
+                    <ifilter v-if="storeFilters[field.key]" :value="field" @change="refreshTable"></ifilter>
+
+                </td>
+            </template>
+            <template slot="Reset" scope="data">
+                <v-btn icon flat
+                       color="red lighten-2 white--text"
+                       title="Reset entity status"
+                       @click='onResetEntityStatus(data.item)'><i class="material-icons">compare_arrows</i></v-btn>
+            </template>
+            <template slot="InContent" scope="data">
+                <span v-if="data.item.getInContent().getContent()">
+                    <v-btn flat round
+                           color="indigo lighten-2 white--text"
+                           title="In Content"
+                           value="assignment"
+                           @click='onViewContentClick(data.item.getInContent())'><v-icon class="mr-1">assignment</v-icon>{{ data.item.getInContent().getType() }}</v-btn>
+                </span>
+            </template>
+            <template slot="OutContent" scope="data">
+                <span v-if="data.item.getOutContent().getContent()">
+                    <v-btn flat round
+                           color="indigo lighten-2 white--text"
+                           title="In Content"
+                           @click='onViewContentClick(data.item.getOutContent())'><v-icon class="mr-1">assignment</v-icon>{{ data.item.getOutContent().getType() }}</v-btn>
+                </span>
+            </template>
+            <template slot="StatusMessage" scope="data">
                 <v-btn icon flat
                        color="indigo lighten-2 white--text"
                        title="In Content"
                        @click='onStatusMessageClick(data.item)'><filter-remove-icon /></v-btn>{{ data.item.StatusMessage }}
-        </template>
-    </b-table>
-
+            </template>
+        </b-table>
+    </div>
     <v-container fluid>
         <v-layout row wrap>
             <v-flex xs1 class="pt-1">

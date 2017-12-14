@@ -53,7 +53,7 @@ export class DataTaskExecuteLocalyComponent extends Vue {
                     let errors = this.$validator.errors;
                     let firstErrorItem = _.isArray(errors.items) && errors.items.length > 0 && errors.items;
                     let scopedError = firstErrorItem ? _.find(firstErrorItem, (value) => {
-                        return value.scope == this.scope;
+                        return value.scope === this.scope;
                     }) : null;
                     if (scopedError) {
                         let $el = $('[data-vv-name=' + scopedError.field + '][data-vv-scope=' + scopedError.scope + ']');

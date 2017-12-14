@@ -19,51 +19,52 @@
             </div>
         </b-col>
     </div>-->
-    <b-table 
-        id="data-tasks"
-        ref="dataTasksTable" 
-        hover 
-        no-local-sorting
-        :busy.sync="isBusy" 
-        @row-dblclicked="onEditTaskClick"
-        :sort-by.sync="sortBy"
-        :sort-desc.sync="sortDesc"
-        :fields="fieldds" 
-        :items="dataTasks">
-        <template slot="ExecLoc" scope="data">
-            <v-btn icon flat outline 
-                color="indigo lighten-2 white--text"
-                title="Execute task immediately" 
-                :disabled="data.item.IsRunning"
-                @click='onExecLocalyTaskClick(data.item)'><i class="material-icons">flash_on</i></v-btn>
-        </template>
-        <template slot="ExecSch" scope="data">
-            <v-btn icon flat outline
-                color="indigo lighten-2 white--text"
-                title="Execute task in scheduler" 
-                :disabled="data.item.IsRunning"
-                @click='onExecInSchTaskClick(data.item)'><i class="material-icons">alarm</i></v-btn>
-        </template>
-        <template slot="Reset" scope="data">
-            <v-btn icon flat outline
-                color="red lighten-2 white--text"
-                title="Reset task" 
-                :disabled="!data.item.IsRunning"
-                @click='onResetTaskClick(data.item)'><i class="material-icons">flash_off</i></v-btn>
-        </template>
-        <template slot="Config" scope="data">
-            <v-btn icon flat outline
-                color="teal lighten-2 white--text"
-                title="Configure task" 
-                @click='onEditTaskClick(data.item)'><v-icon>settings</v-icon></v-btn>
-        </template>
-        <template slot="Delete" scope="data">
-            <confirmation-button title="Delete task" 
-                                 iconName="delete_forever"
-                                 :dialogMessage="'Do you want to Remove \'' + data.item.DisplayName + '\' Task?'"
-                                 @onOkClicked="onDeleteTaskClick(data.item)"></confirmation-button>
-         </template>
-    </b-table>
+    <div style="overflow-x:auto">
+        <b-table id="data-tasks"
+                 ref="dataTasksTable"
+                 hover
+                 no-local-sorting
+                 :busy.sync="isBusy"
+                 @row-dblclicked="onEditTaskClick"
+                 :sort-by.sync="sortBy"
+                 :sort-desc.sync="sortDesc"
+                 :fields="fieldds"
+                 :items="dataTasks">
+            <template slot="ExecLoc" scope="data">
+                <v-btn icon flat outline
+                       color="indigo lighten-2 white--text"
+                       title="Execute task immediately"
+                       :disabled="data.item.IsRunning"
+                       @click='onExecLocalyTaskClick(data.item)'><i class="material-icons">flash_on</i></v-btn>
+            </template>
+            <template slot="ExecSch" scope="data">
+                <v-btn icon flat outline
+                       color="indigo lighten-2 white--text"
+                       title="Execute task in scheduler"
+                       :disabled="data.item.IsRunning"
+                       @click='onExecInSchTaskClick(data.item)'><i class="material-icons">alarm</i></v-btn>
+            </template>
+            <template slot="Reset" scope="data">
+                <v-btn icon flat outline
+                       color="red lighten-2 white--text"
+                       title="Reset task"
+                       :disabled="!data.item.IsRunning"
+                       @click='onResetTaskClick(data.item)'><i class="material-icons">flash_off</i></v-btn>
+            </template>
+            <template slot="Config" scope="data">
+                <v-btn icon flat outline
+                       color="teal lighten-2 white--text"
+                       title="Configure task"
+                       @click='onEditTaskClick(data.item)'><v-icon>settings</v-icon></v-btn>
+            </template>
+            <template slot="Delete" scope="data">
+                <confirmation-button title="Delete task"
+                                     iconName="delete_forever"
+                                     :dialogMessage="'Do you want to Remove \'' + data.item.DisplayName + '\' Task?'"
+                                     @onOkClicked="onDeleteTaskClick(data.item)"></confirmation-button>
+            </template>
+        </b-table>
+    </div>
     
     <b-container>
         <b-row class="text-center">
