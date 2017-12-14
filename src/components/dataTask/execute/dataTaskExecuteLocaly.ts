@@ -5,6 +5,9 @@ import { HandlerSettingsComponent, ConfirmationComponent } from '../../common/';
 import { DataTask } from '../../../models';
 import { HTTP } from '../../../util/http-common';
 
+import $ from 'jquery';
+import _ from 'lodash';
+    
 @Component({
     template: require('./dataTaskExecuteLocaly.html'),
     components: {
@@ -46,6 +49,16 @@ export class DataTaskExecuteLocalyComponent extends Vue {
             .then(function(isValid) {
                 if (isValid) {
                     this.showConfirmation = true;
+                } else {
+                    let errors = this.$validator.errors;
+                    let firstErrorItem = _.isArray(errors.items) && errors.items.length > 0 && errors.items;
+                    let scopedError = firstErrorItem ? _.find(firstErrorItem, (value) => {
+                        return value.scope == this.scope;
+                    }) : null;
+                    if (scopedError) {
+                        let $el = $('[data-vv-name=' + scopedError.field + '][data-vv-scope=' + scopedError.scope + ']');
+                        if ($el) { $el.focus(); }
+                    }
                 }
             }.bind(this))
             .catch((e) => { console.log(e); });
