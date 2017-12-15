@@ -8,6 +8,9 @@ import { HandlerSettingComponent, ConfirmationComponent } from '../../common/';
 import { IEnumValues } from '../../../interfaces';
 import { CronPresetsComponent } from './cronPresets';   
 
+import $ from 'jquery';
+import _ from 'lodash';
+
 @Component({
     template: require('./dataTaskEdit.html'),
     components: {
@@ -117,6 +120,16 @@ export class DataTaskEditComponent extends Vue {
             .then(function(isValid) {
                 if (isValid) {
                     this.showSaveConfirmation = true;
+                } else {
+                    let errors = this.$validator.errors;
+                    let firstErrorItem = _.isArray(errors.items) && errors.items.length > 0 && errors.items;
+                    let scopedError = firstErrorItem ? _.find(firstErrorItem, (value) => {
+                        return value.scope === this.scope;
+                    }) : null;
+                    if (scopedError) {
+                        let $el = $('[data-vv-name=' + scopedError.field + '][data-vv-scope=' + scopedError.scope + ']');
+                        if ($el) { $el.focus(); }
+                    }
                 }
             }.bind(this))
             .catch((e) => { console.log(e); });

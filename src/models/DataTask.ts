@@ -13,6 +13,7 @@ export class DataTask extends TEntity {
 
     DisplayName: string = '';
     Enabled: boolean = false;
+    Inactive: boolean = false;
     GroupName: string = '';
     IsMaintenance: boolean = false;
     MaxRetries: number = 0;
@@ -95,6 +96,7 @@ export class DataTask extends TEntity {
             dataTaskId: this.DataTaskId,
             displayName: this.DisplayName,
             enabled: this.Enabled,
+            inactive: this.Inactive,
             groupName: this.GroupName,
             handlerSettings: this.HandlerSettings,
             isMaintenance: this.IsMaintenance,

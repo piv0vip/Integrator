@@ -4,6 +4,7 @@ import { AxiosResponse } from 'axios';
 import { DataTaskService } from '../../services';
 import { DataTask } from '../../models/DataTask';
 import { TaskStatusEnum } from '../../enums';
+import { Dictionary } from 'typescript-collections';
 
 const state = {
 
@@ -11,11 +12,14 @@ const state = {
 
     cronPresets: new Array<string>(),
 
-    dataTasks: new Array<DataTask>(),
+    dataTasks: new Dictionary<number, DataTask>(),
+
+    dataTasksArray: new Array<DataTask>()
 };
 
 const getters = {
-    dataTasksArray: state => state.dataTasks
+    dataTasks: state => state.dataTasks,
+    dataTasksArray: state => state.dataTasksArray
 };
 
 const mutations = {
@@ -28,12 +32,24 @@ const mutations = {
     },
 
     setDataTasks(state, dataTasks: DataTask[]) {
-        state.dataTasks = dataTasks;
+        // let ddd = new Dictionary<number, DataTask>();
+        dataTasks.forEach((dataTask: DataTask) => {
+            state.dataTasks.setValue(dataTask.DataTaskId, dataTask);
+        });
+
+        state.dataTasksArray = state.dataTasks.values();
+        // state.dataTasks = dataTasks;
     },
 
     setDataTaskStatus(state, status: TaskStatusEnum) {
         state.dataTasks[0].Status = status;
     },
+
+    dataTaskEvent(state, dataTaskJson) {
+        let dataTask = DataTask.createDataTaskFromJson(state.handlerTypes, dataTaskJson);
+        state.dataTasks.setValue(dataTask.DataTaskId, dataTask);
+        state.dataTasksArray = state.dataTasks.values();
+    }
 
 };
 
@@ -46,7 +62,9 @@ const actions = {
                     commit('sethandlerTypes', response.data);
                     resolve();
                 })
-                .catch(e => { reject(e); });
+                .catch(e => {
+                    reject(e);
+                });
         });
     },
 

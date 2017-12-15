@@ -35,7 +35,7 @@
     "test:watch": "cross-env NODE_ENV=development karma start karma.unit.js --singleRun=false --auto-watch"
   },
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.17.1",
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "^1.0.0-beta.9",
     "cronstrue": "^0.10.10",
@@ -46,7 +46,7 @@
     "mdi-vue": "^0.2.7",
     "moment": "^2.18.0",
     "typescript-collections": "^1.2.5",
-    "uglifyjs-webpack-plugin": "^1.0.1",
+    "uglifyjs-webpack-plugin": "^1.0.1",                      
     "url-loader": "^0.6.2",
     "vee-validate": "^2.0.0-rc.23",
     "vue": "~2.4.4",

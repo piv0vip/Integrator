@@ -69,24 +69,22 @@
     <b-container>
         <b-row class="text-center">
             <b-col class="center">
-                
+
                 <v-btn round
-                    title="Add new task" 
-                    color="teal lighten-2 white--text"
-                    @click="onAddDatataskClick"
-                    ><v-icon class="mr-2">link</v-icon> Add DataTask</v-btn>
-                
+                       title="Add new task"
+                       color="teal lighten-2 white--text"
+                       @click="onAddDatataskClick"
+                       ><v-icon class="mr-2">link</v-icon> Add DataTask</v-btn>
+
                 <v-btn round
                        color="indigo lighten-2 white--text"
-                       title="Refresh Table" 
+                       title="Refresh Table"
                        @click="onRefreshTableClick"
                        ><v-icon class="mr-2">autorenew</v-icon> Refresh table</v-btn>
 
                 <v-btn round color="green lighten-2 white--text"
                        @click="showConsole = !showConsole"><v-icon class="mr-2">clear_all</v-icon>Show console</v-btn>
-            
-                <v-btn v-if="!isAuthenticate" round @click="auth('google')" >auth Google</v-btn>
-                <v-btn v-if="isAuthenticate" round color="red lighten-2 white--text" @click="auth('google')" >Logout</v-btn>
+
             </b-col>
         </b-row>
     </b-container>

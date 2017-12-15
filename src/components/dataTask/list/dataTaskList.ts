@@ -157,22 +157,22 @@ export class DataTaskListComponent extends Vue {
     onExecInSchTaskClick(dataTask: DataTask) {
         HTTP.post('DataTask/ExecuteTask/' + dataTask.DataTaskId)
         .then((response: AxiosResponse) => {
-            this.refreshTable();
+            // this.refreshTable();
         })
         .catch(e => {
             console.log(e);
-            this.refreshTable();
+            // this.refreshTable();
         });
     }
 
     onResetTaskClick(dataTask: DataTask) {
         HTTP.post('DataTask/ResetTaskStatus/' + dataTask.DataTaskId)
         .then((response: AxiosResponse) => {
-            this.refreshTable();
+            // this.refreshTable();
         })
         .catch(e => {
             console.log(e);
-            this.refreshTable();
+            // this.refreshTable();
         });
     }
 
@@ -206,7 +206,7 @@ export class DataTaskListComponent extends Vue {
     }
 
     closeExecuteTaskLocaly(e) {
-        this.refreshTable();
+        // this.refreshTable();
     }
 
     closeEditTask(e) {
@@ -216,12 +216,6 @@ export class DataTaskListComponent extends Vue {
 
     onFilterChange(e) {
         this.refreshTable();
-    }
-
-    get isAuthenticate() { return this.$store.getters.isAuthenticate; }
-
-    auth(provider: string) {
-       // if (this)
     }
 
 }
