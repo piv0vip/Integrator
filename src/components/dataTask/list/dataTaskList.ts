@@ -44,7 +44,7 @@ export class DataTaskListComponent extends Vue {
     cronPresets: string[] = [];
 
     showConsole: boolean = false;
-    get consoleMessages(): string[] { return ['SignalR console:', '================'].concat(this.$store.getters.broadcastMessages); }
+    get consoleMessages(): string[] { return this.$store.getters.broadcastMessages; }
 
     currentTask: DataTask = new DataTask();
 

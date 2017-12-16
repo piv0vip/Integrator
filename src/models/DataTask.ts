@@ -1,5 +1,4 @@
 ﻿import * as helper  from '../util/helper';
-import { CronSchedule } from '../components/common';
 import { Setting, DataTaskHandlerSettings, HandlerType, HandlerTypes, HandlerSettings } from '../classes/settings';
 import { TEntity } from './TEntity';
 import { TaskStatusEnum } from '../enums';
@@ -9,7 +8,6 @@ export class DataTask extends TEntity {
     protected _HandlerType: HandlerType;
     protected _HandlerSettings: DataTaskHandlerSettings;
     protected _TaskType: string;
-    protected _CronSchedule: CronSchedule;
 
     DisplayName: string = '';
     Enabled: boolean = false;
@@ -33,7 +31,6 @@ export class DataTask extends TEntity {
         
         this._TaskType = '';
         this._HandlerSettings = new DataTaskHandlerSettings();
-        this._CronSchedule = new CronSchedule();
         this._HandlerType = HandlerType.CreateEmpty();
         this._cronString = '* * * * *';
     }
@@ -64,17 +61,14 @@ export class DataTask extends TEntity {
     }
 
     get CronString(): string {
-        // return this._CronSchedule.toString();
         return this._cronString;
     }
 
     get CronSchedule(): string {
-        // return this._CronSchedule.toString();
         return this._cronString;
     }
 
     set CronSchedule(value: string) {
-        // this._CronSchedule.Parse(value);
         this._cronString = value.toUpperCase();
     }
 
@@ -84,10 +78,6 @@ export class DataTask extends TEntity {
 
     getHandlerSettings(): DataTaskHandlerSettings {
         return this._HandlerSettings;
-    }
-
-    getCronSchedule(): CronSchedule {
-        return this._CronSchedule;
     }
 
     toServer(): {} {

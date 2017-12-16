@@ -5,6 +5,10 @@ export abstract class TEntity implements IServerable<object> {
 
     EntityId?: number = null;
 
+    RecCreated: string;
+    RecModified: string;
+    EntityName: string;
+
     protected keys: {
         realKey: string,
         camelKey: string,
