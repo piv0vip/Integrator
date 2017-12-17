@@ -38,20 +38,4 @@ export class EntityStatusService extends BaseService {
            } );
         } );
     }
-
-    public static createEntities( entities: EntityStatus[] ) {
-
-        let service = new EntityStatusService();
-        
-        return new Promise( (resolve, reject) => {
-            service.createNewEntities(entities)
-            .then( ( response: AxiosResponse ) => {
-                resolve( response );    
-            } )
-            .catch( (error) => {
-                reject('Error');
-            });
-        });
-    }
-    
 }

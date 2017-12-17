@@ -1,13 +1,14 @@
 import * as helper  from '../util/helper';
 import { IServerable } from '../interfaces';
 
-export abstract class TEntity implements IServerable<object> {
+export abstract class TEntity<IModel> implements IServerable<IModel> {
 
     EntityId?: number = null;
 
-    RecCreated: string;
-    RecModified: string;
     EntityName: string;
+
+    RecCreated: Date;
+    RecModified: Date;
 
     protected keys: {
         realKey: string,
@@ -19,12 +20,12 @@ export abstract class TEntity implements IServerable<object> {
         return this.EntityId === null;
     }
 
-    protected params: object;
+    protected model: IModel;
 
-    Parse(params: object) {
+    Parse(model: IModel) {
         
-        this.params = params;
-        let keys: string[] = Object.keys(params);
+        this.model = model;
+        let keys: string[] = Object.keys(model);
         this.keys = keys.map((key) => {
             return {
                 realKey: key,
@@ -33,9 +34,9 @@ export abstract class TEntity implements IServerable<object> {
             };
         });
 
-        this.keys.forEach( key => { this[key.capitalKey] = params[key.realKey] || params[key.camelKey]; });
+        this.keys.forEach(key => { this[key.capitalKey] = model[key.realKey] || model[key.camelKey]; });
     };
 
-    abstract toServer(): {};
+    abstract toServer(): IModel;
 
 }

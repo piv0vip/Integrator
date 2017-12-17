@@ -3,7 +3,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 
 import { IEditViewElement } from '../../../interfaces/';
 
-import { SettingTypeEnum } from '../../../enums';
+import { IntegratorAPIModels } from '../../../api/integratorAPI';
 
 import $ from 'jquery';
 
@@ -54,14 +54,14 @@ export class EditViewElementComponent extends Vue {
     }
 
     get isGuid(): boolean {
-        return this.element.getType() === SettingTypeEnum.Guid;
+        return this.element.getType() === IntegratorAPIModels.Type.Guid;
     }
 
     get isNumber(): boolean {
-        return this.element.getType() === SettingTypeEnum.Number;
+        return this.element.getType() === IntegratorAPIModels.Type.Number;
     }
 
     get isUrl(): boolean {
-        return this.element.getType() === SettingTypeEnum.Url;
+        return this.element.getType() === IntegratorAPIModels.Type.Url;
     }
 }

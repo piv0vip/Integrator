@@ -3,7 +3,7 @@ import { Component, Prop, Watch, Inject } from 'vue-property-decorator';
 
 import { HandlerSetting } from '../../../classes/settings';
 
-import { SettingTypeEnum } from '../../../enums';
+import { IntegratorAPIModels } from '../../../api/integratorAPI';
 
 import moment from 'moment';
 
@@ -69,30 +69,30 @@ export class HandlerSettingComponent extends Vue {
     }
 
     get isBool(): boolean {
-        return this.handlerSetting.Type === SettingTypeEnum.Bool;
+        return this.handlerSetting.Type === IntegratorAPIModels.Type.Bool;
     }
 
     get isSelectBox(): boolean {
-        return this.handlerSetting.Type === SettingTypeEnum.SelectBox;
+        return this.handlerSetting.Type === IntegratorAPIModels.Type.SelectBox;
     }
 
     get isNumber(): boolean {
-        return this.handlerSetting.Type === SettingTypeEnum.Number;
+        return this.handlerSetting.Type === IntegratorAPIModels.Type.Number;
     }
 
     get isDate(): boolean {
-        return this.handlerSetting.Type === SettingTypeEnum.Date;
+        return this.handlerSetting.Type === IntegratorAPIModels.Type.Date;
     }
 
     get isDateTime(): boolean {
-        return this.handlerSetting.Type === SettingTypeEnum.DateTime;
+        return this.handlerSetting.Type === IntegratorAPIModels.Type.DateTime;
     }
 
     get getIcon(): string {
         let iconStr: string = this.isSelectBox ? 'format_list_bulleted' :
             this.isNumber ? 'text_fields' :
-            (this.handlerSetting.Type === SettingTypeEnum.Url) ? 'public' :
-            (this.handlerSetting.Type === SettingTypeEnum.Guid) ? 'G' :
+                (this.handlerSetting.Type === IntegratorAPIModels.Type.Url) ? 'public' :
+                    (this.handlerSetting.Type === IntegratorAPIModels.Type.Guid) ? 'G' :
             this.isDate || this.isDateTime ? '<i class="material-icons">event</i>' :
             this.isBool ? 'check_box' : 'text_fields';
         return iconStr;

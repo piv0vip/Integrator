@@ -1,9 +1,10 @@
 ﻿import * as helper  from '../util/helper';
 import { Setting, DataTaskHandlerSettings, HandlerType, HandlerTypes, HandlerSettings } from '../classes/settings';
 import { TEntity } from './TEntity';
-import { TaskStatusEnum } from '../enums';
 
-export class DataTask extends TEntity {
+import { IntegratorAPIModels as Models } from '../api/integratorAPI'
+
+export class DataTask extends TEntity<Models.DataTask> {
 
     protected _HandlerType: HandlerType;
     protected _HandlerSettings: DataTaskHandlerSettings;
@@ -16,14 +17,12 @@ export class DataTask extends TEntity {
     IsMaintenance: boolean = false;
     MaxRetries: number = 0;
     Progress: string;
-    Retries: string;
-    Status: TaskStatusEnum = TaskStatusEnum.NotStarted;
+    Retries: number;
+    Status: Models.Status = Models.Status.NotStarted;
     LastEndTime: string;
     LastExecutionTime: string;
     LastStartTime: string;
     NextStartTime: string;
-    RecCreated: string;
-    RecModified: string;
     protected _cronString: string;
     
     constructor() {
@@ -73,42 +72,34 @@ export class DataTask extends TEntity {
     }
 
     get IsRunning(): boolean {
-        return this.Status === TaskStatusEnum.Running;
+        return this.Status === Models.Status.Running;
     }
 
     getHandlerSettings(): DataTaskHandlerSettings {
         return this._HandlerSettings;
     }
 
-    toServer(): {} {
+    toServer(): Models.DataTask {
         return {
             cronSchedule: this.CronSchedule,
             dataTaskId: this.DataTaskId,
             displayName: this.DisplayName,
             enabled: this.Enabled,
             inactive: this.Inactive,
-            groupName: this.GroupName,
             handlerSettings: this.HandlerSettings,
             isMaintenance: this.IsMaintenance,
-            lastEndTime: this.LastEndTime,
-            lastExecutionTime: this.LastExecutionTime,
-            lastStartTime: this.LastStartTime,
             maxRetries: this.MaxRetries,
-            nextStartTime: this.NextStartTime,
-            progress: this.Progress,
-            recCreated: this.RecCreated,
-            recModified: this.RecModified,
             retries: this.Retries,
             status: this.Status,
             taskType: this.TaskType
         };
     }
 
-    static createDataTaskFromJson(handlerTypes: HandlerTypes, params) {
+    static createDataTaskFromJson(handlerTypes: HandlerTypes, iDataTask: Models.DataTask) {
         let dataTask = new DataTask();
-        let taskType = params['TaskType'] || params['taskType'];
+        let taskType = iDataTask.taskType;
         if (taskType && handlerTypes.containsKey(taskType)) dataTask.HandlerType = handlerTypes.getValue(taskType);
-        dataTask.Parse(params);
+        dataTask.Parse(iDataTask);
         return dataTask;
     }
 }

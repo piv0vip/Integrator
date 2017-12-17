@@ -1,18 +1,19 @@
 ﻿import * as helper from '../util/helper';
 import { TEntity } from './TEntity';
 import { Content, ContentFactory } from '../components/entityStatus/contentView/classes';
-import { EntityStatusEnum } from '../enums';
 
-export class EntityStatus extends TEntity {
+import { IntegratorAPIModels as Models } from '../api/integratorAPI'
+
+export class EntityStatus extends TEntity<Models.EntityStatus> {
     _InContent: Content;
     _OutContent: Content;
 
     EntityType: string;
     EntityVersion: Date;
     StatusMessage: string;
-    Status: EntityStatusEnum = EntityStatusEnum.NotFound;
-    InDocTransferId: string;
-    OutDocTransferId: string;
+    Status: Models.Status2 = Models.Status2.NotFound;
+    InDocTransferId: number;
+    OutDocTransferId: number;
     Source: string;
     SourceId: string;
     Target: string;
@@ -56,7 +57,7 @@ export class EntityStatus extends TEntity {
 
     get IsNew(): boolean { return false; }
 
-    toServer(): {} {
+    toServer(): Models.EntityStatus {
         return {
             entityStatusId: this.EntityStatusId,
             entityType: this.EntityType,
@@ -66,11 +67,9 @@ export class EntityStatus extends TEntity {
             inDocTransferId: this.InDocTransferId,
             outDocTransferId: this.OutDocTransferId,
             source: this.Source,
-            sourceId: this.Source,
-            target: this.TargetId,
+            sourceId: this.SourceId,
+            target: this.Target,
             targetId: this.TargetId,
-            inDocTransfer: this.InDocTransfer,
-            outDocTransfer: this.OutDocTransfer,
             inContent: this.InContent,
             outContent: this.OutContent
         };
@@ -80,9 +79,9 @@ export class EntityStatus extends TEntity {
         return new EntityStatus();
     }
 
-    static createFromJson(params) {
+    static createFromJson(iEntitySatus: Models.EntityStatus) {
         let entityStatus = new EntityStatus();
-        entityStatus.Parse(params);
+        entityStatus.Parse(iEntitySatus);
         return entityStatus;
     }
 }

@@ -1,4 +1,4 @@
-import { SettingTypeEnum } from '../enums'
+import { IntegratorAPIModels } from '../api/integratorAPI'
 
 export interface IValidable {
     isValid(): boolean;
@@ -27,7 +27,7 @@ export interface IHandlerSetting extends ISetting, IDefaultable {
 
     readonly DefaultValue: string;
 
-    readonly Type: SettingTypeEnum;
+    readonly Type: IntegratorAPIModels.Type;
 
     readonly Options: string[];
 

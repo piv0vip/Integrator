@@ -1,11 +1,12 @@
 ﻿import { TEntity } from './TEntity';
+import { IntegratorAPIModels as Models } from '../api/integratorAPI'
 
-export class DataTaskGroup extends TEntity {
+export class DataTaskGroup extends TEntity<Models.DataTaskGroup> {
 
     Name: string = '';
     Enabled: boolean = false;
     GroupOnly: boolean = false;
-    MaxRetries: number = 0;
+    MaxRetries: string = '0';
     Retries: string;
 
     protected _cronString: string;
@@ -31,15 +32,13 @@ export class DataTaskGroup extends TEntity {
         return this._cronString;
     }
 
-    toServer(): {} {
+    toServer(): Models.DataTaskGroup {
         return {
             cronSchedule: this.CronSchedule,
             dataTaskGroupId: this.DataTaskGroupId,
             name: this.Name,
             enabled: this.Enabled,
             maxRetries: this.MaxRetries,
-            recCreated: this.RecCreated,
-            recModified: this.RecModified,
             retries: this.Retries,
         };
     }

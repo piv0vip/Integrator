@@ -1,10 +1,14 @@
 import { HandlerTypes } from '../../classes/settings/handlerTypes';
-import { HTTP } from '../../util/http-common';
+import { HTTP, API } from '../../util/http-common';
 import { AxiosResponse } from 'axios';
 import { DataTaskService } from '../../services';
 import { DataTask } from '../../models/DataTask';
 import { TaskStatusEnum } from '../../enums';
 import { Dictionary } from 'typescript-collections';
+
+import { IntegratorAPI, IntegratorAPIModels as Models } from '../../api/integratorAPI';
+
+import * as msRest from 'ms-rest-js';
 
 const state = {
 
@@ -27,8 +31,8 @@ const mutations = {
         state.cronPresets = cronPresets;
     },
 
-    sethandlerTypes(state, handlerTypesJson) {
-        state.handlerTypes.Parse(handlerTypesJson);
+    sethandlerTypes(state, iHandler: Models.IHandler[]) {
+        state.handlerTypes.Parse(iHandler);
     },
 
     setDataTasks(state, dataTasks: DataTask[]) {
@@ -57,30 +61,33 @@ const actions = {
 
     getHandlerTypes({ commit }) {
         return new Promise((resolve, reject) => {
-            HTTP.get('DataTask/GetHandlersWithDefaultSettings')
-                .then((response: AxiosResponse) => {
-                    commit('sethandlerTypes', response.data);
+            API.restDataTaskGetHandlersWithDefaultSettingsGet()
+                .then((data) => {
+                    commit('sethandlerTypes', data);
                     resolve();
                 })
-                .catch(e => {
-                    reject(e);
-                });
+                .catch((error) => {
+                    reject(error);
+                })
         });
     },
 
     getCronPresets({ commit }) {
         return new Promise((resolve, reject) => {
-            HTTP.get('DataTask/CrontabPresets')
-                .then((response: AxiosResponse) => {
-                    commit('setCronPresets', response.data);
+            API.restDataTaskCrontabPresetsGet()
+                .then((data) => {
+                    commit('setCronPresets', data);
                     resolve();
                 })
-                .catch(e => { reject(e); });
+                .catch((error) => {
+                    reject(error);
+                })
         });
     },
 
     getDataTasks({ dispatch, commit }) {
         commit('loading', true);
+
         return new Promise((resolve, reject) => {
             dispatch('getHandlerTypes').then(() => {
                 dispatch('getCronPresets').then(() => {

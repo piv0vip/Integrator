@@ -1,7 +1,7 @@
 ﻿import { CronPart, Minute, Hour, Day, Month, DayOfWeek } from './cronParts';
 import { IServerable, IEditViewElement } from '../../../interfaces';
 import cronstrue from 'cronstrue';
-import { SettingTypeEnum } from '../../../enums';
+import { IntegratorAPIModels } from '../../../api/integratorAPI';
 
 export class CronSchedule implements IServerable<string>, IEditViewElement  {
 
@@ -58,7 +58,7 @@ export class CronSchedule implements IServerable<string>, IEditViewElement  {
         return this.toString();
     }
 
-    getType(): SettingTypeEnum {
-        return SettingTypeEnum.String;
+    getType(): IntegratorAPIModels.Type {
+        return IntegratorAPIModels.Type.String;
     }
 }

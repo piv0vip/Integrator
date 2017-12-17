@@ -6,7 +6,7 @@ import {
     IEqualable
 } from '../../interfaces';
 
-import { SettingTypeEnum } from '../../enums';
+import { IntegratorAPIModels } from '../../api/integratorAPI';
 
 export class Setting implements ISetting, IClonable<Setting>, IEqualable<Setting>, IEditViewElement {
 
@@ -43,8 +43,8 @@ export class Setting implements ISetting, IClonable<Setting>, IEqualable<Setting
         return this.Value;
     }
 
-    getType(): SettingTypeEnum {
-        return SettingTypeEnum.String;
+    getType(): IntegratorAPIModels.Type {
+        return IntegratorAPIModels.Type.String;
     }
 }
 

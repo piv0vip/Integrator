@@ -7,11 +7,13 @@ import { IHandlerSetting, IValidable, IClonable, IEditViewElement, IServerable, 
 
 import { Dictionary } from 'typescript-collections';
 
+import { IntegratorAPIModels as Models } from '../../api/integratorAPI'
+
 export class HandlerSetting implements IHandlerSetting, IValidable, IClonable<HandlerSetting>, IEditViewElement {
 
     readonly Name: string;
 
-    readonly Type: SettingTypeEnum;
+    readonly Type: Models.Type;
 
     readonly DefaultValue: string;
 
@@ -21,7 +23,7 @@ export class HandlerSetting implements IHandlerSetting, IValidable, IClonable<Ha
 
     private _value: string;
 
-    constructor(name: string, type: SettingTypeEnum, defaultValue: string = '', options: string[] = [], isRequired: boolean = false) {
+    constructor(name: string, type: Models.Type, defaultValue: string = '', options: string[] = [], isRequired: boolean = false) {
         this.Name = name;
         this.Type = type;
         this.DefaultValue = defaultValue;
@@ -54,7 +56,7 @@ export class HandlerSetting implements IHandlerSetting, IValidable, IClonable<Ha
         return this.Value;
     }
 
-    getType(): SettingTypeEnum {
+    getType(): Models.Type {
         return this.Type;
     }
 
@@ -70,10 +72,10 @@ export class HandlerSetting implements IHandlerSetting, IValidable, IClonable<Ha
     getValidationString(): string {
         let resArr: string[] = [];
         this.IsRequired && resArr.push('required');
-        (this.Type === SettingTypeEnum.Guid) && resArr.push('guid');
-        (this.Type === SettingTypeEnum.Url) && resArr.push('url');
-        (this.Type === SettingTypeEnum.Number) && resArr.push('numeric');
-        (this.Type === SettingTypeEnum.Date || this.Type === SettingTypeEnum.DateTime) && resArr.push('date_format:YYYY-MM-DD');
+        (this.Type === Models.Type.Guid) && resArr.push('guid');
+        (this.Type === Models.Type.Url) && resArr.push('url');
+        (this.Type === Models.Type.Number) && resArr.push('numeric');
+        (this.Type === Models.Type.Date || this.Type === Models.Type.DateTime) && resArr.push('date_format:YYYY-MM-DD');
         return resArr.join('|');
     }
 
@@ -99,10 +101,10 @@ export class HandlerSettings extends Dictionary<string, HandlerSetting> implemen
 
 export class DefaultHandlerSettings extends HandlerSettings {
 
-    Parse(obj) {
-        let settings: { name: string, isRequired?: boolean, defaultValue?: string, type: SettingTypeEnum, options?: string[] }[] = obj;
-        settings.forEach(setting => {
-            this.add(new HandlerSetting(setting.name, setting.type, setting.defaultValue, setting.options, setting.isRequired));
+    Parse(settingDescriptions: Models.SettingDescription[]) {
+        let settings: { name?: string, isRequired?: boolean, defaultValue?: string, type?: Models.Type, options?: string[] }[] = settingDescriptions;
+        settingDescriptions.forEach(settingDescription => {
+            this.add(new HandlerSetting(settingDescription.name, settingDescription.type, settingDescription.defaultValue, settingDescription.options, settingDescription.isRequired));
         });
     }
 }

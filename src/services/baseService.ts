@@ -28,15 +28,6 @@ export abstract class BaseService {
         });
     }
 
-    public createNewEntities(entities: TEntity[]): Promise<AxiosResponse> {
-        let toServerEntities: {}[] = entities.map((entity: TEntity) => entity.toServer());
-        return new Promise((resolve, reject) => {
-            HTTP.post(`${this.ControllerName}/InsertEntities`, toServerEntities)
-                .then(response => { resolve(response); })
-                .catch(error => { reject(Error); });
-        });
-    }
-
     protected get ControllerName(): string { return this._controllerName; }
 
     protected set ControllerName(value: string) { this._controllerName = value; }

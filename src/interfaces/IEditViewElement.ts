@@ -1,7 +1,7 @@
-import { SettingTypeEnum } from '../enums'
+import { IntegratorAPIModels } from '../api/integratorAPI'
 
 export interface IEditViewElement {
 	setValue(value: string);
     getValue(): string;
-    getType(): SettingTypeEnum;
+    getType(): IntegratorAPIModels.Type;
 }

@@ -2,6 +2,8 @@
 import { Setting } from './settings';
 import { Dictionary } from 'typescript-collections';
 
+import { IntegratorAPIModels as Models } from '../../api/integratorAPI';
+
 export interface IHandlerType {
     readonly TaskType: string;
 
@@ -25,7 +27,7 @@ export class HandlerType implements IHandlerType {
         this.DefaultHandlerSettings = handlerSettings;
     }
 
-    static CreateFromServer(obj: { taskType: string, taskHandlerName: string, defaultHandlerSettings: {}[] }): HandlerType {
+    static CreateFromServer( obj: Models.IHandler ): HandlerType {
         let handlerSettings: DefaultHandlerSettings = new DefaultHandlerSettings();
         handlerSettings.Parse(obj.defaultHandlerSettings);
         return new HandlerType(obj.taskType, obj.taskHandlerName, handlerSettings);
