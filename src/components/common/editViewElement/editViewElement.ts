@@ -3,7 +3,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 
 import { IEditViewElement } from '../../../interfaces/';
 
-import { IntegratorAPIModels } from '../../../api/integratorAPI';
+import { Type } from '../../../api/models';
 
 import $ from 'jquery';
 
@@ -54,14 +54,14 @@ export class EditViewElementComponent extends Vue {
     }
 
     get isGuid(): boolean {
-        return this.element.getType() === IntegratorAPIModels.Type.Guid;
+        return this.element.getType() === Type.Guid;
     }
 
     get isNumber(): boolean {
-        return this.element.getType() === IntegratorAPIModels.Type.Number;
+        return this.element.getType() === Type.Number;
     }
 
     get isUrl(): boolean {
-        return this.element.getType() === IntegratorAPIModels.Type.Url;
+        return this.element.getType() === Type.Url;
     }
 }

@@ -2,16 +2,16 @@
 import { TEntity } from './TEntity';
 import { Content, ContentFactory } from '../components/entityStatus/contentView/classes';
 
-import { IntegratorAPIModels as Models } from '../api/integratorAPI'
+import { EntityStatus as IEntityStatus, Status2 } from '../api/models';
 
-export class EntityStatus extends TEntity<Models.EntityStatus> {
+export class EntityStatus extends TEntity<IEntityStatus> {
     _InContent: Content;
     _OutContent: Content;
 
     EntityType: string;
     EntityVersion: Date;
     StatusMessage: string;
-    Status: Models.Status2 = Models.Status2.NotFound;
+    Status: Status2 = Status2.NotFound;
     InDocTransferId: number;
     OutDocTransferId: number;
     Source: string;
@@ -57,7 +57,7 @@ export class EntityStatus extends TEntity<Models.EntityStatus> {
 
     get IsNew(): boolean { return false; }
 
-    toServer(): Models.EntityStatus {
+    toServer(): IEntityStatus {
         return {
             entityStatusId: this.EntityStatusId,
             entityType: this.EntityType,
@@ -79,7 +79,7 @@ export class EntityStatus extends TEntity<Models.EntityStatus> {
         return new EntityStatus();
     }
 
-    static createFromJson(iEntitySatus: Models.EntityStatus) {
+    static createFromJson(iEntitySatus: IEntityStatus) {
         let entityStatus = new EntityStatus();
         entityStatus.Parse(iEntitySatus);
         return entityStatus;

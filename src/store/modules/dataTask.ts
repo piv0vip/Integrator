@@ -1,12 +1,12 @@
 import { HandlerTypes } from '../../classes/settings/handlerTypes';
-import { HTTP, API } from '../../util/http-common';
+import { HTTP } from '../../util/http-common';
 import { AxiosResponse } from 'axios';
 import { DataTaskService } from '../../services';
 import { DataTask } from '../../models/DataTask';
 import { TaskStatusEnum } from '../../enums';
 import { Dictionary } from 'typescript-collections';
 
-import { IntegratorAPI, IntegratorAPIModels as Models } from '../../api/integratorAPI';
+import { IHandler } from '../../api/models';
 
 import * as msRest from 'ms-rest-js';
 
@@ -31,7 +31,7 @@ const mutations = {
         state.cronPresets = cronPresets;
     },
 
-    sethandlerTypes(state, iHandler: Models.IHandler[]) {
+    sethandlerTypes(state, iHandler: IHandler[]) {
         state.handlerTypes.Parse(iHandler);
     },
 
@@ -61,27 +61,28 @@ const actions = {
 
     getHandlerTypes({ commit }) {
         return new Promise((resolve, reject) => {
-            API.restDataTaskGetHandlersWithDefaultSettingsGet()
-                .then((data) => {
-                    commit('sethandlerTypes', data);
+            HTTP.get('DataTask/GetHandlersWithDefaultSettings')
+                .then((response) => {
+                    commit('sethandlerTypes', response.data as IHandler[]);
                     resolve();
                 })
                 .catch((error) => {
+                    debugger;
                     reject(error);
-                })
+                });
         });
     },
 
     getCronPresets({ commit }) {
         return new Promise((resolve, reject) => {
-            API.restDataTaskCrontabPresetsGet()
-                .then((data) => {
-                    commit('setCronPresets', data);
+            HTTP.get('DataTask/CrontabPresets')
+                .then((response) => {
+                    commit('setCronPresets', response.data as string[]);
                     resolve();
                 })
                 .catch((error) => {
                     reject(error);
-                })
+                });
         });
     },
 

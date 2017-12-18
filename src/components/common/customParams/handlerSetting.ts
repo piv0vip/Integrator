@@ -3,7 +3,7 @@ import { Component, Prop, Watch, Inject } from 'vue-property-decorator';
 
 import { HandlerSetting } from '../../../classes/settings';
 
-import { IntegratorAPIModels } from '../../../api/integratorAPI';
+import { Type } from '../../../api/models';
 
 import moment from 'moment';
 
@@ -69,30 +69,30 @@ export class HandlerSettingComponent extends Vue {
     }
 
     get isBool(): boolean {
-        return this.handlerSetting.Type === IntegratorAPIModels.Type.Bool;
+        return this.handlerSetting.Type === Type.Bool;
     }
 
     get isSelectBox(): boolean {
-        return this.handlerSetting.Type === IntegratorAPIModels.Type.SelectBox;
+        return this.handlerSetting.Type === Type.SelectBox;
     }
 
     get isNumber(): boolean {
-        return this.handlerSetting.Type === IntegratorAPIModels.Type.Number;
+        return this.handlerSetting.Type === Type.Number;
     }
 
     get isDate(): boolean {
-        return this.handlerSetting.Type === IntegratorAPIModels.Type.Date;
+        return this.handlerSetting.Type === Type.Date;
     }
 
     get isDateTime(): boolean {
-        return this.handlerSetting.Type === IntegratorAPIModels.Type.DateTime;
+        return this.handlerSetting.Type === Type.DateTime;
     }
 
     get getIcon(): string {
         let iconStr: string = this.isSelectBox ? 'format_list_bulleted' :
             this.isNumber ? 'text_fields' :
-                (this.handlerSetting.Type === IntegratorAPIModels.Type.Url) ? 'public' :
-                    (this.handlerSetting.Type === IntegratorAPIModels.Type.Guid) ? 'G' :
+                (this.handlerSetting.Type === Type.Url) ? 'public' :
+                    (this.handlerSetting.Type === Type.Guid) ? 'G' :
             this.isDate || this.isDateTime ? '<i class="material-icons">event</i>' :
             this.isBool ? 'check_box' : 'text_fields';
         return iconStr;

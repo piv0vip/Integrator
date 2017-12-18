@@ -1,15 +1,15 @@
 import { expect } from 'chai';
 import { HandlerSetting, HandlerSettings, DefaultHandlerSettings } from './handlerSettings';
-import { IntegratorAPIModels } from '../../api/integratorAPI'
+import { Type } from '../../api/models';
 
 describe('HandlerSetting testing', () => {
 
     let hs: HandlerSetting, hs1: HandlerSetting, hs2: HandlerSetting;
 
     beforeEach(() => {
-        hs = new HandlerSetting('test', IntegratorAPIModels.Type.String);
-        hs1 = new HandlerSetting('test', IntegratorAPIModels.Type.String, '32', null, true);
-        hs2 = new HandlerSetting('test', IntegratorAPIModels.Type.String, null, null, true);
+        hs = new HandlerSetting('test', Type.String);
+        hs1 = new HandlerSetting('test', Type.String, '32', null, true);
+        hs2 = new HandlerSetting('test', Type.String, null, null, true);
     })
 
     it('Handler setting should be correct', () => {
@@ -57,8 +57,8 @@ describe('HandlerSettings testing', () => {
 
     beforeEach(() => {
         hss = new HandlerSettings();
-        hss.add(new HandlerSetting('testName', IntegratorAPIModels.Type.String, 'testValue', null, true));
-        hss.add(new HandlerSetting('test2Name', IntegratorAPIModels.Type.Url));
+        hss.add(new HandlerSetting('testName', Type.String, 'testValue', null, true));
+        hss.add(new HandlerSetting('test2Name', Type.Url));
     });
 
     it('size() shoud be retutn correct value', () => {

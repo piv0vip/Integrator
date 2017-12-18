@@ -1,18 +1,8 @@
 import axios from 'axios';
 import * as signalR from '@aspnet/signalr-client';
 
-import { IntegratorAPI } from '../api/integratorAPI'
-
-var baseUri = process.env.NODE_ENV === 'production' ? `/` : `http://localhost:8080/`;
-const API = new IntegratorAPI(baseUri);
-
-
 const HTTP = axios.create({
     baseURL: process.env.NODE_ENV === 'production' ? `/rest/` : `http://localhost:8080/rest/`,
-
-    // headers: {
-    //    	Authorization: 'Bearer {token}'
-    //  	}
 });
 
 HTTP.interceptors.response.use(undefined, error => {
@@ -32,5 +22,5 @@ let httpConnection = new signalR.HttpConnection(hubUrl);
 const HUB: signalR.HubConnection = new signalR.HubConnection(httpConnection);
 
 export {
-    HTTP, HUB, API
+    HTTP, HUB
 } 

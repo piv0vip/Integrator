@@ -1,7 +1,7 @@
 ﻿import { TEntity } from './TEntity';
-import { IntegratorAPIModels as Models } from '../api/integratorAPI'
+import { DataTaskGroup as IDataTaskGroup } from '../api/models';
 
-export class DataTaskGroup extends TEntity<Models.DataTaskGroup> {
+export class DataTaskGroup extends TEntity<IDataTaskGroup> {
 
     Name: string = '';
     Enabled: boolean = false;
@@ -32,7 +32,7 @@ export class DataTaskGroup extends TEntity<Models.DataTaskGroup> {
         return this._cronString;
     }
 
-    toServer(): Models.DataTaskGroup {
+    toServer(): IDataTaskGroup {
         return {
             cronSchedule: this.CronSchedule,
             dataTaskGroupId: this.DataTaskGroupId,

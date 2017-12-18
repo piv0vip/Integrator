@@ -1,4 +1,4 @@
-import { IntegratorAPIModels } from '../api/integratorAPI'
+import { Type } from '../api/models'
 
 export interface IValidable {
     isValid(): boolean;
@@ -27,7 +27,7 @@ export interface IHandlerSetting extends ISetting, IDefaultable {
 
     readonly DefaultValue: string;
 
-    readonly Type: IntegratorAPIModels.Type;
+    readonly Type: Type;
 
     readonly Options: string[];
 

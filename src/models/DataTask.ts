@@ -2,9 +2,9 @@
 import { Setting, DataTaskHandlerSettings, HandlerType, HandlerTypes, HandlerSettings } from '../classes/settings';
 import { TEntity } from './TEntity';
 
-import { IntegratorAPIModels as Models } from '../api/integratorAPI'
+import { DataTask as IDataTask, Status } from '../api/models';
 
-export class DataTask extends TEntity<Models.DataTask> {
+export class DataTask extends TEntity<IDataTask> {
 
     protected _HandlerType: HandlerType;
     protected _HandlerSettings: DataTaskHandlerSettings;
@@ -18,7 +18,7 @@ export class DataTask extends TEntity<Models.DataTask> {
     MaxRetries: number = 0;
     Progress: string;
     Retries: number;
-    Status: Models.Status = Models.Status.NotStarted;
+    Status: Status = Status.NotStarted;
     LastEndTime: string;
     LastExecutionTime: string;
     LastStartTime: string;
@@ -72,14 +72,14 @@ export class DataTask extends TEntity<Models.DataTask> {
     }
 
     get IsRunning(): boolean {
-        return this.Status === Models.Status.Running;
+        return this.Status === Status.Running;
     }
 
     getHandlerSettings(): DataTaskHandlerSettings {
         return this._HandlerSettings;
     }
 
-    toServer(): Models.DataTask {
+    toServer(): IDataTask {
         return {
             cronSchedule: this.CronSchedule,
             dataTaskId: this.DataTaskId,
@@ -95,7 +95,7 @@ export class DataTask extends TEntity<Models.DataTask> {
         };
     }
 
-    static createDataTaskFromJson(handlerTypes: HandlerTypes, iDataTask: Models.DataTask) {
+    static createDataTaskFromJson(handlerTypes: HandlerTypes, iDataTask: IDataTask) {
         let dataTask = new DataTask();
         let taskType = iDataTask.taskType;
         if (taskType && handlerTypes.containsKey(taskType)) dataTask.HandlerType = handlerTypes.getValue(taskType);

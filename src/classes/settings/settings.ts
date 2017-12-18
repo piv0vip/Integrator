@@ -6,7 +6,7 @@ import {
     IEqualable
 } from '../../interfaces';
 
-import { IntegratorAPIModels } from '../../api/integratorAPI';
+import { Type } from '../../api/models';
 
 export class Setting implements ISetting, IClonable<Setting>, IEqualable<Setting>, IEditViewElement {
 
@@ -43,8 +43,8 @@ export class Setting implements ISetting, IClonable<Setting>, IEqualable<Setting
         return this.Value;
     }
 
-    getType(): IntegratorAPIModels.Type {
-        return IntegratorAPIModels.Type.String;
+    getType(): Type {
+        return Type.String;
     }
 }
 

@@ -1,7 +1,7 @@
 ﻿import { CronPart, Minute, Hour, Day, Month, DayOfWeek } from './cronParts';
 import { IServerable, IEditViewElement } from '../../../interfaces';
 import cronstrue from 'cronstrue';
-import { IntegratorAPIModels } from '../../../api/integratorAPI';
+import { Type } from '../../../api/models';
 
 export class CronSchedule implements IServerable<string>, IEditViewElement  {
 
@@ -58,7 +58,7 @@ export class CronSchedule implements IServerable<string>, IEditViewElement  {
         return this.toString();
     }
 
-    getType(): IntegratorAPIModels.Type {
-        return IntegratorAPIModels.Type.String;
+    getType(): Type {
+        return Type.String;
     }
 }

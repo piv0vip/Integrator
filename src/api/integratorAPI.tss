@@ -928,6 +928,7 @@ class IntegratorAPI extends msRest.ServiceClient {
     // Send Request
     let operationRes: msRest.HttpOperationResponse;
     try {
+        debugger;
       operationRes = await client.pipeline(httpRequest);
       let response = operationRes.response;
       let statusCode = response.status;
