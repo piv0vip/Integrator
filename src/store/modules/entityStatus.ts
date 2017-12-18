@@ -36,7 +36,7 @@ const getters = {
 };
 
 const mutations = {
-    
+
     updateFilterValue(state, values: { filterName: string, values: any }) {
         state.filters[values.filterName].FilterData = values.values;
     },
@@ -80,7 +80,7 @@ const actions = {
             HTTP.get('EntityStatus/GetFilterValues')
                 .then((response: AxiosResponse) => {
                     commit('setEntityStatuses', response.data);
-                    resolve();  
+                    resolve();
                 })
                 .catch(e => { reject(e); });
         });

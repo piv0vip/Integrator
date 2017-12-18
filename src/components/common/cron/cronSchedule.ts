@@ -46,7 +46,7 @@ export class CronSchedule implements IServerable<string>, IEditViewElement  {
         return this.toString();
     }
 
-    Parse(arg: string) {
+    load(arg: string) {
         this._parse(arg || '');
     }
 

@@ -1,0 +1,56 @@
+<div>
+
+    <v-container>
+        <v-layout row wrap>
+            <v-flex xs1 class="mr-4">
+                <v-select v-bind:items="pageOptions"
+                          v-model="perPage"
+                          label="Rows per page"></v-select>
+            </v-flex>
+            <v-flex xs2 class="mx-4">
+                <v-text-field v-model="search"
+                              label="Search"
+                              @keyup.native.enter="onFilterChange"></v-text-field>
+            </v-flex>
+            <v-flex xs8>
+                <!--<v-btn @click="onApplyFilter">Apply filter</v-btn>-->
+                <v-btn @click="onResetFilter" :disabled="filtersIsDefault">Reset all filters</v-btn>
+            </v-flex>
+        </v-layout>
+    </v-container>
+
+    <div style="overflow-x:auto">
+        <b-table id="entity-statuses"
+                 ref="entityStatusesTable"
+                 hover
+                 :busy.sync="isBusy"
+                 :sort-by.sync="sortBy"
+                 :sort-desc.sync="sortDesc"
+                 :current-page="currentPage"
+                 :per-page="perPage"
+                 :fields="fields"
+                 :items="myProvider">
+            <template slot="top-row" scope="data" :test="test(data)">
+                <td v-for="field in data.fields">
+                    <ifilter v-if="storeFilters[field.key]" :value="field" @change="refreshTable"></ifilter>
+                </td>
+            </template>
+        </b-table>
+    </div>
+    <v-container fluid>
+        <v-layout row wrap>
+            <v-flex xs1 class="pt-1">
+                Total rows:
+            </v-flex>
+            <v-flex xs1 class="pt-1">
+                <span class="py-1" style="display:block; font-weight:bold">{{ pagedList.totalItemCount }}</span>
+            </v-flex>
+            <v-flex xs10>
+                <v-pagination :length="pagesCount" v-model="currentPage" ></v-pagination>
+            </v-flex>
+        </v-layout>
+    </v-container>
+
+    <content-view :show="showContent" :content="content"></content-view>
+
+</div>

@@ -34,7 +34,11 @@ export class DataTaskExecuteLocalyComponent extends Vue {
     }
 
     Execute() {
-        HTTP.post('DataTask/ExecuteTaskWithParams/' + this.dataTask.DataTaskId, this.handlerSettings.toServer())
+        HTTP.post('DataTask/ExecuteTask/' + this.dataTask.DataTaskId, this.handlerSettings.toServer(), {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
             .then(response => {
                 this.hideModal();
             })

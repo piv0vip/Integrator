@@ -27,7 +27,7 @@ describe('Cron Schedule testing', () => {
         for (let key in testValues) {
             let arr = testValues[key];
             for (let i = 0; i < arr.length; i++) {
-                cs.Parse(arr[i]);
+                cs.load(arr[i]);
                 expect(cs.toString()).to.equal('* * * * *');
             }
         }

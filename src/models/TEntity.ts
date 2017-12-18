@@ -3,9 +3,11 @@ import { IServerable } from '../interfaces';
 
 export abstract class TEntity<IModel> implements IServerable<IModel> {
 
+    protected model: IModel;
+
     EntityId?: number = null;
 
-    EntityName: string;
+    EntityName: string = '';
 
     RecCreated: Date;
     RecModified: Date;
@@ -20,9 +22,7 @@ export abstract class TEntity<IModel> implements IServerable<IModel> {
         return this.EntityId === null;
     }
 
-    protected model: IModel;
-
-    Parse(model: IModel) {
+    load(model: IModel) {
         
         this.model = model;
         let keys: string[] = Object.keys(model);

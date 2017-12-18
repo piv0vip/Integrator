@@ -10,7 +10,7 @@ import { AxiosResponse } from 'axios';
 
 
 import { HandlerTypes } from '../../../classes/settings/handlerTypes';
-import { DataTask } from '../../../models';
+import { DataTask, DataTaskGroup } from '../../../models';
 
 import { DataTaskEditComponent } from '../edit';
 import { ConfirmationButtonComponent } from '../../common/';
@@ -23,6 +23,8 @@ import { IEnumValues, IPagedList, PagedList, ITableFields } from '../../../inter
 import { DataTaskService } from '../../../services';
 
 import chance from 'chance';
+
+import { DataTaskGroup as IDataTaskGroup } from '../../../api/models'
 
 import _ from 'lodash';
 
@@ -146,7 +148,11 @@ export class DataTaskListComponent extends Vue {
     }
 
     get dataTasks(): DataTask[] {
-        return this.$store.getters.dataTasksArray;
+        return this.dataTaskGroups[0] ? this.dataTaskGroups[0].DataTasks : [];
+    }
+
+    get dataTaskGroups(): DataTaskGroup[] {
+        return this.$store.getters.dataTaskGroupsArray;
     }
 
     onExecLocalyTaskClick(dataTask: DataTask) {
@@ -155,7 +161,11 @@ export class DataTaskListComponent extends Vue {
     }
 
     onExecInSchTaskClick(dataTask: DataTask) {
-        HTTP.post('DataTask/ExecuteTask/' + dataTask.DataTaskId)
+        HTTP.post('DataTask/ExecuteTask/' + dataTask.DataTaskId, null, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
         .then((response: AxiosResponse) => {
             // this.refreshTable();
         })
@@ -216,6 +226,9 @@ export class DataTaskListComponent extends Vue {
 
     onFilterChange(e) {
         this.refreshTable();
+    }
+
+    onExecGroupClick(dataTaskGroup: IDataTaskGroup) {
     }
 
 }

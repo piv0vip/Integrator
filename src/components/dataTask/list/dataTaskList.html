@@ -19,6 +19,25 @@
             </div>
         </b-col>
     </div>-->
+
+    <v-expansion-panel expand>
+        <v-expansion-panel-content v-for="(dataTaskGroup, i) in dataTaskGroups" :key="i">
+            <div slot="header">
+                <v-btn icon flat outline
+                       color="indigo lighten-2 white--text"
+                       title="Execute task in scheduler"
+                       :disabled="data.item.IsRunning"
+                       @click='onExecGroupClick(dataTaskGroup)'><i class="material-icons">alarm</i></v-btn>
+
+                <span>Group Name:</span> {{dataTaskGroup.Name}} <br />
+                <span>Cron Schedule:</span> {{dataTaskGroup.CronSchedule}}
+            </div>
+            <v-card v-for="(dataTask, j) in dataTaskGroup.DataTasks" :key="j">
+                <v-card-text class="grey lighten-3">{{ dataTask.DisplayName }}</v-card-text>
+            </v-card>
+        </v-expansion-panel-content>
+    </v-expansion-panel>
+
     <div style="overflow-x:auto">
         <b-table id="data-tasks"
                  ref="dataTasksTable"
@@ -65,7 +84,7 @@
             </template>
         </b-table>
     </div>
-    
+
     <b-container>
         <b-row class="text-center">
             <b-col class="center">
@@ -73,14 +92,12 @@
                 <v-btn round
                        title="Add new task"
                        color="teal lighten-2 white--text"
-                       @click="onAddDatataskClick"
-                       ><v-icon class="mr-2">link</v-icon> Add DataTask</v-btn>
+                       @click="onAddDatataskClick"><v-icon class="mr-2">link</v-icon>Add DataTask</v-btn>
 
                 <v-btn round
                        color="indigo lighten-2 white--text"
                        title="Refresh Table"
-                       @click="onRefreshTableClick"
-                       ><v-icon class="mr-2">autorenew</v-icon> Refresh table</v-btn>
+                       @click="onRefreshTableClick"><v-icon class="mr-2">autorenew</v-icon>Refresh table</v-btn>
 
                 <v-btn round color="green lighten-2 white--text"
                        @click="showConsole = !showConsole"><v-icon class="mr-2">clear_all</v-icon>Show console</v-btn>
@@ -88,9 +105,9 @@
             </b-col>
         </b-row>
     </b-container>
-    
+
     <edit-task v-model="showEditTask" :dataTask="currentTask" @onClose="closeEditTask"> </edit-task>
-    
+
     <execute-task-localy v-model="showExecuteTaskLocaly" :dataTask="currentTask" @onClose="closeExecuteTaskLocaly"> </execute-task-localy>
 
 </div>

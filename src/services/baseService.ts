@@ -23,8 +23,12 @@ export abstract class BaseService {
     public getList(): Promise<AxiosResponse> {
         return new Promise((resolve, reject) => {
             HTTP.get(`${this.ControllerName}/GetList`)
-                .then(response => { resolve(response); })
-                .catch(error => { reject(Error); });
+                .then(response => {
+                    resolve(response);
+                })
+                .catch(error => {
+                    reject(Error);
+                });
         });
     }
 

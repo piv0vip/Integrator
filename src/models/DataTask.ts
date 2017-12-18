@@ -2,9 +2,15 @@
 import { Setting, DataTaskHandlerSettings, HandlerType, HandlerTypes, HandlerSettings } from '../classes/settings';
 import { TEntity } from './TEntity';
 
-import { DataTask as IDataTask, Status } from '../api/models';
+import { DataTask as IDataTask, DataTaskGroup as IDatataskGroup, Status } from '../api/models';
+
+import { DataTaskGroup } from '../models'; 
+
+import store from '../store';
 
 export class DataTask extends TEntity<IDataTask> {
+
+    private _dataTaskGroup: DataTaskGroup;
 
     protected _HandlerType: HandlerType;
     protected _HandlerSettings: DataTaskHandlerSettings;
@@ -13,7 +19,6 @@ export class DataTask extends TEntity<IDataTask> {
     DisplayName: string = '';
     Enabled: boolean = false;
     Inactive: boolean = false;
-    GroupName: string = '';
     IsMaintenance: boolean = false;
     MaxRetries: number = 0;
     Progress: string;
@@ -33,6 +38,10 @@ export class DataTask extends TEntity<IDataTask> {
         this._HandlerType = HandlerType.CreateEmpty();
         this._cronString = '* * * * *';
     }
+
+    get GroupName(): string {
+        return this.model && this.model.dataTaskGroup.name;
+    };
 
     get DataTaskId(): number { return this.EntityId; }
 
@@ -56,7 +65,7 @@ export class DataTask extends TEntity<IDataTask> {
     }
 
     set HandlerSettings(value: string) {
-        this._HandlerSettings.Parse(value);
+        this._HandlerSettings.load(value);
     }
 
     get CronString(): string {
@@ -95,11 +104,12 @@ export class DataTask extends TEntity<IDataTask> {
         };
     }
 
-    static createDataTaskFromJson(handlerTypes: HandlerTypes, iDataTask: IDataTask) {
+    static createDataTaskFromJson(iDataTask: IDataTask) {
+        let handlerTypes = store.getters.handlerTypes;
         let dataTask = new DataTask();
         let taskType = iDataTask.taskType;
         if (taskType && handlerTypes.containsKey(taskType)) dataTask.HandlerType = handlerTypes.getValue(taskType);
-        dataTask.Parse(iDataTask);
+        dataTask.load(iDataTask);
         return dataTask;
     }
 }

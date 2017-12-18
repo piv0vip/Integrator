@@ -21,7 +21,7 @@ export class DataTaskService extends BaseService {
                 .then((response: AxiosResponse) => {
 
                     response.data.forEach((dataTask) => {
-                        dataTasks.push(DataTask.createDataTaskFromJson(store.state['dataTask'].handlerTypes, dataTask));
+                        dataTasks.push(DataTask.createDataTaskFromJson(dataTask));
                     });
 
                     resolve(dataTasks);
@@ -32,7 +32,7 @@ export class DataTaskService extends BaseService {
         });
     }
 
-    public static getPagedList(handlers: HandlerTypes, ctx: { currentPage: number, filter: EntityStatatusDecorator, perPage: number, sortBy: string, sortDesc: boolean }): Promise<{ metadata: IPagedList, data: DataTask[] }> {
+    public static getPagedList(ctx: { currentPage: number, filter: EntityStatatusDecorator, perPage: number, sortBy: string, sortDesc: boolean }): Promise<{ metadata: IPagedList, data: DataTask[] }> {
         let service = new DataTaskService();
 
         let dataTasks: DataTask[] = [];
@@ -44,7 +44,7 @@ export class DataTaskService extends BaseService {
                     pagedList = response.data['metadata'];
 
                     response.data['entities'].forEach((dataTask) => {
-                        dataTasks.push(DataTask.createDataTaskFromJson(handlers, dataTask));
+                        dataTasks.push(DataTask.createDataTaskFromJson(dataTask));
                     });
 
                     resolve({ metadata: pagedList, data: dataTasks });

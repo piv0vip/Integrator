@@ -9,7 +9,7 @@ HTTP.interceptors.response.use(undefined, error => {
     let originalRequest = error.config;
     if (error.response.status === 401 && !originalRequest._retry) { // if the error is 401 and hasent already been retried
         originalRequest._retry = true;
-        let redirectURL = `${location.protocol}//${location.host}${location.port}/account/authorize`;
+        let redirectURL = `${location.protocol}//${location.host}/account/authorize`;
         console.log('redirect to: ' + redirectURL);
         location.href = redirectURL;
     }

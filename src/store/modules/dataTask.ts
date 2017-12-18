@@ -1,12 +1,12 @@
 import { HandlerTypes } from '../../classes/settings/handlerTypes';
 import { HTTP } from '../../util/http-common';
 import { AxiosResponse } from 'axios';
-import { DataTaskService } from '../../services';
-import { DataTask } from '../../models/DataTask';
+import { DataTaskService, DataTaskGroupService } from '../../services';
+import { DataTask, DataTaskGroup } from '../../models';
 import { TaskStatusEnum } from '../../enums';
 import { Dictionary } from 'typescript-collections';
 
-import { IHandler } from '../../api/models';
+import { IHandler, DataTask as IDataTask } from '../../api/models';
 
 import * as msRest from 'ms-rest-js';
 
@@ -18,12 +18,19 @@ const state = {
 
     dataTasks: new Dictionary<number, DataTask>(),
 
-    dataTasksArray: new Array<DataTask>()
+    dataTaskGroups: new Dictionary<number, DataTaskGroup>(),
+
+    dataTasksArray: new Array<DataTask>(),
+
+    dataTaskGroupsArray: new Array<DataTaskGroup>()
 };
 
 const getters = {
+    handlerTypes: state => state.handlerTypes,
     dataTasks: state => state.dataTasks,
-    dataTasksArray: state => state.dataTasksArray
+    dataTasksArray: state => state.dataTasksArray,
+    dataTaskGroupsArray: state => state.dataTaskGroupsArray,
+    //dataTaskGroupsAsSelect: state => {}
 };
 
 const mutations = {
@@ -45,12 +52,19 @@ const mutations = {
         // state.dataTasks = dataTasks;
     },
 
+    setDataTaskGroups(state, dataTaskGroups: DataTaskGroup[]) {
+        dataTaskGroups.forEach((dataTaskGroup: DataTaskGroup) => {
+            state.dataTaskGroups.setValue(dataTaskGroup.DataTaskGroupId, dataTaskGroup);
+        });
+        state.dataTaskGroupsArray = state.dataTaskGroups.values();
+    },
+
     setDataTaskStatus(state, status: TaskStatusEnum) {
         state.dataTasks[0].Status = status;
     },
 
     dataTaskEvent(state, dataTaskJson) {
-        let dataTask = DataTask.createDataTaskFromJson(state.handlerTypes, dataTaskJson);
+        let dataTask = DataTask.createDataTaskFromJson(dataTaskJson as IDataTask);
         state.dataTasks.setValue(dataTask.DataTaskId, dataTask);
         state.dataTasksArray = state.dataTasks.values();
     }
@@ -67,7 +81,6 @@ const actions = {
                     resolve();
                 })
                 .catch((error) => {
-                    debugger;
                     reject(error);
                 });
         });
@@ -92,9 +105,9 @@ const actions = {
         return new Promise((resolve, reject) => {
             dispatch('getHandlerTypes').then(() => {
                 dispatch('getCronPresets').then(() => {
-                    DataTaskService.getList()
-                        .then((response: DataTask[]) => {
-                            commit('setDataTasks', response);
+                    DataTaskGroupService.getList()
+                        .then((response: DataTaskGroup[]) => {
+                            commit('setDataTaskGroups', response);
                             commit('loading', false);
                             resolve();
                         })

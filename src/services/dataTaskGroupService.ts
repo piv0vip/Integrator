@@ -8,9 +8,11 @@ import store from '../store';
 
 import { EntityStatatusDecorator } from '../classes/filter';
 
+import { DataTaskGroup as IDataTaskGroup } from '../api/models';
+
 export class DataTaskGroupService extends BaseService {
     protected setControllerName() {
-        this.ControllerName = 'DataTask';
+        this.ControllerName = 'DataTaskGroup';
     }
 
     public static getList(): Promise<DataTaskGroup[]> {
@@ -19,11 +21,9 @@ export class DataTaskGroupService extends BaseService {
         return new Promise((resolve, reject) => {
             service.getList()
                 .then((response: AxiosResponse) => {
-
-                    response.data.forEach((dataTaskGroup) => {
-                        dataTaskGroups.push(DataTaskGroup.createDataTaskGroupFromJson(dataTaskGroup));
+                    response.data.forEach((dataTaskGroup: IDataTaskGroup) => {
+                        dataTaskGroups.push( new DataTaskGroup(dataTaskGroup));
                     });
-
                     resolve(dataTaskGroups);
                 })
                 .catch((error) => {

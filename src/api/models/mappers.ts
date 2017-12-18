@@ -27,7 +27,7 @@ export const SettingDescription = {
         }
       },
       type: {
-        required: false,
+        required: true,
         serializedName: 'type',
         type: {
           name: 'String'
@@ -268,7 +268,7 @@ export const DataTaskGroup = {
         required: false,
         serializedName: 'maxRetries',
         type: {
-          name: 'String'
+          name: 'Number'
         }
       },
       name: {
@@ -282,7 +282,7 @@ export const DataTaskGroup = {
         required: false,
         serializedName: 'retries',
         type: {
-          name: 'String'
+          name: 'Number'
         }
       },
       recCreated: {
@@ -1231,59 +1231,6 @@ export const FieldFilterEntityStatus = {
   }
 };
 
-export const Log = {
-  required: false,
-  serializedName: 'Log',
-  type: {
-    name: 'Composite',
-    className: 'Log',
-    modelProperties: {
-      id: {
-        required: false,
-        serializedName: 'id',
-        type: {
-          name: 'Number'
-        }
-      },
-      timestamp: {
-        required: false,
-        serializedName: 'timestamp',
-        type: {
-          name: 'DateTime'
-        }
-      },
-      level: {
-        required: false,
-        serializedName: 'level',
-        type: {
-          name: 'String'
-        }
-      },
-      exception: {
-        required: false,
-        serializedName: 'exception',
-        type: {
-          name: 'String'
-        }
-      },
-      renderedMessage: {
-        required: false,
-        serializedName: 'renderedMessage',
-        type: {
-          name: 'String'
-        }
-      },
-      properties: {
-        required: false,
-        serializedName: 'properties',
-        type: {
-          name: 'String'
-        }
-      }
-    }
-  }
-};
-
 export const Stream = {
   required: false,
   serializedName: 'Stream',
@@ -1356,12 +1303,215 @@ export const Stream = {
   }
 };
 
-export const IntegratorAPIRestDataTaskExecuteTaskWithParamsByDataTaskIdPostOptionalParams = {
+export const Log = {
   required: false,
-  serializedName: 'RestDataTaskExecuteTaskWithParamsByDataTaskIdPostOptions',
+  serializedName: 'Log',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskExecuteTaskWithParamsByDataTaskIdPostOptionalParams',
+    className: 'Log',
+    modelProperties: {
+      id: {
+        required: false,
+        serializedName: 'id',
+        type: {
+          name: 'Number'
+        }
+      },
+      timestamp: {
+        required: false,
+        serializedName: 'timestamp',
+        type: {
+          name: 'DateTime'
+        }
+      },
+      level: {
+        required: false,
+        serializedName: 'level',
+        type: {
+          name: 'String'
+        }
+      },
+      exception: {
+        required: false,
+        serializedName: 'exception',
+        type: {
+          name: 'String'
+        }
+      },
+      renderedMessage: {
+        required: false,
+        serializedName: 'renderedMessage',
+        type: {
+          name: 'String'
+        }
+      },
+      properties: {
+        required: false,
+        serializedName: 'properties',
+        type: {
+          name: 'String'
+        }
+      }
+    }
+  }
+};
+
+export const ContainFilterLog = {
+  required: false,
+  serializedName: 'ContainFilter[Log]',
+  type: {
+    name: 'Composite',
+    className: 'ContainFilterLog',
+    modelProperties: {
+      values: {
+        required: false,
+        serializedName: 'values',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const ExistsFilterLog = {
+  required: false,
+  serializedName: 'ExistsFilter[Log]',
+  type: {
+    name: 'Composite',
+    className: 'ExistsFilterLog',
+    modelProperties: {
+      values: {
+        required: false,
+        serializedName: 'values',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const IgnoredFilterLog = {
+  required: false,
+  serializedName: 'IgnoredFilter[Log]',
+  type: {
+    name: 'Composite',
+    className: 'IgnoredFilterLog',
+    modelProperties: {
+      values: {
+        required: false,
+        serializedName: 'values',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const PeriodFilterLog = {
+  required: false,
+  serializedName: 'PeriodFilter[Log]',
+  type: {
+    name: 'Composite',
+    className: 'PeriodFilterLog',
+    modelProperties: {
+      from: {
+        required: false,
+        serializedName: 'from',
+        type: {
+          name: 'DateTime'
+        }
+      },
+      to: {
+        required: false,
+        serializedName: 'to',
+        type: {
+          name: 'DateTime'
+        }
+      }
+    }
+  }
+};
+
+export const FieldFilterLog = {
+  required: false,
+  serializedName: 'FieldFilter[Log]',
+  type: {
+    name: 'Composite',
+    className: 'FieldFilterLog',
+    modelProperties: {
+      fieldName: {
+        required: false,
+        serializedName: 'fieldName',
+        type: {
+          name: 'String'
+        }
+      },
+      containValues: {
+        required: false,
+        serializedName: 'containValues',
+        type: {
+          name: 'Composite',
+          className: 'ContainFilterLog'
+        }
+      },
+      existsValues: {
+        required: false,
+        serializedName: 'existsValues',
+        type: {
+          name: 'Composite',
+          className: 'ExistsFilterLog'
+        }
+      },
+      ignoredValues: {
+        required: false,
+        serializedName: 'ignoredValues',
+        type: {
+          name: 'Composite',
+          className: 'IgnoredFilterLog'
+        }
+      },
+      period: {
+        required: false,
+        serializedName: 'period',
+        type: {
+          name: 'Composite',
+          className: 'PeriodFilterLog'
+        }
+      }
+    }
+  }
+};
+
+export const IntegratorAPIRestDataTaskExecuteTaskByIdPostOptionalParams = {
+  required: false,
+  serializedName: 'RestDataTaskExecuteTaskByIdPostOptions',
+  type: {
+    name: 'Composite',
+    className: 'IntegratorAPIRestDataTaskExecuteTaskByIdPostOptionalParams',
     modelProperties: {
       dataTaskParameters: {
         required: false,
@@ -1381,12 +1531,12 @@ export const IntegratorAPIRestDataTaskExecuteTaskWithParamsByDataTaskIdPostOptio
   }
 };
 
-export const IntegratorAPIRestDataTaskGetPagedListPostOptionalParams = {
+export const IntegratorAPIRestDataTaskGetPagedListByIdPostOptionalParams = {
   required: false,
-  serializedName: 'RestDataTaskGetPagedListPostOptions',
+  serializedName: 'RestDataTaskGetPagedListByIdPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskGetPagedListPostOptionalParams',
+    className: 'IntegratorAPIRestDataTaskGetPagedListByIdPostOptionalParams',
     modelProperties: {
       fieldFilters: {
         required: false,
@@ -1414,12 +1564,12 @@ export const IntegratorAPIRestDataTaskGetPagedListPostOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestDataTaskInsertPostOptionalParams = {
+export const IntegratorAPIRestDataTaskInsertByIdPostOptionalParams = {
   required: false,
-  serializedName: 'RestDataTaskInsertPostOptions',
+  serializedName: 'RestDataTaskInsertByIdPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskInsertPostOptionalParams',
+    className: 'IntegratorAPIRestDataTaskInsertByIdPostOptionalParams',
     modelProperties: {
       entity: {
         required: false,
@@ -1433,12 +1583,12 @@ export const IntegratorAPIRestDataTaskInsertPostOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestDataTaskInsertEntitiesPostOptionalParams = {
+export const IntegratorAPIRestDataTaskInsertArrayByIdPostOptionalParams = {
   required: false,
-  serializedName: 'RestDataTaskInsertEntitiesPostOptions',
+  serializedName: 'RestDataTaskInsertArrayByIdPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskInsertEntitiesPostOptionalParams',
+    className: 'IntegratorAPIRestDataTaskInsertArrayByIdPostOptionalParams',
     modelProperties: {
       entities: {
         required: false,
@@ -1459,12 +1609,12 @@ export const IntegratorAPIRestDataTaskInsertEntitiesPostOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestDataTaskUpdatePutOptionalParams = {
+export const IntegratorAPIRestDataTaskUpdateByIdPutOptionalParams = {
   required: false,
-  serializedName: 'RestDataTaskUpdatePutOptions',
+  serializedName: 'RestDataTaskUpdateByIdPutOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskUpdatePutOptionalParams',
+    className: 'IntegratorAPIRestDataTaskUpdateByIdPutOptionalParams',
     modelProperties: {
       entity: {
         required: false,
@@ -1478,12 +1628,12 @@ export const IntegratorAPIRestDataTaskUpdatePutOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams = {
+export const IntegratorAPIRestDataTaskGroupGetPagedListByIdPostOptionalParams = {
   required: false,
-  serializedName: 'RestDataTaskGroupGetPagedListPostOptions',
+  serializedName: 'RestDataTaskGroupGetPagedListByIdPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams',
+    className: 'IntegratorAPIRestDataTaskGroupGetPagedListByIdPostOptionalParams',
     modelProperties: {
       fieldFilters: {
         required: false,
@@ -1511,12 +1661,12 @@ export const IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestDataTaskGroupInsertPostOptionalParams = {
+export const IntegratorAPIRestDataTaskGroupInsertByIdPostOptionalParams = {
   required: false,
-  serializedName: 'RestDataTaskGroupInsertPostOptions',
+  serializedName: 'RestDataTaskGroupInsertByIdPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskGroupInsertPostOptionalParams',
+    className: 'IntegratorAPIRestDataTaskGroupInsertByIdPostOptionalParams',
     modelProperties: {
       entity: {
         required: false,
@@ -1530,12 +1680,12 @@ export const IntegratorAPIRestDataTaskGroupInsertPostOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestDataTaskGroupInsertEntitiesPostOptionalParams = {
+export const IntegratorAPIRestDataTaskGroupInsertArrayByIdPostOptionalParams = {
   required: false,
-  serializedName: 'RestDataTaskGroupInsertEntitiesPostOptions',
+  serializedName: 'RestDataTaskGroupInsertArrayByIdPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskGroupInsertEntitiesPostOptionalParams',
+    className: 'IntegratorAPIRestDataTaskGroupInsertArrayByIdPostOptionalParams',
     modelProperties: {
       entities: {
         required: false,
@@ -1556,12 +1706,12 @@ export const IntegratorAPIRestDataTaskGroupInsertEntitiesPostOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestDataTaskGroupUpdatePutOptionalParams = {
+export const IntegratorAPIRestDataTaskGroupUpdateByIdPutOptionalParams = {
   required: false,
-  serializedName: 'RestDataTaskGroupUpdatePutOptions',
+  serializedName: 'RestDataTaskGroupUpdateByIdPutOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskGroupUpdatePutOptionalParams',
+    className: 'IntegratorAPIRestDataTaskGroupUpdateByIdPutOptionalParams',
     modelProperties: {
       entity: {
         required: false,
@@ -1575,12 +1725,12 @@ export const IntegratorAPIRestDataTaskGroupUpdatePutOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams = {
+export const IntegratorAPIRestEntityStatusGetPagedListByIdPostOptionalParams = {
   required: false,
-  serializedName: 'RestEntityStatusGetPagedListPostOptions',
+  serializedName: 'RestEntityStatusGetPagedListByIdPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams',
+    className: 'IntegratorAPIRestEntityStatusGetPagedListByIdPostOptionalParams',
     modelProperties: {
       fieldFilters: {
         required: false,
@@ -1608,12 +1758,12 @@ export const IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestEntityStatusInsertPostOptionalParams = {
+export const IntegratorAPIRestEntityStatusInsertByIdPostOptionalParams = {
   required: false,
-  serializedName: 'RestEntityStatusInsertPostOptions',
+  serializedName: 'RestEntityStatusInsertByIdPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestEntityStatusInsertPostOptionalParams',
+    className: 'IntegratorAPIRestEntityStatusInsertByIdPostOptionalParams',
     modelProperties: {
       entity: {
         required: false,
@@ -1627,12 +1777,12 @@ export const IntegratorAPIRestEntityStatusInsertPostOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestEntityStatusInsertEntitiesPostOptionalParams = {
+export const IntegratorAPIRestEntityStatusInsertArrayByIdPostOptionalParams = {
   required: false,
-  serializedName: 'RestEntityStatusInsertEntitiesPostOptions',
+  serializedName: 'RestEntityStatusInsertArrayByIdPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestEntityStatusInsertEntitiesPostOptionalParams',
+    className: 'IntegratorAPIRestEntityStatusInsertArrayByIdPostOptionalParams',
     modelProperties: {
       entities: {
         required: false,
@@ -1653,12 +1803,12 @@ export const IntegratorAPIRestEntityStatusInsertEntitiesPostOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestEntityStatusUpdatePutOptionalParams = {
+export const IntegratorAPIRestEntityStatusUpdateByIdPutOptionalParams = {
   required: false,
-  serializedName: 'RestEntityStatusUpdatePutOptions',
+  serializedName: 'RestEntityStatusUpdateByIdPutOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestEntityStatusUpdatePutOptionalParams',
+    className: 'IntegratorAPIRestEntityStatusUpdateByIdPutOptionalParams',
     modelProperties: {
       entity: {
         required: false,
@@ -1666,6 +1816,39 @@ export const IntegratorAPIRestEntityStatusUpdatePutOptionalParams = {
         type: {
           name: 'Composite',
           className: 'EntityStatus'
+        }
+      }
+    }
+  }
+};
+
+export const IntegratorAPIRestSchedulerGetPagedListPostOptionalParams = {
+  required: false,
+  serializedName: 'RestSchedulerGetPagedListPostOptions',
+  type: {
+    name: 'Composite',
+    className: 'IntegratorAPIRestSchedulerGetPagedListPostOptionalParams',
+    modelProperties: {
+      fieldFilters: {
+        required: false,
+        serializedName: 'fieldFilters',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'FieldFilterLogElementType',
+              type: {
+                name: 'Composite',
+                className: 'FieldFilterLog'
+              }
+          }
+        }
+      },
+      sortBy: {
+        required: false,
+        serializedName: 'sortBy',
+        type: {
+          name: 'String'
         }
       }
     }

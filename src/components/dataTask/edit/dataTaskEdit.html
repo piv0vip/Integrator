@@ -52,6 +52,17 @@
 
                     </v-flex>
                     <v-flex xs6 class="px-4">
+                        <v-select v-else-if="isSelectBox" :prepend-icon="getIcon"
+                                  :items="handlerSetting.Options"
+                                  v-model="editValue"
+                                  :label="handlerSetting.Name"
+                                  :error-messages="errors.collect(orderNum, scope)"
+                                  combobox
+                                  v-validate="validationString"
+                                  :data-vv-scope="scope"
+                                  :data-vv-name="handlerSetting.Name"
+                                  :data-vv-as="handlerSetting.Name"
+                                  :required="handlerSetting.IsRequired"></v-select>
                         <v-text-field v-model="dataTask.GroupName"
                                       label="Group Name"
                                       :error-messages="errors.collect('groupName', scope)"

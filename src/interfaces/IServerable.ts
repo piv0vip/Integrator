@@ -1,4 +1,4 @@
 export interface IServerable<T> {
-    Parse(arg: T);
+    load(arg: T);
     toServer(): T;
 }

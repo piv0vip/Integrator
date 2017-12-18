@@ -21,10 +21,10 @@ export interface SettingDescription {
    */
   defaultValue?: string;
   /**
-   * @member {Type} [type] Possible values include: 'SelectBox', 'String',
+   * @member {Type} type Possible values include: 'SelectBox', 'String',
    * 'Date', 'DateTime', 'Bool', 'Url', 'Guid', 'Number', 'EditableSelectBox'
    */
-  type?: Type;
+  type: Type;
   /**
    * @member {string[]} [options]
    */
@@ -141,17 +141,17 @@ export interface DataTaskGroup {
    */
   groupOnly?: boolean;
   /**
-   * @member {string} [maxRetries]
+   * @member {number} [maxRetries]
    */
-  maxRetries?: string;
+  maxRetries?: number;
   /**
    * @member {string} [name]
    */
   name?: string;
   /**
-   * @member {string} [retries]
+   * @member {number} [retries]
    */
-  retries?: string;
+  retries?: number;
   /**
    * @member {Date} [recCreated]
    */
@@ -640,38 +640,6 @@ export interface FieldFilterEntityStatus {
 
 /**
  * @interface
- * An interface representing Log.
- */
-export interface Log {
-  /**
-   * @member {number} [id]
-   */
-  id?: number;
-  /**
-   * @member {Date} [timestamp]
-   */
-  timestamp?: Date;
-  /**
-   * @member {Level} [level] Possible values include: 'Verbose', 'Debug',
-   * 'Information', 'Warning', 'Error', 'Fatal'
-   */
-  level?: Level;
-  /**
-   * @member {string} [exception]
-   */
-  exception?: string;
-  /**
-   * @member {string} [renderedMessage]
-   */
-  renderedMessage?: string;
-  /**
-   * @member {string} [properties]
-   */
-  properties?: string;
-}
-
-/**
- * @interface
  * An interface representing Stream.
  */
 export interface Stream {
@@ -711,12 +679,119 @@ export interface Stream {
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestDataTaskExecuteTaskWithParamsByDataTaskIdPostOptionalParams.
+ * An interface representing Log.
+ */
+export interface Log {
+  /**
+   * @member {number} [id]
+   */
+  id?: number;
+  /**
+   * @member {Date} [timestamp]
+   */
+  timestamp?: Date;
+  /**
+   * @member {Level} [level] Possible values include: 'Verbose', 'Debug',
+   * 'Information', 'Warning', 'Error', 'Fatal'
+   */
+  level?: Level;
+  /**
+   * @member {string} [exception]
+   */
+  exception?: string;
+  /**
+   * @member {string} [renderedMessage]
+   */
+  renderedMessage?: string;
+  /**
+   * @member {string} [properties]
+   */
+  properties?: string;
+}
+
+/**
+ * @interface
+ * An interface representing ContainFilterLog.
+ */
+export interface ContainFilterLog {
+  /**
+   * @member {string[]} [values]
+   */
+  values?: string[];
+}
+
+/**
+ * @interface
+ * An interface representing ExistsFilterLog.
+ */
+export interface ExistsFilterLog {
+  /**
+   * @member {string[]} [values]
+   */
+  values?: string[];
+}
+
+/**
+ * @interface
+ * An interface representing IgnoredFilterLog.
+ */
+export interface IgnoredFilterLog {
+  /**
+   * @member {string[]} [values]
+   */
+  values?: string[];
+}
+
+/**
+ * @interface
+ * An interface representing PeriodFilterLog.
+ */
+export interface PeriodFilterLog {
+  /**
+   * @member {Date} [from]
+   */
+  from?: Date;
+  /**
+   * @member {Date} [to]
+   */
+  to?: Date;
+}
+
+/**
+ * @interface
+ * An interface representing FieldFilterLog.
+ */
+export interface FieldFilterLog {
+  /**
+   * @member {string} [fieldName]
+   */
+  fieldName?: string;
+  /**
+   * @member {ContainFilterLog} [containValues]
+   */
+  containValues?: ContainFilterLog;
+  /**
+   * @member {ExistsFilterLog} [existsValues]
+   */
+  existsValues?: ExistsFilterLog;
+  /**
+   * @member {IgnoredFilterLog} [ignoredValues]
+   */
+  ignoredValues?: IgnoredFilterLog;
+  /**
+   * @member {PeriodFilterLog} [period]
+   */
+  period?: PeriodFilterLog;
+}
+
+/**
+ * @interface
+ * An interface representing IntegratorAPIRestDataTaskExecuteTaskByIdPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestDataTaskExecuteTaskWithParamsByDataTaskIdPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestDataTaskExecuteTaskByIdPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {{ [propertyName: string]: string }} [dataTaskParameters]
    */
@@ -725,12 +800,12 @@ export interface IntegratorAPIRestDataTaskExecuteTaskWithParamsByDataTaskIdPostO
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestDataTaskGetPagedListPostOptionalParams.
+ * An interface representing IntegratorAPIRestDataTaskGetPagedListByIdPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestDataTaskGetPagedListPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestDataTaskGetPagedListByIdPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {FieldFilterDataTask[]} [fieldFilters]
    */
@@ -743,12 +818,12 @@ export interface IntegratorAPIRestDataTaskGetPagedListPostOptionalParams extends
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestDataTaskInsertPostOptionalParams.
+ * An interface representing IntegratorAPIRestDataTaskInsertByIdPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestDataTaskInsertPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestDataTaskInsertByIdPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {DataTask} [entity]
    */
@@ -757,12 +832,12 @@ export interface IntegratorAPIRestDataTaskInsertPostOptionalParams extends Reque
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestDataTaskInsertEntitiesPostOptionalParams.
+ * An interface representing IntegratorAPIRestDataTaskInsertArrayByIdPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestDataTaskInsertEntitiesPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestDataTaskInsertArrayByIdPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {DataTask[]} [entities]
    */
@@ -771,12 +846,12 @@ export interface IntegratorAPIRestDataTaskInsertEntitiesPostOptionalParams exten
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestDataTaskUpdatePutOptionalParams.
+ * An interface representing IntegratorAPIRestDataTaskUpdateByIdPutOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestDataTaskUpdatePutOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestDataTaskUpdateByIdPutOptionalParams extends RequestOptionsBase {
   /**
    * @member {DataTask} [entity]
    */
@@ -785,12 +860,12 @@ export interface IntegratorAPIRestDataTaskUpdatePutOptionalParams extends Reques
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams.
+ * An interface representing IntegratorAPIRestDataTaskGroupGetPagedListByIdPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestDataTaskGroupGetPagedListByIdPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {FieldFilterDataTaskGroup[]} [fieldFilters]
    */
@@ -803,12 +878,12 @@ export interface IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams ex
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestDataTaskGroupInsertPostOptionalParams.
+ * An interface representing IntegratorAPIRestDataTaskGroupInsertByIdPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestDataTaskGroupInsertPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestDataTaskGroupInsertByIdPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {DataTaskGroup} [entity]
    */
@@ -817,12 +892,12 @@ export interface IntegratorAPIRestDataTaskGroupInsertPostOptionalParams extends 
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestDataTaskGroupInsertEntitiesPostOptionalParams.
+ * An interface representing IntegratorAPIRestDataTaskGroupInsertArrayByIdPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestDataTaskGroupInsertEntitiesPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestDataTaskGroupInsertArrayByIdPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {DataTaskGroup[]} [entities]
    */
@@ -831,12 +906,12 @@ export interface IntegratorAPIRestDataTaskGroupInsertEntitiesPostOptionalParams 
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestDataTaskGroupUpdatePutOptionalParams.
+ * An interface representing IntegratorAPIRestDataTaskGroupUpdateByIdPutOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestDataTaskGroupUpdatePutOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestDataTaskGroupUpdateByIdPutOptionalParams extends RequestOptionsBase {
   /**
    * @member {DataTaskGroup} [entity]
    */
@@ -845,12 +920,12 @@ export interface IntegratorAPIRestDataTaskGroupUpdatePutOptionalParams extends R
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams.
+ * An interface representing IntegratorAPIRestEntityStatusGetPagedListByIdPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestEntityStatusGetPagedListByIdPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {FieldFilterEntityStatus[]} [fieldFilters]
    */
@@ -863,12 +938,12 @@ export interface IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams ext
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestEntityStatusInsertPostOptionalParams.
+ * An interface representing IntegratorAPIRestEntityStatusInsertByIdPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestEntityStatusInsertPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestEntityStatusInsertByIdPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {EntityStatus} [entity]
    */
@@ -877,12 +952,12 @@ export interface IntegratorAPIRestEntityStatusInsertPostOptionalParams extends R
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestEntityStatusInsertEntitiesPostOptionalParams.
+ * An interface representing IntegratorAPIRestEntityStatusInsertArrayByIdPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestEntityStatusInsertEntitiesPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestEntityStatusInsertArrayByIdPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {EntityStatus[]} [entities]
    */
@@ -891,16 +966,34 @@ export interface IntegratorAPIRestEntityStatusInsertEntitiesPostOptionalParams e
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestEntityStatusUpdatePutOptionalParams.
+ * An interface representing IntegratorAPIRestEntityStatusUpdateByIdPutOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestEntityStatusUpdatePutOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestEntityStatusUpdateByIdPutOptionalParams extends RequestOptionsBase {
   /**
    * @member {EntityStatus} [entity]
    */
   entity?: EntityStatus;
+}
+
+/**
+ * @interface
+ * An interface representing IntegratorAPIRestSchedulerGetPagedListPostOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface IntegratorAPIRestSchedulerGetPagedListPostOptionalParams extends RequestOptionsBase {
+  /**
+   * @member {FieldFilterLog[]} [fieldFilters]
+   */
+  fieldFilters?: FieldFilterLog[];
+  /**
+   * @member {string} [sortBy]
+   */
+  sortBy?: string;
 }
 
 /**

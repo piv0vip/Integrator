@@ -101,7 +101,7 @@ export abstract class Settings {
 
 export class CustomHandlerSettings extends Settings implements IServerable<{name: string, value: string}[]> {
     
-    Parse(arg: { name: string; value: string; }[]) {
+    load(arg: { name: string; value: string; }[]) {
         arg.forEach ( (setting) => {
             this.Add( new Setting( setting.name, setting.value));
         });

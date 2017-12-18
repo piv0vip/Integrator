@@ -131,7 +131,7 @@ export class DataTaskHandlerSettings extends HandlerSettings implements IServera
         return out;
     }
 
-    Parse(obj) {
+    load(obj) {
         let handlerSettings = JSON.parse(obj);
         for (let key in handlerSettings) {
             if (this.containsKey(key)) {

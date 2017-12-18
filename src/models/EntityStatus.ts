@@ -81,7 +81,7 @@ export class EntityStatus extends TEntity<IEntityStatus> {
 
     static createFromJson(iEntitySatus: IEntityStatus) {
         let entityStatus = new EntityStatus();
-        entityStatus.Parse(iEntitySatus);
+        entityStatus.load(iEntitySatus);
         return entityStatus;
     }
 }
