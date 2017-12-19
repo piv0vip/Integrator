@@ -9,114 +9,6 @@ import { RequestOptionsBase } from "ms-rest-js";
 
 /**
  * @interface
- * An interface representing SettingDescription.
- */
-export interface SettingDescription {
-  /**
-   * @member {string} name
-   */
-  name: string;
-  /**
-   * @member {string} [defaultValue]
-   */
-  defaultValue?: string;
-  /**
-   * @member {Type} type Possible values include: 'SelectBox', 'String',
-   * 'Date', 'DateTime', 'Bool', 'Url', 'Guid', 'Number', 'EditableSelectBox'
-   */
-  type: Type;
-  /**
-   * @member {string[]} [options]
-   */
-  options?: string[];
-  /**
-   * @member {boolean} [isRequired]
-   */
-  isRequired?: boolean;
-}
-
-/**
- * @interface
- * An interface representing SafeWaitHandle.
- */
-export interface SafeWaitHandle {
-  /**
-   * @member {boolean} [isInvalid]
-   */
-  readonly isInvalid?: boolean;
-  /**
-   * @member {boolean} [isClosed]
-   */
-  readonly isClosed?: boolean;
-}
-
-/**
- * @interface
- * An interface representing WaitHandle.
- */
-export interface WaitHandle {
-  /**
-   * @member {any} [handle]
-   */
-  handle?: any;
-  /**
-   * @member {SafeWaitHandle} [safeWaitHandle]
-   */
-  safeWaitHandle?: SafeWaitHandle;
-}
-
-/**
- * @interface
- * An interface representing NullableCancellationToken.
- */
-export interface NullableCancellationToken {
-  /**
-   * @member {boolean} [isCancellationRequested]
-   */
-  readonly isCancellationRequested?: boolean;
-  /**
-   * @member {boolean} [canBeCanceled]
-   */
-  readonly canBeCanceled?: boolean;
-  /**
-   * @member {WaitHandle} [waitHandle]
-   */
-  readonly waitHandle?: WaitHandle;
-}
-
-/**
- * @interface
- * An interface representing IHandler.
- */
-export interface IHandler {
-  /**
-   * @member {any} [handlerSettings]
-   */
-  readonly handlerSettings?: any;
-  /**
-   * @member {SettingDescription[]} [defaultHandlerSettings]
-   */
-  readonly defaultHandlerSettings?: SettingDescription[];
-  /**
-   * @member {string} [taskType]
-   */
-  readonly taskType?: string;
-  /**
-   * @member {string} [taskHandlerName]
-   */
-  readonly taskHandlerName?: string;
-  /**
-   * @member {NullableCancellationToken} [cancellationToken]
-   */
-  cancellationToken?: NullableCancellationToken;
-  /**
-   * @member {any} [logger]
-   */
-  readonly logger?: any;
-}
-
-/**
- * @interface
  * An interface representing DataTaskGroup.
  */
 export interface DataTaskGroup {
@@ -679,6 +571,114 @@ export interface Stream {
 
 /**
  * @interface
+ * An interface representing SettingDescription.
+ */
+export interface SettingDescription {
+  /**
+   * @member {string} name
+   */
+  name: string;
+  /**
+   * @member {string} [defaultValue]
+   */
+  defaultValue?: string;
+  /**
+   * @member {Type} type Possible values include: 'SelectBox', 'String',
+   * 'Date', 'DateTime', 'Bool', 'Url', 'Guid', 'Number', 'EditableSelectBox'
+   */
+  type: Type;
+  /**
+   * @member {string[]} [options]
+   */
+  options?: string[];
+  /**
+   * @member {boolean} [isRequired]
+   */
+  isRequired?: boolean;
+}
+
+/**
+ * @interface
+ * An interface representing SafeWaitHandle.
+ */
+export interface SafeWaitHandle {
+  /**
+   * @member {boolean} [isInvalid]
+   */
+  readonly isInvalid?: boolean;
+  /**
+   * @member {boolean} [isClosed]
+   */
+  readonly isClosed?: boolean;
+}
+
+/**
+ * @interface
+ * An interface representing WaitHandle.
+ */
+export interface WaitHandle {
+  /**
+   * @member {any} [handle]
+   */
+  handle?: any;
+  /**
+   * @member {SafeWaitHandle} [safeWaitHandle]
+   */
+  safeWaitHandle?: SafeWaitHandle;
+}
+
+/**
+ * @interface
+ * An interface representing NullableCancellationToken.
+ */
+export interface NullableCancellationToken {
+  /**
+   * @member {boolean} [isCancellationRequested]
+   */
+  readonly isCancellationRequested?: boolean;
+  /**
+   * @member {boolean} [canBeCanceled]
+   */
+  readonly canBeCanceled?: boolean;
+  /**
+   * @member {WaitHandle} [waitHandle]
+   */
+  readonly waitHandle?: WaitHandle;
+}
+
+/**
+ * @interface
+ * An interface representing IHandler.
+ */
+export interface IHandler {
+  /**
+   * @member {any} [handlerSettings]
+   */
+  readonly handlerSettings?: any;
+  /**
+   * @member {SettingDescription[]} [defaultHandlerSettings]
+   */
+  readonly defaultHandlerSettings?: SettingDescription[];
+  /**
+   * @member {string} [taskType]
+   */
+  readonly taskType?: string;
+  /**
+   * @member {string} [taskHandlerName]
+   */
+  readonly taskHandlerName?: string;
+  /**
+   * @member {NullableCancellationToken} [cancellationToken]
+   */
+  cancellationToken?: NullableCancellationToken;
+  /**
+   * @member {any} [logger]
+   */
+  readonly logger?: any;
+}
+
+/**
+ * @interface
  * An interface representing Log.
  */
 export interface Log {
@@ -694,7 +694,7 @@ export interface Log {
    * @member {Level} [level] Possible values include: 'Verbose', 'Debug',
    * 'Information', 'Warning', 'Error', 'Fatal'
    */
-  level?: Level;
+  readonly level?: Level;
   /**
    * @member {string} [exception]
    */
@@ -997,29 +997,6 @@ export interface IntegratorAPIRestSchedulerGetPagedListPostOptionalParams extend
 }
 
 /**
- * Defines values for Type.
- * Possible values include: 'SelectBox', 'String', 'Date', 'DateTime', 'Bool',
- * 'Url', 'Guid', 'Number', 'EditableSelectBox'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Type = <Type>"someUnknownValueThatWillStillBeValid";
- * @readonly
- * @enum {string}
- */
-export enum Type {
-  SelectBox = 'SelectBox',
-  String = 'String',
-  Date = 'Date',
-  DateTime = 'DateTime',
-  Bool = 'Bool',
-  Url = 'Url',
-  Guid = 'Guid',
-  Number = 'Number',
-  EditableSelectBox = 'EditableSelectBox',
-}
-
-/**
  * Defines values for Status.
  * Possible values include: 'NotStarted', 'Running', 'Successful', 'Error',
  * 'Cancelled'
@@ -1075,6 +1052,29 @@ export enum Status2 {
   Confirmed = 'Confirmed',
   Errored = 'Errored',
   Ignored = 'Ignored',
+}
+
+/**
+ * Defines values for Type.
+ * Possible values include: 'SelectBox', 'String', 'Date', 'DateTime', 'Bool',
+ * 'Url', 'Guid', 'Number', 'EditableSelectBox'
+ * There could be more values for this enum apart from the ones defined here.If
+ * you want to set a value that is not from the known values then you can do
+ * the following:
+ * let param: Type = <Type>"someUnknownValueThatWillStillBeValid";
+ * @readonly
+ * @enum {string}
+ */
+export enum Type {
+  SelectBox = 'SelectBox',
+  String = 'String',
+  Date = 'Date',
+  DateTime = 'DateTime',
+  Bool = 'Bool',
+  Url = 'Url',
+  Guid = 'Guid',
+  Number = 'Number',
+  EditableSelectBox = 'EditableSelectBox',
 }
 
 /**

@@ -28,10 +28,6 @@ export class Log extends TEntity<ILog> {
         return this.model.level;
     }
 
-    set Level(v: LogLevel) {
-        this.model.level = v;
-    }
-
     get Exception(): string {
         return this.model.exception;
     }

@@ -22,19 +22,35 @@
 
     <v-expansion-panel expand>
         <v-expansion-panel-content v-for="(dataTaskGroup, i) in dataTaskGroups" :key="i">
+
             <div slot="header">
-                <!--<v-btn icon flat outline
+
+                <v-btn icon flat outline
                        color="indigo lighten-2 white--text"
                        title="Execute task in scheduler"
-                       :disabled="data.item.IsRunning"
-                       @click='onExecGroupClick(dataTaskGroup)'><i class="material-icons">alarm</i></v-btn>-->
+                       @click.stop='onExecGroupClick(dataTaskGroup)'><i class="material-icons">alarm</i></v-btn>
 
-                <span>Group Name:</span> {{dataTaskGroup.Name}} <br />
+                <v-btn icon flat outline
+                       color="teal lighten-2 white--text"
+                       title="Configure group"
+                       @click.stop='onEditGroupClick(dataTaskGroup)'><v-icon>settings</v-icon></v-btn>
+
+                <span>Group Name:</span> {{dataTaskGroup.Name}}
+
                 <span>Cron Schedule:</span> {{dataTaskGroup.CronSchedule}}
+
+                <!--<v-btn flat icon outline color="primary" dark @click.stop="showDiscardConfirmation = true"><v-icon>delete_forever</v-icon></v-btn>-->
+
             </div>
-            <v-card v-for="(dataTask, j) in dataTaskGroup.DataTasks" :key="j">
-                <v-card-text class="grey lighten-3">{{ dataTask.DisplayName }}</v-card-text>
-            </v-card>
+
+            <v-layout row>
+                <v-flex xs-11 class="px-4">
+                    <v-card v-for="(dataTask, j) in dataTaskGroup.DataTasks" :key="j">
+                        <v-card-text class="grey lighten-3">{{ dataTask.DisplayName }}</v-card-text>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+
         </v-expansion-panel-content>
     </v-expansion-panel>
 
@@ -77,10 +93,14 @@
                        @click='onEditTaskClick(data.item)'><v-icon>settings</v-icon></v-btn>
             </template>
             <template slot="Delete" scope="data">
-                <confirmation-button title="Delete task"
-                                     iconName="delete_forever"
-                                     :dialogMessage="'Do you want to Remove \'' + data.item.DisplayName + '\' Task?'"
-                                     @onOkClicked="onDeleteTaskClick(data.item)"></confirmation-button>
+
+                <!--<v-btn flat icon outline color="primary" dark @click.stop="showDiscardConfirmation = true"><v-icon>delete_forever</v-icon></v-btn>
+
+                <confirmation v-model="showDiscardConfirmation"
+                              :message="'Do you want to Remove \'' + data.item.DisplayName + '\' Task?'"
+                              @onOkClicked="onDeleteTaskClick(data.item)">
+                </confirmation>-->
+
             </template>
         </b-table>
     </div>
@@ -112,7 +132,8 @@
     </b-container>
 
     <edit-task v-model="showEditTask" :dataTask="currentTask" @onClose="closeEditTask"> </edit-task>
-    <edit-group v-model="showEditGroup" :dataTaskGroup="currentGroup" @onClose="closeEditGroup"> </edit-group>
+
+    <edit-group v-model="showEditGroup" scope="fromList" :dataTaskGroup="currentGroup" @onClose="closeEditGroup"> </edit-group>
 
     <execute-task-localy v-model="showExecuteTaskLocaly" :dataTask="currentTask" @onClose="closeExecuteTaskLocaly"> </execute-task-localy>
 

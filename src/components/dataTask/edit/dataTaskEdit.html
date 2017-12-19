@@ -34,8 +34,7 @@
                                   data-vv-name="taskHandler"
                                   data-vv-as="Task Handler"
                                   required
-                                  :disabled="!isNew"
-                                  ></v-select>
+                                  :disabled="!isNew"></v-select>
                     </v-flex>
                 </v-layout>
 
@@ -51,9 +50,9 @@
                                       required></v-text-field>
 
                     </v-flex>
-                    <v-flex xs6 class="px-4">
+                    <v-flex xs5 class="px-4">
                         <v-select :items="dataTaskGroups"
-                                  v-model="dataTask.DataTaskGroupId"
+                                  v-model="selectedGroup"
                                   label="Group Name"
                                   :error-messages="errors.collect('groupName', scope)"
                                   v-validate="'required'"
@@ -68,6 +67,13 @@
                                       data-vv-name="groupName"
                                       data-vv-as="Group Name"
                                       required></v-text-field>-->
+                    </v-flex>
+                    <v-flex xs1>
+                        <v-btn icon flat outline
+                               color="indigo lighten-2 white--text"
+                               title="Create new Group"
+                               @click='createNewGroup()'><v-icon>fiber_new</v-icon></v-btn>
+
                     </v-flex>
                 </v-layout>
 
@@ -120,9 +126,9 @@
                             <v-container>
                                 <template v-for="(handlerSetting, index) in handlerSettingsList">
                                     <handler-setting v-model="handlerSetting.Value"
-                                                     :initToggle="mut" 
+                                                     :initToggle="mut"
                                                      :scope="scope"
-                                                     :orderNum="'handlerSetting'+index" 
+                                                     :orderNum="'handlerSetting'+index"
                                                      :handlerSetting="handlerSetting" @input="refreshList()"></handler-setting>
                                 </template>
                             </v-container>
@@ -136,7 +142,7 @@
 
         <v-card-actions class="p-3 grey lighten-3">
 
-            <v-spacer></v-spacer>   
+            <v-spacer></v-spacer>
 
             <v-btn round title="Save Data Task Configuration" color="primary" dark @click="onSaveClick">
                 <v-icon class="mr-2">save</v-icon>Save
@@ -159,4 +165,7 @@
         </v-card-actions>
 
     </v-card>
+
+    <edit-group v-model="showEditGroup" scope="fromEdit" :dataTaskGroup="currentGroup" @onClose="closeEditGroup"> </edit-group>
+
 </v-dialog>

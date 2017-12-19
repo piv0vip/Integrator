@@ -9,17 +9,6 @@
 
                 <v-layout row>
 
-                    <v-flex xs3 offset-xs3 class="px-4">
-                        <v-switch class="my-1" label="Is Enabled" v-model="dataTaskGroup.Enabled" color="info" hide-details></v-switch>
-                    </v-flex>
-
-                    <v-flex xs3 class="px-4">
-                        <v-switch class="my-1" label="Group Only" v-model="dataTaskGroup.GroupOnly" color="info" hide-details></v-switch>
-                    </v-flex>
-
-                </v-layout>
-
-                <v-layout row>
                     <v-flex xs6 class="px-4">
                         <v-text-field v-model="dataTaskGroup.Name"
                                       label="Group Name"
@@ -31,6 +20,15 @@
                                       required></v-text-field>
 
                     </v-flex>
+
+                    <v-flex xs3 class="pl-4">
+                        <v-switch class="my-3" label="Group Only" v-model="dataTaskGroup.GroupOnly" color="info" hide-details></v-switch>
+                    </v-flex>
+
+                    <v-flex xs3 class="pl-4">
+                        <v-switch class="my-3" label="Is Enabled" v-model="dataTaskGroup.Enabled" color="info" hide-details></v-switch>
+                    </v-flex>
+
                 </v-layout>
 
                 <v-layout row>

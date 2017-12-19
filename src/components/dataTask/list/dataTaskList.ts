@@ -14,7 +14,7 @@ import { DataTask, DataTaskGroup } from '../../../models';
 
 import { DataTaskEditComponent } from '../edit';
 import { DataTaskGroupEditComponent } from '../editGroup';
-import { ConfirmationButtonComponent } from '../../common/';
+import { ConfirmationComponent } from '../../common/';
 import { DataTaskExecuteLocalyComponent } from '../../dataTask/execute';
 
 import * as helper from '../../../util/helper';
@@ -25,7 +25,7 @@ import { DataTaskService } from '../../../services';
 
 import chance from 'chance';
 
-import { DataTaskGroup as IDataTaskGroup } from '../../../api/models'
+import { DataTaskGroup as IDataTaskGroup } from '../../../api/models';
 
 import _ from 'lodash';
 
@@ -34,7 +34,7 @@ import _ from 'lodash';
     components: {
         'edit-task': DataTaskEditComponent,
         'edit-group': DataTaskGroupEditComponent,
-        'confirmation-button': ConfirmationButtonComponent,
+        'confirmation': ConfirmationComponent,
         'execute-task-localy': DataTaskExecuteLocalyComponent,
     },
 })
@@ -48,12 +48,13 @@ export class DataTaskListComponent extends Vue {
     cronPresets: string[] = [];
 
     showConsole: boolean = false;
+
     get consoleMessages(): string[] { return this.$store.getters.broadcastMessages; }
 
     currentTask: DataTask = new DataTask();
     currentGroup: DataTaskGroup = new DataTaskGroup();
 
-    debugger;
+    showDiscardConfirmation: boolean = false;
 
     showExecuteTaskLocaly: boolean = false;
     showEditTask: boolean = false;
@@ -154,11 +155,11 @@ export class DataTaskListComponent extends Vue {
     }
 
     get dataTasks(): DataTask[] {
-        let arr: DataTask[] = []
+        let arr: DataTask[] = [];
         this.dataTaskGroups.forEach((group: DataTaskGroup) => {
             group.DataTasks.forEach((task: DataTask) => {
                 arr.push(task);
-            })
+            });
         });
         return arr;
     }
@@ -197,7 +198,7 @@ export class DataTaskListComponent extends Vue {
             // this.refreshTable();
         });
     }
-
+    
     onAddDatataskClick() {
         this.currentTask = new DataTask();
         this.showEditTask = true;
@@ -221,6 +222,11 @@ export class DataTaskListComponent extends Vue {
         this.showEditTask = true;
     }
 
+    onEditGroupClick(dataTaskGroup: DataTaskGroup) {
+        this.currentGroup = dataTaskGroup;
+        this.showEditGroup = true;
+    }
+
     onDeleteTaskClick(dataTask: DataTask) {
         HTTP.delete('DataTask/Delete/' + dataTask.DataTaskId)
         .then((response: AxiosResponse) => {
@@ -241,9 +247,11 @@ export class DataTaskListComponent extends Vue {
         this.refreshTable();
     }
 
-    closeEditGroup(e) {
+    closeEditGroup(dataTaskGroup?: DataTaskGroup) {
         this.showEditGroup = false;
-        this.refreshTable();
+        if (dataTaskGroup) {
+            this.refreshTable();
+        }
     }
 
     onFilterChange(e) {
@@ -251,6 +259,16 @@ export class DataTaskListComponent extends Vue {
     }
 
     onExecGroupClick(dataTaskGroup: IDataTaskGroup) {
+    }
+
+    onDeleteGroupClick(dataTaskGroup: DataTaskGroup) {
+        HTTP.delete('DataTaskGroup/Delete/' + dataTaskGroup.DataTaskGroupId)
+            .then((response: AxiosResponse) => {
+                this.refreshTable();
+            })
+            .catch(e => {
+                this.isBusy = false;
+            });
     }
 
 }

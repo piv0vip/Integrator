@@ -1,12 +1,14 @@
 import Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import { DataTaskHandlerSettings, HandlerTypes, HandlerType, HandlerSetting } from '../../../classes/settings';
-import { DataTask } from '../../../models';
+import { DataTask, DataTaskGroup } from '../../../models';
 import { EnumValues, CustomEnumValues } from '../../../enums';
 import { HTTP } from '../../../util/http-common';
 import { HandlerSettingComponent, ConfirmationComponent } from '../../common/';
 import { IEnumValues } from '../../../interfaces';
 import { CronPresetsComponent } from './cronPresets';   
+
+import { DataTaskGroupEditComponent } from '../editGroup';
 
 import $ from 'jquery';
 import _ from 'lodash';
@@ -16,7 +18,8 @@ import _ from 'lodash';
     components: {
         'handler-setting': HandlerSettingComponent,
         'confirmation': ConfirmationComponent,
-        'cron-presets': CronPresetsComponent
+        'cron-presets': CronPresetsComponent,
+        'edit-group': DataTaskGroupEditComponent,
     },
     inject: ['$validator'],
 })
@@ -29,7 +32,11 @@ export class DataTaskEditComponent extends Vue {
 
     scope: string = 'dataTaskEditScope';
 
+    currentGroup: DataTaskGroup = new DataTaskGroup();
+    showEditGroup: boolean = false;
+
     selectedHandler: string = '';
+    selectedGroup: number = null;
 
     initToggle: boolean = false;
 
@@ -61,13 +68,14 @@ export class DataTaskEditComponent extends Vue {
         return this.handlerTypes.asSelectBoxList();
     }
 
-    get dataTaskGroups(): any[] {
+    get dataTaskGroups(): {value: number, text: string}[] {
         return this.$store.getters.dataTaskGroupsAsSelect;
     }
 
     @Watch('dataTask')
     onDataTaskChanged (value: DataTask) {
         this.selectedHandler = (value ? value.TaskType : '');
+        this.selectedGroup = (value ? value.DataTaskGroupId : null);
         this.cronString = value.CronSchedule;
     }
 
@@ -78,6 +86,14 @@ export class DataTaskEditComponent extends Vue {
         }
         if (this.dataTask.TaskType !== value) { this.dataTask.TaskType = value; }
         this.$nextTick(() => { this.refreshList(); });
+    }
+
+    @Watch('selectedGroup')
+    onSelectedGroup(value) {
+        console.log('selected group: ' + value);
+        if (this.selectedGroup > 0) {
+            this.dataTask.DataTaskGroupId = this.selectedGroup;
+        } 
     }
 
     @Watch('cronString')
@@ -163,5 +179,22 @@ export class DataTaskEditComponent extends Vue {
 
     refreshList() {
         this.mut = !this.mut;
+    }
+
+    createNewGroup() {
+        this.currentGroup = new DataTaskGroup();
+        this.showEditGroup = true;
+    }
+
+    closeEditGroup(dataTaskGroup?: DataTaskGroup) {
+        this.showEditGroup = false;
+        if (dataTaskGroup) {
+            this.$store.dispatch('getDataTasks')
+                .then(() => {
+                    this.selectedGroup = dataTaskGroup.DataTaskGroupId;
+                });
+        } else {
+            this.selectedGroup = this.dataTask.DataTaskGroupId;
+        }
     }
 }

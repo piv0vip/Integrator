@@ -4,7 +4,7 @@ import BootstrapVue from 'bootstrap-vue';
 import VueRouter from 'vue-router';
 import Vuetify from 'vuetify';
 import VeeValidate, { Validator } from 'vee-validate';
-import VueHighlightJS from 'vue-highlight.js';
+import VueHighlightJS from 'vue-highlightjs';
 
 import * as helper from './util/helper';
 

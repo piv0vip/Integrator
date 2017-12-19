@@ -5,215 +5,6 @@
  */
 
 
-export const SettingDescription = {
-  required: false,
-  serializedName: 'SettingDescription',
-  type: {
-    name: 'Composite',
-    className: 'SettingDescription',
-    modelProperties: {
-      name: {
-        required: true,
-        serializedName: 'name',
-        type: {
-          name: 'String'
-        }
-      },
-      defaultValue: {
-        required: false,
-        serializedName: 'defaultValue',
-        type: {
-          name: 'String'
-        }
-      },
-      type: {
-        required: true,
-        serializedName: 'type',
-        type: {
-          name: 'String'
-        }
-      },
-      options: {
-        required: false,
-        serializedName: 'options',
-        type: {
-          name: 'Sequence',
-          element: {
-              required: false,
-              serializedName: 'stringElementType',
-              type: {
-                name: 'String'
-              }
-          }
-        }
-      },
-      isRequired: {
-        required: false,
-        serializedName: 'isRequired',
-        type: {
-          name: 'Boolean'
-        }
-      }
-    }
-  }
-};
-
-export const SafeWaitHandle = {
-  required: false,
-  serializedName: 'SafeWaitHandle',
-  type: {
-    name: 'Composite',
-    className: 'SafeWaitHandle',
-    modelProperties: {
-      isInvalid: {
-        required: false,
-        readOnly: true,
-        serializedName: 'isInvalid',
-        type: {
-          name: 'Boolean'
-        }
-      },
-      isClosed: {
-        required: false,
-        readOnly: true,
-        serializedName: 'isClosed',
-        type: {
-          name: 'Boolean'
-        }
-      }
-    }
-  }
-};
-
-export const WaitHandle = {
-  required: false,
-  serializedName: 'WaitHandle',
-  type: {
-    name: 'Composite',
-    className: 'WaitHandle',
-    modelProperties: {
-      handle: {
-        required: false,
-        serializedName: 'handle',
-        type: {
-          name: 'Object'
-        }
-      },
-      safeWaitHandle: {
-        required: false,
-        serializedName: 'safeWaitHandle',
-        type: {
-          name: 'Composite',
-          className: 'SafeWaitHandle'
-        }
-      }
-    }
-  }
-};
-
-export const NullableCancellationToken = {
-  required: false,
-  serializedName: 'Nullable[CancellationToken]',
-  type: {
-    name: 'Composite',
-    className: 'NullableCancellationToken',
-    modelProperties: {
-      isCancellationRequested: {
-        required: false,
-        readOnly: true,
-        serializedName: 'isCancellationRequested',
-        type: {
-          name: 'Boolean'
-        }
-      },
-      canBeCanceled: {
-        required: false,
-        readOnly: true,
-        serializedName: 'canBeCanceled',
-        type: {
-          name: 'Boolean'
-        }
-      },
-      waitHandle: {
-        required: false,
-        readOnly: true,
-        serializedName: 'waitHandle',
-        type: {
-          name: 'Composite',
-          className: 'WaitHandle'
-        }
-      }
-    }
-  }
-};
-
-export const IHandler = {
-  required: false,
-  serializedName: 'IHandler',
-  type: {
-    name: 'Composite',
-    className: 'IHandler',
-    modelProperties: {
-      handlerSettings: {
-        required: false,
-        readOnly: true,
-        serializedName: 'handlerSettings',
-        type: {
-          name: 'Object'
-        }
-      },
-      defaultHandlerSettings: {
-        required: false,
-        readOnly: true,
-        serializedName: 'defaultHandlerSettings',
-        type: {
-          name: 'Sequence',
-          element: {
-              required: false,
-              serializedName: 'SettingDescriptionElementType',
-              type: {
-                name: 'Composite',
-                className: 'SettingDescription'
-              }
-          }
-        }
-      },
-      taskType: {
-        required: false,
-        readOnly: true,
-        serializedName: 'taskType',
-        type: {
-          name: 'String'
-        }
-      },
-      taskHandlerName: {
-        required: false,
-        readOnly: true,
-        serializedName: 'taskHandlerName',
-        type: {
-          name: 'String'
-        }
-      },
-      cancellationToken: {
-        required: false,
-        serializedName: 'cancellationToken',
-        type: {
-          name: 'Composite',
-          className: 'NullableCancellationToken'
-        }
-      },
-      logger: {
-        required: false,
-        readOnly: true,
-        serializedName: 'logger',
-        type: {
-          name: 'Object'
-        }
-      }
-    }
-  }
-};
-
 export const DataTaskGroup = {
   required: false,
   serializedName: 'DataTaskGroup',
@@ -1303,6 +1094,215 @@ export const Stream = {
   }
 };
 
+export const SettingDescription = {
+  required: false,
+  serializedName: 'SettingDescription',
+  type: {
+    name: 'Composite',
+    className: 'SettingDescription',
+    modelProperties: {
+      name: {
+        required: true,
+        serializedName: 'name',
+        type: {
+          name: 'String'
+        }
+      },
+      defaultValue: {
+        required: false,
+        serializedName: 'defaultValue',
+        type: {
+          name: 'String'
+        }
+      },
+      type: {
+        required: true,
+        serializedName: 'type',
+        type: {
+          name: 'String'
+        }
+      },
+      options: {
+        required: false,
+        serializedName: 'options',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      },
+      isRequired: {
+        required: false,
+        serializedName: 'isRequired',
+        type: {
+          name: 'Boolean'
+        }
+      }
+    }
+  }
+};
+
+export const SafeWaitHandle = {
+  required: false,
+  serializedName: 'SafeWaitHandle',
+  type: {
+    name: 'Composite',
+    className: 'SafeWaitHandle',
+    modelProperties: {
+      isInvalid: {
+        required: false,
+        readOnly: true,
+        serializedName: 'isInvalid',
+        type: {
+          name: 'Boolean'
+        }
+      },
+      isClosed: {
+        required: false,
+        readOnly: true,
+        serializedName: 'isClosed',
+        type: {
+          name: 'Boolean'
+        }
+      }
+    }
+  }
+};
+
+export const WaitHandle = {
+  required: false,
+  serializedName: 'WaitHandle',
+  type: {
+    name: 'Composite',
+    className: 'WaitHandle',
+    modelProperties: {
+      handle: {
+        required: false,
+        serializedName: 'handle',
+        type: {
+          name: 'Object'
+        }
+      },
+      safeWaitHandle: {
+        required: false,
+        serializedName: 'safeWaitHandle',
+        type: {
+          name: 'Composite',
+          className: 'SafeWaitHandle'
+        }
+      }
+    }
+  }
+};
+
+export const NullableCancellationToken = {
+  required: false,
+  serializedName: 'Nullable[CancellationToken]',
+  type: {
+    name: 'Composite',
+    className: 'NullableCancellationToken',
+    modelProperties: {
+      isCancellationRequested: {
+        required: false,
+        readOnly: true,
+        serializedName: 'isCancellationRequested',
+        type: {
+          name: 'Boolean'
+        }
+      },
+      canBeCanceled: {
+        required: false,
+        readOnly: true,
+        serializedName: 'canBeCanceled',
+        type: {
+          name: 'Boolean'
+        }
+      },
+      waitHandle: {
+        required: false,
+        readOnly: true,
+        serializedName: 'waitHandle',
+        type: {
+          name: 'Composite',
+          className: 'WaitHandle'
+        }
+      }
+    }
+  }
+};
+
+export const IHandler = {
+  required: false,
+  serializedName: 'IHandler',
+  type: {
+    name: 'Composite',
+    className: 'IHandler',
+    modelProperties: {
+      handlerSettings: {
+        required: false,
+        readOnly: true,
+        serializedName: 'handlerSettings',
+        type: {
+          name: 'Object'
+        }
+      },
+      defaultHandlerSettings: {
+        required: false,
+        readOnly: true,
+        serializedName: 'defaultHandlerSettings',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'SettingDescriptionElementType',
+              type: {
+                name: 'Composite',
+                className: 'SettingDescription'
+              }
+          }
+        }
+      },
+      taskType: {
+        required: false,
+        readOnly: true,
+        serializedName: 'taskType',
+        type: {
+          name: 'String'
+        }
+      },
+      taskHandlerName: {
+        required: false,
+        readOnly: true,
+        serializedName: 'taskHandlerName',
+        type: {
+          name: 'String'
+        }
+      },
+      cancellationToken: {
+        required: false,
+        serializedName: 'cancellationToken',
+        type: {
+          name: 'Composite',
+          className: 'NullableCancellationToken'
+        }
+      },
+      logger: {
+        required: false,
+        readOnly: true,
+        serializedName: 'logger',
+        type: {
+          name: 'Object'
+        }
+      }
+    }
+  }
+};
+
 export const Log = {
   required: false,
   serializedName: 'Log',
@@ -1326,6 +1326,7 @@ export const Log = {
       },
       level: {
         required: false,
+        readOnly: true,
         serializedName: 'level',
         type: {
           name: 'String'

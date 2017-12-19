@@ -3,7 +3,10 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { DataTaskGroup } from '../../../models';
 import { HTTP } from '../../../util/http-common';
 import { ConfirmationComponent } from '../../common/';
-import { CronPresetsComponent } from '../edit/cronPresets';   
+import { CronPresetsComponent } from '../edit/cronPresets';
+import { AxiosResponse } from 'axios';
+
+import { DataTaskGroup as IDataTaskGroup } from '../../../api/models';
 
 import $ from 'jquery';
 import _ from 'lodash';
@@ -12,7 +15,7 @@ import _ from 'lodash';
     template: require('./dataTaskGroupEdit.html'),
     components: {
         'confirmation': ConfirmationComponent,
-        'cron-presets': CronPresetsComponent
+        'cron-presets': CronPresetsComponent,
     },
     inject: ['$validator'],
 })
@@ -23,7 +26,8 @@ export class DataTaskGroupEditComponent extends Vue {
 
     height: string = '300px';
 
-    scope: string = 'dataTaskGroupEditScope';
+    @Prop()
+    scope: string;
 
     initToggle: boolean = false;
 
@@ -65,9 +69,9 @@ export class DataTaskGroupEditComponent extends Vue {
             {url: 'DataTaskGroup/Insert', method: 'post'} : 
             {url: 'DataTaskGroup/Update', method: 'put'} ;
         HTTP[request.method](request.url, this.dataTaskGroup.toServer())
-            .then(function(response) {
+            .then(function (response: AxiosResponse) {
                 this.$store.commit('loading', false);
-                this.closeEdit();
+                this.closeEdit(new DataTaskGroup(response.data as IDataTaskGroup));
             }.bind(this))
             .catch(e => {
                 this.$store.commit('loading', false);
@@ -110,10 +114,10 @@ export class DataTaskGroupEditComponent extends Vue {
         this.showSaveConfirmation = false;
     }
 
-    closeEdit() {
+    closeEdit(dataTaskGroup?: DataTaskGroup) {
         this.$validator.reset();
         this.$emit('input', false);
-        this.$emit('onClose');
+        this.$emit('onClose', dataTaskGroup);
     }
 
     refreshList() {

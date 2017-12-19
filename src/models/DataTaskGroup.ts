@@ -25,10 +25,10 @@ export class DataTaskGroup extends TEntity<IDataTaskGroup> {
     }
 
     set DataTaskList(v: IDataTask[]) {
-        this._dataTasks = []
+        this._dataTasks = [];
         v.forEach((dataTask: IDataTask) => {
             this._dataTasks.push(DataTask.createDataTaskFromJson(dataTask));
-        })
+        });
     }
 
     constructor(dataTaskGroup?: IDataTaskGroup) {
@@ -38,12 +38,12 @@ export class DataTaskGroup extends TEntity<IDataTaskGroup> {
         }
     }
 
-    //load(model: IDataTaskGroup) {
+    // load(model: IDataTaskGroup) {
     //    this.model = model;
     //    this.model.dataTaskList.forEach((dataTask) => {
     //        this._dataTasks.push(DataTask.createDataTaskFromJson(dataTask));
     //    });
-    //}
+    // }
 
     toServer(): IDataTaskGroup {
         return {

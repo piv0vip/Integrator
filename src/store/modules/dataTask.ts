@@ -35,8 +35,8 @@ const getters = {
             return {
                 value: dataTaskGroup.DataTaskGroupId,
                 text: dataTaskGroup.Name
-            }
-        })
+            };
+        });
     }
 };
 
@@ -50,13 +50,10 @@ const mutations = {
     },
 
     setDataTasks(state, dataTasks: DataTask[]) {
-        // let ddd = new Dictionary<number, DataTask>();
         dataTasks.forEach((dataTask: DataTask) => {
             state.dataTasks.setValue(dataTask.DataTaskId, dataTask);
         });
-
         state.dataTasksArray = state.dataTasks.values();
-        // state.dataTasks = dataTasks;
     },
 
     setDataTaskGroups(state, dataTaskGroups: DataTaskGroup[]) {
@@ -82,7 +79,7 @@ const actions = {
 
     getHandlerTypes({ commit }) {
         return new Promise((resolve, reject) => {
-            HTTP.get('DataTask/GetHandlersWithDefaultSettings')
+            HTTP.get('Scheduler/GetHandlersWithDefaultSettings')
                 .then((response) => {
                     commit('sethandlerTypes', response.data as IHandler[]);
                     resolve();
