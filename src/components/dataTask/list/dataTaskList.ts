@@ -154,7 +154,13 @@ export class DataTaskListComponent extends Vue {
     }
 
     get dataTasks(): DataTask[] {
-        return this.dataTaskGroups[0] ? this.dataTaskGroups[0].DataTasks : [];
+        let arr: DataTask[] = []
+        this.dataTaskGroups.forEach((group: DataTaskGroup) => {
+            group.DataTasks.forEach((task: DataTask) => {
+                arr.push(task);
+            })
+        });
+        return arr;
     }
 
     get dataTaskGroups(): DataTaskGroup[] {
@@ -167,7 +173,7 @@ export class DataTaskListComponent extends Vue {
     }
 
     onExecInSchTaskClick(dataTask: DataTask) {
-        HTTP.post('DataTask/ExecuteTask/' + dataTask.DataTaskId, null, {
+        HTTP.post('Scheduler/ExecuteTask/' + dataTask.DataTaskId, null, {
             headers: {
                 'Content-Type': 'application/json',
             }

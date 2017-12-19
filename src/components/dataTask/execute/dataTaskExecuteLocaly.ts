@@ -34,7 +34,7 @@ export class DataTaskExecuteLocalyComponent extends Vue {
     }
 
     Execute() {
-        HTTP.post('DataTask/ExecuteTask/' + this.dataTask.DataTaskId, this.handlerSettings.toServer(), {
+        HTTP.post('Scheduler/ExecuteTask/' + this.dataTask.DataTaskId, this.handlerSettings.toServer(), {
             headers: {
                 'Content-Type': 'application/json',
             }
