@@ -23,7 +23,13 @@ export class ConfirmationComponent extends Vue {
     @Prop({default: 'Message'})
     message: String;
 
+    @Prop({ default: null })
+    okCallBack: Function
+
     onOkClicked(e) {
+        if (this.okCallBack) {
+            this.okCallBack();
+        }
         this.$emit('onOkClicked');
         this.emitCloseClicked();
     }

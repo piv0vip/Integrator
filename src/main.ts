@@ -63,7 +63,7 @@ new Vue({
   created() {
       HUB.start();
       store.dispatch('connectToHub');
-      console.log('create vue application');
+      store.dispatch('getProductVersion');
   },
   components: {
     'app': AppComponent

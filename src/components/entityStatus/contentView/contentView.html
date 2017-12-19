@@ -6,9 +6,11 @@
                 View {{ content.getType() }} document
             </v-card-title>
             <v-card-text style="height: 700px;">
-                <highlight-code :lang="content.getTypeFormat()">
-                    {{ content.toHTML() }}
-                </highlight-code>
+                <pre v-highlightjs>
+                    <code :class="content.getTypeFormat()">
+                        {{ content.toHTML() }}
+                    </code>
+                </pre>
             </v-card-text>
             <v-card-actions class="p-3 grey lighten-3">
                 <v-spacer></v-spacer>

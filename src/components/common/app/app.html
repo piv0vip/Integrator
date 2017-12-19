@@ -3,7 +3,7 @@
         <v-toolbar-title href="#/">Scheduler console</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
-            <v-btn flat href="#/">Scheduling Task Configuration</v-btn>
+            <v-btn exact flat href="#/">Scheduling Task Configuration</v-btn>
             <v-btn flat href="#/entity-statuses">Entity statuses</v-btn>
         </v-toolbar-items>
     </v-toolbar>
@@ -13,6 +13,7 @@
         </v-container>
     </v-content>
     <v-footer app class="pa-3" fixed variant="light">
+        Version: {{ productVersion }}
         <v-spacer></v-spacer>
         <div>© CloudWorks Ltd., {{ new Date().getFullYear() }}</div>
     </v-footer>

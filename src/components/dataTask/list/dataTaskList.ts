@@ -53,8 +53,10 @@ export class DataTaskListComponent extends Vue {
 
     currentTask: DataTask = new DataTask();
     currentGroup: DataTaskGroup = new DataTaskGroup();
+    confirmationCBFunc: Function = null;
+    confirmationMessage: string = ''
 
-    showDiscardConfirmation: boolean = false;
+    showConfirmation: boolean = false;
 
     showExecuteTaskLocaly: boolean = false;
     showEditTask: boolean = false;
@@ -271,4 +273,19 @@ export class DataTaskListComponent extends Vue {
             });
     }
 
+    onDeleteTask(dataTask: DataTask) {
+        this.confirmationMessage = 'Do you want to Remove \'' + dataTask.DisplayName + '\' Task?'
+        this.confirmationCBFunc = () => {
+            this.onDeleteTaskClick(dataTask);
+        }
+        this.showConfirmation = true;
+    }
+
+    onDeleteGroup(dataTaskGroup: DataTaskGroup) {
+        this.confirmationMessage = 'Do you want to Remove \'' + dataTaskGroup.Name + '\' Group?'
+        this.confirmationCBFunc = () => {
+            this.onDeleteGroupClick(dataTaskGroup);
+        }
+        this.showConfirmation = true;
+    }
 }

@@ -21,7 +21,7 @@
     </div>-->
 
     <v-expansion-panel expand>
-        <v-expansion-panel-content v-for="(dataTaskGroup, i) in dataTaskGroups" :key="i">
+        <v-expansion-panel-content class="mb-1" v-for="(dataTaskGroup, i) in dataTaskGroups" :key="i">
 
             <div slot="header">
 
@@ -35,18 +35,39 @@
                        title="Configure group"
                        @click.stop='onEditGroupClick(dataTaskGroup)'><v-icon>settings</v-icon></v-btn>
 
-                <span>Group Name:</span> {{dataTaskGroup.Name}}
+                <v-btn flat icon outline color="primary" dark @click.stop="onDeleteGroup(dataTaskGroup)"><v-icon>delete_forever</v-icon></v-btn>
+
+                <h6 style="display:inline">{{dataTaskGroup.Name}}</h6>
 
                 <span>Cron Schedule:</span> {{dataTaskGroup.CronSchedule}}
-
-                <!--<v-btn flat icon outline color="primary" dark @click.stop="showDiscardConfirmation = true"><v-icon>delete_forever</v-icon></v-btn>-->
 
             </div>
 
             <v-layout row>
-                <v-flex xs-11 class="px-4">
-                    <v-card v-for="(dataTask, j) in dataTaskGroup.DataTasks" :key="j">
-                        <v-card-text class="grey lighten-3">{{ dataTask.DisplayName }}</v-card-text>
+                <v-flex offset-xs1 xs11 class="px-4">
+                    <v-card class="mb-2" v-for="(dataTask, j) in dataTaskGroup.DataTasks" :key="j">
+                        <v-card-text class="lighten-3">
+                            <v-btn icon flat outline
+                                   color="indigo lighten-2 white--text"
+                                   title="Execute task immediately"
+                                   :disabled="dataTask.IsRunning"
+                                   @click='onExecLocalyTaskClick(dataTask)'><i class="material-icons">flash_on</i></v-btn>
+                            <v-btn icon flat outline
+                                   color="indigo lighten-2 white--text"
+                                   title="Execute task in scheduler"
+                                   :disabled="dataTask.IsRunning"
+                                   @click='onExecInSchTaskClick(dataTask)'><i class="material-icons">alarm</i></v-btn>
+                            <v-btn icon flat outline
+                                   color="red lighten-2 white--text"
+                                   title="Reset task"
+                                   :disabled="!dataTask.IsRunning"
+                                   @click='onResetTaskClick(dataTask)'><i class="material-icons">flash_off</i></v-btn>
+                            <v-btn icon flat outline
+                                   color="teal lighten-2 white--text"
+                                   title="Configure task"
+                                   @click='onEditTaskClick(dataTask)'><v-icon>settings</v-icon></v-btn>
+                            {{ dataTask.DisplayName }}
+                        </v-card-text>
                     </v-card>
                 </v-flex>
             </v-layout>
@@ -94,12 +115,7 @@
             </template>
             <template slot="Delete" scope="data">
 
-                <!--<v-btn flat icon outline color="primary" dark @click.stop="showDiscardConfirmation = true"><v-icon>delete_forever</v-icon></v-btn>
-
-                <confirmation v-model="showDiscardConfirmation"
-                              :message="'Do you want to Remove \'' + data.item.DisplayName + '\' Task?'"
-                              @onOkClicked="onDeleteTaskClick(data.item)">
-                </confirmation>-->
+                <v-btn flat icon outline color="primary" dark @click.stop="onDeleteTask(data.item)"><v-icon>delete_forever</v-icon></v-btn>
 
             </template>
         </b-table>
@@ -136,5 +152,10 @@
     <edit-group v-model="showEditGroup" scope="fromList" :dataTaskGroup="currentGroup" @onClose="closeEditGroup"> </edit-group>
 
     <execute-task-localy v-model="showExecuteTaskLocaly" :dataTask="currentTask" @onClose="closeExecuteTaskLocaly"> </execute-task-localy>
+
+    <confirmation v-model="showConfirmation"
+                  :okCallBack="confirmationCBFunc"
+                  :message="confirmationMessage">
+    </confirmation>
 
 </div>

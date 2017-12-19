@@ -27,7 +27,7 @@ export class DataTaskGroupService extends BaseService {
                     resolve(dataTaskGroups);
                 })
                 .catch((error) => {
-                    reject('Error');
+                    reject(error);
                 });
         });
     }
