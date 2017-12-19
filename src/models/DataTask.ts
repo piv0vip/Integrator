@@ -28,6 +28,7 @@ export class DataTask extends TEntity<IDataTask> {
     LastExecutionTime: string;
     LastStartTime: string;
     NextStartTime: string;
+    DataTaskGroupId: number;
     protected _cronString: string;
     
     constructor() {
@@ -40,7 +41,7 @@ export class DataTask extends TEntity<IDataTask> {
     }
 
     get GroupName(): string {
-        return this.model && this.model.dataTaskGroup.name;
+        return this.model && this.model.dataTaskGroup && this.model.dataTaskGroup.name || '';
     };
 
     get DataTaskId(): number { return this.EntityId; }
@@ -100,7 +101,8 @@ export class DataTask extends TEntity<IDataTask> {
             maxRetries: this.MaxRetries,
             retries: this.Retries,
             status: this.Status,
-            taskType: this.TaskType
+            taskType: this.TaskType,
+            dataTaskGroupId: this.DataTaskGroupId
         };
     }
 

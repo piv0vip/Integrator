@@ -4,7 +4,7 @@
  * regenerated.
  */
 
-import { RequestOptionsBase } from 'ms-rest-js';
+import { RequestOptionsBase } from "ms-rest-js";
 
 
 /**
@@ -786,26 +786,12 @@ export interface FieldFilterLog {
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestDataTaskExecuteTaskByIdPostOptionalParams.
+ * An interface representing IntegratorAPIRestDataTaskGetPagedListPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestDataTaskExecuteTaskByIdPostOptionalParams extends RequestOptionsBase {
-  /**
-   * @member {{ [propertyName: string]: string }} [dataTaskParameters]
-   */
-  dataTaskParameters?: { [propertyName: string]: string };
-}
-
-/**
- * @interface
- * An interface representing IntegratorAPIRestDataTaskGetPagedListByIdPostOptionalParams.
- * Optional Parameters.
- *
- * @extends RequestOptionsBase
- */
-export interface IntegratorAPIRestDataTaskGetPagedListByIdPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestDataTaskGetPagedListPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {FieldFilterDataTask[]} [fieldFilters]
    */
@@ -818,12 +804,12 @@ export interface IntegratorAPIRestDataTaskGetPagedListByIdPostOptionalParams ext
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestDataTaskInsertByIdPostOptionalParams.
+ * An interface representing IntegratorAPIRestDataTaskInsertPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestDataTaskInsertByIdPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestDataTaskInsertPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {DataTask} [entity]
    */
@@ -832,12 +818,12 @@ export interface IntegratorAPIRestDataTaskInsertByIdPostOptionalParams extends R
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestDataTaskInsertArrayByIdPostOptionalParams.
+ * An interface representing IntegratorAPIRestDataTaskInsertArrayPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestDataTaskInsertArrayByIdPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestDataTaskInsertArrayPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {DataTask[]} [entities]
    */
@@ -846,12 +832,12 @@ export interface IntegratorAPIRestDataTaskInsertArrayByIdPostOptionalParams exte
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestDataTaskUpdateByIdPutOptionalParams.
+ * An interface representing IntegratorAPIRestDataTaskUpdatePutOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestDataTaskUpdateByIdPutOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestDataTaskUpdatePutOptionalParams extends RequestOptionsBase {
   /**
    * @member {DataTask} [entity]
    */
@@ -860,12 +846,12 @@ export interface IntegratorAPIRestDataTaskUpdateByIdPutOptionalParams extends Re
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestDataTaskGroupGetPagedListByIdPostOptionalParams.
+ * An interface representing IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestDataTaskGroupGetPagedListByIdPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {FieldFilterDataTaskGroup[]} [fieldFilters]
    */
@@ -878,12 +864,12 @@ export interface IntegratorAPIRestDataTaskGroupGetPagedListByIdPostOptionalParam
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestDataTaskGroupInsertByIdPostOptionalParams.
+ * An interface representing IntegratorAPIRestDataTaskGroupInsertPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestDataTaskGroupInsertByIdPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestDataTaskGroupInsertPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {DataTaskGroup} [entity]
    */
@@ -892,12 +878,12 @@ export interface IntegratorAPIRestDataTaskGroupInsertByIdPostOptionalParams exte
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestDataTaskGroupInsertArrayByIdPostOptionalParams.
+ * An interface representing IntegratorAPIRestDataTaskGroupInsertArrayPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestDataTaskGroupInsertArrayByIdPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestDataTaskGroupInsertArrayPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {DataTaskGroup[]} [entities]
    */
@@ -906,12 +892,12 @@ export interface IntegratorAPIRestDataTaskGroupInsertArrayByIdPostOptionalParams
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestDataTaskGroupUpdateByIdPutOptionalParams.
+ * An interface representing IntegratorAPIRestDataTaskGroupUpdatePutOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestDataTaskGroupUpdateByIdPutOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestDataTaskGroupUpdatePutOptionalParams extends RequestOptionsBase {
   /**
    * @member {DataTaskGroup} [entity]
    */
@@ -920,12 +906,12 @@ export interface IntegratorAPIRestDataTaskGroupUpdateByIdPutOptionalParams exten
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestEntityStatusGetPagedListByIdPostOptionalParams.
+ * An interface representing IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestEntityStatusGetPagedListByIdPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {FieldFilterEntityStatus[]} [fieldFilters]
    */
@@ -938,12 +924,12 @@ export interface IntegratorAPIRestEntityStatusGetPagedListByIdPostOptionalParams
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestEntityStatusInsertByIdPostOptionalParams.
+ * An interface representing IntegratorAPIRestEntityStatusInsertPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestEntityStatusInsertByIdPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestEntityStatusInsertPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {EntityStatus} [entity]
    */
@@ -952,12 +938,12 @@ export interface IntegratorAPIRestEntityStatusInsertByIdPostOptionalParams exten
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestEntityStatusInsertArrayByIdPostOptionalParams.
+ * An interface representing IntegratorAPIRestEntityStatusInsertArrayPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestEntityStatusInsertArrayByIdPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestEntityStatusInsertArrayPostOptionalParams extends RequestOptionsBase {
   /**
    * @member {EntityStatus[]} [entities]
    */
@@ -966,16 +952,30 @@ export interface IntegratorAPIRestEntityStatusInsertArrayByIdPostOptionalParams 
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestEntityStatusUpdateByIdPutOptionalParams.
+ * An interface representing IntegratorAPIRestEntityStatusUpdatePutOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestEntityStatusUpdateByIdPutOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestEntityStatusUpdatePutOptionalParams extends RequestOptionsBase {
   /**
    * @member {EntityStatus} [entity]
    */
   entity?: EntityStatus;
+}
+
+/**
+ * @interface
+ * An interface representing IntegratorAPIRestSchedulerExecuteTaskByDataTaskIdPostOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface IntegratorAPIRestSchedulerExecuteTaskByDataTaskIdPostOptionalParams extends RequestOptionsBase {
+  /**
+   * @member {{ [propertyName: string]: string }} [dataTaskParameters]
+   */
+  dataTaskParameters?: { [propertyName: string]: string };
 }
 
 /**
@@ -1098,18 +1098,18 @@ export enum Level {
 }
 
 /**
- * Defines values for RestDataTaskGetStatusByIdGetOKResponse.
+ * Defines values for RestDataTaskGetStatusByDataTaskIdGetOKResponse.
  * Possible values include: 'NotStarted', 'Running', 'Successful', 'Error',
  * 'Cancelled'
  * There could be more values for this enum apart from the ones defined here.If
  * you want to set a value that is not from the known values then you can do
  * the following:
- * let param: RestDataTaskGetStatusByIdGetOKResponse =
- * <RestDataTaskGetStatusByIdGetOKResponse>"someUnknownValueThatWillStillBeValid";
+ * let param: RestDataTaskGetStatusByDataTaskIdGetOKResponse =
+ * <RestDataTaskGetStatusByDataTaskIdGetOKResponse>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export enum RestDataTaskGetStatusByIdGetOKResponse {
+export enum RestDataTaskGetStatusByDataTaskIdGetOKResponse {
   NotStarted = 'NotStarted',
   Running = 'Running',
   Successful = 'Successful',

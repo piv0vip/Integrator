@@ -13,6 +13,7 @@ import { HandlerTypes } from '../../../classes/settings/handlerTypes';
 import { DataTask, DataTaskGroup } from '../../../models';
 
 import { DataTaskEditComponent } from '../edit';
+import { DataTaskGroupEditComponent } from '../editGroup';
 import { ConfirmationButtonComponent } from '../../common/';
 import { DataTaskExecuteLocalyComponent } from '../../dataTask/execute';
 
@@ -32,6 +33,7 @@ import _ from 'lodash';
     template: require('./dataTaskList.html'),
     components: {
         'edit-task': DataTaskEditComponent,
+        'edit-group': DataTaskGroupEditComponent,
         'confirmation-button': ConfirmationButtonComponent,
         'execute-task-localy': DataTaskExecuteLocalyComponent,
     },
@@ -49,9 +51,13 @@ export class DataTaskListComponent extends Vue {
     get consoleMessages(): string[] { return this.$store.getters.broadcastMessages; }
 
     currentTask: DataTask = new DataTask();
+    currentGroup: DataTaskGroup = new DataTaskGroup();
+
+    debugger;
 
     showExecuteTaskLocaly: boolean = false;
     showEditTask: boolean = false;
+    showEditGroup: boolean = false;
 
     isBusy: boolean = false;  
     sortBy: string =  'LastStartTime';
@@ -191,6 +197,11 @@ export class DataTaskListComponent extends Vue {
         this.showEditTask = true;
     }
 
+    onAddGroupClick() {
+        this.currentGroup = new DataTaskGroup();
+        this.showEditGroup = true;
+    }
+
     refreshTable() {
         this.$store.dispatch('getDataTasks');
     }
@@ -221,6 +232,11 @@ export class DataTaskListComponent extends Vue {
 
     closeEditTask(e) {
         this.showEditTask = false;
+        this.refreshTable();
+    }
+
+    closeEditGroup(e) {
+        this.showEditGroup = false;
         this.refreshTable();
     }
 

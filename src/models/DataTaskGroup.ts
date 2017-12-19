@@ -1,48 +1,49 @@
 ﻿import { TEntity } from './TEntity';
 import { DataTask } from '../models';
-import { DataTaskGroup as IDataTaskGroup } from '../api/models';
+import { DataTaskGroup as IDataTaskGroup, DataTask as  IDataTask } from '../api/models';
 
 export class DataTaskGroup extends TEntity<IDataTaskGroup> {
 
     private _dataTasks: DataTask[] = [];
+    protected _cronString: string = '* * * * *';
 
-    constructor(dataTaskGroup?: IDataTaskGroup) {
-        super();
-        this.load(dataTaskGroup);
-    }
-
-    get Name(): string { return this.model.name || ''; }
-    set Name(v: string) { this.model.name = v; }
-
-    get Enabled(): boolean { return this.model.enabled || false; }
-    set Enabled(v: boolean) { this.model.enabled = v; }
-
-    get GroupOnly(): boolean { return this.model.groupOnly || false; }
-    set GroupOnly(v: boolean) { this.model.groupOnly = v; }
-
-    get MaxRetries(): number { return this.model.maxRetries || 0; }
-    set MaxRetries(v: number) { this.model.maxRetries = v; }
-
-    get Retries(): number { return this.model.retries || 0; }
-    set Retries(v: number) { this.model.retries = v; }
+    Name: string = '';
+    Enabled: boolean = false;
+    GroupOnly: boolean = false;
+    MaxRetries: number = 0;
+    Retries: number = 0;
 
     get DataTaskGroupId(): number { return this.EntityId; }
     set DataTaskGroupId(v: number) { this.EntityId = v; }
 
-    get CronSchedule(): string { return this.model.cronSchedule || '* * * * *'; }
-    set CronSchedule(v: string) { this.model.cronSchedule = v.toUpperCase(); }
-    get CronString(): string { return this.model.cronSchedule; }
+    get CronSchedule(): string { return this._cronString || '* * * * *'; }
+    set CronSchedule(v: string) { this._cronString = v.toUpperCase(); }
+    get CronString(): string { return this._cronString; }
 
     get DataTasks(): DataTask[] {
         return this._dataTasks;
     }
 
-    load(model: IDataTaskGroup) {
-        this.model = model;
-        this.model.dataTaskList.forEach((dataTask) => {
+    set DataTaskList(v: IDataTask[]) {
+        this._dataTasks = []
+        v.forEach((dataTask: IDataTask) => {
             this._dataTasks.push(DataTask.createDataTaskFromJson(dataTask));
-        });
+        })
     }
+
+    constructor(dataTaskGroup?: IDataTaskGroup) {
+        super();
+        if (dataTaskGroup) {
+            this.load(dataTaskGroup);
+        }
+    }
+
+    //load(model: IDataTaskGroup) {
+    //    this.model = model;
+    //    this.model.dataTaskList.forEach((dataTask) => {
+    //        this._dataTasks.push(DataTask.createDataTaskFromJson(dataTask));
+    //    });
+    //}
 
     toServer(): IDataTaskGroup {
         return {

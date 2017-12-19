@@ -1506,37 +1506,12 @@ export const FieldFilterLog = {
   }
 };
 
-export const IntegratorAPIRestDataTaskExecuteTaskByIdPostOptionalParams = {
+export const IntegratorAPIRestDataTaskGetPagedListPostOptionalParams = {
   required: false,
-  serializedName: 'RestDataTaskExecuteTaskByIdPostOptions',
+  serializedName: 'RestDataTaskGetPagedListPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskExecuteTaskByIdPostOptionalParams',
-    modelProperties: {
-      dataTaskParameters: {
-        required: false,
-        serializedName: 'dataTaskParameters',
-        type: {
-          name: 'Dictionary',
-          value: {
-              required: false,
-              serializedName: 'stringElementType',
-              type: {
-                name: 'String'
-              }
-          }
-        }
-      }
-    }
-  }
-};
-
-export const IntegratorAPIRestDataTaskGetPagedListByIdPostOptionalParams = {
-  required: false,
-  serializedName: 'RestDataTaskGetPagedListByIdPostOptions',
-  type: {
-    name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskGetPagedListByIdPostOptionalParams',
+    className: 'IntegratorAPIRestDataTaskGetPagedListPostOptionalParams',
     modelProperties: {
       fieldFilters: {
         required: false,
@@ -1564,12 +1539,12 @@ export const IntegratorAPIRestDataTaskGetPagedListByIdPostOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestDataTaskInsertByIdPostOptionalParams = {
+export const IntegratorAPIRestDataTaskInsertPostOptionalParams = {
   required: false,
-  serializedName: 'RestDataTaskInsertByIdPostOptions',
+  serializedName: 'RestDataTaskInsertPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskInsertByIdPostOptionalParams',
+    className: 'IntegratorAPIRestDataTaskInsertPostOptionalParams',
     modelProperties: {
       entity: {
         required: false,
@@ -1583,12 +1558,12 @@ export const IntegratorAPIRestDataTaskInsertByIdPostOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestDataTaskInsertArrayByIdPostOptionalParams = {
+export const IntegratorAPIRestDataTaskInsertArrayPostOptionalParams = {
   required: false,
-  serializedName: 'RestDataTaskInsertArrayByIdPostOptions',
+  serializedName: 'RestDataTaskInsertArrayPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskInsertArrayByIdPostOptionalParams',
+    className: 'IntegratorAPIRestDataTaskInsertArrayPostOptionalParams',
     modelProperties: {
       entities: {
         required: false,
@@ -1609,12 +1584,12 @@ export const IntegratorAPIRestDataTaskInsertArrayByIdPostOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestDataTaskUpdateByIdPutOptionalParams = {
+export const IntegratorAPIRestDataTaskUpdatePutOptionalParams = {
   required: false,
-  serializedName: 'RestDataTaskUpdateByIdPutOptions',
+  serializedName: 'RestDataTaskUpdatePutOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskUpdateByIdPutOptionalParams',
+    className: 'IntegratorAPIRestDataTaskUpdatePutOptionalParams',
     modelProperties: {
       entity: {
         required: false,
@@ -1628,12 +1603,12 @@ export const IntegratorAPIRestDataTaskUpdateByIdPutOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestDataTaskGroupGetPagedListByIdPostOptionalParams = {
+export const IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams = {
   required: false,
-  serializedName: 'RestDataTaskGroupGetPagedListByIdPostOptions',
+  serializedName: 'RestDataTaskGroupGetPagedListPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskGroupGetPagedListByIdPostOptionalParams',
+    className: 'IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams',
     modelProperties: {
       fieldFilters: {
         required: false,
@@ -1661,12 +1636,12 @@ export const IntegratorAPIRestDataTaskGroupGetPagedListByIdPostOptionalParams = 
   }
 };
 
-export const IntegratorAPIRestDataTaskGroupInsertByIdPostOptionalParams = {
+export const IntegratorAPIRestDataTaskGroupInsertPostOptionalParams = {
   required: false,
-  serializedName: 'RestDataTaskGroupInsertByIdPostOptions',
+  serializedName: 'RestDataTaskGroupInsertPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskGroupInsertByIdPostOptionalParams',
+    className: 'IntegratorAPIRestDataTaskGroupInsertPostOptionalParams',
     modelProperties: {
       entity: {
         required: false,
@@ -1680,12 +1655,12 @@ export const IntegratorAPIRestDataTaskGroupInsertByIdPostOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestDataTaskGroupInsertArrayByIdPostOptionalParams = {
+export const IntegratorAPIRestDataTaskGroupInsertArrayPostOptionalParams = {
   required: false,
-  serializedName: 'RestDataTaskGroupInsertArrayByIdPostOptions',
+  serializedName: 'RestDataTaskGroupInsertArrayPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskGroupInsertArrayByIdPostOptionalParams',
+    className: 'IntegratorAPIRestDataTaskGroupInsertArrayPostOptionalParams',
     modelProperties: {
       entities: {
         required: false,
@@ -1706,12 +1681,12 @@ export const IntegratorAPIRestDataTaskGroupInsertArrayByIdPostOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestDataTaskGroupUpdateByIdPutOptionalParams = {
+export const IntegratorAPIRestDataTaskGroupUpdatePutOptionalParams = {
   required: false,
-  serializedName: 'RestDataTaskGroupUpdateByIdPutOptions',
+  serializedName: 'RestDataTaskGroupUpdatePutOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestDataTaskGroupUpdateByIdPutOptionalParams',
+    className: 'IntegratorAPIRestDataTaskGroupUpdatePutOptionalParams',
     modelProperties: {
       entity: {
         required: false,
@@ -1725,12 +1700,12 @@ export const IntegratorAPIRestDataTaskGroupUpdateByIdPutOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestEntityStatusGetPagedListByIdPostOptionalParams = {
+export const IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams = {
   required: false,
-  serializedName: 'RestEntityStatusGetPagedListByIdPostOptions',
+  serializedName: 'RestEntityStatusGetPagedListPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestEntityStatusGetPagedListByIdPostOptionalParams',
+    className: 'IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams',
     modelProperties: {
       fieldFilters: {
         required: false,
@@ -1758,12 +1733,12 @@ export const IntegratorAPIRestEntityStatusGetPagedListByIdPostOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestEntityStatusInsertByIdPostOptionalParams = {
+export const IntegratorAPIRestEntityStatusInsertPostOptionalParams = {
   required: false,
-  serializedName: 'RestEntityStatusInsertByIdPostOptions',
+  serializedName: 'RestEntityStatusInsertPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestEntityStatusInsertByIdPostOptionalParams',
+    className: 'IntegratorAPIRestEntityStatusInsertPostOptionalParams',
     modelProperties: {
       entity: {
         required: false,
@@ -1777,12 +1752,12 @@ export const IntegratorAPIRestEntityStatusInsertByIdPostOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestEntityStatusInsertArrayByIdPostOptionalParams = {
+export const IntegratorAPIRestEntityStatusInsertArrayPostOptionalParams = {
   required: false,
-  serializedName: 'RestEntityStatusInsertArrayByIdPostOptions',
+  serializedName: 'RestEntityStatusInsertArrayPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestEntityStatusInsertArrayByIdPostOptionalParams',
+    className: 'IntegratorAPIRestEntityStatusInsertArrayPostOptionalParams',
     modelProperties: {
       entities: {
         required: false,
@@ -1803,12 +1778,12 @@ export const IntegratorAPIRestEntityStatusInsertArrayByIdPostOptionalParams = {
   }
 };
 
-export const IntegratorAPIRestEntityStatusUpdateByIdPutOptionalParams = {
+export const IntegratorAPIRestEntityStatusUpdatePutOptionalParams = {
   required: false,
-  serializedName: 'RestEntityStatusUpdateByIdPutOptions',
+  serializedName: 'RestEntityStatusUpdatePutOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestEntityStatusUpdateByIdPutOptionalParams',
+    className: 'IntegratorAPIRestEntityStatusUpdatePutOptionalParams',
     modelProperties: {
       entity: {
         required: false,
@@ -1816,6 +1791,31 @@ export const IntegratorAPIRestEntityStatusUpdateByIdPutOptionalParams = {
         type: {
           name: 'Composite',
           className: 'EntityStatus'
+        }
+      }
+    }
+  }
+};
+
+export const IntegratorAPIRestSchedulerExecuteTaskByDataTaskIdPostOptionalParams = {
+  required: false,
+  serializedName: 'RestSchedulerExecuteTaskByDataTaskIdPostOptions',
+  type: {
+    name: 'Composite',
+    className: 'IntegratorAPIRestSchedulerExecuteTaskByDataTaskIdPostOptionalParams',
+    modelProperties: {
+      dataTaskParameters: {
+        required: false,
+        serializedName: 'dataTaskParameters',
+        type: {
+          name: 'Dictionary',
+          value: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
         }
       }
     }

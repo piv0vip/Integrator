@@ -23,11 +23,11 @@
     <v-expansion-panel expand>
         <v-expansion-panel-content v-for="(dataTaskGroup, i) in dataTaskGroups" :key="i">
             <div slot="header">
-                <v-btn icon flat outline
+                <!--<v-btn icon flat outline
                        color="indigo lighten-2 white--text"
                        title="Execute task in scheduler"
                        :disabled="data.item.IsRunning"
-                       @click='onExecGroupClick(dataTaskGroup)'><i class="material-icons">alarm</i></v-btn>
+                       @click='onExecGroupClick(dataTaskGroup)'><i class="material-icons">alarm</i></v-btn>-->
 
                 <span>Group Name:</span> {{dataTaskGroup.Name}} <br />
                 <span>Cron Schedule:</span> {{dataTaskGroup.CronSchedule}}
@@ -95,6 +95,11 @@
                        @click="onAddDatataskClick"><v-icon class="mr-2">link</v-icon>Add DataTask</v-btn>
 
                 <v-btn round
+                       title="Add new group"
+                       color="teal lighten-2 white--text"
+                       @click="onAddGroupClick"><v-icon class="mr-2">link</v-icon>Add Group</v-btn>
+
+                <v-btn round
                        color="indigo lighten-2 white--text"
                        title="Refresh Table"
                        @click="onRefreshTableClick"><v-icon class="mr-2">autorenew</v-icon>Refresh table</v-btn>
@@ -107,6 +112,7 @@
     </b-container>
 
     <edit-task v-model="showEditTask" :dataTask="currentTask" @onClose="closeEditTask"> </edit-task>
+    <edit-group v-model="showEditGroup" :dataTaskGroup="currentGroup" @onClose="closeEditGroup"> </edit-group>
 
     <execute-task-localy v-model="showExecuteTaskLocaly" :dataTask="currentTask" @onClose="closeExecuteTaskLocaly"> </execute-task-localy>
 

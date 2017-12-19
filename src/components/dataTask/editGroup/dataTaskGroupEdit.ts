@@ -1,43 +1,35 @@
 import Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
-import { DataTaskHandlerSettings, HandlerTypes, HandlerType, HandlerSetting } from '../../../classes/settings';
-import { DataTask } from '../../../models';
-import { EnumValues, CustomEnumValues } from '../../../enums';
+import { DataTaskGroup } from '../../../models';
 import { HTTP } from '../../../util/http-common';
-import { HandlerSettingComponent, ConfirmationComponent } from '../../common/';
-import { IEnumValues } from '../../../interfaces';
-import { CronPresetsComponent } from './cronPresets';   
+import { ConfirmationComponent } from '../../common/';
+import { CronPresetsComponent } from '../edit/cronPresets';   
 
 import $ from 'jquery';
 import _ from 'lodash';
 
 @Component({
-    template: require('./dataTaskEdit.html'),
+    template: require('./dataTaskGroupEdit.html'),
     components: {
-        'handler-setting': HandlerSettingComponent,
         'confirmation': ConfirmationComponent,
         'cron-presets': CronPresetsComponent
     },
     inject: ['$validator'],
 })
 
-export class DataTaskEditComponent extends Vue {
+export class DataTaskGroupEditComponent extends Vue {
 
     showModal: boolean = false;
 
     height: string = '300px';
 
-    scope: string = 'dataTaskEditScope';
-
-    selectedHandler: string = '';
+    scope: string = 'dataTaskGroupEditScope';
 
     initToggle: boolean = false;
 
     mut: boolean = false; // hack for refresh data
 
     cronString: string = '* * * * *';
-
-    groupSelect: number = null;
 
     showSaveConfirmation: boolean = false;
     showDiscardConfirmation: boolean = false;
@@ -51,68 +43,31 @@ export class DataTaskEditComponent extends Vue {
     }
 
     @Prop()
-    dataTask: DataTask;
+    dataTaskGroup: DataTaskGroup;
 
-    get handlerTypes(): HandlerTypes {
-        return this.$store.state['dataTask'].handlerTypes;
-    }
-
-    get handlerSettingsSelectList(): any[] {
-        return this.handlerTypes.asSelectBoxList();
-    }
-
-    get dataTaskGroups(): any[] {
-        return this.$store.getters.dataTaskGroupsAsSelect;
-    }
-
-    @Watch('dataTask')
-    onDataTaskChanged (value: DataTask) {
-        this.selectedHandler = (value ? value.TaskType : '');
+    @Watch('dataTaskGroup')
+    onDataTaskChanged(value: DataTaskGroup) {
         this.cronString = value.CronSchedule;
-    }
-
-    @Watch('selectedHandler')
-    onSelectedHandlerChanged(value: string) {
-        if (this.handlerTypes.containsKey(value) && this.dataTask.IsNew) {
-            this.dataTask.HandlerType = this.handlerTypes.getValue(value);
-        }
-        if (this.dataTask.TaskType !== value) { this.dataTask.TaskType = value; }
-        this.$nextTick(() => { this.refreshList(); });
     }
 
     @Watch('cronString')
     onCronStringChange(value) {
-        this.dataTask.CronSchedule = value;
+        this.dataTaskGroup.CronSchedule = value;
     }
 
     get isNew(): boolean {
-        return this.dataTask ? this.dataTask.IsNew : true;
-    }
-
-    get handlerSettings(): DataTaskHandlerSettings {
-        return this.dataTask.getHandlerSettings();
-    }
-
-    get handlerSettingsList(): HandlerSetting[] {
-        this.mut; return this.dataTask.getHandlerSettings().values();
-    }
-
-    get handlerSettingsIsDafault(): boolean {
-        this.mut; return this.handlerSettings.isDefault();
-    }
-
-    onModalHidden(e) {
+        return this.dataTaskGroup ? this.dataTaskGroup.IsNew : true;
     }
 
     onSaveDialog(evt) {
         this.$store.commit('loading', true);
         let request: {url: string, method: string} = this.isNew ? 
-            {url: 'DataTask/Insert', method: 'post'} : 
-            {url: 'DataTask/Update', method: 'put'} ;
-        HTTP[request.method](request.url, this.dataTask.toServer())
+            {url: 'DataTaskGroup/Insert', method: 'post'} : 
+            {url: 'DataTaskGroup/Update', method: 'put'} ;
+        HTTP[request.method](request.url, this.dataTaskGroup.toServer())
             .then(function(response) {
                 this.$store.commit('loading', false);
-                this.closeEditTask();
+                this.closeEdit();
             }.bind(this))
             .catch(e => {
                 this.$store.commit('loading', false);
@@ -146,7 +101,7 @@ export class DataTaskEditComponent extends Vue {
     }
 
     onDiscardOkClicked(e) {
-        this.closeEditTask();
+        this.closeEdit();
     }
 
     onShowModal() { }
@@ -155,7 +110,7 @@ export class DataTaskEditComponent extends Vue {
         this.showSaveConfirmation = false;
     }
 
-    closeEditTask() {
+    closeEdit() {
         this.$validator.reset();
         this.$emit('input', false);
         this.$emit('onClose');

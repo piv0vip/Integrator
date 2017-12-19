@@ -30,7 +30,14 @@ const getters = {
     dataTasks: state => state.dataTasks,
     dataTasksArray: state => state.dataTasksArray,
     dataTaskGroupsArray: state => state.dataTaskGroupsArray,
-    //dataTaskGroupsAsSelect: state => {}
+    dataTaskGroupsAsSelect: state => {
+        return state.dataTaskGroupsArray.map((dataTaskGroup: DataTaskGroup) => {
+            return {
+                value: dataTaskGroup.DataTaskGroupId,
+                text: dataTaskGroup.Name
+            }
+        })
+    }
 };
 
 const mutations = {
