@@ -6,7 +6,7 @@ import { DataTask, DataTaskGroup } from '../../models';
 import { TaskStatusEnum } from '../../enums';
 import { Dictionary } from 'typescript-collections';
 
-import { IHandler, DataTask as IDataTask } from '../../api/models';
+import { IHandler, DataTask as IDataTask, DataTaskGroup as IDataTaskGroup } from '../../api/models';
 
 import * as msRest from 'ms-rest-js';
 
@@ -22,7 +22,9 @@ const state = {
 
     dataTasksArray: new Array<DataTask>(),
 
-    dataTaskGroupsArray: new Array<DataTaskGroup>()
+    dataTaskGroupsArray: new Array<DataTaskGroup>(),
+
+    iDataTaskGroups: new Array<IDataTaskGroup>()
 };
 
 const getters = {
@@ -37,7 +39,9 @@ const getters = {
                 text: dataTaskGroup.Name
             };
         });
-    }
+    },
+
+    iDataTaskGroups: state => state.iDataTaskGroups
 };
 
 const mutations = {
@@ -57,6 +61,7 @@ const mutations = {
     },
 
     setDataTaskGroups(state, dataTaskGroups: DataTaskGroup[]) {
+        state.dataTaskGroups.clear();
         dataTaskGroups.forEach((dataTaskGroup: DataTaskGroup) => {
             state.dataTaskGroups.setValue(dataTaskGroup.DataTaskGroupId, dataTaskGroup);
         });
@@ -71,6 +76,10 @@ const mutations = {
         let dataTask = DataTask.createDataTaskFromJson(dataTaskJson as IDataTask);
         state.dataTasks.setValue(dataTask.DataTaskId, dataTask);
         state.dataTasksArray = state.dataTasks.values();
+    },
+
+    setIDataTaskGroups(state, dataTaskGroup: IDataTaskGroup) {
+        state.iDataTaskGroups = dataTaskGroup;
     }
 
 };
@@ -103,6 +112,35 @@ const actions = {
         });
     },
 
+    getIDataTaskGroups({ commit }) {
+        return new Promise((resolve, reject) => {
+            HTTP.get('DataTaskGroup/GetList')
+                .then((response) => {
+                    commit('setIDataTaskGroups', response.data as IDataTaskGroup[]);
+                    resolve();
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    },
+
+    // temporary for global refresh groups
+    getSilentDataTasks({ dispatch, commit }) {
+        return new Promise((resolve, reject) => {
+            DataTaskGroupService.getList()
+                .then((response: DataTaskGroup[]) => {
+                    //debugger;
+                    commit('setDataTaskGroups', response);
+                    resolve();
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
+
+        })
+    },
+
     getDataTasks({ dispatch, commit }) {
         commit('loading', true);
 
@@ -111,6 +149,7 @@ const actions = {
                 dispatch('getCronPresets').then(() => {
                     DataTaskGroupService.getList()
                         .then((response: DataTaskGroup[]) => {
+                            //debugger;
                             commit('setDataTaskGroups', response);
                             commit('loading', false);
                             resolve();

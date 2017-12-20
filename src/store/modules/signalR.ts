@@ -21,12 +21,14 @@ const mutations = {
 
 const actions = {
 
-    connectToHub({ commit }) {
+    connectToHub({ commit, dispatch }) {
+
         HUB.on('Broadcast', (data) => {
             commit('setBroadcastMessage', data);
         });
+
         HUB.on('DataTask', (data) => {
-            commit('dataTaskEvent', data);
+            dispatch('getSilentDataTasks');
         });
     },
 };

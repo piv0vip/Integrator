@@ -9,3 +9,16 @@ img
     padding-right: 10px !important;
     width: 32px;
 }
+h6 {
+    margin-bottom: 0 !important;
+}
+.task-expansion.expansion-panel {
+    width: auto !important
+}
+.expansion-panel {
+    margin-bottom: 0;
+}
+.expansion-panel .expansion-panel__header {
+    padding-bottom: 0;
+    padding-top: 0;
+}

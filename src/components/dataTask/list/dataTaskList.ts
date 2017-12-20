@@ -27,7 +27,15 @@ import chance from 'chance';
 
 import { DataTaskGroup as IDataTaskGroup } from '../../../api/models';
 
+import cronstrue from 'cronstrue';
+
 import _ from 'lodash';
+
+interface IHeaders {
+    text: string,
+    value: string,
+    align?: 'left' | 'right' | 'center'
+}
 
 @Component({
     template: require('./dataTaskList.html'),
@@ -38,7 +46,6 @@ import _ from 'lodash';
         'execute-task-localy': DataTaskExecuteLocalyComponent,
     },
 })
-
 export class DataTaskListComponent extends Vue {
 
     statusEnum = new CustomEnumValues();
@@ -66,11 +73,29 @@ export class DataTaskListComponent extends Vue {
     sortBy: string =  'LastStartTime';
     sortDesc: boolean = true;
 
+    DataTask = DataTask;
+
     formatDate: Function = helper.formatDate;
 
     getEnumDescription: Function = (val) => { return this.statusEnum.getEnumValueByCode(val).getDescription(); };
 
     chance: chance;
+
+    vtfGroupGridHeaders: IHeaders[] = [
+        { text: 'Group Name', value: 'name', align: 'center' },
+        { text: 'Cron', value: 'cronSchedule', align: 'center' },
+        { text: 'Tasks Count', value: 'dataTaskList', align: 'center'  },
+        { text: 'Group Only', value: 'groupInly', align: 'center' }
+    ];
+
+    vtfTaskGridHeaders: IHeaders[] = [
+        { text: 'Action', value: 'nothing', align: 'center' },
+        { text: 'Task Name', value: 'displayName', align: 'center' },
+        { text: 'Cron', value: 'cronSchedule', align: 'center' },
+        { text: 'Task Status', value: 'status', align: 'center' },
+        { text: 'Task Start Time', value: 'lastStartTime', align: 'center' },
+        { text: 'Next Start Time', value: 'nextStartTime', align: 'center' },
+    ];
 
     fieldds: ITableFields[] = 
     [
@@ -170,6 +195,10 @@ export class DataTaskListComponent extends Vue {
         return this.$store.getters.dataTaskGroupsArray;
     }
 
+    get iDataTaskGroups(): IDataTaskGroup[] {
+        return this.$store.getters.iDataTaskGroups;
+    }
+
     onExecLocalyTaskClick(dataTask: DataTask) {
         this.currentTask = dataTask;
         this.showExecuteTaskLocaly = true;
@@ -212,6 +241,7 @@ export class DataTaskListComponent extends Vue {
     }
 
     refreshTable() {
+        this.$store.dispatch('getIDataTaskGroups');
         this.$store.dispatch('getDataTasks');
     }
 
@@ -288,4 +318,9 @@ export class DataTaskListComponent extends Vue {
         }
         this.showConfirmation = true;
     }
+
+    cronHumanity(cron: string): string {
+        return cronstrue.toString(cron.toUpperCase());
+    }
+
 }
