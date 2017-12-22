@@ -110,6 +110,7 @@ export class DataTask extends TEntity<IDataTask> {
         let handlerTypes = store.getters.handlerTypes;
         let dataTask = new DataTask();
         let taskType = iDataTask.taskType;
+        debugger;
         if (taskType && handlerTypes.containsKey(taskType)) dataTask.HandlerType = handlerTypes.getValue(taskType);
         dataTask.load(iDataTask);
         return dataTask;

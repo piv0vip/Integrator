@@ -1,0 +1,21 @@
+<template>
+
+    <v-btn round
+           title="Add new task"
+           color="teal lighten-2 white--text"
+           @click="onAddDatataskClick"><v-icon class="mr-2">link</v-icon>Add DataTask</v-btn>
+
+    <v-btn round
+           title="Add new group"
+           color="teal lighten-2 white--text"
+           @click="onAddGroupClick"><v-icon class="mr-2">link</v-icon>Add Group</v-btn>
+
+    <v-btn round
+           color="indigo lighten-2 white--text"
+           title="Refresh Table"
+           @click="onRefreshTableClick"><v-icon class="mr-2">autorenew</v-icon>Refresh table</v-btn>
+
+    <v-btn round color="green lighten-2 white--text"
+           @click="showConsole = !showConsole"><v-icon class="mr-2">clear_all</v-icon>Show console</v-btn>
+
+</template>

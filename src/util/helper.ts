@@ -1,4 +1,4 @@
-import moment from 'moment';
+import * as moment from 'moment';
 import cronParse from 'cron-parser';
 import _ from 'lodash';
 
@@ -9,8 +9,8 @@ export function createGuid() {
           });
 }
 
-export function formatDate(val: string): string { 
-    return val ? moment.utc(val).format('MM/DD/YYYY h:mm a') : '';
+export function formatDate(val: string): string {
+    return val ? moment.parseZone(val).local().format('MM/DD/YY H:mm') : '';
 }
 
 export function firstCharToLower(str: string): string {

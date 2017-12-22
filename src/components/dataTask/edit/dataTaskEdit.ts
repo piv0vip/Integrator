@@ -26,8 +26,6 @@ import _ from 'lodash';
 
 export class DataTaskEditComponent extends Vue {
 
-    showModal: boolean = false;
-
     height: string = '300px';
 
     scope: string = 'dataTaskEditScope';
@@ -52,13 +50,12 @@ export class DataTaskEditComponent extends Vue {
     @Prop()
     value: boolean;
 
-    @Watch('value')
-    onValueChanged(value) {
-        this.showModal = value;
-    }
-
     @Prop()
     dataTask: DataTask;
+
+    get showModal(): boolean {
+        return this.$store.state['dataTask'].showEditDataTaskDialog;
+    }
 
     get handlerTypes(): HandlerTypes {
         return this.$store.state['dataTask'].handlerTypes;

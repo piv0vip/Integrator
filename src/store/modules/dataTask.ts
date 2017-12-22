@@ -12,6 +12,9 @@ import * as msRest from 'ms-rest-js';
 
 const state = {
 
+    showEditDataTaskDialog: false,
+    showEditDataTaskGroupDialog: false,
+
     handlerTypes: new HandlerTypes(),
 
     cronPresets: new Array<string>(),
@@ -45,6 +48,15 @@ const getters = {
 };
 
 const mutations = {
+
+    dataTaskDialogVisible(state, payLoad: boolean) {
+        state.showEditDataTaskDialog = payLoad;
+    },
+
+    dataTaskGroupDialogVisible(state, payLoad: boolean) {
+        state.showEditDataTaskGroupDialog = payLoad;
+    },
+
     setCronPresets(state, cronPresets: string[]) {
         state.cronPresets = cronPresets;
     },
@@ -130,7 +142,6 @@ const actions = {
         return new Promise((resolve, reject) => {
             DataTaskGroupService.getList()
                 .then((response: DataTaskGroup[]) => {
-                    //debugger;
                     commit('setDataTaskGroups', response);
                     resolve();
                 })
@@ -138,7 +149,7 @@ const actions = {
                     console.log(e);
                 });
 
-        })
+        });
     },
 
     getDataTasks({ dispatch, commit }) {
@@ -147,16 +158,13 @@ const actions = {
         return new Promise((resolve, reject) => {
             dispatch('getHandlerTypes').then(() => {
                 dispatch('getCronPresets').then(() => {
-                    DataTaskGroupService.getList()
-                        .then((response: DataTaskGroup[]) => {
-                            //debugger;
-                            commit('setDataTaskGroups', response);
+                    dispatch('getIDataTaskGroups').then(() => {
+                        commit('loading', false);
+                        resolve();
+                    })
+                        .catch(() => {
                             commit('loading', false);
-                            resolve();
-                        })
-                        .catch((e) => {
-                            commit('loading', false);
-                            console.log(e);
+                            reject();
                         });
                 });
             });

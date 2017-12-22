@@ -32,9 +32,9 @@ import cronstrue from 'cronstrue';
 import _ from 'lodash';
 
 interface IHeaders {
-    text: string;
-    value: string;
-    align?: 'left' | 'right' | 'center';
+    text: string,
+    value: string,
+    align?: 'left' | 'right' | 'center'
 }
 
 @Component({
@@ -48,14 +48,20 @@ interface IHeaders {
 })
 export class DataTaskListComponent extends Vue {
 
+    statusEnum = new CustomEnumValues();
+
     handlerTypes: HandlerTypes = new HandlerTypes();
 
     cronPresets: string[] = [];
 
+    showConsole: boolean = false;
+
+    get consoleMessages(): string[] { return this.$store.getters.broadcastMessages; }
+
     currentTask: DataTask = new DataTask();
     currentGroup: DataTaskGroup = new DataTaskGroup();
     confirmationCBFunc: Function = null;
-    confirmationMessage: string = '';
+    confirmationMessage: string = ''
 
     showConfirmation: boolean = false;
 
@@ -79,6 +85,8 @@ export class DataTaskListComponent extends Vue {
     }
 
     formatDate: Function = helper.formatDate;
+
+    getEnumDescription: Function = (val) => { return this.statusEnum.getEnumValueByCode(val).getDescription(); };
 
     chance: chance;
 
@@ -115,6 +123,7 @@ export class DataTaskListComponent extends Vue {
             tdClass: 'py-3',
             label: 'Task Status',
             sortable: true,
+            formatter: 'getEnumDescription'
         }, 
         {
             key: 'LastStartTime',
@@ -154,6 +163,15 @@ export class DataTaskListComponent extends Vue {
 
         this.refreshTable();
 
+        this.statusEnum.Load([
+            { code: 'NotStarted', name: 'NotStarted', description: 'Not Started'},
+            { code: 'Running', name: 'Running'},
+            { code: 'Successful', name: 'Successful'},
+            { code: 'Error', name: 'Error'},
+            { code: 'Cancelled', name: 'Cancelled'}
+        ]);
+
+
     }
 
     get dataTasks(): DataTask[] {
@@ -175,7 +193,6 @@ export class DataTaskListComponent extends Vue {
     }
 
     onExecLocalyTaskClick(dataTask: DataTask) {
-        debugger;
         this.currentTask = dataTask;
         this.showExecuteTaskLocaly = true;
     }
@@ -186,28 +203,39 @@ export class DataTaskListComponent extends Vue {
                 'Content-Type': 'application/json',
             }
         })
-        .then((response: AxiosResponse) => { })
+        .then((response: AxiosResponse) => {
+            // this.refreshTable();
+        })
         .catch(e => {
-                console.log(e);
+            console.log(e);
+            // this.refreshTable();
         });
     }
 
     onResetTaskClick(dataTask: DataTask) {
         HTTP.post('DataTask/ResetTaskStatus/' + dataTask.DataTaskId)
-        .then((response: AxiosResponse) => { })
-        .catch(e => { });
+        .then((response: AxiosResponse) => {
+            // this.refreshTable();
+        })
+        .catch(e => {
+            console.log(e);
+            // this.refreshTable();
+        });
     }
     
-    onExecGroupClick(dataTaskGroup: IDataTaskGroup) {
-        HTTP.post('Scheduler/ExecuteTaskGroup/' + dataTaskGroup.dataTaskGroupId)
-            .then((response: AxiosResponse) => { })
-            .catch(e => {
-                console.log(e);
-            });
+    onAddDatataskClick() {
+        this.currentTask = new DataTask();
+        this.showEditTask = true;
+    }
+
+    onAddGroupClick() {
+        this.currentGroup = new DataTaskGroup();
+        this.showEditGroup = true;
     }
 
     refreshTable() {
         this.$store.dispatch('getIDataTaskGroups');
+        this.$store.dispatch('getDataTasks');
     }
 
     onRefreshTableClick() {
@@ -216,12 +244,12 @@ export class DataTaskListComponent extends Vue {
 
     onEditTaskClick(dataTask: DataTask) {
         this.currentTask = dataTask;
-        this.$store.commit('dataTaskDialogVisible', true);
+        this.showEditTask = true;
     }
 
     onEditGroupClick(dataTaskGroup: DataTaskGroup) {
         this.currentGroup = dataTaskGroup;
-        this.$store.commit('dataTaskGroupDialogVisible', true);
+        this.showEditGroup = true;
     }
 
     onDeleteTaskClick(dataTask: DataTask) {
@@ -240,21 +268,22 @@ export class DataTaskListComponent extends Vue {
     }
 
     closeEditTask(e) {
-        this.currentTask = new DataTask();
-        this.$store.commit('dataTaskDialogVisible', false);
+        this.showEditTask = false;
         this.refreshTable();
     }
 
     closeEditGroup(dataTaskGroup?: DataTaskGroup) {
-        this.$store.commit('dataTaskGroupDialogVisible', false);
+        this.showEditGroup = false;
         if (dataTaskGroup) {
             this.refreshTable();
         }
-        this.currentGroup = new DataTaskGroup();
     }
 
     onFilterChange(e) {
         this.refreshTable();
+    }
+
+    onExecGroupClick(dataTaskGroup: IDataTaskGroup) {
     }
 
     onDeleteGroupClick(dataTaskGroup: DataTaskGroup) {
@@ -268,18 +297,18 @@ export class DataTaskListComponent extends Vue {
     }
 
     onDeleteTask(dataTask: DataTask) {
-        this.confirmationMessage = 'Do you want to Remove \'' + dataTask.DisplayName + '\' Task?';
+        this.confirmationMessage = 'Do you want to Remove \'' + dataTask.DisplayName + '\' Task?'
         this.confirmationCBFunc = () => {
             this.onDeleteTaskClick(dataTask);
-        };
+        }
         this.showConfirmation = true;
     }
 
     onDeleteGroup(dataTaskGroup: DataTaskGroup) {
-        this.confirmationMessage = 'Do you want to Remove \'' + dataTaskGroup.Name + '\' Group?';
+        this.confirmationMessage = 'Do you want to Remove \'' + dataTaskGroup.Name + '\' Group?'
         this.confirmationCBFunc = () => {
             this.onDeleteGroupClick(dataTaskGroup);
-        };
+        }
         this.showConfirmation = true;
     }
 
@@ -318,56 +347,14 @@ export class DataTaskListComponent extends Vue {
 
     getStatusColor(status: TaskStatusEnum): string {
         switch (status) {
-            case (TaskStatusEnum.Error):
-                return 'red--text text--accent-3';
+            case (TaskStatusEnum.Error): 
+                return 'red--text text--accent-3'
             case (TaskStatusEnum.Successful):
-                return 'teal--text text--accent-3';
+                return 'teal--text text--accent-3'
             case (TaskStatusEnum.Running):
-                return 'blue--text text--accent-3';
+                return 'blue--text text--accent-3'
             default:
-                return 'grey--text text--darken-2';
+                return 'grey--text text--darken-2'
         }        
-    }
-
-    taskGroupStatus(group: IDataTaskGroup): {
-        total: number,
-        error: number,
-        isRunning: number
-    } {
-        let dataTasks: IDataTask[] = group.dataTaskList;
-        return {
-            total: dataTasks.length,
-            error: _.filter(dataTasks, dataTask => dataTask.status === TaskStatusEnum.Error).length,
-            isRunning: _.filter(dataTasks, dataTask => dataTask.status === TaskStatusEnum.Running).length,
-        };
-    }
-
-    changeOrder(dataTasks: IDataTask[], index1: number, index2: number): void {
-
-        let i = 0;
-        _.forEach(dataTasks, dataTask => {
-            dataTasks[i].executionOrder = (i === index1) ? index2 : (i === (index2)) ? index1 : i;
-            i++;
-        });
-
-        // let d1: IDataTask = dataTasks[index - 1];
-        // let d2: IDataTask = dataTasks[index];
-        // if (d1.executionOrder == 0 && d2.executionOrder == 0) {
-        //    d2.executionOrder = 1;
-        // } else if (d1.executionOrder == 0) {
-        //    d2.executionOrder = 0;
-        //    d1.executionOrder = index;
-        // } else {
-        //    let order: number = d1.executionOrder;
-        //    d1.executionOrder = d2.executionOrder;
-        //    d2.executionOrder = order 
-        // }
-
-        HTTP.put('DataTask/UpdateArray', dataTasks);
-
-    }
-
-    orderDataTasks(dataTasks: IDataTask[]): IDataTask[] {
-        return _.sortBy(dataTasks, dataTask => dataTask.executionOrder);
     }
 }

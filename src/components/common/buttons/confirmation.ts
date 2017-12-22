@@ -24,7 +24,7 @@ export class ConfirmationComponent extends Vue {
     message: String;
 
     @Prop({ default: null })
-    okCallBack: Function
+    okCallBack: Function;
 
     onOkClicked(e) {
         if (this.okCallBack) {

@@ -14,9 +14,11 @@ import { AppComponent } from './components/common/';
 import { DataTaskListComponent } from './components/dataTask';
 import { EntityStatusListComponent } from './components/entityStatus';
 
-import { HUB } from './util/http-common';
+import VueDragAndDropList from 'vue-drag-and-drop-list';
 
 import store from './store';
+
+Vue.use(VueDragAndDropList);
 
 Validator.extend('guid', {
     getMessage: field => `Value must be in 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX' format`,
@@ -51,8 +53,8 @@ Vue.use(VueHighlightJS);
 
 let router = new VueRouter({
   routes: [
-    { path: '/', component: DataTaskListComponent },
-    { path: '/entity-statuses', component: EntityStatusListComponent },
+      { name: 'dataTasks', path: '/', components: { default: DataTaskListComponent } },
+      { name: 'entityStatuses', path: '/entity-statuses', components: { default: EntityStatusListComponent } },
  ]
 });
 
@@ -61,9 +63,9 @@ new Vue({
   router,
   store,
   created() {
-      HUB.start();
       store.dispatch('connectToHub');
       store.dispatch('getProductVersion');
+      store.dispatch('getDataTasks');
   },
   components: {
     'app': AppComponent

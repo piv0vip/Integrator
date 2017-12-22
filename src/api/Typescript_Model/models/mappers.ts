@@ -62,13 +62,6 @@ export const DataTaskGroup = {
           name: 'Boolean'
         }
       },
-      lastDuration: {
-        required: false,
-        serializedName: 'lastDuration',
-        type: {
-          name: 'String'
-        }
-      },
       lastStartTime: {
         required: false,
         serializedName: 'lastStartTime',
@@ -95,6 +88,13 @@ export const DataTaskGroup = {
         serializedName: 'retries',
         type: {
           name: 'Number'
+        }
+      },
+      lastDuration: {
+        required: false,
+        serializedName: 'lastDuration',
+        type: {
+          name: 'String'
         }
       },
       recCreated: {
@@ -215,6 +215,13 @@ export const DataTask = {
           name: 'Boolean'
         }
       },
+      lastDuration: {
+        required: false,
+        serializedName: 'lastDuration',
+        type: {
+          name: 'String'
+        }
+      },
       lastStartTime: {
         required: false,
         serializedName: 'lastStartTime',
@@ -241,13 +248,6 @@ export const DataTask = {
         serializedName: 'retries',
         type: {
           name: 'Number'
-        }
-      },
-      lastDuration: {
-        required: false,
-        serializedName: 'lastDuration',
-        type: {
-          name: 'String'
         }
       },
       recCreated: {
@@ -815,6 +815,20 @@ export const EntityStatus = {
         serializedName: 'inDocTransferId',
         type: {
           name: 'Number'
+        }
+      },
+      hasInContent: {
+        required: false,
+        serializedName: 'hasInContent',
+        type: {
+          name: 'Boolean'
+        }
+      },
+      hasOutContent: {
+        required: false,
+        serializedName: 'hasOutContent',
+        type: {
+          name: 'Boolean'
         }
       },
       outContent: {
@@ -1639,6 +1653,32 @@ export const IntegratorAPIRestDataTaskUpdatePutOptionalParams = {
   }
 };
 
+export const IntegratorAPIRestDataTaskUpdateArrayPutOptionalParams = {
+  required: false,
+  serializedName: 'RestDataTaskUpdateArrayPutOptions',
+  type: {
+    name: 'Composite',
+    className: 'IntegratorAPIRestDataTaskUpdateArrayPutOptionalParams',
+    modelProperties: {
+      entities: {
+        required: false,
+        serializedName: 'entities',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'DataTaskElementType',
+              type: {
+                name: 'Composite',
+                className: 'DataTask'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams = {
   required: false,
   serializedName: 'RestDataTaskGroupGetPagedListPostOptions',
@@ -1736,6 +1776,32 @@ export const IntegratorAPIRestDataTaskGroupUpdatePutOptionalParams = {
   }
 };
 
+export const IntegratorAPIRestDataTaskGroupUpdateArrayPutOptionalParams = {
+  required: false,
+  serializedName: 'RestDataTaskGroupUpdateArrayPutOptions',
+  type: {
+    name: 'Composite',
+    className: 'IntegratorAPIRestDataTaskGroupUpdateArrayPutOptionalParams',
+    modelProperties: {
+      entities: {
+        required: false,
+        serializedName: 'entities',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'DataTaskGroupElementType',
+              type: {
+                name: 'Composite',
+                className: 'DataTaskGroup'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams = {
   required: false,
   serializedName: 'RestEntityStatusGetPagedListPostOptions',
@@ -1827,6 +1893,32 @@ export const IntegratorAPIRestEntityStatusUpdatePutOptionalParams = {
         type: {
           name: 'Composite',
           className: 'EntityStatus'
+        }
+      }
+    }
+  }
+};
+
+export const IntegratorAPIRestEntityStatusUpdateArrayPutOptionalParams = {
+  required: false,
+  serializedName: 'RestEntityStatusUpdateArrayPutOptions',
+  type: {
+    name: 'Composite',
+    className: 'IntegratorAPIRestEntityStatusUpdateArrayPutOptionalParams',
+    modelProperties: {
+      entities: {
+        required: false,
+        serializedName: 'entities',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'EntityStatusElementType',
+              type: {
+                name: 'Composite',
+                className: 'EntityStatus'
+              }
+          }
         }
       }
     }

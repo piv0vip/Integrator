@@ -1,154 +1,178 @@
 <div>
-    <div v-show="showConsole" class="p-2" style="height:300px; overflow-y:auto; background-color:black; color:white ">
-        <div v-for="message in consoleMessages">{{ message }}</div>
-    </div>
+    
+        <v-layout row wrap>
+            <v-flex xs12>
+                <!--<v-btn round
+                       title="Add new task"
+                       color="teal lighten-2 white--text"
+                       @click="onAddDatataskClick"><v-icon class="mr-2">link</v-icon>Add DataTask</v-btn>
 
-    <v-layout wrap>
+                <v-btn round
+                       title="Add new group"
+                       color="teal lighten-2 white--text"
+                       @click="onAddGroupClick"><v-icon class="mr-2">link</v-icon>Add Group</v-btn>-->
+
+                <!--<v-btn round
+                       color="indigo lighten-2 white--text"
+                       title="Refresh Table"
+                       @click="onRefreshTableClick"><v-icon class="mr-2">autorenew</v-icon>Refresh table</v-btn>-->
+
+                <!--<v-btn round color="green lighten-2 white--text"
+                       @click="showConsole = !showConsole"><v-icon class="mr-2">clear_all</v-icon>Show console</v-btn>-->
+
+            </v-flex>
+        </v-layout>
+
+    <v-layout row wrap>
         
-        <v-flex xs12 class="px-2" v-for="(dataTaskGroup, i) in dataTaskGroups" :key="i">
-            <v-card class="mb-3" >
+        <v-flex xs12 class="px-2" v-for="(dataTaskGroup, i) in iDataTaskGroups" :key="i">
                 
                 <v-expansion-panel expand>
-                    <v-expansion-panel-content style="background-color:#f5f5f5; padding:0 26px" class="py-0" >
+                    <v-expansion-panel-content  class="py-1 mb-1 grey lighten-4" >
 
-                        <v-layout slot="header" row>
-                            <v-flex xs2>
-                                <v-btn icon flat outline
+                        <v-layout slot="header" row class="mx-1">
+                            <v-flex xs1 class="text-xs-right">
+
+                                <v-btn v-if="dataTaskGroup.groupOnly" icon flat
+                                       class="m-0"
                                        color="indigo lighten-2 white--text"
                                        title="Execute group"
-                                       @click.stop='onExecGroupClick(dataTaskGroup)'><i class="material-icons">alarm</i></v-btn>
+                                       :disabled="isGroupRunning(dataTaskGroup)"
+                                       @click.stop='onExecGroupClick(dataTaskGroup)'><i class="material-icons">flash_on</i></v-btn>
 
-                                <v-btn icon flat outline
+                                <!--<v-btn v-if="dataTaskGroup.groupOnly" icon flat
+               class="m-0"
+               color="red lighten-2 white--text"
+               title="Reset group"
+               :disabled="!isGroupRunning(dataTaskGroup)"
+               @click.stop='onResetGroupClick(createDataTaskGroup(dataTaskGroup))'><i class="material-icons">flash_off</i></v-btn>-->
+
+                            </v-flex>
+
+                            <v-flex xs2 class="">
+                                <h6 style="display:inline-block" class="pl-2">{{dataTaskGroup.name}} ({{taskGroupStatus(dataTaskGroup).total}})</h6>
+                                <v-layout row wrap>
+                                    <v-flex xs12 class="pl-4">
+                                        <template v-if="dataTaskGroup.dataTaskList.length">
+                                            <span>is running: {{ taskGroupStatus(dataTaskGroup).isRunning }}</span>
+                                            <span>, error: {{ taskGroupStatus(dataTaskGroup).error }}</span>
+                                        </template>
+                                        <template v-else="dataTaskGroup.dataTaskList.length">
+                                            <span>no tasks</span>
+                                        </template>
+                                    </v-flex>
+                                </v-layout>
+                            </v-flex>
+
+                            <v-flex xs2 class="my-2">
+                                <template v-if="dataTaskGroup.groupOnly && dataTaskGroup.lastStartTime">
+                                    Last Start Time: {{formatDate(dataTaskGroup.lastStartTime)}}
+                                </template>
+                            </v-flex>
+
+                            <v-flex xs3 class="my-2">
+                                <template v-if="dataTaskGroup.groupOnly && dataTaskGroup.nextStartTime">
+                                    Next Start Time: {{formatDate(dataTaskGroup.nextStartTime)}}
+                                </template>
+                            </v-flex>
+
+                            <v-flex xs3 class="text-xs-right py-2">
+                                <span :class="getStatusColor(getGroupStatus(dataTaskGroup))">{{ getGroupStatus(dataTaskGroup) }}</span>
+                            </v-flex>
+
+                            <v-flex xs1 class="text-xs-right pr-2">
+                                <v-btn icon flat
+                                       class="m-0"
                                        color="teal lighten-2 white--text"
                                        title="Configure group"
-                                       @click.stop='onEditGroupClick(dataTaskGroup)'><v-icon>settings</v-icon></v-btn>
-                            </v-flex>
-                            <v-flex xs2>
-                                <h6>{{dataTaskGroup.Name}}</h6>
-                            </v-flex>
-                            <v-flex xs3 class="py-3">
-                                <span>runs</span> {{cronHumanity(dataTaskGroup.CronSchedule)}}
-                            </v-flex>
-                            <v-flex xs4 class="py-3">
-                                <template v-if="dataTaskGroup.DataTasks.length">
-                                    <span>task count:</span> {{dataTaskGroup.DataTasks.length}}
-                                </template>
-                                <template v-else="dataTaskGroup.DataTasks.length">
-                                    <span>no tasks</span>
-                                </template>
-                            </v-flex>
-                            <v-flex xs1 class="text-xs-right pr-4">
-                                <v-btn flat icon outline color="primary" dark @click.stop="onDeleteGroup(dataTaskGroup)"><v-icon>delete_forever</v-icon></v-btn>
+                                       @click.stop='onEditGroupClick(createDataTaskGroup(dataTaskGroup))'><v-icon>settings</v-icon></v-btn>
+                                <v-btn flat icon color="primary"
+                                       class="m-0"
+                                       @click.stop="onDeleteGroup(createDataTaskGroup(dataTaskGroup))"><v-icon>delete_forever</v-icon></v-btn>
                             </v-flex>
                         </v-layout>
 
-                        <v-layout row>
-                            <v-flex xs12 class="mx-2 px-4">
-                                <v-card class="mb-3" v-for="(dataTask, j) in dataTaskGroup.DataTasks" :key="j">
+                        <v-layout class="py-3" row wrap>
+                            <v-flex xs12 class="px-4" v-for="(dataTask, j) in orderDataTasks(dataTaskGroup.dataTaskList)" :key="j">
+                                   
                                     <v-expansion-panel class="task-expansion" expand>
-                                        <v-expansion-panel-content style="background-color:#fff" class="">
+                                        <v-expansion-panel-content  class="py-2">
+                                     
                                             <v-layout slot="header" row>
-                                                <v-flex offset-xs1 xs11 class="mx-2">
-                                                    <v-btn icon flat outline
+                                                <v-flex xs1 class="mx-2 text-xs-right">
+                                                    <v-btn v-if="!dataTaskGroup.groupOnly" icon flat
+                                                           class="m-0"
                                                            color="indigo lighten-2 white--text"
                                                            title="Execute task immediately"
-                                                           :disabled="dataTask.IsRunning"
-                                                           @click.stop='onExecLocalyTaskClick(dataTask)'><i class="material-icons">flash_on</i></v-btn>
-                                                    <v-btn icon flat outline
+                                                           :disabled="isTaskRunning(dataTask)||dataTask.inactive"
+                                                           @click.stop='onExecLocalyTaskClick(createDataTask(dataTask))'><i class="material-icons">flash_on</i></v-btn>
+                                                    <v-btn v-if="!dataTaskGroup.groupOnly" icon flat
+                                                           class="m-0"
                                                            color="indigo lighten-2 white--text"
                                                            title="Execute task in scheduler"
-                                                           :disabled="dataTask.IsRunning"
-                                                           @click.stop='onExecInSchTaskClick(dataTask)'><i class="material-icons">alarm</i></v-btn>
-                                                    <v-btn icon flat outline
+                                                           :disabled="isTaskRunning(dataTask)||dataTask.inactive"
+                                                           @click.stop='onExecInSchTaskClick(createDataTask(dataTask))'><i class="material-icons">alarm</i></v-btn>
+                                                    <v-btn icon flat
+                                                           class="m-0"
                                                            color="red lighten-2 white--text"
                                                            title="Reset task"
-                                                           :disabled="!dataTask.IsRunning"
-                                                           @click.stop='onResetTaskClick(dataTask)'><i class="material-icons">flash_off</i></v-btn>
-                                                    <v-btn icon flat outline
+                                                           :disabled="!isTaskRunning(dataTask)||dataTask.inactive"
+                                                           @click.stop='onResetTaskClick(createDataTask(dataTask))'><i class="material-icons">flash_off</i></v-btn>
+                                                </v-flex>
+                                                <v-flex xs2 class="mx-2 py-2">
+                                                    <span class="subheading">{{dataTask.displayName}}</span>
+                                                </v-flex>
+                                                <v-flex xs2 class="py-2">
+                                                    <template v-if="!dataTask.inactive && dataTask.lastStartTime">
+                                                        Last Start Time: {{formatDate(dataTask.lastStartTime)}}
+                                                    </template>
+                                                </v-flex>
+                                                <v-flex xs2 class="py-2">
+                                                    <template v-if="!dataTask.inactive && dataTask.nextStartTime">
+                                                        Next Start Time: {{formatDate(dataTask.nextStartTime)}}
+                                                    </template>
+                                                </v-flex>
+                                                <v-flex xs3 class="text-xs-right mx-2">
+                                                    <!--{{ dataTask.executionOrder }}-->
+                                                    <v-btn @click="changeOrder(orderDataTasks(dataTaskGroup.dataTaskList), j, j-1)" :disabled="j==0" flat icon class="m-0"><v-icon>arrow_upward</v-icon></v-btn>
+                                                    <v-btn @click="changeOrder(orderDataTasks(dataTaskGroup.dataTaskList), j, j+1)" :disabled="j==(dataTaskGroup.dataTaskList.length-1)" flat icon class="m-0"><v-icon>arrow_downward</v-icon></v-btn>
+                                                </v-flex>
+
+                                                <v-flex xs1 class="text-xs-right py-2">
+                                                    <span v-if="!dataTask.inactive" :class="getStatusColor(getTaskStatus(dataTask))">{{ getTaskStatus(dataTask) }}</span>
+                                                    <span v-if="dataTask.inactive">task is inactive</span>
+                                                </v-flex>
+
+                                                <v-flex xs1 class="mx-2 text-xs-right pr-1">
+                                                    <v-btn icon flat
+                                                           class="m-0"
                                                            color="teal lighten-2 white--text"
                                                            title="Configure task"
-                                                           @click.stop='onEditTaskClick(dataTask)'><v-icon>settings</v-icon></v-btn>
-                                                    <h6 style="display:inline-block" class="py-3">{{dataTask.DisplayName}}</h6>
-                                                    runs {{ cronHumanity(dataTask.CronSchedule) }}
+                                                           @click.stop='onEditTaskClick(createDataTask(dataTask))'><v-icon>settings</v-icon></v-btn>
+                                                    <v-btn flat icon
+                                                           class="m-0"
+                                                           color="primary"
+                                                           @click.stop="onDeleteTask(createDataTask(dataTask))"><v-icon>delete_forever</v-icon></v-btn>
                                                 </v-flex>
                                             </v-layout>
-                                            <v-layout class="pb-3" row>
-                                                <v-flex offset-xs1 xs2 class="px-4" >
-                                                    {{ dataTask.DisplayName }}
-                                                </v-flex>
-                                                <v-flex xs9 class="px-4">
-                                                    {{ dataTask.DisplayName }}
-                                                </v-flex>
-                                            </v-layout>
-                                            <v-layout class="pb-3" row>
-                                                <v-flex offset-xs1 xs2 class="px-4">
-                                                    {{ dataTask.DisplayName }}
-                                                </v-flex>
-                                                <v-flex xs9 class="px-4">
-                                                    {{ dataTask.DisplayName }}
-                                                </v-flex>
-                                            </v-layout>
+                                            <!--<v-layout class="pb-3" row>
+                                                <v-flex xs12> other information </v-flex>
+                                            </v-layout>-->
 
                                         </v-expansion-panel-content>
                                     </v-expansion-panel>
-                                </v-card>
+
                             </v-flex>
                         </v-layout>
 
                     </v-expansion-panel-content>
                 </v-expansion-panel>
 
-            </v-card>
+            <!--</v-card>-->
         </v-flex>
     </v-layout>
 
-    <!--<v-data-table :headers="vtfGroupGridHeaders"
-                  :items="iDataTaskGroups"
-                  hide-actions
-                  item-key="name">
-        <template slot="items" scope="props">
-            <tr @click="props.item.dataTaskList.length>0 ? props.expanded = !props.expanded: null">
-                <td class="py-3 text-xs-center">{{ props.item.name }}</td>
-                <td class="py-3 text-xs-center">{{ props.item.cronSchedule }}</td>
-                <td class="py-3 text-xs-center">{{ props.item.dataTaskList.length }}</td>
-                <td class="py-3 text-xs-center">{{ props.item.groupOnly }}</td>
-            </tr>
-        </template>
-        <template v-if="props.item.dataTaskList.length" slot="expand" scope="props">
-            <v-data-table class="ml-4" :headers="vtfTaskGridHeaders"
-                          :items="props.item.dataTaskList"
-                          hide-actions
-                          item-key="name">
-                <template slot="items" scope="props">
-                    <td class="text-xs-center" style="width: 1">
-                        <v-btn icon flat outline
-                               color="indigo lighten-2 white--text"
-                               title="Execute task immediately"
-                               @click.stop='onExecLocalyTaskClick(DataTask.createDataTaskFromJson(props.item))'><i class="material-icons">flash_on</i></v-btn>
-                        <v-btn icon flat outline
-                               color="indigo lighten-2 white--text"
-                               title="Execute task in scheduler"
-                               @click.stop='onExecInSchTaskClick(DataTask.createDataTaskFromJson(props.item))'><i class="material-icons">alarm</i></v-btn>
-                        <v-btn icon flat outline
-                               color="red lighten-2 white--text"
-                               title="Reset task"
-                               @click.stop='onResetTaskClick(DataTask.createDataTaskFromJson(props.item))'><i class="material-icons">flash_off</i></v-btn>
-                        <v-btn icon flat outline
-                               color="teal lighten-2 white--text"
-                               title="Configure task"
-                               @click.stop='onEditTaskClick(DataTask.createDataTaskFromJson(props.item))'><v-icon>settings</v-icon></v-btn>
-                    </td>
-                    <td class="py-3 text-xs-center">{{ props.item.displayName }}</td>
-                    <td class="py-3 text-xs-center">{{ props.item.cronSchedule }}</td>
-                    <td class="py-3 text-xs-center">{{ props.item.status }}</td>
-                    <td class="py-3 text-xs-center">{{ formatDate(props.item.lastStartTime) }}</td>
-                    <td class="py-3 text-xs-center">{{ formatDate(props.item.nextStartTime) }}</td>
-                </template>
-            </v-data-table>
-        </template>
-    </v-data-table>-->
-
-    <div style="overflow-x:auto">
+    <!--<div style="overflow-x:auto">
         <b-table id="data-tasks"
                  ref="dataTasksTable"
                  hover
@@ -198,31 +222,14 @@
         <b-row class="text-center">
             <b-col class="center">
 
-                <v-btn round
-                       title="Add new task"
-                       color="teal lighten-2 white--text"
-                       @click="onAddDatataskClick"><v-icon class="mr-2">link</v-icon>Add DataTask</v-btn>
-
-                <v-btn round
-                       title="Add new group"
-                       color="teal lighten-2 white--text"
-                       @click="onAddGroupClick"><v-icon class="mr-2">link</v-icon>Add Group</v-btn>
-
-                <v-btn round
-                       color="indigo lighten-2 white--text"
-                       title="Refresh Table"
-                       @click="onRefreshTableClick"><v-icon class="mr-2">autorenew</v-icon>Refresh table</v-btn>
-
-                <v-btn round color="green lighten-2 white--text"
-                       @click="showConsole = !showConsole"><v-icon class="mr-2">clear_all</v-icon>Show console</v-btn>
 
             </b-col>
         </b-row>
-    </b-container>
+    </b-container>-->
 
-    <edit-task v-model="showEditTask" :dataTask="currentTask" @onClose="closeEditTask"> </edit-task>
+    <edit-task :dataTask="currentTask" @onClose="closeEditTask"> </edit-task>
 
-    <edit-group v-model="showEditGroup" scope="fromList" :dataTaskGroup="currentGroup" @onClose="closeEditGroup"> </edit-group>
+    <edit-group scope="fromList" :dataTaskGroup="currentGroup" @onClose="closeEditGroup"> </edit-group>
 
     <execute-task-localy v-model="showExecuteTaskLocaly" :dataTask="currentTask" @onClose="closeExecuteTaskLocaly"> </execute-task-localy>
 

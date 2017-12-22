@@ -22,8 +22,6 @@ import _ from 'lodash';
 
 export class DataTaskGroupEditComponent extends Vue {
 
-    showModal: boolean = false;
-
     height: string = '300px';
 
     @Prop()
@@ -41,9 +39,8 @@ export class DataTaskGroupEditComponent extends Vue {
     @Prop()
     value: boolean;
 
-    @Watch('value')
-    onValueChanged(value) {
-        this.showModal = value;
+    get showModal(): boolean {
+        return this.$store.state['dataTask'].showEditDataTaskGroupDialog;
     }
 
     @Prop()

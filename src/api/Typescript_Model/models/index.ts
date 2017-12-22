@@ -4,7 +4,7 @@
  * regenerated.
  */
 
-import { RequestOptionsBase } from 'ms-rest-js';
+import { RequestOptionsBase } from "ms-rest-js";
 
 
 /**
@@ -37,10 +37,6 @@ export interface DataTaskGroup {
    */
   enabled?: boolean;
   /**
-   * @member {string} [lastDuration]
-   */
-  lastDuration?: string;
-  /**
    * @member {Date} [lastStartTime]
    */
   lastStartTime?: Date;
@@ -56,6 +52,10 @@ export interface DataTaskGroup {
    * @member {number} [retries]
    */
   retries?: number;
+  /**
+   * @member {string} [lastDuration]
+   */
+  lastDuration?: string;
   /**
    * @member {Date} [recCreated]
    */
@@ -125,6 +125,10 @@ export interface DataTask {
    */
   enabled?: boolean;
   /**
+   * @member {string} [lastDuration]
+   */
+  lastDuration?: string;
+  /**
    * @member {Date} [lastStartTime]
    */
   lastStartTime?: Date;
@@ -140,10 +144,6 @@ export interface DataTask {
    * @member {number} [retries]
    */
   retries?: number;
-  /**
-   * @member {string} [lastDuration]
-   */
-  lastDuration?: string;
   /**
    * @member {Date} [recCreated]
    */
@@ -424,6 +424,14 @@ export interface EntityStatus {
    * @member {number} [inDocTransferId]
    */
   inDocTransferId?: number;
+  /**
+   * @member {boolean} [hasInContent]
+   */
+  hasInContent?: boolean;
+  /**
+   * @member {boolean} [hasOutContent]
+   */
+  hasOutContent?: boolean;
   /**
    * @member {string} [outContent]
    */
@@ -866,6 +874,20 @@ export interface IntegratorAPIRestDataTaskUpdatePutOptionalParams extends Reques
 
 /**
  * @interface
+ * An interface representing IntegratorAPIRestDataTaskUpdateArrayPutOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface IntegratorAPIRestDataTaskUpdateArrayPutOptionalParams extends RequestOptionsBase {
+  /**
+   * @member {DataTask[]} [entities]
+   */
+  entities?: DataTask[];
+}
+
+/**
+ * @interface
  * An interface representing IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams.
  * Optional Parameters.
  *
@@ -926,6 +948,20 @@ export interface IntegratorAPIRestDataTaskGroupUpdatePutOptionalParams extends R
 
 /**
  * @interface
+ * An interface representing IntegratorAPIRestDataTaskGroupUpdateArrayPutOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface IntegratorAPIRestDataTaskGroupUpdateArrayPutOptionalParams extends RequestOptionsBase {
+  /**
+   * @member {DataTaskGroup[]} [entities]
+   */
+  entities?: DataTaskGroup[];
+}
+
+/**
+ * @interface
  * An interface representing IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams.
  * Optional Parameters.
  *
@@ -982,6 +1018,20 @@ export interface IntegratorAPIRestEntityStatusUpdatePutOptionalParams extends Re
    * @member {EntityStatus} [entity]
    */
   entity?: EntityStatus;
+}
+
+/**
+ * @interface
+ * An interface representing IntegratorAPIRestEntityStatusUpdateArrayPutOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface IntegratorAPIRestEntityStatusUpdateArrayPutOptionalParams extends RequestOptionsBase {
+  /**
+   * @member {EntityStatus[]} [entities]
+   */
+  entities?: EntityStatus[];
 }
 
 /**
@@ -1135,4 +1185,20 @@ export enum RestDataTaskGetStatusByDataTaskIdGetOKResponse {
   Successful = 'Successful',
   Error = 'Error',
   Cancelled = 'Cancelled',
+}
+
+/**
+ * Defines values for ContentType.
+ * Possible values include: 'InContent', 'OutContent'
+ * There could be more values for this enum apart from the ones defined here.If
+ * you want to set a value that is not from the known values then you can do
+ * the following:
+ * let param: ContentType =
+ * <ContentType>"someUnknownValueThatWillStillBeValid";
+ * @readonly
+ * @enum {string}
+ */
+export enum ContentType {
+  InContent = 'InContent',
+  OutContent = 'OutContent',
 }

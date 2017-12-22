@@ -1,5 +1,4 @@
 import axios from 'axios';
-import * as signalR from '@aspnet/signalr-client';
 
 const HTTP = axios.create({
     baseURL: process.env.NODE_ENV === 'production' ? `/rest/` : `http://localhost:8080/rest/`,
@@ -16,11 +15,6 @@ HTTP.interceptors.response.use(undefined, error => {
     return Promise.reject(error);
 });
 
-let hubUrl = process.env.NODE_ENV === 'production' ? `/hub` : `http://localhost:8080/hub`;
-let httpConnection = new signalR.HttpConnection(hubUrl);
-
-const HUB: signalR.HubConnection = new signalR.HubConnection(httpConnection);
-
 export {
-    HTTP, HUB
+    HTTP
 } 

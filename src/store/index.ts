@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 // import * as actions from './actions'
-// import * as getters from './getters';
+import getters from './getters';
 import dataTask from './modules/dataTask';
 import entityStatus from './modules/entityStatus';
 import signalR from './modules/signalR';
@@ -13,26 +13,34 @@ Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
 
 export default new Vuex.Store({
+
     // actions,
+
     state: {
-        loading: false
+        loading: false,
+        pending: false
     },
-    getters: {
-        loading: state => {
-            return state.loading;
-        }
-    },
+
+    getters,
+
     mutations: {
+
         loading(state, payLoad: boolean) {
             state.loading = payLoad;
+        },
+
+        pending(state, payLoad: boolean) {
+            state.pending = payLoad;
         }
     },
+
     modules: {
         dataTask,
         entityStatus,
         signalR,
         auth
     },
+
     strict: debug,
     //    plugins: debug ? [createLogger()] : []
 });
