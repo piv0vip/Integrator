@@ -4,7 +4,7 @@
  * regenerated.
  */
 
-import { RequestOptionsBase } from 'ms-rest-js';
+import { RequestOptionsBase } from "ms-rest-js";
 
 
 /**
@@ -37,10 +37,6 @@ export interface DataTaskGroup {
    */
   enabled?: boolean;
   /**
-   * @member {string} [lastDuration]
-   */
-  lastDuration?: string;
-  /**
    * @member {Date} [lastStartTime]
    */
   lastStartTime?: Date;
@@ -56,6 +52,10 @@ export interface DataTaskGroup {
    * @member {number} [retries]
    */
   retries?: number;
+  /**
+   * @member {string} [lastDuration]
+   */
+  lastDuration?: string;
   /**
    * @member {Date} [recCreated]
    */
@@ -125,6 +125,10 @@ export interface DataTask {
    */
   enabled?: boolean;
   /**
+   * @member {string} [lastDuration]
+   */
+  lastDuration?: string;
+  /**
    * @member {Date} [lastStartTime]
    */
   lastStartTime?: Date;
@@ -140,10 +144,6 @@ export interface DataTask {
    * @member {number} [retries]
    */
   retries?: number;
-  /**
-   * @member {string} [lastDuration]
-   */
-  lastDuration?: string;
   /**
    * @member {Date} [recCreated]
    */
@@ -341,6 +341,81 @@ export interface EntityStatusesValues {
 
 /**
  * @interface
+ * An interface representing ContainFilterEntityStatus.
+ */
+export interface ContainFilterEntityStatus {
+  /**
+   * @member {string[]} [values]
+   */
+  values?: string[];
+}
+
+/**
+ * @interface
+ * An interface representing ExistsFilterEntityStatus.
+ */
+export interface ExistsFilterEntityStatus {
+  /**
+   * @member {string[]} [values]
+   */
+  values?: string[];
+}
+
+/**
+ * @interface
+ * An interface representing IgnoredFilterEntityStatus.
+ */
+export interface IgnoredFilterEntityStatus {
+  /**
+   * @member {string[]} [values]
+   */
+  values?: string[];
+}
+
+/**
+ * @interface
+ * An interface representing PeriodFilterEntityStatus.
+ */
+export interface PeriodFilterEntityStatus {
+  /**
+   * @member {Date} [from]
+   */
+  from?: Date;
+  /**
+   * @member {Date} [to]
+   */
+  to?: Date;
+}
+
+/**
+ * @interface
+ * An interface representing FieldFilterEntityStatus.
+ */
+export interface FieldFilterEntityStatus {
+  /**
+   * @member {string} [fieldName]
+   */
+  fieldName?: string;
+  /**
+   * @member {ContainFilterEntityStatus} [containValues]
+   */
+  containValues?: ContainFilterEntityStatus;
+  /**
+   * @member {ExistsFilterEntityStatus} [existsValues]
+   */
+  existsValues?: ExistsFilterEntityStatus;
+  /**
+   * @member {IgnoredFilterEntityStatus} [ignoredValues]
+   */
+  ignoredValues?: IgnoredFilterEntityStatus;
+  /**
+   * @member {PeriodFilterEntityStatus} [period]
+   */
+  period?: PeriodFilterEntityStatus;
+}
+
+/**
+ * @interface
  * An interface representing DocumentTransfer.
  */
 export interface DocumentTransfer {
@@ -425,6 +500,14 @@ export interface EntityStatus {
    */
   inDocTransferId?: number;
   /**
+   * @member {boolean} [hasInContent]
+   */
+  hasInContent?: boolean;
+  /**
+   * @member {boolean} [hasOutContent]
+   */
+  hasOutContent?: boolean;
+  /**
    * @member {string} [outContent]
    */
   outContent?: string;
@@ -473,81 +556,6 @@ export interface EntityStatus {
    * @member {string} [entityName]
    */
   readonly entityName?: string;
-}
-
-/**
- * @interface
- * An interface representing ContainFilterEntityStatus.
- */
-export interface ContainFilterEntityStatus {
-  /**
-   * @member {string[]} [values]
-   */
-  values?: string[];
-}
-
-/**
- * @interface
- * An interface representing ExistsFilterEntityStatus.
- */
-export interface ExistsFilterEntityStatus {
-  /**
-   * @member {string[]} [values]
-   */
-  values?: string[];
-}
-
-/**
- * @interface
- * An interface representing IgnoredFilterEntityStatus.
- */
-export interface IgnoredFilterEntityStatus {
-  /**
-   * @member {string[]} [values]
-   */
-  values?: string[];
-}
-
-/**
- * @interface
- * An interface representing PeriodFilterEntityStatus.
- */
-export interface PeriodFilterEntityStatus {
-  /**
-   * @member {Date} [from]
-   */
-  from?: Date;
-  /**
-   * @member {Date} [to]
-   */
-  to?: Date;
-}
-
-/**
- * @interface
- * An interface representing FieldFilterEntityStatus.
- */
-export interface FieldFilterEntityStatus {
-  /**
-   * @member {string} [fieldName]
-   */
-  fieldName?: string;
-  /**
-   * @member {ContainFilterEntityStatus} [containValues]
-   */
-  containValues?: ContainFilterEntityStatus;
-  /**
-   * @member {ExistsFilterEntityStatus} [existsValues]
-   */
-  existsValues?: ExistsFilterEntityStatus;
-  /**
-   * @member {IgnoredFilterEntityStatus} [ignoredValues]
-   */
-  ignoredValues?: IgnoredFilterEntityStatus;
-  /**
-   * @member {PeriodFilterEntityStatus} [period]
-   */
-  period?: PeriodFilterEntityStatus;
 }
 
 /**
@@ -806,6 +814,110 @@ export interface FieldFilterLog {
 
 /**
  * @interface
+ * An interface representing IDocumentTransfer.
+ */
+export interface IDocumentTransfer {
+  /**
+   * @member {string} [content]
+   */
+  content?: string;
+  /**
+   * @member {number} [documentTransferId]
+   */
+  documentTransferId?: number;
+  /**
+   * @member {string} [documentType]
+   */
+  documentType?: string;
+  /**
+   * @member {string} [errorMessage]
+   */
+  errorMessage?: string;
+  /**
+   * @member {string} [source]
+   */
+  source?: string;
+  /**
+   * @member {string} [sourceId]
+   */
+  sourceId?: string;
+  /**
+   * @member {Status3} [status] Possible values include: 'New', 'Processing',
+   * 'Processed', 'Failed', 'Ignored'
+   */
+  status?: Status3;
+  /**
+   * @member {string} [target]
+   */
+  target?: string;
+  /**
+   * @member {string} [targetId]
+   */
+  targetId?: string;
+}
+
+/**
+ * @interface
+ * An interface representing IEntityStatus.
+ */
+export interface IEntityStatus {
+  /**
+   * @member {number} [entityStatusId]
+   */
+  readonly entityStatusId?: number;
+  /**
+   * @member {string} [entityType]
+   */
+  readonly entityType?: string;
+  /**
+   * @member {Date} [entityVersion]
+   */
+  readonly entityVersion?: Date;
+  /**
+   * @member {string} [inContent]
+   */
+  inContent?: string;
+  /**
+   * @member {IDocumentTransfer} [inDocTransfer]
+   */
+  readonly inDocTransfer?: IDocumentTransfer;
+  /**
+   * @member {string} [outContent]
+   */
+  outContent?: string;
+  /**
+   * @member {IDocumentTransfer} [outDocTransfer]
+   */
+  outDocTransfer?: IDocumentTransfer;
+  /**
+   * @member {string} [source]
+   */
+  source?: string;
+  /**
+   * @member {string} [sourceId]
+   */
+  sourceId?: string;
+  /**
+   * @member {Status4} [status] Possible values include: 'NotFound',
+   * 'ReadyToSend', 'NotConfirmed', 'Confirmed', 'Errored', 'Ignored'
+   */
+  readonly status?: Status4;
+  /**
+   * @member {string} [statusMessage]
+   */
+  statusMessage?: string;
+  /**
+   * @member {string} [target]
+   */
+  target?: string;
+  /**
+   * @member {string} [targetId]
+   */
+  targetId?: string;
+}
+
+/**
+ * @interface
  * An interface representing IntegratorAPIRestDataTaskGetPagedListPostOptionalParams.
  * Optional Parameters.
  *
@@ -862,6 +974,20 @@ export interface IntegratorAPIRestDataTaskUpdatePutOptionalParams extends Reques
    * @member {DataTask} [entity]
    */
   entity?: DataTask;
+}
+
+/**
+ * @interface
+ * An interface representing IntegratorAPIRestDataTaskUpdateArrayPutOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface IntegratorAPIRestDataTaskUpdateArrayPutOptionalParams extends RequestOptionsBase {
+  /**
+   * @member {DataTask[]} [entities]
+   */
+  entities?: DataTask[];
 }
 
 /**
@@ -926,6 +1052,38 @@ export interface IntegratorAPIRestDataTaskGroupUpdatePutOptionalParams extends R
 
 /**
  * @interface
+ * An interface representing IntegratorAPIRestDataTaskGroupUpdateArrayPutOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface IntegratorAPIRestDataTaskGroupUpdateArrayPutOptionalParams extends RequestOptionsBase {
+  /**
+   * @member {DataTaskGroup[]} [entities]
+   */
+  entities?: DataTaskGroup[];
+}
+
+/**
+ * @interface
+ * An interface representing IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams extends RequestOptionsBase {
+  /**
+   * @member {FieldFilterEntityStatus[]} [fieldFilters]
+   */
+  fieldFilters?: FieldFilterEntityStatus[];
+  /**
+   * @member {string} [sortBy]
+   */
+  sortBy?: string;
+}
+
+/**
+ * @interface
  * An interface representing IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams.
  * Optional Parameters.
  *
@@ -986,6 +1144,20 @@ export interface IntegratorAPIRestEntityStatusUpdatePutOptionalParams extends Re
 
 /**
  * @interface
+ * An interface representing IntegratorAPIRestEntityStatusUpdateArrayPutOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface IntegratorAPIRestEntityStatusUpdateArrayPutOptionalParams extends RequestOptionsBase {
+  /**
+   * @member {EntityStatus[]} [entities]
+   */
+  entities?: EntityStatus[];
+}
+
+/**
+ * @interface
  * An interface representing IntegratorAPIRestSchedulerExecuteTaskByDataTaskIdPostOptionalParams.
  * Optional Parameters.
  *
@@ -1014,6 +1186,20 @@ export interface IntegratorAPIRestSchedulerGetPagedListPostOptionalParams extend
    * @member {string} [sortBy]
    */
   sortBy?: string;
+}
+
+/**
+ * @interface
+ * An interface representing IntegratorAPIRestSchedulerResendEntityPostOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface IntegratorAPIRestSchedulerResendEntityPostOptionalParams extends RequestOptionsBase {
+  /**
+   * @member {EntityStatus} [entityStatus]
+   */
+  entityStatus?: EntityStatus;
 }
 
 /**
@@ -1118,6 +1304,45 @@ export enum Level {
 }
 
 /**
+ * Defines values for Status3.
+ * Possible values include: 'New', 'Processing', 'Processed', 'Failed',
+ * 'Ignored'
+ * There could be more values for this enum apart from the ones defined here.If
+ * you want to set a value that is not from the known values then you can do
+ * the following:
+ * let param: Status3 = <Status3>"someUnknownValueThatWillStillBeValid";
+ * @readonly
+ * @enum {string}
+ */
+export enum Status3 {
+  New = 'New',
+  Processing = 'Processing',
+  Processed = 'Processed',
+  Failed = 'Failed',
+  Ignored = 'Ignored',
+}
+
+/**
+ * Defines values for Status4.
+ * Possible values include: 'NotFound', 'ReadyToSend', 'NotConfirmed',
+ * 'Confirmed', 'Errored', 'Ignored'
+ * There could be more values for this enum apart from the ones defined here.If
+ * you want to set a value that is not from the known values then you can do
+ * the following:
+ * let param: Status4 = <Status4>"someUnknownValueThatWillStillBeValid";
+ * @readonly
+ * @enum {string}
+ */
+export enum Status4 {
+  NotFound = 'NotFound',
+  ReadyToSend = 'ReadyToSend',
+  NotConfirmed = 'NotConfirmed',
+  Confirmed = 'Confirmed',
+  Errored = 'Errored',
+  Ignored = 'Ignored',
+}
+
+/**
  * Defines values for RestDataTaskGetStatusByDataTaskIdGetOKResponse.
  * Possible values include: 'NotStarted', 'Running', 'Successful', 'Error',
  * 'Cancelled'
@@ -1135,4 +1360,20 @@ export enum RestDataTaskGetStatusByDataTaskIdGetOKResponse {
   Successful = 'Successful',
   Error = 'Error',
   Cancelled = 'Cancelled',
+}
+
+/**
+ * Defines values for ContentType.
+ * Possible values include: 'InContent', 'OutContent'
+ * There could be more values for this enum apart from the ones defined here.If
+ * you want to set a value that is not from the known values then you can do
+ * the following:
+ * let param: ContentType =
+ * <ContentType>"someUnknownValueThatWillStillBeValid";
+ * @readonly
+ * @enum {string}
+ */
+export enum ContentType {
+  InContent = 'InContent',
+  OutContent = 'OutContent',
 }

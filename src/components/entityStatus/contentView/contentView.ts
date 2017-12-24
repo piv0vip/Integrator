@@ -21,6 +21,7 @@ export class ContentViewComponent extends Vue {
 
     @Watch('show')
     onShowChange() {
+        debugger;
         this.dialogShow = true;
     }
 }

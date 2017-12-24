@@ -14,11 +14,11 @@ import { AppComponent } from './components/common/';
 import { DataTaskListComponent } from './components/dataTask';
 import { EntityStatusListComponent } from './components/entityStatus';
 
-import VueDragAndDropList from 'vue-drag-and-drop-list';
+//import VueDragAndDropList from 'vue-drag-and-drop-list';
 
 import store from './store';
 
-Vue.use(VueDragAndDropList);
+//Vue.use(VueDragAndDropList);
 
 Validator.extend('guid', {
     getMessage: field => `Value must be in 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX' format`,

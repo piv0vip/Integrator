@@ -62,13 +62,6 @@ export const DataTaskGroup = {
           name: 'Boolean'
         }
       },
-      lastDuration: {
-        required: false,
-        serializedName: 'lastDuration',
-        type: {
-          name: 'String'
-        }
-      },
       lastStartTime: {
         required: false,
         serializedName: 'lastStartTime',
@@ -95,6 +88,13 @@ export const DataTaskGroup = {
         serializedName: 'retries',
         type: {
           name: 'Number'
+        }
+      },
+      lastDuration: {
+        required: false,
+        serializedName: 'lastDuration',
+        type: {
+          name: 'String'
         }
       },
       recCreated: {
@@ -215,6 +215,13 @@ export const DataTask = {
           name: 'Boolean'
         }
       },
+      lastDuration: {
+        required: false,
+        serializedName: 'lastDuration',
+        type: {
+          name: 'String'
+        }
+      },
       lastStartTime: {
         required: false,
         serializedName: 'lastStartTime',
@@ -241,13 +248,6 @@ export const DataTask = {
         serializedName: 'retries',
         type: {
           name: 'Number'
-        }
-      },
-      lastDuration: {
-        required: false,
-        serializedName: 'lastDuration',
-        type: {
-          name: 'String'
         }
       },
       recCreated: {
@@ -671,6 +671,156 @@ export const EntityStatusesValues = {
   }
 };
 
+export const ContainFilterEntityStatus = {
+  required: false,
+  serializedName: 'ContainFilter[EntityStatus]',
+  type: {
+    name: 'Composite',
+    className: 'ContainFilterEntityStatus',
+    modelProperties: {
+      values: {
+        required: false,
+        serializedName: 'values',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const ExistsFilterEntityStatus = {
+  required: false,
+  serializedName: 'ExistsFilter[EntityStatus]',
+  type: {
+    name: 'Composite',
+    className: 'ExistsFilterEntityStatus',
+    modelProperties: {
+      values: {
+        required: false,
+        serializedName: 'values',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const IgnoredFilterEntityStatus = {
+  required: false,
+  serializedName: 'IgnoredFilter[EntityStatus]',
+  type: {
+    name: 'Composite',
+    className: 'IgnoredFilterEntityStatus',
+    modelProperties: {
+      values: {
+        required: false,
+        serializedName: 'values',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const PeriodFilterEntityStatus = {
+  required: false,
+  serializedName: 'PeriodFilter[EntityStatus]',
+  type: {
+    name: 'Composite',
+    className: 'PeriodFilterEntityStatus',
+    modelProperties: {
+      from: {
+        required: false,
+        serializedName: 'from',
+        type: {
+          name: 'DateTime'
+        }
+      },
+      to: {
+        required: false,
+        serializedName: 'to',
+        type: {
+          name: 'DateTime'
+        }
+      }
+    }
+  }
+};
+
+export const FieldFilterEntityStatus = {
+  required: false,
+  serializedName: 'FieldFilter[EntityStatus]',
+  type: {
+    name: 'Composite',
+    className: 'FieldFilterEntityStatus',
+    modelProperties: {
+      fieldName: {
+        required: false,
+        serializedName: 'fieldName',
+        type: {
+          name: 'String'
+        }
+      },
+      containValues: {
+        required: false,
+        serializedName: 'containValues',
+        type: {
+          name: 'Composite',
+          className: 'ContainFilterEntityStatus'
+        }
+      },
+      existsValues: {
+        required: false,
+        serializedName: 'existsValues',
+        type: {
+          name: 'Composite',
+          className: 'ExistsFilterEntityStatus'
+        }
+      },
+      ignoredValues: {
+        required: false,
+        serializedName: 'ignoredValues',
+        type: {
+          name: 'Composite',
+          className: 'IgnoredFilterEntityStatus'
+        }
+      },
+      period: {
+        required: false,
+        serializedName: 'period',
+        type: {
+          name: 'Composite',
+          className: 'PeriodFilterEntityStatus'
+        }
+      }
+    }
+  }
+};
+
 export const DocumentTransfer = {
   required: false,
   serializedName: 'DocumentTransfer',
@@ -817,6 +967,20 @@ export const EntityStatus = {
           name: 'Number'
         }
       },
+      hasInContent: {
+        required: false,
+        serializedName: 'hasInContent',
+        type: {
+          name: 'Boolean'
+        }
+      },
+      hasOutContent: {
+        required: false,
+        serializedName: 'hasOutContent',
+        type: {
+          name: 'Boolean'
+        }
+      },
       outContent: {
         required: false,
         serializedName: 'outContent',
@@ -901,156 +1065,6 @@ export const EntityStatus = {
         serializedName: 'entityName',
         type: {
           name: 'String'
-        }
-      }
-    }
-  }
-};
-
-export const ContainFilterEntityStatus = {
-  required: false,
-  serializedName: 'ContainFilter[EntityStatus]',
-  type: {
-    name: 'Composite',
-    className: 'ContainFilterEntityStatus',
-    modelProperties: {
-      values: {
-        required: false,
-        serializedName: 'values',
-        type: {
-          name: 'Sequence',
-          element: {
-              required: false,
-              serializedName: 'stringElementType',
-              type: {
-                name: 'String'
-              }
-          }
-        }
-      }
-    }
-  }
-};
-
-export const ExistsFilterEntityStatus = {
-  required: false,
-  serializedName: 'ExistsFilter[EntityStatus]',
-  type: {
-    name: 'Composite',
-    className: 'ExistsFilterEntityStatus',
-    modelProperties: {
-      values: {
-        required: false,
-        serializedName: 'values',
-        type: {
-          name: 'Sequence',
-          element: {
-              required: false,
-              serializedName: 'stringElementType',
-              type: {
-                name: 'String'
-              }
-          }
-        }
-      }
-    }
-  }
-};
-
-export const IgnoredFilterEntityStatus = {
-  required: false,
-  serializedName: 'IgnoredFilter[EntityStatus]',
-  type: {
-    name: 'Composite',
-    className: 'IgnoredFilterEntityStatus',
-    modelProperties: {
-      values: {
-        required: false,
-        serializedName: 'values',
-        type: {
-          name: 'Sequence',
-          element: {
-              required: false,
-              serializedName: 'stringElementType',
-              type: {
-                name: 'String'
-              }
-          }
-        }
-      }
-    }
-  }
-};
-
-export const PeriodFilterEntityStatus = {
-  required: false,
-  serializedName: 'PeriodFilter[EntityStatus]',
-  type: {
-    name: 'Composite',
-    className: 'PeriodFilterEntityStatus',
-    modelProperties: {
-      from: {
-        required: false,
-        serializedName: 'from',
-        type: {
-          name: 'DateTime'
-        }
-      },
-      to: {
-        required: false,
-        serializedName: 'to',
-        type: {
-          name: 'DateTime'
-        }
-      }
-    }
-  }
-};
-
-export const FieldFilterEntityStatus = {
-  required: false,
-  serializedName: 'FieldFilter[EntityStatus]',
-  type: {
-    name: 'Composite',
-    className: 'FieldFilterEntityStatus',
-    modelProperties: {
-      fieldName: {
-        required: false,
-        serializedName: 'fieldName',
-        type: {
-          name: 'String'
-        }
-      },
-      containValues: {
-        required: false,
-        serializedName: 'containValues',
-        type: {
-          name: 'Composite',
-          className: 'ContainFilterEntityStatus'
-        }
-      },
-      existsValues: {
-        required: false,
-        serializedName: 'existsValues',
-        type: {
-          name: 'Composite',
-          className: 'ExistsFilterEntityStatus'
-        }
-      },
-      ignoredValues: {
-        required: false,
-        serializedName: 'ignoredValues',
-        type: {
-          name: 'Composite',
-          className: 'IgnoredFilterEntityStatus'
-        }
-      },
-      period: {
-        required: false,
-        serializedName: 'period',
-        type: {
-          name: 'Composite',
-          className: 'PeriodFilterEntityStatus'
         }
       }
     }
@@ -1542,6 +1556,189 @@ export const FieldFilterLog = {
   }
 };
 
+export const IDocumentTransfer = {
+  required: false,
+  serializedName: 'IDocumentTransfer',
+  type: {
+    name: 'Composite',
+    className: 'IDocumentTransfer',
+    modelProperties: {
+      content: {
+        required: false,
+        serializedName: 'content',
+        type: {
+          name: 'String'
+        }
+      },
+      documentTransferId: {
+        required: false,
+        serializedName: 'documentTransferId',
+        type: {
+          name: 'Number'
+        }
+      },
+      documentType: {
+        required: false,
+        serializedName: 'documentType',
+        type: {
+          name: 'String'
+        }
+      },
+      errorMessage: {
+        required: false,
+        serializedName: 'errorMessage',
+        type: {
+          name: 'String'
+        }
+      },
+      source: {
+        required: false,
+        serializedName: 'source',
+        type: {
+          name: 'String'
+        }
+      },
+      sourceId: {
+        required: false,
+        serializedName: 'sourceId',
+        type: {
+          name: 'String'
+        }
+      },
+      status: {
+        required: false,
+        serializedName: 'status',
+        type: {
+          name: 'String'
+        }
+      },
+      target: {
+        required: false,
+        serializedName: 'target',
+        type: {
+          name: 'String'
+        }
+      },
+      targetId: {
+        required: false,
+        serializedName: 'targetId',
+        type: {
+          name: 'String'
+        }
+      }
+    }
+  }
+};
+
+export const IEntityStatus = {
+  required: false,
+  serializedName: 'IEntityStatus',
+  type: {
+    name: 'Composite',
+    className: 'IEntityStatus',
+    modelProperties: {
+      entityStatusId: {
+        required: false,
+        readOnly: true,
+        serializedName: 'entityStatusId',
+        type: {
+          name: 'Number'
+        }
+      },
+      entityType: {
+        required: false,
+        readOnly: true,
+        serializedName: 'entityType',
+        type: {
+          name: 'String'
+        }
+      },
+      entityVersion: {
+        required: false,
+        readOnly: true,
+        serializedName: 'entityVersion',
+        type: {
+          name: 'DateTime'
+        }
+      },
+      inContent: {
+        required: false,
+        serializedName: 'inContent',
+        type: {
+          name: 'String'
+        }
+      },
+      inDocTransfer: {
+        required: false,
+        readOnly: true,
+        serializedName: 'inDocTransfer',
+        type: {
+          name: 'Composite',
+          className: 'IDocumentTransfer'
+        }
+      },
+      outContent: {
+        required: false,
+        serializedName: 'outContent',
+        type: {
+          name: 'String'
+        }
+      },
+      outDocTransfer: {
+        required: false,
+        serializedName: 'outDocTransfer',
+        type: {
+          name: 'Composite',
+          className: 'IDocumentTransfer'
+        }
+      },
+      source: {
+        required: false,
+        serializedName: 'source',
+        type: {
+          name: 'String'
+        }
+      },
+      sourceId: {
+        required: false,
+        serializedName: 'sourceId',
+        type: {
+          name: 'String'
+        }
+      },
+      status: {
+        required: false,
+        readOnly: true,
+        serializedName: 'status',
+        type: {
+          name: 'String'
+        }
+      },
+      statusMessage: {
+        required: false,
+        serializedName: 'statusMessage',
+        type: {
+          name: 'String'
+        }
+      },
+      target: {
+        required: false,
+        serializedName: 'target',
+        type: {
+          name: 'String'
+        }
+      },
+      targetId: {
+        required: false,
+        serializedName: 'targetId',
+        type: {
+          name: 'String'
+        }
+      }
+    }
+  }
+};
+
 export const IntegratorAPIRestDataTaskGetPagedListPostOptionalParams = {
   required: false,
   serializedName: 'RestDataTaskGetPagedListPostOptions',
@@ -1633,6 +1830,32 @@ export const IntegratorAPIRestDataTaskUpdatePutOptionalParams = {
         type: {
           name: 'Composite',
           className: 'DataTask'
+        }
+      }
+    }
+  }
+};
+
+export const IntegratorAPIRestDataTaskUpdateArrayPutOptionalParams = {
+  required: false,
+  serializedName: 'RestDataTaskUpdateArrayPutOptions',
+  type: {
+    name: 'Composite',
+    className: 'IntegratorAPIRestDataTaskUpdateArrayPutOptionalParams',
+    modelProperties: {
+      entities: {
+        required: false,
+        serializedName: 'entities',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'DataTaskElementType',
+              type: {
+                name: 'Composite',
+                className: 'DataTask'
+              }
+          }
         }
       }
     }
@@ -1736,6 +1959,65 @@ export const IntegratorAPIRestDataTaskGroupUpdatePutOptionalParams = {
   }
 };
 
+export const IntegratorAPIRestDataTaskGroupUpdateArrayPutOptionalParams = {
+  required: false,
+  serializedName: 'RestDataTaskGroupUpdateArrayPutOptions',
+  type: {
+    name: 'Composite',
+    className: 'IntegratorAPIRestDataTaskGroupUpdateArrayPutOptionalParams',
+    modelProperties: {
+      entities: {
+        required: false,
+        serializedName: 'entities',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'DataTaskGroupElementType',
+              type: {
+                name: 'Composite',
+                className: 'DataTaskGroup'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams = {
+  required: false,
+  serializedName: 'RestEntityStatusGetEntityStatusShortPostOptions',
+  type: {
+    name: 'Composite',
+    className: 'IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams',
+    modelProperties: {
+      fieldFilters: {
+        required: false,
+        serializedName: 'fieldFilters',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'FieldFilterEntityStatusElementType',
+              type: {
+                name: 'Composite',
+                className: 'FieldFilterEntityStatus'
+              }
+          }
+        }
+      },
+      sortBy: {
+        required: false,
+        serializedName: 'sortBy',
+        type: {
+          name: 'String'
+        }
+      }
+    }
+  }
+};
+
 export const IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams = {
   required: false,
   serializedName: 'RestEntityStatusGetPagedListPostOptions',
@@ -1833,6 +2115,32 @@ export const IntegratorAPIRestEntityStatusUpdatePutOptionalParams = {
   }
 };
 
+export const IntegratorAPIRestEntityStatusUpdateArrayPutOptionalParams = {
+  required: false,
+  serializedName: 'RestEntityStatusUpdateArrayPutOptions',
+  type: {
+    name: 'Composite',
+    className: 'IntegratorAPIRestEntityStatusUpdateArrayPutOptionalParams',
+    modelProperties: {
+      entities: {
+        required: false,
+        serializedName: 'entities',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'EntityStatusElementType',
+              type: {
+                name: 'Composite',
+                className: 'EntityStatus'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const IntegratorAPIRestSchedulerExecuteTaskByDataTaskIdPostOptionalParams = {
   required: false,
   serializedName: 'RestSchedulerExecuteTaskByDataTaskIdPostOptions',
@@ -1885,6 +2193,25 @@ export const IntegratorAPIRestSchedulerGetPagedListPostOptionalParams = {
         serializedName: 'sortBy',
         type: {
           name: 'String'
+        }
+      }
+    }
+  }
+};
+
+export const IntegratorAPIRestSchedulerResendEntityPostOptionalParams = {
+  required: false,
+  serializedName: 'RestSchedulerResendEntityPostOptions',
+  type: {
+    name: 'Composite',
+    className: 'IntegratorAPIRestSchedulerResendEntityPostOptionalParams',
+    modelProperties: {
+      entityStatus: {
+        required: false,
+        serializedName: 'entityStatus',
+        type: {
+          name: 'Composite',
+          className: 'EntityStatus'
         }
       }
     }

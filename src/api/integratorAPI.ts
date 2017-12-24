@@ -1220,6 +1220,123 @@ class IntegratorAPI extends msRest.ServiceClient {
   // methods on the client.
 
   /**
+   * @param {IntegratorAPIRestDataTaskUpdateArrayPutOptionalParams} [options]
+   * Optional Parameters.
+   *
+   * @returns {Promise} A promise is returned
+   *
+   * @resolve {HttpOperationResponse} - The deserialized result object.
+   *
+   * @reject {Error|ServiceError} - The error object.
+   */
+  async restDataTaskUpdateArrayPutWithHttpOperationResponse(options?: Models.IntegratorAPIRestDataTaskUpdateArrayPutOptionalParams): Promise<msRest.HttpOperationResponse> {
+    let client = this;
+    let entities = (options && options.entities !== undefined) ? options.entities : undefined;
+
+    // Construct URL
+    let baseUrl = this.baseUri;
+    let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'rest/DataTask/UpdateArray';
+
+    // Create HTTP transport objects
+    let httpRequest = new WebResource();
+    httpRequest.method = 'PUT';
+    httpRequest.url = requestUrl;
+    httpRequest.headers = {};
+    // Set Headers
+    httpRequest.headers['Content-Type'] = 'application/json-patch+json; charset=utf-8';
+    if(options && options.customHeaders) {
+      for(let headerName in options.customHeaders) {
+        if (options.customHeaders.hasOwnProperty(headerName)) {
+          httpRequest.headers[headerName] = options.customHeaders[headerName];
+        }
+      }
+    }
+    // Serialize Request
+    let requestContent = null;
+    let requestModel = null;
+    try {
+      if (entities !== null && entities !== undefined) {
+        let requestModelMapper = {
+          required: false,
+          serializedName: 'entities',
+          type: {
+            name: 'Sequence',
+            element: {
+                required: false,
+                serializedName: 'DataTaskElementType',
+                type: {
+                  name: 'Composite',
+                  className: 'DataTask'
+                }
+            }
+          }
+        };
+        requestModel = client.serializer.serialize(requestModelMapper, entities, 'entities');
+        requestContent = JSON.stringify(requestModel);
+      }
+    } catch (error) {
+      let serializationError = new Error(`Error "${error.message}" occurred in serializing the ` +
+          `payload - ${JSON.stringify(entities, null, 2)}.`);
+      return Promise.reject(serializationError);
+    }
+    httpRequest.body = requestContent;
+    // Send Request
+    let operationRes: msRest.HttpOperationResponse;
+    try {
+      operationRes = await client.pipeline(httpRequest);
+      let response = operationRes.response;
+      let statusCode = response.status;
+      if (statusCode !== 200) {
+        let error = new msRest.RestError(operationRes.bodyAsText as string);
+        error.statusCode = response.status;
+        error.request = msRest.stripRequest(httpRequest);
+        error.response = msRest.stripResponse(response);
+        let parsedErrorResponse = operationRes.bodyAsJson as { [key: string]: any };
+        try {
+          if (parsedErrorResponse) {
+            let internalError = null;
+            if (parsedErrorResponse.error) internalError = parsedErrorResponse.error;
+            error.code = internalError ? internalError.code : parsedErrorResponse.code;
+            error.message = internalError ? internalError.message : parsedErrorResponse.message;
+          }
+        } catch (defaultError) {
+          error.message = `Error "${defaultError.message}" occurred in deserializing the responseBody ` +
+                           `- "${operationRes.bodyAsText}" for the default response.`;
+          return Promise.reject(error);
+        }
+        return Promise.reject(error);
+      }
+      // Deserialize Response
+      if (statusCode === 200) {
+        let parsedResponse = operationRes.bodyAsJson as { [key: string]: any };
+        try {
+          if (parsedResponse !== null && parsedResponse !== undefined) {
+            let resultMapper = {
+              required: false,
+              serializedName: 'parsedResponse',
+              type: {
+                name: 'Boolean'
+              }
+            };
+            operationRes.bodyAsJson = client.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.bodyAsJson');
+          }
+        } catch (error) {
+          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
+          deserializationError.request = msRest.stripRequest(httpRequest);
+          deserializationError.response = msRest.stripResponse(response);
+          return Promise.reject(deserializationError);
+        }
+      }
+
+    } catch(err) {
+      return Promise.reject(err);
+    }
+
+    return Promise.resolve(operationRes);
+  }
+  // methods on the client.
+
+  /**
    * @param {number} entityId
    *
    * @param {RequestOptionsBase} [options] Optional Parameters.
@@ -1946,6 +2063,123 @@ class IntegratorAPI extends msRest.ServiceClient {
   // methods on the client.
 
   /**
+   * @param {IntegratorAPIRestDataTaskGroupUpdateArrayPutOptionalParams}
+   * [options] Optional Parameters.
+   *
+   * @returns {Promise} A promise is returned
+   *
+   * @resolve {HttpOperationResponse} - The deserialized result object.
+   *
+   * @reject {Error|ServiceError} - The error object.
+   */
+  async restDataTaskGroupUpdateArrayPutWithHttpOperationResponse(options?: Models.IntegratorAPIRestDataTaskGroupUpdateArrayPutOptionalParams): Promise<msRest.HttpOperationResponse> {
+    let client = this;
+    let entities = (options && options.entities !== undefined) ? options.entities : undefined;
+
+    // Construct URL
+    let baseUrl = this.baseUri;
+    let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'rest/DataTaskGroup/UpdateArray';
+
+    // Create HTTP transport objects
+    let httpRequest = new WebResource();
+    httpRequest.method = 'PUT';
+    httpRequest.url = requestUrl;
+    httpRequest.headers = {};
+    // Set Headers
+    httpRequest.headers['Content-Type'] = 'application/json-patch+json; charset=utf-8';
+    if(options && options.customHeaders) {
+      for(let headerName in options.customHeaders) {
+        if (options.customHeaders.hasOwnProperty(headerName)) {
+          httpRequest.headers[headerName] = options.customHeaders[headerName];
+        }
+      }
+    }
+    // Serialize Request
+    let requestContent = null;
+    let requestModel = null;
+    try {
+      if (entities !== null && entities !== undefined) {
+        let requestModelMapper = {
+          required: false,
+          serializedName: 'entities',
+          type: {
+            name: 'Sequence',
+            element: {
+                required: false,
+                serializedName: 'DataTaskGroupElementType',
+                type: {
+                  name: 'Composite',
+                  className: 'DataTaskGroup'
+                }
+            }
+          }
+        };
+        requestModel = client.serializer.serialize(requestModelMapper, entities, 'entities');
+        requestContent = JSON.stringify(requestModel);
+      }
+    } catch (error) {
+      let serializationError = new Error(`Error "${error.message}" occurred in serializing the ` +
+          `payload - ${JSON.stringify(entities, null, 2)}.`);
+      return Promise.reject(serializationError);
+    }
+    httpRequest.body = requestContent;
+    // Send Request
+    let operationRes: msRest.HttpOperationResponse;
+    try {
+      operationRes = await client.pipeline(httpRequest);
+      let response = operationRes.response;
+      let statusCode = response.status;
+      if (statusCode !== 200) {
+        let error = new msRest.RestError(operationRes.bodyAsText as string);
+        error.statusCode = response.status;
+        error.request = msRest.stripRequest(httpRequest);
+        error.response = msRest.stripResponse(response);
+        let parsedErrorResponse = operationRes.bodyAsJson as { [key: string]: any };
+        try {
+          if (parsedErrorResponse) {
+            let internalError = null;
+            if (parsedErrorResponse.error) internalError = parsedErrorResponse.error;
+            error.code = internalError ? internalError.code : parsedErrorResponse.code;
+            error.message = internalError ? internalError.message : parsedErrorResponse.message;
+          }
+        } catch (defaultError) {
+          error.message = `Error "${defaultError.message}" occurred in deserializing the responseBody ` +
+                           `- "${operationRes.bodyAsText}" for the default response.`;
+          return Promise.reject(error);
+        }
+        return Promise.reject(error);
+      }
+      // Deserialize Response
+      if (statusCode === 200) {
+        let parsedResponse = operationRes.bodyAsJson as { [key: string]: any };
+        try {
+          if (parsedResponse !== null && parsedResponse !== undefined) {
+            let resultMapper = {
+              required: false,
+              serializedName: 'parsedResponse',
+              type: {
+                name: 'Boolean'
+              }
+            };
+            operationRes.bodyAsJson = client.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.bodyAsJson');
+          }
+        } catch (error) {
+          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
+          deserializationError.request = msRest.stripRequest(httpRequest);
+          deserializationError.response = msRest.stripResponse(response);
+          return Promise.reject(deserializationError);
+        }
+      }
+
+    } catch(err) {
+      return Promise.reject(err);
+    }
+
+    return Promise.resolve(operationRes);
+  }
+  // methods on the client.
+
+  /**
    * @param {RequestOptionsBase} [options] Optional Parameters.
    *
    * @returns {Promise} A promise is returned
@@ -2114,6 +2348,236 @@ class IntegratorAPI extends msRest.ServiceClient {
           deserializationError.response = msRest.stripResponse(response);
           return Promise.reject(deserializationError);
         }
+      }
+
+    } catch(err) {
+      return Promise.reject(err);
+    }
+
+    return Promise.resolve(operationRes);
+  }
+  // methods on the client.
+
+  /**
+   * @param {number} pageNumber
+   *
+   * @param {number} pageSize
+   *
+   * @param {boolean} sortDesc
+   *
+   * @param {IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams}
+   * [options] Optional Parameters.
+   *
+   * @returns {Promise} A promise is returned
+   *
+   * @resolve {HttpOperationResponse} - The deserialized result object.
+   *
+   * @reject {Error|ServiceError} - The error object.
+   */
+  async restEntityStatusGetEntityStatusShortPostWithHttpOperationResponse(pageNumber: number, pageSize: number, sortDesc: boolean, options?: Models.IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams): Promise<msRest.HttpOperationResponse> {
+    let client = this;
+    let fieldFilters = (options && options.fieldFilters !== undefined) ? options.fieldFilters : undefined;
+    let sortBy = (options && options.sortBy !== undefined) ? options.sortBy : undefined;
+    // Validate
+    try {
+      if (pageNumber === null || pageNumber === undefined || typeof pageNumber !== 'number') {
+        throw new Error('pageNumber cannot be null or undefined and it must be of type number.');
+      }
+      if (pageSize === null || pageSize === undefined || typeof pageSize !== 'number') {
+        throw new Error('pageSize cannot be null or undefined and it must be of type number.');
+      }
+      if (sortDesc === null || sortDesc === undefined || typeof sortDesc !== 'boolean') {
+        throw new Error('sortDesc cannot be null or undefined and it must be of type boolean.');
+      }
+      if (sortBy !== null && sortBy !== undefined && typeof sortBy.valueOf() !== 'string') {
+        throw new Error('sortBy must be of type string.');
+      }
+    } catch (error) {
+      return Promise.reject(error);
+    }
+
+    // Construct URL
+    let baseUrl = this.baseUri;
+    let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'rest/EntityStatus/GetEntityStatusShort';
+    let queryParamsArray: Array<any> = [];
+    queryParamsArray.push('pageNumber=' + encodeURIComponent(pageNumber.toString()));
+    queryParamsArray.push('pageSize=' + encodeURIComponent(pageSize.toString()));
+    queryParamsArray.push('sortDesc=' + encodeURIComponent(sortDesc.toString()));
+    if (sortBy !== null && sortBy !== undefined) {
+      queryParamsArray.push('sortBy=' + encodeURIComponent(sortBy));
+    }
+    if (queryParamsArray.length > 0) {
+      requestUrl += '?' + queryParamsArray.join('&');
+    }
+
+    // Create HTTP transport objects
+    let httpRequest = new WebResource();
+    httpRequest.method = 'POST';
+    httpRequest.url = requestUrl;
+    httpRequest.headers = {};
+    // Set Headers
+    httpRequest.headers['Content-Type'] = 'application/json-patch+json; charset=utf-8';
+    if(options && options.customHeaders) {
+      for(let headerName in options.customHeaders) {
+        if (options.customHeaders.hasOwnProperty(headerName)) {
+          httpRequest.headers[headerName] = options.customHeaders[headerName];
+        }
+      }
+    }
+    // Serialize Request
+    let requestContent = null;
+    let requestModel = null;
+    try {
+      if (fieldFilters !== null && fieldFilters !== undefined) {
+        let requestModelMapper = {
+          required: false,
+          serializedName: 'fieldFilters',
+          type: {
+            name: 'Sequence',
+            element: {
+                required: false,
+                serializedName: 'FieldFilterEntityStatusElementType',
+                type: {
+                  name: 'Composite',
+                  className: 'FieldFilterEntityStatus'
+                }
+            }
+          }
+        };
+        requestModel = client.serializer.serialize(requestModelMapper, fieldFilters, 'fieldFilters');
+        requestContent = JSON.stringify(requestModel);
+      }
+    } catch (error) {
+      let serializationError = new Error(`Error "${error.message}" occurred in serializing the ` +
+          `payload - ${JSON.stringify(fieldFilters, null, 2)}.`);
+      return Promise.reject(serializationError);
+    }
+    httpRequest.body = requestContent;
+    // Send Request
+    let operationRes: msRest.HttpOperationResponse;
+    try {
+      operationRes = await client.pipeline(httpRequest);
+      let response = operationRes.response;
+      let statusCode = response.status;
+      if (statusCode !== 200) {
+        let error = new msRest.RestError(operationRes.bodyAsText as string);
+        error.statusCode = response.status;
+        error.request = msRest.stripRequest(httpRequest);
+        error.response = msRest.stripResponse(response);
+        let parsedErrorResponse = operationRes.bodyAsJson as { [key: string]: any };
+        try {
+          if (parsedErrorResponse) {
+            let internalError = null;
+            if (parsedErrorResponse.error) internalError = parsedErrorResponse.error;
+            error.code = internalError ? internalError.code : parsedErrorResponse.code;
+            error.message = internalError ? internalError.message : parsedErrorResponse.message;
+          }
+        } catch (defaultError) {
+          error.message = `Error "${defaultError.message}" occurred in deserializing the responseBody ` +
+                           `- "${operationRes.bodyAsText}" for the default response.`;
+          return Promise.reject(error);
+        }
+        return Promise.reject(error);
+      }
+
+    } catch(err) {
+      return Promise.reject(err);
+    }
+
+    return Promise.resolve(operationRes);
+  }
+  // methods on the client.
+
+  /**
+   * @param {number} entityStatusId
+   *
+   * @param {ContentType} contentType Possible values include: 'InContent',
+   * 'OutContent'
+   *
+   * @param {string} entityStatusId1
+   *
+   * @param {string} contentType1
+   *
+   * @param {RequestOptionsBase} [options] Optional Parameters.
+   *
+   * @returns {Promise} A promise is returned
+   *
+   * @resolve {HttpOperationResponse} - The deserialized result object.
+   *
+   * @reject {Error|ServiceError} - The error object.
+   */
+  async restEntityStatusGetContentOfEntityStatusByEntityStatusIdByContentTypeGetWithHttpOperationResponse(entityStatusId: number, contentType: Models.ContentType, entityStatusId1: string, contentType1: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse> {
+    let client = this;
+    // Validate
+    try {
+      if (entityStatusId === null || entityStatusId === undefined || typeof entityStatusId !== 'number') {
+        throw new Error('entityStatusId cannot be null or undefined and it must be of type number.');
+      }
+      if (contentType === null || contentType === undefined || typeof contentType.valueOf() !== 'string') {
+        throw new Error('contentType cannot be null or undefined and it must be of type string.');
+      }
+      if (entityStatusId1 === null || entityStatusId1 === undefined || typeof entityStatusId1.valueOf() !== 'string') {
+        throw new Error('entityStatusId1 cannot be null or undefined and it must be of type string.');
+      }
+      if (contentType1 === null || contentType1 === undefined || typeof contentType1.valueOf() !== 'string') {
+        throw new Error('contentType1 cannot be null or undefined and it must be of type string.');
+      }
+    } catch (error) {
+      return Promise.reject(error);
+    }
+
+    // Construct URL
+    let baseUrl = this.baseUri;
+    let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'rest/EntityStatus/GetContentOfEntityStatus/{entityStatusId}/{contentType}';
+    requestUrl = requestUrl.replace('{entityStatusId}', encodeURIComponent(entityStatusId1));
+    requestUrl = requestUrl.replace('{contentType}', encodeURIComponent(contentType1));
+
+    // Create HTTP transport objects
+    let httpRequest = new WebResource();
+    httpRequest.method = 'GET';
+    httpRequest.url = requestUrl;
+    httpRequest.headers = {};
+    // Set Headers
+    httpRequest.headers['Content-Type'] = 'application/json; charset=utf-8';
+    if (entityStatusId !== undefined && entityStatusId !== null) {
+      httpRequest.headers['entityStatusId'] = entityStatusId.toString();
+    }
+    if (contentType !== undefined && contentType !== null) {
+      httpRequest.headers['contentType'] = contentType;
+    }
+    if(options && options.customHeaders) {
+      for(let headerName in options.customHeaders) {
+        if (options.customHeaders.hasOwnProperty(headerName)) {
+          httpRequest.headers[headerName] = options.customHeaders[headerName];
+        }
+      }
+    }
+    httpRequest.body = null;
+    // Send Request
+    let operationRes: msRest.HttpOperationResponse;
+    try {
+      operationRes = await client.pipeline(httpRequest);
+      let response = operationRes.response;
+      let statusCode = response.status;
+      if (statusCode !== 200) {
+        let error = new msRest.RestError(operationRes.bodyAsText as string);
+        error.statusCode = response.status;
+        error.request = msRest.stripRequest(httpRequest);
+        error.response = msRest.stripResponse(response);
+        let parsedErrorResponse = operationRes.bodyAsJson as { [key: string]: any };
+        try {
+          if (parsedErrorResponse) {
+            let internalError = null;
+            if (parsedErrorResponse.error) internalError = parsedErrorResponse.error;
+            error.code = internalError ? internalError.code : parsedErrorResponse.code;
+            error.message = internalError ? internalError.message : parsedErrorResponse.message;
+          }
+        } catch (defaultError) {
+          error.message = `Error "${defaultError.message}" occurred in deserializing the responseBody ` +
+                           `- "${operationRes.bodyAsText}" for the default response.`;
+          return Promise.reject(error);
+        }
+        return Promise.reject(error);
       }
 
     } catch(err) {
@@ -2851,6 +3315,123 @@ class IntegratorAPI extends msRest.ServiceClient {
   // methods on the client.
 
   /**
+   * @param {IntegratorAPIRestEntityStatusUpdateArrayPutOptionalParams} [options]
+   * Optional Parameters.
+   *
+   * @returns {Promise} A promise is returned
+   *
+   * @resolve {HttpOperationResponse} - The deserialized result object.
+   *
+   * @reject {Error|ServiceError} - The error object.
+   */
+  async restEntityStatusUpdateArrayPutWithHttpOperationResponse(options?: Models.IntegratorAPIRestEntityStatusUpdateArrayPutOptionalParams): Promise<msRest.HttpOperationResponse> {
+    let client = this;
+    let entities = (options && options.entities !== undefined) ? options.entities : undefined;
+
+    // Construct URL
+    let baseUrl = this.baseUri;
+    let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'rest/EntityStatus/UpdateArray';
+
+    // Create HTTP transport objects
+    let httpRequest = new WebResource();
+    httpRequest.method = 'PUT';
+    httpRequest.url = requestUrl;
+    httpRequest.headers = {};
+    // Set Headers
+    httpRequest.headers['Content-Type'] = 'application/json-patch+json; charset=utf-8';
+    if(options && options.customHeaders) {
+      for(let headerName in options.customHeaders) {
+        if (options.customHeaders.hasOwnProperty(headerName)) {
+          httpRequest.headers[headerName] = options.customHeaders[headerName];
+        }
+      }
+    }
+    // Serialize Request
+    let requestContent = null;
+    let requestModel = null;
+    try {
+      if (entities !== null && entities !== undefined) {
+        let requestModelMapper = {
+          required: false,
+          serializedName: 'entities',
+          type: {
+            name: 'Sequence',
+            element: {
+                required: false,
+                serializedName: 'EntityStatusElementType',
+                type: {
+                  name: 'Composite',
+                  className: 'EntityStatus'
+                }
+            }
+          }
+        };
+        requestModel = client.serializer.serialize(requestModelMapper, entities, 'entities');
+        requestContent = JSON.stringify(requestModel);
+      }
+    } catch (error) {
+      let serializationError = new Error(`Error "${error.message}" occurred in serializing the ` +
+          `payload - ${JSON.stringify(entities, null, 2)}.`);
+      return Promise.reject(serializationError);
+    }
+    httpRequest.body = requestContent;
+    // Send Request
+    let operationRes: msRest.HttpOperationResponse;
+    try {
+      operationRes = await client.pipeline(httpRequest);
+      let response = operationRes.response;
+      let statusCode = response.status;
+      if (statusCode !== 200) {
+        let error = new msRest.RestError(operationRes.bodyAsText as string);
+        error.statusCode = response.status;
+        error.request = msRest.stripRequest(httpRequest);
+        error.response = msRest.stripResponse(response);
+        let parsedErrorResponse = operationRes.bodyAsJson as { [key: string]: any };
+        try {
+          if (parsedErrorResponse) {
+            let internalError = null;
+            if (parsedErrorResponse.error) internalError = parsedErrorResponse.error;
+            error.code = internalError ? internalError.code : parsedErrorResponse.code;
+            error.message = internalError ? internalError.message : parsedErrorResponse.message;
+          }
+        } catch (defaultError) {
+          error.message = `Error "${defaultError.message}" occurred in deserializing the responseBody ` +
+                           `- "${operationRes.bodyAsText}" for the default response.`;
+          return Promise.reject(error);
+        }
+        return Promise.reject(error);
+      }
+      // Deserialize Response
+      if (statusCode === 200) {
+        let parsedResponse = operationRes.bodyAsJson as { [key: string]: any };
+        try {
+          if (parsedResponse !== null && parsedResponse !== undefined) {
+            let resultMapper = {
+              required: false,
+              serializedName: 'parsedResponse',
+              type: {
+                name: 'Boolean'
+              }
+            };
+            operationRes.bodyAsJson = client.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.bodyAsJson');
+          }
+        } catch (error) {
+          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
+          deserializationError.request = msRest.stripRequest(httpRequest);
+          deserializationError.response = msRest.stripResponse(response);
+          return Promise.reject(deserializationError);
+        }
+      }
+
+    } catch(err) {
+      return Promise.reject(err);
+    }
+
+    return Promise.resolve(operationRes);
+  }
+  // methods on the client.
+
+  /**
    * @param {number} taskStatusId
    *
    * @param {RequestOptionsBase} [options] Optional Parameters.
@@ -3269,12 +3850,12 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    * @reject {Error|ServiceError} - The error object.
    */
-  async restSchedulerGetDatabaseGetDatabaseGetWithHttpOperationResponse(options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse> {
+  async restSchedulerGetDatabaseGetWithHttpOperationResponse(options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse> {
     let client = this;
 
     // Construct URL
     let baseUrl = this.baseUri;
-    let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'rest/Scheduler/GetDatabase/GetDatabase';
+    let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'rest/Scheduler/GetDatabase';
 
     // Create HTTP transport objects
     let httpRequest = new WebResource();
@@ -3651,6 +4232,103 @@ class IntegratorAPI extends msRest.ServiceClient {
           return Promise.reject(error);
         }
         return Promise.reject(error);
+      }
+
+    } catch(err) {
+      return Promise.reject(err);
+    }
+
+    return Promise.resolve(operationRes);
+  }
+  // methods on the client.
+
+  /**
+   * @param {IntegratorAPIRestSchedulerResendEntityPostOptionalParams} [options]
+   * Optional Parameters.
+   *
+   * @returns {Promise} A promise is returned
+   *
+   * @resolve {HttpOperationResponse} - The deserialized result object.
+   *
+   * @reject {Error|ServiceError} - The error object.
+   */
+  async restSchedulerResendEntityPostWithHttpOperationResponse(options?: Models.IntegratorAPIRestSchedulerResendEntityPostOptionalParams): Promise<msRest.HttpOperationResponse> {
+    let client = this;
+    let entityStatus = (options && options.entityStatus !== undefined) ? options.entityStatus : undefined;
+
+    // Construct URL
+    let baseUrl = this.baseUri;
+    let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'rest/Scheduler/ResendEntity';
+
+    // Create HTTP transport objects
+    let httpRequest = new WebResource();
+    httpRequest.method = 'POST';
+    httpRequest.url = requestUrl;
+    httpRequest.headers = {};
+    // Set Headers
+    httpRequest.headers['Content-Type'] = 'application/json-patch+json; charset=utf-8';
+    if(options && options.customHeaders) {
+      for(let headerName in options.customHeaders) {
+        if (options.customHeaders.hasOwnProperty(headerName)) {
+          httpRequest.headers[headerName] = options.customHeaders[headerName];
+        }
+      }
+    }
+    // Serialize Request
+    let requestContent = null;
+    let requestModel = null;
+    try {
+      if (entityStatus !== null && entityStatus !== undefined) {
+        let requestModelMapper = Mappers.EntityStatus;
+        requestModel = client.serializer.serialize(requestModelMapper, entityStatus, 'entityStatus');
+        requestContent = JSON.stringify(requestModel);
+      }
+    } catch (error) {
+      let serializationError = new Error(`Error "${error.message}" occurred in serializing the ` +
+          `payload - ${JSON.stringify(entityStatus, null, 2)}.`);
+      return Promise.reject(serializationError);
+    }
+    httpRequest.body = requestContent;
+    // Send Request
+    let operationRes: msRest.HttpOperationResponse;
+    try {
+      operationRes = await client.pipeline(httpRequest);
+      let response = operationRes.response;
+      let statusCode = response.status;
+      if (statusCode !== 200) {
+        let error = new msRest.RestError(operationRes.bodyAsText as string);
+        error.statusCode = response.status;
+        error.request = msRest.stripRequest(httpRequest);
+        error.response = msRest.stripResponse(response);
+        let parsedErrorResponse = operationRes.bodyAsJson as { [key: string]: any };
+        try {
+          if (parsedErrorResponse) {
+            let internalError = null;
+            if (parsedErrorResponse.error) internalError = parsedErrorResponse.error;
+            error.code = internalError ? internalError.code : parsedErrorResponse.code;
+            error.message = internalError ? internalError.message : parsedErrorResponse.message;
+          }
+        } catch (defaultError) {
+          error.message = `Error "${defaultError.message}" occurred in deserializing the responseBody ` +
+                           `- "${operationRes.bodyAsText}" for the default response.`;
+          return Promise.reject(error);
+        }
+        return Promise.reject(error);
+      }
+      // Deserialize Response
+      if (statusCode === 200) {
+        let parsedResponse = operationRes.bodyAsJson as { [key: string]: any };
+        try {
+          if (parsedResponse !== null && parsedResponse !== undefined) {
+            let resultMapper = Mappers.IEntityStatus;
+            operationRes.bodyAsJson = client.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.bodyAsJson');
+          }
+        } catch (error) {
+          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
+          deserializationError.request = msRest.stripRequest(httpRequest);
+          deserializationError.response = msRest.stripResponse(response);
+          return Promise.reject(deserializationError);
+        }
       }
 
     } catch(err) {
@@ -4277,6 +4955,49 @@ class IntegratorAPI extends msRest.ServiceClient {
   }
 
   /**
+   * @param {IntegratorAPIRestDataTaskUpdateArrayPutOptionalParams} [options]
+   * Optional Parameters.
+   *
+   * @param {ServiceCallback} callback - The callback.
+   *
+   * @returns {ServiceCallback} callback(err, result, request, response)
+   *
+   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
+   *
+   *                      {boolean} [result]   - The deserialized result object if an error did not occur.
+   *
+   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
+   *
+   *                      {Response} [response] - The HTTP Response stream if an error did not occur.
+   */
+  restDataTaskUpdateArrayPut(): Promise<boolean>;
+  restDataTaskUpdateArrayPut(options: Models.IntegratorAPIRestDataTaskUpdateArrayPutOptionalParams): Promise<boolean>;
+  restDataTaskUpdateArrayPut(callback: msRest.ServiceCallback<boolean>): void;
+  restDataTaskUpdateArrayPut(options: Models.IntegratorAPIRestDataTaskUpdateArrayPutOptionalParams, callback: msRest.ServiceCallback<boolean>): void;
+  restDataTaskUpdateArrayPut(options?: Models.IntegratorAPIRestDataTaskUpdateArrayPutOptionalParams, callback?: msRest.ServiceCallback<boolean>): any {
+    if (!callback && typeof options === 'function') {
+      callback = options;
+      options = undefined;
+    }
+    let cb = callback as msRest.ServiceCallback<boolean>;
+    if (!callback) {
+      return this.restDataTaskUpdateArrayPutWithHttpOperationResponse(options).then((operationRes: msRest.HttpOperationResponse) => {
+        return Promise.resolve(operationRes.bodyAsJson as boolean);
+      }).catch((err: Error) => {
+        return Promise.reject(err);
+      });
+    } else {
+      msRest.promiseToCallback(this.restDataTaskUpdateArrayPutWithHttpOperationResponse(options))((err: Error, data: msRest.HttpOperationResponse) => {
+        if (err) {
+          return cb(err);
+        }
+        let result = data.bodyAsJson as boolean;
+        return cb(err, result, data.request, data.response);
+      });
+    }
+  }
+
+  /**
    * @param {number} entityId
    *
    * @param {RequestOptionsBase} [options] Optional Parameters.
@@ -4588,6 +5309,49 @@ class IntegratorAPI extends msRest.ServiceClient {
   }
 
   /**
+   * @param {IntegratorAPIRestDataTaskGroupUpdateArrayPutOptionalParams}
+   * [options] Optional Parameters.
+   *
+   * @param {ServiceCallback} callback - The callback.
+   *
+   * @returns {ServiceCallback} callback(err, result, request, response)
+   *
+   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
+   *
+   *                      {boolean} [result]   - The deserialized result object if an error did not occur.
+   *
+   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
+   *
+   *                      {Response} [response] - The HTTP Response stream if an error did not occur.
+   */
+  restDataTaskGroupUpdateArrayPut(): Promise<boolean>;
+  restDataTaskGroupUpdateArrayPut(options: Models.IntegratorAPIRestDataTaskGroupUpdateArrayPutOptionalParams): Promise<boolean>;
+  restDataTaskGroupUpdateArrayPut(callback: msRest.ServiceCallback<boolean>): void;
+  restDataTaskGroupUpdateArrayPut(options: Models.IntegratorAPIRestDataTaskGroupUpdateArrayPutOptionalParams, callback: msRest.ServiceCallback<boolean>): void;
+  restDataTaskGroupUpdateArrayPut(options?: Models.IntegratorAPIRestDataTaskGroupUpdateArrayPutOptionalParams, callback?: msRest.ServiceCallback<boolean>): any {
+    if (!callback && typeof options === 'function') {
+      callback = options;
+      options = undefined;
+    }
+    let cb = callback as msRest.ServiceCallback<boolean>;
+    if (!callback) {
+      return this.restDataTaskGroupUpdateArrayPutWithHttpOperationResponse(options).then((operationRes: msRest.HttpOperationResponse) => {
+        return Promise.resolve(operationRes.bodyAsJson as boolean);
+      }).catch((err: Error) => {
+        return Promise.reject(err);
+      });
+    } else {
+      msRest.promiseToCallback(this.restDataTaskGroupUpdateArrayPutWithHttpOperationResponse(options))((err: Error, data: msRest.HttpOperationResponse) => {
+        if (err) {
+          return cb(err);
+        }
+        let result = data.bodyAsJson as boolean;
+        return cb(err, result, data.request, data.response);
+      });
+    }
+  }
+
+  /**
    * @param {RequestOptionsBase} [options] Optional Parameters.
    *
    * @param {ServiceCallback} callback - The callback.
@@ -4670,6 +5434,106 @@ class IntegratorAPI extends msRest.ServiceClient {
           return cb(err);
         }
         let result = data.bodyAsJson as boolean;
+        return cb(err, result, data.request, data.response);
+      });
+    }
+  }
+
+  /**
+   * @param {number} pageNumber
+   *
+   * @param {number} pageSize
+   *
+   * @param {boolean} sortDesc
+   *
+   * @param {IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams}
+   * [options] Optional Parameters.
+   *
+   * @param {ServiceCallback} callback - The callback.
+   *
+   * @returns {ServiceCallback} callback(err, result, request, response)
+   *
+   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
+   *
+   *                      {void} [result]   - The deserialized result object if an error did not occur.
+   *
+   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
+   *
+   *                      {Response} [response] - The HTTP Response stream if an error did not occur.
+   */
+  restEntityStatusGetEntityStatusShortPost(pageNumber: number, pageSize: number, sortDesc: boolean): Promise<void>;
+  restEntityStatusGetEntityStatusShortPost(pageNumber: number, pageSize: number, sortDesc: boolean, options: Models.IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams): Promise<void>;
+  restEntityStatusGetEntityStatusShortPost(pageNumber: number, pageSize: number, sortDesc: boolean, callback: msRest.ServiceCallback<void>): void;
+  restEntityStatusGetEntityStatusShortPost(pageNumber: number, pageSize: number, sortDesc: boolean, options: Models.IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams, callback: msRest.ServiceCallback<void>): void;
+  restEntityStatusGetEntityStatusShortPost(pageNumber: number, pageSize: number, sortDesc: boolean, options?: Models.IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams, callback?: msRest.ServiceCallback<void>): any {
+    if (!callback && typeof options === 'function') {
+      callback = options;
+      options = undefined;
+    }
+    let cb = callback as msRest.ServiceCallback<void>;
+    if (!callback) {
+      return this.restEntityStatusGetEntityStatusShortPostWithHttpOperationResponse(pageNumber, pageSize, sortDesc, options).then((operationRes: msRest.HttpOperationResponse) => {
+        return Promise.resolve(operationRes.bodyAsJson as void);
+      }).catch((err: Error) => {
+        return Promise.reject(err);
+      });
+    } else {
+      msRest.promiseToCallback(this.restEntityStatusGetEntityStatusShortPostWithHttpOperationResponse(pageNumber, pageSize, sortDesc, options))((err: Error, data: msRest.HttpOperationResponse) => {
+        if (err) {
+          return cb(err);
+        }
+        let result = data.bodyAsJson as void;
+        return cb(err, result, data.request, data.response);
+      });
+    }
+  }
+
+  /**
+   * @param {number} entityStatusId
+   *
+   * @param {ContentType} contentType Possible values include: 'InContent',
+   * 'OutContent'
+   *
+   * @param {string} entityStatusId1
+   *
+   * @param {string} contentType1
+   *
+   * @param {RequestOptionsBase} [options] Optional Parameters.
+   *
+   * @param {ServiceCallback} callback - The callback.
+   *
+   * @returns {ServiceCallback} callback(err, result, request, response)
+   *
+   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
+   *
+   *                      {void} [result]   - The deserialized result object if an error did not occur.
+   *
+   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
+   *
+   *                      {Response} [response] - The HTTP Response stream if an error did not occur.
+   */
+  restEntityStatusGetContentOfEntityStatusByEntityStatusIdByContentTypeGet(entityStatusId: number, contentType: Models.ContentType, entityStatusId1: string, contentType1: string): Promise<void>;
+  restEntityStatusGetContentOfEntityStatusByEntityStatusIdByContentTypeGet(entityStatusId: number, contentType: Models.ContentType, entityStatusId1: string, contentType1: string, options: msRest.RequestOptionsBase): Promise<void>;
+  restEntityStatusGetContentOfEntityStatusByEntityStatusIdByContentTypeGet(entityStatusId: number, contentType: Models.ContentType, entityStatusId1: string, contentType1: string, callback: msRest.ServiceCallback<void>): void;
+  restEntityStatusGetContentOfEntityStatusByEntityStatusIdByContentTypeGet(entityStatusId: number, contentType: Models.ContentType, entityStatusId1: string, contentType1: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  restEntityStatusGetContentOfEntityStatusByEntityStatusIdByContentTypeGet(entityStatusId: number, contentType: Models.ContentType, entityStatusId1: string, contentType1: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
+    if (!callback && typeof options === 'function') {
+      callback = options;
+      options = undefined;
+    }
+    let cb = callback as msRest.ServiceCallback<void>;
+    if (!callback) {
+      return this.restEntityStatusGetContentOfEntityStatusByEntityStatusIdByContentTypeGetWithHttpOperationResponse(entityStatusId, contentType, entityStatusId1, contentType1, options).then((operationRes: msRest.HttpOperationResponse) => {
+        return Promise.resolve(operationRes.bodyAsJson as void);
+      }).catch((err: Error) => {
+        return Promise.reject(err);
+      });
+    } else {
+      msRest.promiseToCallback(this.restEntityStatusGetContentOfEntityStatusByEntityStatusIdByContentTypeGetWithHttpOperationResponse(entityStatusId, contentType, entityStatusId1, contentType1, options))((err: Error, data: msRest.HttpOperationResponse) => {
+        if (err) {
+          return cb(err);
+        }
+        let result = data.bodyAsJson as void;
         return cb(err, result, data.request, data.response);
       });
     }
@@ -4987,6 +5851,49 @@ class IntegratorAPI extends msRest.ServiceClient {
   }
 
   /**
+   * @param {IntegratorAPIRestEntityStatusUpdateArrayPutOptionalParams} [options]
+   * Optional Parameters.
+   *
+   * @param {ServiceCallback} callback - The callback.
+   *
+   * @returns {ServiceCallback} callback(err, result, request, response)
+   *
+   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
+   *
+   *                      {boolean} [result]   - The deserialized result object if an error did not occur.
+   *
+   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
+   *
+   *                      {Response} [response] - The HTTP Response stream if an error did not occur.
+   */
+  restEntityStatusUpdateArrayPut(): Promise<boolean>;
+  restEntityStatusUpdateArrayPut(options: Models.IntegratorAPIRestEntityStatusUpdateArrayPutOptionalParams): Promise<boolean>;
+  restEntityStatusUpdateArrayPut(callback: msRest.ServiceCallback<boolean>): void;
+  restEntityStatusUpdateArrayPut(options: Models.IntegratorAPIRestEntityStatusUpdateArrayPutOptionalParams, callback: msRest.ServiceCallback<boolean>): void;
+  restEntityStatusUpdateArrayPut(options?: Models.IntegratorAPIRestEntityStatusUpdateArrayPutOptionalParams, callback?: msRest.ServiceCallback<boolean>): any {
+    if (!callback && typeof options === 'function') {
+      callback = options;
+      options = undefined;
+    }
+    let cb = callback as msRest.ServiceCallback<boolean>;
+    if (!callback) {
+      return this.restEntityStatusUpdateArrayPutWithHttpOperationResponse(options).then((operationRes: msRest.HttpOperationResponse) => {
+        return Promise.resolve(operationRes.bodyAsJson as boolean);
+      }).catch((err: Error) => {
+        return Promise.reject(err);
+      });
+    } else {
+      msRest.promiseToCallback(this.restEntityStatusUpdateArrayPutWithHttpOperationResponse(options))((err: Error, data: msRest.HttpOperationResponse) => {
+        if (err) {
+          return cb(err);
+        }
+        let result = data.bodyAsJson as boolean;
+        return cb(err, result, data.request, data.response);
+      });
+    }
+  }
+
+  /**
    * @param {number} taskStatusId
    *
    * @param {RequestOptionsBase} [options] Optional Parameters.
@@ -5179,24 +6086,24 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    *                      {Response} [response] - The HTTP Response stream if an error did not occur.
    */
-  restSchedulerGetDatabaseGetDatabaseGet(): Promise<Models.Stream>;
-  restSchedulerGetDatabaseGetDatabaseGet(options: msRest.RequestOptionsBase): Promise<Models.Stream>;
-  restSchedulerGetDatabaseGetDatabaseGet(callback: msRest.ServiceCallback<Models.Stream>): void;
-  restSchedulerGetDatabaseGetDatabaseGet(options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.Stream>): void;
-  restSchedulerGetDatabaseGetDatabaseGet(options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<Models.Stream>): any {
+  restSchedulerGetDatabaseGet(): Promise<Models.Stream>;
+  restSchedulerGetDatabaseGet(options: msRest.RequestOptionsBase): Promise<Models.Stream>;
+  restSchedulerGetDatabaseGet(callback: msRest.ServiceCallback<Models.Stream>): void;
+  restSchedulerGetDatabaseGet(options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.Stream>): void;
+  restSchedulerGetDatabaseGet(options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<Models.Stream>): any {
     if (!callback && typeof options === 'function') {
       callback = options;
       options = undefined;
     }
     let cb = callback as msRest.ServiceCallback<Models.Stream>;
     if (!callback) {
-      return this.restSchedulerGetDatabaseGetDatabaseGetWithHttpOperationResponse(options).then((operationRes: msRest.HttpOperationResponse) => {
+      return this.restSchedulerGetDatabaseGetWithHttpOperationResponse(options).then((operationRes: msRest.HttpOperationResponse) => {
         return Promise.resolve(operationRes.bodyAsJson as Models.Stream);
       }).catch((err: Error) => {
         return Promise.reject(err);
       });
     } else {
-      msRest.promiseToCallback(this.restSchedulerGetDatabaseGetDatabaseGetWithHttpOperationResponse(options))((err: Error, data: msRest.HttpOperationResponse) => {
+      msRest.promiseToCallback(this.restSchedulerGetDatabaseGetWithHttpOperationResponse(options))((err: Error, data: msRest.HttpOperationResponse) => {
         if (err) {
           return cb(err);
         }
@@ -5334,6 +6241,50 @@ class IntegratorAPI extends msRest.ServiceClient {
           return cb(err);
         }
         let result = data.bodyAsJson as void;
+        return cb(err, result, data.request, data.response);
+      });
+    }
+  }
+
+  /**
+   * @param {IntegratorAPIRestSchedulerResendEntityPostOptionalParams} [options]
+   * Optional Parameters.
+   *
+   * @param {ServiceCallback} callback - The callback.
+   *
+   * @returns {ServiceCallback} callback(err, result, request, response)
+   *
+   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
+   *
+   *                      {Models.IEntityStatus} [result]   - The deserialized result object if an error did not occur.
+   *                      See {@link Models.IEntityStatus} for more information.
+   *
+   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
+   *
+   *                      {Response} [response] - The HTTP Response stream if an error did not occur.
+   */
+  restSchedulerResendEntityPost(): Promise<Models.IEntityStatus>;
+  restSchedulerResendEntityPost(options: Models.IntegratorAPIRestSchedulerResendEntityPostOptionalParams): Promise<Models.IEntityStatus>;
+  restSchedulerResendEntityPost(callback: msRest.ServiceCallback<Models.IEntityStatus>): void;
+  restSchedulerResendEntityPost(options: Models.IntegratorAPIRestSchedulerResendEntityPostOptionalParams, callback: msRest.ServiceCallback<Models.IEntityStatus>): void;
+  restSchedulerResendEntityPost(options?: Models.IntegratorAPIRestSchedulerResendEntityPostOptionalParams, callback?: msRest.ServiceCallback<Models.IEntityStatus>): any {
+    if (!callback && typeof options === 'function') {
+      callback = options;
+      options = undefined;
+    }
+    let cb = callback as msRest.ServiceCallback<Models.IEntityStatus>;
+    if (!callback) {
+      return this.restSchedulerResendEntityPostWithHttpOperationResponse(options).then((operationRes: msRest.HttpOperationResponse) => {
+        return Promise.resolve(operationRes.bodyAsJson as Models.IEntityStatus);
+      }).catch((err: Error) => {
+        return Promise.reject(err);
+      });
+    } else {
+      msRest.promiseToCallback(this.restSchedulerResendEntityPostWithHttpOperationResponse(options))((err: Error, data: msRest.HttpOperationResponse) => {
+        if (err) {
+          return cb(err);
+        }
+        let result = data.bodyAsJson as Models.IEntityStatus;
         return cb(err, result, data.request, data.response);
       });
     }

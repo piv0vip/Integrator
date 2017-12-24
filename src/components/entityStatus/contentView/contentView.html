@@ -6,9 +6,8 @@
                 View {{ content.getType() }} document
             </v-card-title>
             <v-card-text style="height: 700px;">
-                <pre v-highlightjs>
+                <pre v-highlightjs="content.toHTML()">
                     <code :class="content.getTypeFormat()">
-                        {{ content.toHTML() }}
                     </code>
                 </pre>
             </v-card-text>
