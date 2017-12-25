@@ -1965,6 +1965,40 @@ export const PagedListRequestLog = {
   }
 };
 
+export const PagedListResponseLog = {
+  required: false,
+  serializedName: 'PagedListResponse[Log]',
+  type: {
+    name: 'Composite',
+    className: 'PagedListResponseLog',
+    modelProperties: {
+      metadata: {
+        required: false,
+        serializedName: 'metadata',
+        type: {
+          name: 'Composite',
+          className: 'IPagedList'
+        }
+      },
+      entities: {
+        required: false,
+        serializedName: 'entities',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'LogElementType',
+              type: {
+                name: 'Composite',
+                className: 'Log'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const IDocumentTransfer = {
   required: false,
   serializedName: 'IDocumentTransfer',

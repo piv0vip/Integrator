@@ -13,6 +13,7 @@ import * as helper from './util/helper';
 import { AppComponent } from './components/common/';
 import { DataTaskListComponent } from './components/dataTask';
 import { EntityStatusListComponent } from './components/entityStatus';
+import { LogsListComponent } from './components/log';
 
 //import VueDragAndDropList from 'vue-drag-and-drop-list';
 
@@ -55,6 +56,7 @@ let router = new VueRouter({
   routes: [
       { name: 'dataTasks', path: '/', components: { default: DataTaskListComponent } },
       { name: 'entityStatuses', path: '/entity-statuses', components: { default: EntityStatusListComponent } },
+      { name: 'logs', path: '/logs', components: { default: LogsListComponent } },
  ]
 });
 

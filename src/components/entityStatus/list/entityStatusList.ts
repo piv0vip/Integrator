@@ -10,7 +10,7 @@ import { EntityStatusService } from '../../../services';
 import { ContentViewComponent } from '../contentView/contentView';
 import { ContentFactory, Content } from '../contentView/classes';
 
-import { FilterComponent, CheckBoxFilterComponent, ContainFilterComponent } from '../../common/filter';
+import { FilterComponent } from '../../common/filter';
 import { IFilter, DateFilter, CheckBoxFilter, MultiselectFilter, Filters, ContainFilter } from '../../../classes/filter';
 import { EnumValues } from 'enum-values';
 
@@ -25,9 +25,7 @@ import FilterRemoveIcon from 'mdi-vue/FilterRemoveIcon';
     components: {
         Multiselect,
         FilterRemoveIcon,
-        'content-view': ContentViewComponent,
-        'checkbox-filter': CheckBoxFilterComponent,
-        'contain-filter': ContainFilterComponent,
+        ContentViewComponent,
         FilterComponent
     }
 })
@@ -45,7 +43,7 @@ export class EntityStatusListComponent extends Vue {
     }
 
     get pagedListMetaData(): IPagedList {
-        return this.$store.getters.pagedListMetaData;
+        return this.$store.getters.pagedListMetaDataEntityStatus;
     }
 
     search: string = '';

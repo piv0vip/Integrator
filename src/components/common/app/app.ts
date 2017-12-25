@@ -21,7 +21,8 @@ export class AppComponent extends Vue {
         routeTo?: string
     }[] = [
         { icon: 'contacts', text: 'Scheduling Task Configuration', routeTo: '/' },
-        { icon: 'history', text: 'Entity statuses', routeTo: '/entity-statuses' }
+        { icon: 'history', text: 'Entity statuses', routeTo: '/entity-statuses' },
+        { icon: 'filter_list', text: 'Logs', routeTo: '/logs' }
     ];
 
     get productVersion(): string {

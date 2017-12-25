@@ -1,27 +1,49 @@
 import { HTTP } from '../../util/http-common';
-import { IFilter, FilterFactory, CheckBoxFilter } from '../../classes/filter';
+import { IFilter, FilterFactory, CheckBoxFilter, PagedListReq } from '../../classes/filter';
 import { EnumValues } from 'enum-values';
 import { EntityStatusEnum, FilterTypeEnum } from '../../enums';
 
+import { PagedListResponseLog } from '../../api/models';
+
 import _ from 'lodash';
+import { AxiosResponse } from "axios";
 
 const state = {
+
+
 
     filterPresets: {
         //statuses: []
     },
 
     filters: {
-        //Status:         FilterFactory.getFilter(FilterTypeEnum.StringList),
+        status:         FilterFactory.getFilter(FilterTypeEnum.StringList),
         //EntityType:     FilterFactory.getFilter(FilterTypeEnum.StringList),
         //Source:         FilterFactory.getFilter(FilterTypeEnum.StringList),
         //Target:         FilterFactory.getFilter(FilterTypeEnum.StringList),
         //StatusMessage:  FilterFactory.getFilter(FilterTypeEnum.Multiselect),
         //EntityVersion:  FilterFactory.getFilter(FilterTypeEnum.Date)
-    }
+    },
+
+    pagedListRequest: new PagedListReq(),
+    pagedListResponse: null
+
 };
 
 const getters = {
+
+    pagedListRequestLogs: state => state.pagedListRequest,
+
+    logs: state => {
+        let ans: PagedListResponseLog = state.pagedListResponse as PagedListResponseLog;
+        return ans ? ans.entities : [];
+    },
+
+    pagedListMetaDataLogs: state => {
+        let ans: PagedListResponseLog = state.pagedListResponse as PagedListResponseLog;
+        return ans ? ans.metadata : {};
+    }
+
 
     //filterPresets:      state => state.filterPresets,
 
@@ -50,7 +72,7 @@ const mutations = {
     //    });
     //},
 
-    //setEntityStatuses(state, filterPresets: any) {
+    setFilterValuesLogs(state, filterPresets: any) {
     //    state.filterPresets = filterPresets;
 
     //    if (state.filterPresets.statuses.length > 0)
@@ -69,21 +91,50 @@ const mutations = {
 
     //    if (state.filterPresets.versions.length > 0)
     //        state.filters.EntityVersion.Values = state.filterPresets.versions;
-    //},
+    },
+
+    changeSortLog(state, value: { sortBy: string, sortDesc: boolean }) {
+        state.pagedListRequest.sortBy = value.sortBy;
+        state.pagedListRequest.sortDesc = value.sortDesc;
+    },
+
+    setLogs(state, pagedListResponse: PagedListResponseLog) {
+        state.pagedListResponse = pagedListResponse;
+    },
+
+    pagedListMetaDataLogs: state => {
+        let ans: PagedListResponseLog = state.pagedListResponse as PagedListResponseLog;
+        return ans ? ans.metadata : {};
+    }
+
+    
 };
 
 const actions = {
 
-    //getEntityStatuses({ dispatch, commit }) {
-    //    return new Promise((resolve, reject) => {
-    //        HTTP.get('EntityStatus/GetFilterValues')
-    //            .then((response) => {
-    //                commit('setEntityStatuses', response.data);
-    //                resolve();  
-    //            })
-    //            .catch(e => { reject(e); });
-    //    });
-    //}
+    getLogs({ state, dispatch, commit, getters }) {
+
+        commit('loading', true);
+        return new Promise((resolve, reject) => {
+            HTTP.post(`Scheduler/GetLogsPagedList`, getters.pagedListRequestLogs)
+                .then((response: AxiosResponse) => {
+                    commit('setLogs', response.data as PagedListResponseLog);
+                    commit('loading', false);
+                    resolve();
+                })
+                .catch(e => {
+                    commit('loading', false);
+                    reject(e);
+                });
+        })
+    },
+
+    doChangeSortLog({ commit, dispatch }, value: { sortBy: string, sertDesc: boolean }) {
+        commit('changeSortLog', value)
+        return dispatch('getLogs');
+    },
+
+
 };
 
 export default {

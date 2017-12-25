@@ -13,7 +13,6 @@ import _ from 'lodash';
 
 const state = {
 
-    ctx: new PagedListReq(),
 
     filterPresets: {
         statuses: []
@@ -28,12 +27,13 @@ const state = {
         entityVersion:  FilterFactory.getFilter(FilterTypeEnum.Date)
     },
 
-    pagedListAnswer: null
+    pagedListRequest: new PagedListReq(),
+    pagedListResponse: null
 };
 
 const getters = {
 
-    ctx: state => state.ctx,
+    pagedListRequest: state => state.pagedListRequest,
 
     filterPresets:      state => state.filterPresets,
 
@@ -46,35 +46,35 @@ const getters = {
     },
 
     entityStatuses: state => {
-        let ans: PagedListResponseEntityStatus = state.pagedListAnswer as PagedListResponseEntityStatus;
+        let ans: PagedListResponseEntityStatus = state.pagedListResponse as PagedListResponseEntityStatus;
         return ans ? ans.entities : [] ; 
     },
 
-    pagedListMetaData: state => {
-        let ans: PagedListResponseEntityStatus = state.pagedListAnswer as PagedListResponseEntityStatus;
-        return ans.metadata;
+    pagedListMetaDataEntityStatus: state => {
+        let ans: PagedListResponseEntityStatus = state.pagedListResponse as PagedListResponseEntityStatus;
+        return ans ? ans.metadata : {} ;
     }
 };
 
 const mutations = {
 
     changeCurrentPage(state, value: number) {
-        state.ctx.currentPage = value;
+        state.pagedListRequest.currentPage = value;
     },
 
     changePerPage(state, value: number) {
-        state.ctx.perPage = value;
+        state.pagedListRequest.perPage = value;
     },
 
     changeSort(state, value: { sortBy: string, sortDesc: boolean }) {
-        state.ctx.sortBy = value.sortBy;
-        state.ctx.sortDesc = value.sortDesc;
+        state.pagedListRequest.sortBy = value.sortBy;
+        state.pagedListRequest.sortDesc = value.sortDesc;
     },
 
     updateFilterValue(state, values: { filterName: string, values: any }) {
         state.filters[values.filterName].FilterData = values.values;
-        let temp: PagedListReq = state.ctx;
-        state.ctx = {
+        let temp: PagedListReq = state.pagedListRequest;
+        state.pagedListRequest = {
             currentPage: temp.currentPage,
             perPage: temp.perPage,
             sortBy: temp.sortBy,
@@ -133,8 +133,8 @@ const mutations = {
             state.filters.entityVersion.Values = filterPresets.versions;
     },
 
-    setEntityStatuses(state, pagedListAnswer: PagedListResponseEntityStatus) {
-        state.pagedListAnswer = pagedListAnswer;
+    setEntityStatuses(state, pagedListResponse: PagedListResponseEntityStatus) {
+        state.pagedListResponse = pagedListResponse;
     }
 
 };
@@ -156,7 +156,7 @@ const actions = {
 
         commit('loading', true);
         return new Promise((resolve, reject) => {
-            HTTP.post(`EntityStatus/GetEntityStatusShort`, getters.ctx) 
+            HTTP.post(`EntityStatus/GetEntityStatusShort`, getters.pagedListRequest) 
                 .then((response: AxiosResponse) => {
                     commit('setEntityStatuses', response.data as PagedListResponseEntityStatus);
                     commit('loading', false);

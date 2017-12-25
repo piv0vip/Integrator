@@ -1014,6 +1014,21 @@ export interface PagedListRequestLog {
 
 /**
  * @interface
+ * An interface representing PagedListResponseLog.
+ */
+export interface PagedListResponseLog {
+  /**
+   * @member {IPagedList} [metadata]
+   */
+  metadata?: IPagedList;
+  /**
+   * @member {Log[]} [entities]
+   */
+  entities?: Log[];
+}
+
+/**
+ * @interface
  * An interface representing IDocumentTransfer.
  */
 export interface IDocumentTransfer {

@@ -5,6 +5,7 @@ import getters from './getters';
 import dataTask from './modules/dataTask';
 import entityStatus from './modules/entityStatus';
 import signalR from './modules/signalR';
+import log from './modules/logs';
 import auth from './modules/auth';
 // import createLogger from '../../../src/plugins/logger'
 
@@ -38,6 +39,7 @@ export default new Vuex.Store({
         dataTask,
         entityStatus,
         signalR,
+        log,
         auth
     },
 
