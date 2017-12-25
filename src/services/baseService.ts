@@ -12,7 +12,7 @@ export abstract class BaseService {
 
     public getPagedList(ctx: IPagedListReq): Promise<AxiosResponse> {
         return new Promise((resolve, reject) => {
-            HTTP.post(`${this.ControllerName}/GetPagedList?pageSize=${ctx.perPage}&pageNumber=${ctx.currentPage}&sortBy=${ctx.sortBy}&sortDesc=${ctx.sortDesc}`, ctx.filter)
+            HTTP.post(`${this.ControllerName}/GetPagedList?pageSize=${ctx.perPage}&pageNumber=${ctx.currentPage}&sortBy=${ctx.sortBy}&sortDesc=${ctx.sortDesc}`, ctx.filters)
                 .then(response => { resolve(response); })
                 .catch(error => { reject(Error); });
         });

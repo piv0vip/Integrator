@@ -18,10 +18,10 @@ import { ITableFields } from '../../../interfaces';
         FilterIcon,
         FilterOutlineIcon,
         FilterRemoveIcon,
-        'checkbox-filter': CheckBoxFilterComponent,
-        'contain-filter': ContainFilterComponent,
-        'multiselect-filter': MultiSelectComponent,
-        'date-filter': DateFilterComponent,
+        CheckBoxFilterComponent,
+        ContainFilterComponent,
+        MultiSelectComponent,
+        DateFilterComponent,
     }
 })
 
@@ -57,9 +57,11 @@ export class FilterComponent extends Vue {
     }
 
     onResetClick() {
-        this.$store.commit('resetFilter', { filterName: this.value.key });
-        this.$emit('change', this.filter);
-        this.closeDialog();
+        this.$store.commit('resetFilter', this.value.key);
+        this.$nextTick(() => {
+            this.$emit('change', this.filter);
+            this.closeDialog();
+        });
     }
 
     isCheckBoxFilter(): boolean {

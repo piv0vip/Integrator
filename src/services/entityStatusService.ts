@@ -5,9 +5,7 @@ import { AxiosResponse } from 'axios';
 import { HandlerTypes } from '../classes/settings/handlerTypes';
 import { BaseService } from './baseService';
 
-import { PagedListAnsEntityStatus } from '../api/models'
-
-import { EntityStatatusDecorator } from '../classes/filter';
+import { PagedListResponseEntityStatus } from '../api/models'
 
 export class EntityStatusService extends BaseService {
     
@@ -25,9 +23,9 @@ export class EntityStatusService extends BaseService {
         return new Promise( (resolve, reject) => {
 
 
-            HTTP.post(`EntityStatus/GetPagedList?pageSize=${ctx.perPage}&pageNumber=${ctx.currentPage}&sortBy=${ctx.sortBy}&sortDesc=${ctx.sortDesc}`, ctx.filter)
+            HTTP.post(`EntityStatus/GetPagedList`, ctx)
                 .then(response => {
-                    let data: PagedListAnsEntityStatus = response.data as PagedListAnsEntityStatus
+                    let data: PagedListResponseEntityStatus = response.data as PagedListResponseEntityStatus
 
                     resolve();
                 })

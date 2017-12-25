@@ -37,6 +37,10 @@ export interface DataTaskGroup {
    */
   enabled?: boolean;
   /**
+   * @member {string} [lastDuration]
+   */
+  lastDuration?: string;
+  /**
    * @member {Date} [lastStartTime]
    */
   lastStartTime?: Date;
@@ -52,10 +56,6 @@ export interface DataTaskGroup {
    * @member {number} [retries]
    */
   retries?: number;
-  /**
-   * @member {string} [lastDuration]
-   */
-  lastDuration?: string;
   /**
    * @member {Date} [recCreated]
    */
@@ -125,10 +125,6 @@ export interface DataTask {
    */
   enabled?: boolean;
   /**
-   * @member {string} [lastDuration]
-   */
-  lastDuration?: string;
-  /**
    * @member {Date} [lastStartTime]
    */
   lastStartTime?: Date;
@@ -144,6 +140,10 @@ export interface DataTask {
    * @member {number} [retries]
    */
   retries?: number;
+  /**
+   * @member {string} [lastDuration]
+   */
+  lastDuration?: string;
   /**
    * @member {Date} [recCreated]
    */
@@ -212,10 +212,6 @@ export interface PeriodFilterDataTask {
  */
 export interface FieldFilterDataTask {
   /**
-   * @member {string} [fieldName]
-   */
-  fieldName?: string;
-  /**
    * @member {ContainFilterDataTask} [containValues]
    */
   containValues?: ContainFilterDataTask;
@@ -224,6 +220,10 @@ export interface FieldFilterDataTask {
    */
   existsValues?: ExistsFilterDataTask;
   /**
+   * @member {string} [fieldName]
+   */
+  fieldName?: string;
+  /**
    * @member {IgnoredFilterDataTask} [ignoredValues]
    */
   ignoredValues?: IgnoredFilterDataTask;
@@ -231,6 +231,33 @@ export interface FieldFilterDataTask {
    * @member {PeriodFilterDataTask} [period]
    */
   period?: PeriodFilterDataTask;
+}
+
+/**
+ * @interface
+ * An interface representing PagedListRequestDataTask.
+ */
+export interface PagedListRequestDataTask {
+  /**
+   * @member {number} [currentPage]
+   */
+  currentPage?: number;
+  /**
+   * @member {FieldFilterDataTask[]} [filters]
+   */
+  filters?: FieldFilterDataTask[];
+  /**
+   * @member {number} [perPage]
+   */
+  perPage?: number;
+  /**
+   * @member {string} [sortBy]
+   */
+  sortBy?: string;
+  /**
+   * @member {boolean} [sortDesc]
+   */
+  sortDesc?: boolean;
 }
 
 /**
@@ -282,9 +309,9 @@ export interface IPagedList {
 
 /**
  * @interface
- * An interface representing PagedListAnsDataTask.
+ * An interface representing PagedListResponseDataTask.
  */
-export interface PagedListAnsDataTask {
+export interface PagedListResponseDataTask {
   /**
    * @member {IPagedList} [metadata]
    */
@@ -349,10 +376,6 @@ export interface PeriodFilterDataTaskGroup {
  */
 export interface FieldFilterDataTaskGroup {
   /**
-   * @member {string} [fieldName]
-   */
-  fieldName?: string;
-  /**
    * @member {ContainFilterDataTaskGroup} [containValues]
    */
   containValues?: ContainFilterDataTaskGroup;
@@ -360,6 +383,10 @@ export interface FieldFilterDataTaskGroup {
    * @member {ExistsFilterDataTaskGroup} [existsValues]
    */
   existsValues?: ExistsFilterDataTaskGroup;
+  /**
+   * @member {string} [fieldName]
+   */
+  fieldName?: string;
   /**
    * @member {IgnoredFilterDataTaskGroup} [ignoredValues]
    */
@@ -372,9 +399,36 @@ export interface FieldFilterDataTaskGroup {
 
 /**
  * @interface
- * An interface representing PagedListAnsDataTaskGroup.
+ * An interface representing PagedListRequestDataTaskGroup.
  */
-export interface PagedListAnsDataTaskGroup {
+export interface PagedListRequestDataTaskGroup {
+  /**
+   * @member {number} [currentPage]
+   */
+  currentPage?: number;
+  /**
+   * @member {FieldFilterDataTaskGroup[]} [filters]
+   */
+  filters?: FieldFilterDataTaskGroup[];
+  /**
+   * @member {number} [perPage]
+   */
+  perPage?: number;
+  /**
+   * @member {string} [sortBy]
+   */
+  sortBy?: string;
+  /**
+   * @member {boolean} [sortDesc]
+   */
+  sortDesc?: boolean;
+}
+
+/**
+ * @interface
+ * An interface representing PagedListResponseDataTaskGroup.
+ */
+export interface PagedListResponseDataTaskGroup {
   /**
    * @member {IPagedList} [metadata]
    */
@@ -470,10 +524,6 @@ export interface PeriodFilterEntityStatus {
  */
 export interface FieldFilterEntityStatus {
   /**
-   * @member {string} [fieldName]
-   */
-  fieldName?: string;
-  /**
    * @member {ContainFilterEntityStatus} [containValues]
    */
   containValues?: ContainFilterEntityStatus;
@@ -482,6 +532,10 @@ export interface FieldFilterEntityStatus {
    */
   existsValues?: ExistsFilterEntityStatus;
   /**
+   * @member {string} [fieldName]
+   */
+  fieldName?: string;
+  /**
    * @member {IgnoredFilterEntityStatus} [ignoredValues]
    */
   ignoredValues?: IgnoredFilterEntityStatus;
@@ -489,6 +543,33 @@ export interface FieldFilterEntityStatus {
    * @member {PeriodFilterEntityStatus} [period]
    */
   period?: PeriodFilterEntityStatus;
+}
+
+/**
+ * @interface
+ * An interface representing PagedListRequestEntityStatus.
+ */
+export interface PagedListRequestEntityStatus {
+  /**
+   * @member {number} [currentPage]
+   */
+  currentPage?: number;
+  /**
+   * @member {FieldFilterEntityStatus[]} [filters]
+   */
+  filters?: FieldFilterEntityStatus[];
+  /**
+   * @member {number} [perPage]
+   */
+  perPage?: number;
+  /**
+   * @member {string} [sortBy]
+   */
+  sortBy?: string;
+  /**
+   * @member {boolean} [sortDesc]
+   */
+  sortDesc?: boolean;
 }
 
 /**
@@ -637,24 +718,9 @@ export interface EntityStatus {
 
 /**
  * @interface
- * An interface representing PagedListAns.
+ * An interface representing PagedListResponseEntityStatus.
  */
-export interface PagedListAns {
-  /**
-   * @member {IPagedList} [metadata]
-   */
-  metadata?: IPagedList;
-  /**
-   * @member {EntityStatus[]} [entities]
-   */
-  entities?: EntityStatus[];
-}
-
-/**
- * @interface
- * An interface representing PagedListAnsEntityStatus.
- */
-export interface PagedListAnsEntityStatus {
+export interface PagedListResponseEntityStatus {
   /**
    * @member {IPagedList} [metadata]
    */
@@ -898,10 +964,6 @@ export interface PeriodFilterLog {
  */
 export interface FieldFilterLog {
   /**
-   * @member {string} [fieldName]
-   */
-  fieldName?: string;
-  /**
    * @member {ContainFilterLog} [containValues]
    */
   containValues?: ContainFilterLog;
@@ -910,6 +972,10 @@ export interface FieldFilterLog {
    */
   existsValues?: ExistsFilterLog;
   /**
+   * @member {string} [fieldName]
+   */
+  fieldName?: string;
+  /**
    * @member {IgnoredFilterLog} [ignoredValues]
    */
   ignoredValues?: IgnoredFilterLog;
@@ -917,6 +983,33 @@ export interface FieldFilterLog {
    * @member {PeriodFilterLog} [period]
    */
   period?: PeriodFilterLog;
+}
+
+/**
+ * @interface
+ * An interface representing PagedListRequestLog.
+ */
+export interface PagedListRequestLog {
+  /**
+   * @member {number} [currentPage]
+   */
+  currentPage?: number;
+  /**
+   * @member {FieldFilterLog[]} [filters]
+   */
+  filters?: FieldFilterLog[];
+  /**
+   * @member {number} [perPage]
+   */
+  perPage?: number;
+  /**
+   * @member {string} [sortBy]
+   */
+  sortBy?: string;
+  /**
+   * @member {boolean} [sortDesc]
+   */
+  sortDesc?: boolean;
 }
 
 /**
@@ -1032,13 +1125,9 @@ export interface IEntityStatus {
  */
 export interface IntegratorAPIRestDataTaskGetPagedListPostOptionalParams extends RequestOptionsBase {
   /**
-   * @member {FieldFilterDataTask[]} [fieldFilters]
+   * @member {PagedListRequestDataTask} [pagedListRequest]
    */
-  fieldFilters?: FieldFilterDataTask[];
-  /**
-   * @member {string} [sortBy]
-   */
-  sortBy?: string;
+  pagedListRequest?: PagedListRequestDataTask;
 }
 
 /**
@@ -1106,13 +1195,9 @@ export interface IntegratorAPIRestDataTaskUpdateArrayPutOptionalParams extends R
  */
 export interface IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams extends RequestOptionsBase {
   /**
-   * @member {FieldFilterDataTaskGroup[]} [fieldFilters]
+   * @member {PagedListRequestDataTaskGroup} [pagedListRequest]
    */
-  fieldFilters?: FieldFilterDataTaskGroup[];
-  /**
-   * @member {string} [sortBy]
-   */
-  sortBy?: string;
+  pagedListRequest?: PagedListRequestDataTaskGroup;
 }
 
 /**
@@ -1180,13 +1265,9 @@ export interface IntegratorAPIRestDataTaskGroupUpdateArrayPutOptionalParams exte
  */
 export interface IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams extends RequestOptionsBase {
   /**
-   * @member {FieldFilterEntityStatus[]} [fieldFilters]
+   * @member {PagedListRequestEntityStatus} [pagedListRequest]
    */
-  fieldFilters?: FieldFilterEntityStatus[];
-  /**
-   * @member {string} [sortBy]
-   */
-  sortBy?: string;
+  pagedListRequest?: PagedListRequestEntityStatus;
 }
 
 /**
@@ -1198,13 +1279,9 @@ export interface IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalPa
  */
 export interface IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams extends RequestOptionsBase {
   /**
-   * @member {FieldFilterEntityStatus[]} [fieldFilters]
+   * @member {PagedListRequestEntityStatus} [pagedListRequest]
    */
-  fieldFilters?: FieldFilterEntityStatus[];
-  /**
-   * @member {string} [sortBy]
-   */
-  sortBy?: string;
+  pagedListRequest?: PagedListRequestEntityStatus;
 }
 
 /**
@@ -1279,20 +1356,16 @@ export interface IntegratorAPIRestSchedulerExecuteTaskByDataTaskIdPostOptionalPa
 
 /**
  * @interface
- * An interface representing IntegratorAPIRestSchedulerGetPagedListPostOptionalParams.
+ * An interface representing IntegratorAPIRestSchedulerGetLogsPagedListPostOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface IntegratorAPIRestSchedulerGetPagedListPostOptionalParams extends RequestOptionsBase {
+export interface IntegratorAPIRestSchedulerGetLogsPagedListPostOptionalParams extends RequestOptionsBase {
   /**
-   * @member {FieldFilterLog[]} [fieldFilters]
+   * @member {PagedListRequestLog} [pagedListRequest]
    */
-  fieldFilters?: FieldFilterLog[];
-  /**
-   * @member {string} [sortBy]
-   */
-  sortBy?: string;
+  pagedListRequest?: PagedListRequestLog;
 }
 
 /**

@@ -11,7 +11,7 @@ import { ContentViewComponent } from '../contentView/contentView';
 import { ContentFactory, Content } from '../contentView/classes';
 
 import { FilterComponent, CheckBoxFilterComponent, ContainFilterComponent } from '../../common/filter';
-import { IFilter, DateFilter, CheckBoxFilter, MultiselectFilter, Filters, ContainFilter, EntityStatatusDecorator } from '../../../classes/filter';
+import { IFilter, DateFilter, CheckBoxFilter, MultiselectFilter, Filters, ContainFilter } from '../../../classes/filter';
 import { EnumValues } from 'enum-values';
 
 import Multiselect from 'vue-multiselect';
@@ -34,8 +34,6 @@ import FilterRemoveIcon from 'mdi-vue/FilterRemoveIcon';
 
 export class EntityStatusListComponent extends Vue {
 
-    filtersDecorator: EntityStatatusDecorator = new EntityStatatusDecorator();
-
     storeFilters: any = this.$store.getters.filters;
 
     get filtersIsDefault(): boolean {
@@ -54,20 +52,10 @@ export class EntityStatusListComponent extends Vue {
 
     // keyword: ContainFilter = this.filters.Keyword;
     
-    statusEnum = new CustomEnumValues();
-    
-    currentEntity: EntityStatus = EntityStatus.createNew();
-
     content: Content = ContentFactory.getFactory('').createContent();
     showContent: boolean = false;
 
-    isBusy: boolean = false;  
-    sortBy: string =  'EntityVersion';
-    sortDesc: boolean = true;
-
     formatDate: Function = helper.formatDate;
-
-    getEnumDescription: Function = (val) => { return this.statusEnum.getEnumValueByCode(val).getDescription(); };
 
     pageOptions: {text: number, value: number}[] = [{text: 5, value: 5}, {text: 10, value: 10}, {text: 15, value: 15}];
 
@@ -76,7 +64,7 @@ export class EntityStatusListComponent extends Vue {
     pagesCount: number = 1;
     
     perPage: number = 10;
-    totalRows: number = 0;
+
     currentPage: number = 1;
     filter: string = '';
 
@@ -90,7 +78,7 @@ export class EntityStatusListComponent extends Vue {
         {
             key: 'entityStatusId',
             tdClass: 'py-3',
-            label: 'Entity Status ID',
+            label: 'ID',
             sortable: true,
         }, 
         {
@@ -166,42 +154,9 @@ export class EntityStatusListComponent extends Vue {
         this.$store.dispatch('doChangePerPage', value)
     }
 
-
-
     created() {
-
         this.$store.dispatch('getFilterValues');
-
         this.$store.dispatch('getEntityStatuses');
-
-        this.statusEnum.Load([
-            { code: 'NotFound', name: 'NotFound', description: 'Not Found' },
-            { code: 'ReadyToSend', name: 'ReadyToSend', description: 'Ready to send' },
-            { code: 'Confirmed', name: 'Confirmed' },
-            { code: 'NotConfirmed', name: 'NotConfirmed', description: 'Not Confirmed'},    
-            { code: 'Errored', name: 'Errored' },
-            { code: 'Ignored', name: 'Ignored' },
-        ]);
-    }
-
-
-
-    myProvider(ctx) {
-        this.$store.commit('loading', true);
-        ctx.filter = this.filtersDecorator.toServer();
-        return EntityStatusService.getPagedList(ctx)
-        .then( function(response: {data: EntityStatus[], metadata}) {
-            this.pagedList = response.metadata;
-            this.pagesCount = Math.ceil(response.metadata.totalItemCount / this.perPage);
-           
-            this.$store.commit('loading', false);
-            return response.data;
-        }.bind(this) )
-        .catch( (e) => {
-            this.$store.commit('loading', false);
-            console.log(e);
-            return [];
-        });
     }
 
     refreshTable() {
@@ -266,23 +221,27 @@ export class EntityStatusListComponent extends Vue {
     }
 
     onResetFilter() {
-        this.$store.commit('resetAllFilters');
+        this.$store.dispatch('doResetAllFilters');
         // this.filters.reset();
-        this.onApplyFilter();
+        //this.onApplyFilter();
     }
 
     customLabel(option) {
         return option.displayName;
     }
 
-    onStatusMessageClick(item) {
+    onStatusMessageClick(item: IEntityStatus) {
         let filterData: string[] = this.storeFilters.statusMessage.FilterData;
         this.$store.commit('updateFilterValue', {
             filterName: 'statusMessage',
-            values: filterData.concat([item.StatusMessage])
+            values: filterData.concat([item.statusMessage])
         });
         this.refreshTable();
         console.log(item);
+    }
+
+    onSortClicked(ctx) {
+        this.$store.dispatch('doChangeSort', ctx)
     }
 
     isResendBtnVisible(entityStatus: IEntityStatus): boolean {

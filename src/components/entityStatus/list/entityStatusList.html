@@ -21,9 +21,8 @@
         <b-table id="entity-statuses"
                  ref="entityStatusesTable"
                  hover
-                 :busy.sync="isBusy"
-                 :sort-by.sync="sortBy"
-                 :sort-desc.sync="sortDesc"
+                 @sort-changed="onSortClicked"
+                 no-local-sorting
                  :fields="fields"
                  :items="entityStatuses">
             <template slot="top-row" scope="data" :test="test(data)">

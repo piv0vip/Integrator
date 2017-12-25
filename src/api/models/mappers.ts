@@ -62,6 +62,13 @@ export const DataTaskGroup = {
           name: 'Boolean'
         }
       },
+      lastDuration: {
+        required: false,
+        serializedName: 'lastDuration',
+        type: {
+          name: 'String'
+        }
+      },
       lastStartTime: {
         required: false,
         serializedName: 'lastStartTime',
@@ -88,13 +95,6 @@ export const DataTaskGroup = {
         serializedName: 'retries',
         type: {
           name: 'Number'
-        }
-      },
-      lastDuration: {
-        required: false,
-        serializedName: 'lastDuration',
-        type: {
-          name: 'String'
         }
       },
       recCreated: {
@@ -215,13 +215,6 @@ export const DataTask = {
           name: 'Boolean'
         }
       },
-      lastDuration: {
-        required: false,
-        serializedName: 'lastDuration',
-        type: {
-          name: 'String'
-        }
-      },
       lastStartTime: {
         required: false,
         serializedName: 'lastStartTime',
@@ -248,6 +241,13 @@ export const DataTask = {
         serializedName: 'retries',
         type: {
           name: 'Number'
+        }
+      },
+      lastDuration: {
+        required: false,
+        serializedName: 'lastDuration',
+        type: {
+          name: 'String'
         }
       },
       recCreated: {
@@ -383,13 +383,6 @@ export const FieldFilterDataTask = {
     name: 'Composite',
     className: 'FieldFilterDataTask',
     modelProperties: {
-      fieldName: {
-        required: false,
-        serializedName: 'fieldName',
-        type: {
-          name: 'String'
-        }
-      },
       containValues: {
         required: false,
         serializedName: 'containValues',
@@ -406,6 +399,13 @@ export const FieldFilterDataTask = {
           className: 'ExistsFilterDataTask'
         }
       },
+      fieldName: {
+        required: false,
+        serializedName: 'fieldName',
+        type: {
+          name: 'String'
+        }
+      },
       ignoredValues: {
         required: false,
         serializedName: 'ignoredValues',
@@ -420,6 +420,60 @@ export const FieldFilterDataTask = {
         type: {
           name: 'Composite',
           className: 'PeriodFilterDataTask'
+        }
+      }
+    }
+  }
+};
+
+export const PagedListRequestDataTask = {
+  required: false,
+  serializedName: 'PagedListRequest[DataTask]',
+  type: {
+    name: 'Composite',
+    className: 'PagedListRequestDataTask',
+    modelProperties: {
+      currentPage: {
+        required: false,
+        serializedName: 'currentPage',
+        type: {
+          name: 'Number'
+        }
+      },
+      filters: {
+        required: false,
+        serializedName: 'filters',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'FieldFilterDataTaskElementType',
+              type: {
+                name: 'Composite',
+                className: 'FieldFilterDataTask'
+              }
+          }
+        }
+      },
+      perPage: {
+        required: false,
+        serializedName: 'perPage',
+        type: {
+          name: 'Number'
+        }
+      },
+      sortBy: {
+        required: false,
+        serializedName: 'sortBy',
+        type: {
+          name: 'String'
+        }
+      },
+      sortDesc: {
+        required: false,
+        serializedName: 'sortDesc',
+        type: {
+          name: 'Boolean'
         }
       }
     }
@@ -517,12 +571,12 @@ export const IPagedList = {
   }
 };
 
-export const PagedListAnsDataTask = {
+export const PagedListResponseDataTask = {
   required: false,
-  serializedName: 'PagedListAns[DataTask]',
+  serializedName: 'PagedListResponse[DataTask]',
   type: {
     name: 'Composite',
-    className: 'PagedListAnsDataTask',
+    className: 'PagedListResponseDataTask',
     modelProperties: {
       metadata: {
         required: false,
@@ -658,13 +712,6 @@ export const FieldFilterDataTaskGroup = {
     name: 'Composite',
     className: 'FieldFilterDataTaskGroup',
     modelProperties: {
-      fieldName: {
-        required: false,
-        serializedName: 'fieldName',
-        type: {
-          name: 'String'
-        }
-      },
       containValues: {
         required: false,
         serializedName: 'containValues',
@@ -679,6 +726,13 @@ export const FieldFilterDataTaskGroup = {
         type: {
           name: 'Composite',
           className: 'ExistsFilterDataTaskGroup'
+        }
+      },
+      fieldName: {
+        required: false,
+        serializedName: 'fieldName',
+        type: {
+          name: 'String'
         }
       },
       ignoredValues: {
@@ -701,12 +755,66 @@ export const FieldFilterDataTaskGroup = {
   }
 };
 
-export const PagedListAnsDataTaskGroup = {
+export const PagedListRequestDataTaskGroup = {
   required: false,
-  serializedName: 'PagedListAns[DataTaskGroup]',
+  serializedName: 'PagedListRequest[DataTaskGroup]',
   type: {
     name: 'Composite',
-    className: 'PagedListAnsDataTaskGroup',
+    className: 'PagedListRequestDataTaskGroup',
+    modelProperties: {
+      currentPage: {
+        required: false,
+        serializedName: 'currentPage',
+        type: {
+          name: 'Number'
+        }
+      },
+      filters: {
+        required: false,
+        serializedName: 'filters',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'FieldFilterDataTaskGroupElementType',
+              type: {
+                name: 'Composite',
+                className: 'FieldFilterDataTaskGroup'
+              }
+          }
+        }
+      },
+      perPage: {
+        required: false,
+        serializedName: 'perPage',
+        type: {
+          name: 'Number'
+        }
+      },
+      sortBy: {
+        required: false,
+        serializedName: 'sortBy',
+        type: {
+          name: 'String'
+        }
+      },
+      sortDesc: {
+        required: false,
+        serializedName: 'sortDesc',
+        type: {
+          name: 'Boolean'
+        }
+      }
+    }
+  }
+};
+
+export const PagedListResponseDataTaskGroup = {
+  required: false,
+  serializedName: 'PagedListResponse[DataTaskGroup]',
+  type: {
+    name: 'Composite',
+    className: 'PagedListResponseDataTaskGroup',
     modelProperties: {
       metadata: {
         required: false,
@@ -937,13 +1045,6 @@ export const FieldFilterEntityStatus = {
     name: 'Composite',
     className: 'FieldFilterEntityStatus',
     modelProperties: {
-      fieldName: {
-        required: false,
-        serializedName: 'fieldName',
-        type: {
-          name: 'String'
-        }
-      },
       containValues: {
         required: false,
         serializedName: 'containValues',
@@ -960,6 +1061,13 @@ export const FieldFilterEntityStatus = {
           className: 'ExistsFilterEntityStatus'
         }
       },
+      fieldName: {
+        required: false,
+        serializedName: 'fieldName',
+        type: {
+          name: 'String'
+        }
+      },
       ignoredValues: {
         required: false,
         serializedName: 'ignoredValues',
@@ -974,6 +1082,60 @@ export const FieldFilterEntityStatus = {
         type: {
           name: 'Composite',
           className: 'PeriodFilterEntityStatus'
+        }
+      }
+    }
+  }
+};
+
+export const PagedListRequestEntityStatus = {
+  required: false,
+  serializedName: 'PagedListRequest[EntityStatus]',
+  type: {
+    name: 'Composite',
+    className: 'PagedListRequestEntityStatus',
+    modelProperties: {
+      currentPage: {
+        required: false,
+        serializedName: 'currentPage',
+        type: {
+          name: 'Number'
+        }
+      },
+      filters: {
+        required: false,
+        serializedName: 'filters',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'FieldFilterEntityStatusElementType',
+              type: {
+                name: 'Composite',
+                className: 'FieldFilterEntityStatus'
+              }
+          }
+        }
+      },
+      perPage: {
+        required: false,
+        serializedName: 'perPage',
+        type: {
+          name: 'Number'
+        }
+      },
+      sortBy: {
+        required: false,
+        serializedName: 'sortBy',
+        type: {
+          name: 'String'
+        }
+      },
+      sortDesc: {
+        required: false,
+        serializedName: 'sortDesc',
+        type: {
+          name: 'Boolean'
         }
       }
     }
@@ -1230,46 +1392,12 @@ export const EntityStatus = {
   }
 };
 
-export const PagedListAns = {
+export const PagedListResponseEntityStatus = {
   required: false,
-  serializedName: 'PagedListAns',
+  serializedName: 'PagedListResponse[EntityStatus]',
   type: {
     name: 'Composite',
-    className: 'PagedListAns',
-    modelProperties: {
-      metadata: {
-        required: false,
-        serializedName: 'metadata',
-        type: {
-          name: 'Composite',
-          className: 'IPagedList'
-        }
-      },
-      entities: {
-        required: false,
-        serializedName: 'entities',
-        type: {
-          name: 'Sequence',
-          element: {
-              required: false,
-              serializedName: 'EntityStatusElementType',
-              type: {
-                name: 'Composite',
-                className: 'EntityStatus'
-              }
-          }
-        }
-      }
-    }
-  }
-};
-
-export const PagedListAnsEntityStatus = {
-  required: false,
-  serializedName: 'PagedListAns[EntityStatus]',
-  type: {
-    name: 'Composite',
-    className: 'PagedListAnsEntityStatus',
+    className: 'PagedListResponseEntityStatus',
     modelProperties: {
       metadata: {
         required: false,
@@ -1740,13 +1868,6 @@ export const FieldFilterLog = {
     name: 'Composite',
     className: 'FieldFilterLog',
     modelProperties: {
-      fieldName: {
-        required: false,
-        serializedName: 'fieldName',
-        type: {
-          name: 'String'
-        }
-      },
       containValues: {
         required: false,
         serializedName: 'containValues',
@@ -1763,6 +1884,13 @@ export const FieldFilterLog = {
           className: 'ExistsFilterLog'
         }
       },
+      fieldName: {
+        required: false,
+        serializedName: 'fieldName',
+        type: {
+          name: 'String'
+        }
+      },
       ignoredValues: {
         required: false,
         serializedName: 'ignoredValues',
@@ -1777,6 +1905,60 @@ export const FieldFilterLog = {
         type: {
           name: 'Composite',
           className: 'PeriodFilterLog'
+        }
+      }
+    }
+  }
+};
+
+export const PagedListRequestLog = {
+  required: false,
+  serializedName: 'PagedListRequest[Log]',
+  type: {
+    name: 'Composite',
+    className: 'PagedListRequestLog',
+    modelProperties: {
+      currentPage: {
+        required: false,
+        serializedName: 'currentPage',
+        type: {
+          name: 'Number'
+        }
+      },
+      filters: {
+        required: false,
+        serializedName: 'filters',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'FieldFilterLogElementType',
+              type: {
+                name: 'Composite',
+                className: 'FieldFilterLog'
+              }
+          }
+        }
+      },
+      perPage: {
+        required: false,
+        serializedName: 'perPage',
+        type: {
+          name: 'Number'
+        }
+      },
+      sortBy: {
+        required: false,
+        serializedName: 'sortBy',
+        type: {
+          name: 'String'
+        }
+      },
+      sortDesc: {
+        required: false,
+        serializedName: 'sortDesc',
+        type: {
+          name: 'Boolean'
         }
       }
     }
@@ -1973,26 +2155,12 @@ export const IntegratorAPIRestDataTaskGetPagedListPostOptionalParams = {
     name: 'Composite',
     className: 'IntegratorAPIRestDataTaskGetPagedListPostOptionalParams',
     modelProperties: {
-      fieldFilters: {
+      pagedListRequest: {
         required: false,
-        serializedName: 'fieldFilters',
+        serializedName: 'pagedListRequest',
         type: {
-          name: 'Sequence',
-          element: {
-              required: false,
-              serializedName: 'FieldFilterDataTaskElementType',
-              type: {
-                name: 'Composite',
-                className: 'FieldFilterDataTask'
-              }
-          }
-        }
-      },
-      sortBy: {
-        required: false,
-        serializedName: 'sortBy',
-        type: {
-          name: 'String'
+          name: 'Composite',
+          className: 'PagedListRequestDataTask'
         }
       }
     }
@@ -2096,26 +2264,12 @@ export const IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams = {
     name: 'Composite',
     className: 'IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams',
     modelProperties: {
-      fieldFilters: {
+      pagedListRequest: {
         required: false,
-        serializedName: 'fieldFilters',
+        serializedName: 'pagedListRequest',
         type: {
-          name: 'Sequence',
-          element: {
-              required: false,
-              serializedName: 'FieldFilterDataTaskGroupElementType',
-              type: {
-                name: 'Composite',
-                className: 'FieldFilterDataTaskGroup'
-              }
-          }
-        }
-      },
-      sortBy: {
-        required: false,
-        serializedName: 'sortBy',
-        type: {
-          name: 'String'
+          name: 'Composite',
+          className: 'PagedListRequestDataTaskGroup'
         }
       }
     }
@@ -2219,26 +2373,12 @@ export const IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams
     name: 'Composite',
     className: 'IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams',
     modelProperties: {
-      fieldFilters: {
+      pagedListRequest: {
         required: false,
-        serializedName: 'fieldFilters',
+        serializedName: 'pagedListRequest',
         type: {
-          name: 'Sequence',
-          element: {
-              required: false,
-              serializedName: 'FieldFilterEntityStatusElementType',
-              type: {
-                name: 'Composite',
-                className: 'FieldFilterEntityStatus'
-              }
-          }
-        }
-      },
-      sortBy: {
-        required: false,
-        serializedName: 'sortBy',
-        type: {
-          name: 'String'
+          name: 'Composite',
+          className: 'PagedListRequestEntityStatus'
         }
       }
     }
@@ -2252,26 +2392,12 @@ export const IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams = {
     name: 'Composite',
     className: 'IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams',
     modelProperties: {
-      fieldFilters: {
+      pagedListRequest: {
         required: false,
-        serializedName: 'fieldFilters',
+        serializedName: 'pagedListRequest',
         type: {
-          name: 'Sequence',
-          element: {
-              required: false,
-              serializedName: 'FieldFilterEntityStatusElementType',
-              type: {
-                name: 'Composite',
-                className: 'FieldFilterEntityStatus'
-              }
-          }
-        }
-      },
-      sortBy: {
-        required: false,
-        serializedName: 'sortBy',
-        type: {
-          name: 'String'
+          name: 'Composite',
+          className: 'PagedListRequestEntityStatus'
         }
       }
     }
@@ -2393,33 +2519,19 @@ export const IntegratorAPIRestSchedulerExecuteTaskByDataTaskIdPostOptionalParams
   }
 };
 
-export const IntegratorAPIRestSchedulerGetPagedListPostOptionalParams = {
+export const IntegratorAPIRestSchedulerGetLogsPagedListPostOptionalParams = {
   required: false,
-  serializedName: 'RestSchedulerGetPagedListPostOptions',
+  serializedName: 'RestSchedulerGetLogsPagedListPostOptions',
   type: {
     name: 'Composite',
-    className: 'IntegratorAPIRestSchedulerGetPagedListPostOptionalParams',
+    className: 'IntegratorAPIRestSchedulerGetLogsPagedListPostOptionalParams',
     modelProperties: {
-      fieldFilters: {
+      pagedListRequest: {
         required: false,
-        serializedName: 'fieldFilters',
+        serializedName: 'pagedListRequest',
         type: {
-          name: 'Sequence',
-          element: {
-              required: false,
-              serializedName: 'FieldFilterLogElementType',
-              type: {
-                name: 'Composite',
-                className: 'FieldFilterLog'
-              }
-          }
-        }
-      },
-      sortBy: {
-        required: false,
-        serializedName: 'sortBy',
-        type: {
-          name: 'String'
+          name: 'Composite',
+          className: 'PagedListRequestLog'
         }
       }
     }

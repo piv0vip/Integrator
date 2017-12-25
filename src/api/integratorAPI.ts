@@ -779,12 +779,6 @@ class IntegratorAPI extends msRest.ServiceClient {
   // methods on the client.
 
   /**
-   * @param {number} pageNumber
-   *
-   * @param {number} pageSize
-   *
-   * @param {boolean} sortDesc
-   *
    * @param {IntegratorAPIRestDataTaskGetPagedListPostOptionalParams} [options]
    * Optional Parameters.
    *
@@ -794,41 +788,13 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    * @reject {Error|ServiceError} - The error object.
    */
-  async restDataTaskGetPagedListPostWithHttpOperationResponse(pageNumber: number, pageSize: number, sortDesc: boolean, options?: Models.IntegratorAPIRestDataTaskGetPagedListPostOptionalParams): Promise<msRest.HttpOperationResponse> {
+  async restDataTaskGetPagedListPostWithHttpOperationResponse(options?: Models.IntegratorAPIRestDataTaskGetPagedListPostOptionalParams): Promise<msRest.HttpOperationResponse> {
     let client = this;
-    let fieldFilters = (options && options.fieldFilters !== undefined) ? options.fieldFilters : undefined;
-    let sortBy = (options && options.sortBy !== undefined) ? options.sortBy : undefined;
-    // Validate
-    try {
-      if (pageNumber === null || pageNumber === undefined || typeof pageNumber !== 'number') {
-        throw new Error('pageNumber cannot be null or undefined and it must be of type number.');
-      }
-      if (pageSize === null || pageSize === undefined || typeof pageSize !== 'number') {
-        throw new Error('pageSize cannot be null or undefined and it must be of type number.');
-      }
-      if (sortDesc === null || sortDesc === undefined || typeof sortDesc !== 'boolean') {
-        throw new Error('sortDesc cannot be null or undefined and it must be of type boolean.');
-      }
-      if (sortBy !== null && sortBy !== undefined && typeof sortBy.valueOf() !== 'string') {
-        throw new Error('sortBy must be of type string.');
-      }
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    let pagedListRequest = (options && options.pagedListRequest !== undefined) ? options.pagedListRequest : undefined;
 
     // Construct URL
     let baseUrl = this.baseUri;
     let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'rest/DataTask/GetPagedList';
-    let queryParamsArray: Array<any> = [];
-    queryParamsArray.push('pageNumber=' + encodeURIComponent(pageNumber.toString()));
-    queryParamsArray.push('pageSize=' + encodeURIComponent(pageSize.toString()));
-    queryParamsArray.push('sortDesc=' + encodeURIComponent(sortDesc.toString()));
-    if (sortBy !== null && sortBy !== undefined) {
-      queryParamsArray.push('sortBy=' + encodeURIComponent(sortBy));
-    }
-    if (queryParamsArray.length > 0) {
-      requestUrl += '?' + queryParamsArray.join('&');
-    }
 
     // Create HTTP transport objects
     let httpRequest = new WebResource();
@@ -848,28 +814,14 @@ class IntegratorAPI extends msRest.ServiceClient {
     let requestContent = null;
     let requestModel = null;
     try {
-      if (fieldFilters !== null && fieldFilters !== undefined) {
-        let requestModelMapper = {
-          required: false,
-          serializedName: 'fieldFilters',
-          type: {
-            name: 'Sequence',
-            element: {
-                required: false,
-                serializedName: 'FieldFilterDataTaskElementType',
-                type: {
-                  name: 'Composite',
-                  className: 'FieldFilterDataTask'
-                }
-            }
-          }
-        };
-        requestModel = client.serializer.serialize(requestModelMapper, fieldFilters, 'fieldFilters');
+      if (pagedListRequest !== null && pagedListRequest !== undefined) {
+        let requestModelMapper = Mappers.PagedListRequestDataTask;
+        requestModel = client.serializer.serialize(requestModelMapper, pagedListRequest, 'pagedListRequest');
         requestContent = JSON.stringify(requestModel);
       }
     } catch (error) {
       let serializationError = new Error(`Error "${error.message}" occurred in serializing the ` +
-          `payload - ${JSON.stringify(fieldFilters, null, 2)}.`);
+          `payload - ${JSON.stringify(pagedListRequest, null, 2)}.`);
       return Promise.reject(serializationError);
     }
     httpRequest.body = requestContent;
@@ -904,7 +856,7 @@ class IntegratorAPI extends msRest.ServiceClient {
         let parsedResponse = operationRes.bodyAsJson as { [key: string]: any };
         try {
           if (parsedResponse !== null && parsedResponse !== undefined) {
-            let resultMapper = Mappers.PagedListAnsDataTask;
+            let resultMapper = Mappers.PagedListResponseDataTask;
             operationRes.bodyAsJson = client.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.bodyAsJson');
           }
         } catch (error) {
@@ -1637,12 +1589,6 @@ class IntegratorAPI extends msRest.ServiceClient {
   // methods on the client.
 
   /**
-   * @param {number} pageNumber
-   *
-   * @param {number} pageSize
-   *
-   * @param {boolean} sortDesc
-   *
    * @param {IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams}
    * [options] Optional Parameters.
    *
@@ -1652,41 +1598,13 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    * @reject {Error|ServiceError} - The error object.
    */
-  async restDataTaskGroupGetPagedListPostWithHttpOperationResponse(pageNumber: number, pageSize: number, sortDesc: boolean, options?: Models.IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams): Promise<msRest.HttpOperationResponse> {
+  async restDataTaskGroupGetPagedListPostWithHttpOperationResponse(options?: Models.IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams): Promise<msRest.HttpOperationResponse> {
     let client = this;
-    let fieldFilters = (options && options.fieldFilters !== undefined) ? options.fieldFilters : undefined;
-    let sortBy = (options && options.sortBy !== undefined) ? options.sortBy : undefined;
-    // Validate
-    try {
-      if (pageNumber === null || pageNumber === undefined || typeof pageNumber !== 'number') {
-        throw new Error('pageNumber cannot be null or undefined and it must be of type number.');
-      }
-      if (pageSize === null || pageSize === undefined || typeof pageSize !== 'number') {
-        throw new Error('pageSize cannot be null or undefined and it must be of type number.');
-      }
-      if (sortDesc === null || sortDesc === undefined || typeof sortDesc !== 'boolean') {
-        throw new Error('sortDesc cannot be null or undefined and it must be of type boolean.');
-      }
-      if (sortBy !== null && sortBy !== undefined && typeof sortBy.valueOf() !== 'string') {
-        throw new Error('sortBy must be of type string.');
-      }
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    let pagedListRequest = (options && options.pagedListRequest !== undefined) ? options.pagedListRequest : undefined;
 
     // Construct URL
     let baseUrl = this.baseUri;
     let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'rest/DataTaskGroup/GetPagedList';
-    let queryParamsArray: Array<any> = [];
-    queryParamsArray.push('pageNumber=' + encodeURIComponent(pageNumber.toString()));
-    queryParamsArray.push('pageSize=' + encodeURIComponent(pageSize.toString()));
-    queryParamsArray.push('sortDesc=' + encodeURIComponent(sortDesc.toString()));
-    if (sortBy !== null && sortBy !== undefined) {
-      queryParamsArray.push('sortBy=' + encodeURIComponent(sortBy));
-    }
-    if (queryParamsArray.length > 0) {
-      requestUrl += '?' + queryParamsArray.join('&');
-    }
 
     // Create HTTP transport objects
     let httpRequest = new WebResource();
@@ -1706,28 +1624,14 @@ class IntegratorAPI extends msRest.ServiceClient {
     let requestContent = null;
     let requestModel = null;
     try {
-      if (fieldFilters !== null && fieldFilters !== undefined) {
-        let requestModelMapper = {
-          required: false,
-          serializedName: 'fieldFilters',
-          type: {
-            name: 'Sequence',
-            element: {
-                required: false,
-                serializedName: 'FieldFilterDataTaskGroupElementType',
-                type: {
-                  name: 'Composite',
-                  className: 'FieldFilterDataTaskGroup'
-                }
-            }
-          }
-        };
-        requestModel = client.serializer.serialize(requestModelMapper, fieldFilters, 'fieldFilters');
+      if (pagedListRequest !== null && pagedListRequest !== undefined) {
+        let requestModelMapper = Mappers.PagedListRequestDataTaskGroup;
+        requestModel = client.serializer.serialize(requestModelMapper, pagedListRequest, 'pagedListRequest');
         requestContent = JSON.stringify(requestModel);
       }
     } catch (error) {
       let serializationError = new Error(`Error "${error.message}" occurred in serializing the ` +
-          `payload - ${JSON.stringify(fieldFilters, null, 2)}.`);
+          `payload - ${JSON.stringify(pagedListRequest, null, 2)}.`);
       return Promise.reject(serializationError);
     }
     httpRequest.body = requestContent;
@@ -1762,7 +1666,7 @@ class IntegratorAPI extends msRest.ServiceClient {
         let parsedResponse = operationRes.bodyAsJson as { [key: string]: any };
         try {
           if (parsedResponse !== null && parsedResponse !== undefined) {
-            let resultMapper = Mappers.PagedListAnsDataTaskGroup;
+            let resultMapper = Mappers.PagedListResponseDataTaskGroup;
             operationRes.bodyAsJson = client.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.bodyAsJson');
           }
         } catch (error) {
@@ -2389,12 +2293,6 @@ class IntegratorAPI extends msRest.ServiceClient {
   // methods on the client.
 
   /**
-   * @param {number} pageNumber
-   *
-   * @param {number} pageSize
-   *
-   * @param {boolean} sortDesc
-   *
    * @param {IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams}
    * [options] Optional Parameters.
    *
@@ -2404,41 +2302,13 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    * @reject {Error|ServiceError} - The error object.
    */
-  async restEntityStatusGetEntityStatusShortPostWithHttpOperationResponse(pageNumber: number, pageSize: number, sortDesc: boolean, options?: Models.IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams): Promise<msRest.HttpOperationResponse> {
+  async restEntityStatusGetEntityStatusShortPostWithHttpOperationResponse(options?: Models.IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams): Promise<msRest.HttpOperationResponse> {
     let client = this;
-    let fieldFilters = (options && options.fieldFilters !== undefined) ? options.fieldFilters : undefined;
-    let sortBy = (options && options.sortBy !== undefined) ? options.sortBy : undefined;
-    // Validate
-    try {
-      if (pageNumber === null || pageNumber === undefined || typeof pageNumber !== 'number') {
-        throw new Error('pageNumber cannot be null or undefined and it must be of type number.');
-      }
-      if (pageSize === null || pageSize === undefined || typeof pageSize !== 'number') {
-        throw new Error('pageSize cannot be null or undefined and it must be of type number.');
-      }
-      if (sortDesc === null || sortDesc === undefined || typeof sortDesc !== 'boolean') {
-        throw new Error('sortDesc cannot be null or undefined and it must be of type boolean.');
-      }
-      if (sortBy !== null && sortBy !== undefined && typeof sortBy.valueOf() !== 'string') {
-        throw new Error('sortBy must be of type string.');
-      }
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    let pagedListRequest = (options && options.pagedListRequest !== undefined) ? options.pagedListRequest : undefined;
 
     // Construct URL
     let baseUrl = this.baseUri;
     let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'rest/EntityStatus/GetEntityStatusShort';
-    let queryParamsArray: Array<any> = [];
-    queryParamsArray.push('pageNumber=' + encodeURIComponent(pageNumber.toString()));
-    queryParamsArray.push('pageSize=' + encodeURIComponent(pageSize.toString()));
-    queryParamsArray.push('sortDesc=' + encodeURIComponent(sortDesc.toString()));
-    if (sortBy !== null && sortBy !== undefined) {
-      queryParamsArray.push('sortBy=' + encodeURIComponent(sortBy));
-    }
-    if (queryParamsArray.length > 0) {
-      requestUrl += '?' + queryParamsArray.join('&');
-    }
 
     // Create HTTP transport objects
     let httpRequest = new WebResource();
@@ -2458,28 +2328,14 @@ class IntegratorAPI extends msRest.ServiceClient {
     let requestContent = null;
     let requestModel = null;
     try {
-      if (fieldFilters !== null && fieldFilters !== undefined) {
-        let requestModelMapper = {
-          required: false,
-          serializedName: 'fieldFilters',
-          type: {
-            name: 'Sequence',
-            element: {
-                required: false,
-                serializedName: 'FieldFilterEntityStatusElementType',
-                type: {
-                  name: 'Composite',
-                  className: 'FieldFilterEntityStatus'
-                }
-            }
-          }
-        };
-        requestModel = client.serializer.serialize(requestModelMapper, fieldFilters, 'fieldFilters');
+      if (pagedListRequest !== null && pagedListRequest !== undefined) {
+        let requestModelMapper = Mappers.PagedListRequestEntityStatus;
+        requestModel = client.serializer.serialize(requestModelMapper, pagedListRequest, 'pagedListRequest');
         requestContent = JSON.stringify(requestModel);
       }
     } catch (error) {
       let serializationError = new Error(`Error "${error.message}" occurred in serializing the ` +
-          `payload - ${JSON.stringify(fieldFilters, null, 2)}.`);
+          `payload - ${JSON.stringify(pagedListRequest, null, 2)}.`);
       return Promise.reject(serializationError);
     }
     httpRequest.body = requestContent;
@@ -2514,7 +2370,7 @@ class IntegratorAPI extends msRest.ServiceClient {
         let parsedResponse = operationRes.bodyAsJson as { [key: string]: any };
         try {
           if (parsedResponse !== null && parsedResponse !== undefined) {
-            let resultMapper = Mappers.PagedListAns;
+            let resultMapper = Mappers.PagedListResponseEntityStatus;
             operationRes.bodyAsJson = client.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.bodyAsJson');
           }
         } catch (error) {
@@ -2934,12 +2790,6 @@ class IntegratorAPI extends msRest.ServiceClient {
   // methods on the client.
 
   /**
-   * @param {number} pageNumber
-   *
-   * @param {number} pageSize
-   *
-   * @param {boolean} sortDesc
-   *
    * @param {IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams}
    * [options] Optional Parameters.
    *
@@ -2949,41 +2799,13 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    * @reject {Error|ServiceError} - The error object.
    */
-  async restEntityStatusGetPagedListPostWithHttpOperationResponse(pageNumber: number, pageSize: number, sortDesc: boolean, options?: Models.IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams): Promise<msRest.HttpOperationResponse> {
+  async restEntityStatusGetPagedListPostWithHttpOperationResponse(options?: Models.IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams): Promise<msRest.HttpOperationResponse> {
     let client = this;
-    let fieldFilters = (options && options.fieldFilters !== undefined) ? options.fieldFilters : undefined;
-    let sortBy = (options && options.sortBy !== undefined) ? options.sortBy : undefined;
-    // Validate
-    try {
-      if (pageNumber === null || pageNumber === undefined || typeof pageNumber !== 'number') {
-        throw new Error('pageNumber cannot be null or undefined and it must be of type number.');
-      }
-      if (pageSize === null || pageSize === undefined || typeof pageSize !== 'number') {
-        throw new Error('pageSize cannot be null or undefined and it must be of type number.');
-      }
-      if (sortDesc === null || sortDesc === undefined || typeof sortDesc !== 'boolean') {
-        throw new Error('sortDesc cannot be null or undefined and it must be of type boolean.');
-      }
-      if (sortBy !== null && sortBy !== undefined && typeof sortBy.valueOf() !== 'string') {
-        throw new Error('sortBy must be of type string.');
-      }
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    let pagedListRequest = (options && options.pagedListRequest !== undefined) ? options.pagedListRequest : undefined;
 
     // Construct URL
     let baseUrl = this.baseUri;
     let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'rest/EntityStatus/GetPagedList';
-    let queryParamsArray: Array<any> = [];
-    queryParamsArray.push('pageNumber=' + encodeURIComponent(pageNumber.toString()));
-    queryParamsArray.push('pageSize=' + encodeURIComponent(pageSize.toString()));
-    queryParamsArray.push('sortDesc=' + encodeURIComponent(sortDesc.toString()));
-    if (sortBy !== null && sortBy !== undefined) {
-      queryParamsArray.push('sortBy=' + encodeURIComponent(sortBy));
-    }
-    if (queryParamsArray.length > 0) {
-      requestUrl += '?' + queryParamsArray.join('&');
-    }
 
     // Create HTTP transport objects
     let httpRequest = new WebResource();
@@ -3003,28 +2825,14 @@ class IntegratorAPI extends msRest.ServiceClient {
     let requestContent = null;
     let requestModel = null;
     try {
-      if (fieldFilters !== null && fieldFilters !== undefined) {
-        let requestModelMapper = {
-          required: false,
-          serializedName: 'fieldFilters',
-          type: {
-            name: 'Sequence',
-            element: {
-                required: false,
-                serializedName: 'FieldFilterEntityStatusElementType',
-                type: {
-                  name: 'Composite',
-                  className: 'FieldFilterEntityStatus'
-                }
-            }
-          }
-        };
-        requestModel = client.serializer.serialize(requestModelMapper, fieldFilters, 'fieldFilters');
+      if (pagedListRequest !== null && pagedListRequest !== undefined) {
+        let requestModelMapper = Mappers.PagedListRequestEntityStatus;
+        requestModel = client.serializer.serialize(requestModelMapper, pagedListRequest, 'pagedListRequest');
         requestContent = JSON.stringify(requestModel);
       }
     } catch (error) {
       let serializationError = new Error(`Error "${error.message}" occurred in serializing the ` +
-          `payload - ${JSON.stringify(fieldFilters, null, 2)}.`);
+          `payload - ${JSON.stringify(pagedListRequest, null, 2)}.`);
       return Promise.reject(serializationError);
     }
     httpRequest.body = requestContent;
@@ -3059,7 +2867,7 @@ class IntegratorAPI extends msRest.ServiceClient {
         let parsedResponse = operationRes.bodyAsJson as { [key: string]: any };
         try {
           if (parsedResponse !== null && parsedResponse !== undefined) {
-            let resultMapper = Mappers.PagedListAnsEntityStatus;
+            let resultMapper = Mappers.PagedListResponseEntityStatus;
             operationRes.bodyAsJson = client.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.bodyAsJson');
           }
         } catch (error) {
@@ -4188,14 +3996,8 @@ class IntegratorAPI extends msRest.ServiceClient {
   // methods on the client.
 
   /**
-   * @param {number} pageNumber
-   *
-   * @param {number} pageSize
-   *
-   * @param {boolean} sortDesc
-   *
-   * @param {IntegratorAPIRestSchedulerGetPagedListPostOptionalParams} [options]
-   * Optional Parameters.
+   * @param {IntegratorAPIRestSchedulerGetLogsPagedListPostOptionalParams}
+   * [options] Optional Parameters.
    *
    * @returns {Promise} A promise is returned
    *
@@ -4203,41 +4005,13 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    * @reject {Error|ServiceError} - The error object.
    */
-  async restSchedulerGetPagedListPostWithHttpOperationResponse(pageNumber: number, pageSize: number, sortDesc: boolean, options?: Models.IntegratorAPIRestSchedulerGetPagedListPostOptionalParams): Promise<msRest.HttpOperationResponse> {
+  async restSchedulerGetLogsPagedListPostWithHttpOperationResponse(options?: Models.IntegratorAPIRestSchedulerGetLogsPagedListPostOptionalParams): Promise<msRest.HttpOperationResponse> {
     let client = this;
-    let fieldFilters = (options && options.fieldFilters !== undefined) ? options.fieldFilters : undefined;
-    let sortBy = (options && options.sortBy !== undefined) ? options.sortBy : undefined;
-    // Validate
-    try {
-      if (pageNumber === null || pageNumber === undefined || typeof pageNumber !== 'number') {
-        throw new Error('pageNumber cannot be null or undefined and it must be of type number.');
-      }
-      if (pageSize === null || pageSize === undefined || typeof pageSize !== 'number') {
-        throw new Error('pageSize cannot be null or undefined and it must be of type number.');
-      }
-      if (sortDesc === null || sortDesc === undefined || typeof sortDesc !== 'boolean') {
-        throw new Error('sortDesc cannot be null or undefined and it must be of type boolean.');
-      }
-      if (sortBy !== null && sortBy !== undefined && typeof sortBy.valueOf() !== 'string') {
-        throw new Error('sortBy must be of type string.');
-      }
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    let pagedListRequest = (options && options.pagedListRequest !== undefined) ? options.pagedListRequest : undefined;
 
     // Construct URL
     let baseUrl = this.baseUri;
-    let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'rest/Scheduler/GetPagedList';
-    let queryParamsArray: Array<any> = [];
-    queryParamsArray.push('pageNumber=' + encodeURIComponent(pageNumber.toString()));
-    queryParamsArray.push('pageSize=' + encodeURIComponent(pageSize.toString()));
-    queryParamsArray.push('sortDesc=' + encodeURIComponent(sortDesc.toString()));
-    if (sortBy !== null && sortBy !== undefined) {
-      queryParamsArray.push('sortBy=' + encodeURIComponent(sortBy));
-    }
-    if (queryParamsArray.length > 0) {
-      requestUrl += '?' + queryParamsArray.join('&');
-    }
+    let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'rest/Scheduler/GetLogsPagedList';
 
     // Create HTTP transport objects
     let httpRequest = new WebResource();
@@ -4257,28 +4031,14 @@ class IntegratorAPI extends msRest.ServiceClient {
     let requestContent = null;
     let requestModel = null;
     try {
-      if (fieldFilters !== null && fieldFilters !== undefined) {
-        let requestModelMapper = {
-          required: false,
-          serializedName: 'fieldFilters',
-          type: {
-            name: 'Sequence',
-            element: {
-                required: false,
-                serializedName: 'FieldFilterLogElementType',
-                type: {
-                  name: 'Composite',
-                  className: 'FieldFilterLog'
-                }
-            }
-          }
-        };
-        requestModel = client.serializer.serialize(requestModelMapper, fieldFilters, 'fieldFilters');
+      if (pagedListRequest !== null && pagedListRequest !== undefined) {
+        let requestModelMapper = Mappers.PagedListRequestLog;
+        requestModel = client.serializer.serialize(requestModelMapper, pagedListRequest, 'pagedListRequest');
         requestContent = JSON.stringify(requestModel);
       }
     } catch (error) {
       let serializationError = new Error(`Error "${error.message}" occurred in serializing the ` +
-          `payload - ${JSON.stringify(fieldFilters, null, 2)}.`);
+          `payload - ${JSON.stringify(pagedListRequest, null, 2)}.`);
       return Promise.reject(serializationError);
     }
     httpRequest.body = requestContent;
@@ -4850,12 +4610,6 @@ class IntegratorAPI extends msRest.ServiceClient {
   }
 
   /**
-   * @param {number} pageNumber
-   *
-   * @param {number} pageSize
-   *
-   * @param {boolean} sortDesc
-   *
    * @param {IntegratorAPIRestDataTaskGetPagedListPostOptionalParams} [options]
    * Optional Parameters.
    *
@@ -4865,36 +4619,36 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
    *
-   *                      {Models.PagedListAnsDataTask} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.PagedListAnsDataTask} for more
+   *                      {Models.PagedListResponseDataTask} [result]   - The deserialized result object if an error did not occur.
+   *                      See {@link Models.PagedListResponseDataTask} for more
    *                      information.
    *
    *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
    *
    *                      {Response} [response] - The HTTP Response stream if an error did not occur.
    */
-  restDataTaskGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean): Promise<Models.PagedListAnsDataTask>;
-  restDataTaskGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean, options: Models.IntegratorAPIRestDataTaskGetPagedListPostOptionalParams): Promise<Models.PagedListAnsDataTask>;
-  restDataTaskGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean, callback: msRest.ServiceCallback<Models.PagedListAnsDataTask>): void;
-  restDataTaskGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean, options: Models.IntegratorAPIRestDataTaskGetPagedListPostOptionalParams, callback: msRest.ServiceCallback<Models.PagedListAnsDataTask>): void;
-  restDataTaskGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean, options?: Models.IntegratorAPIRestDataTaskGetPagedListPostOptionalParams, callback?: msRest.ServiceCallback<Models.PagedListAnsDataTask>): any {
+  restDataTaskGetPagedListPost(): Promise<Models.PagedListResponseDataTask>;
+  restDataTaskGetPagedListPost(options: Models.IntegratorAPIRestDataTaskGetPagedListPostOptionalParams): Promise<Models.PagedListResponseDataTask>;
+  restDataTaskGetPagedListPost(callback: msRest.ServiceCallback<Models.PagedListResponseDataTask>): void;
+  restDataTaskGetPagedListPost(options: Models.IntegratorAPIRestDataTaskGetPagedListPostOptionalParams, callback: msRest.ServiceCallback<Models.PagedListResponseDataTask>): void;
+  restDataTaskGetPagedListPost(options?: Models.IntegratorAPIRestDataTaskGetPagedListPostOptionalParams, callback?: msRest.ServiceCallback<Models.PagedListResponseDataTask>): any {
     if (!callback && typeof options === 'function') {
       callback = options;
       options = undefined;
     }
-    let cb = callback as msRest.ServiceCallback<Models.PagedListAnsDataTask>;
+    let cb = callback as msRest.ServiceCallback<Models.PagedListResponseDataTask>;
     if (!callback) {
-      return this.restDataTaskGetPagedListPostWithHttpOperationResponse(pageNumber, pageSize, sortDesc, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.bodyAsJson as Models.PagedListAnsDataTask);
+      return this.restDataTaskGetPagedListPostWithHttpOperationResponse(options).then((operationRes: msRest.HttpOperationResponse) => {
+        return Promise.resolve(operationRes.bodyAsJson as Models.PagedListResponseDataTask);
       }).catch((err: Error) => {
         return Promise.reject(err);
       });
     } else {
-      msRest.promiseToCallback(this.restDataTaskGetPagedListPostWithHttpOperationResponse(pageNumber, pageSize, sortDesc, options))((err: Error, data: msRest.HttpOperationResponse) => {
+      msRest.promiseToCallback(this.restDataTaskGetPagedListPostWithHttpOperationResponse(options))((err: Error, data: msRest.HttpOperationResponse) => {
         if (err) {
           return cb(err);
         }
-        let result = data.bodyAsJson as Models.PagedListAnsDataTask;
+        let result = data.bodyAsJson as Models.PagedListResponseDataTask;
         return cb(err, result, data.request, data.response);
       });
     }
@@ -5206,12 +4960,6 @@ class IntegratorAPI extends msRest.ServiceClient {
   }
 
   /**
-   * @param {number} pageNumber
-   *
-   * @param {number} pageSize
-   *
-   * @param {boolean} sortDesc
-   *
    * @param {IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams}
    * [options] Optional Parameters.
    *
@@ -5221,36 +4969,36 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
    *
-   *                      {Models.PagedListAnsDataTaskGroup} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.PagedListAnsDataTaskGroup} for more
-   *                      information.
+   *                      {Models.PagedListResponseDataTaskGroup} [result]   - The deserialized result object if an error did not occur.
+   *                      See {@link Models.PagedListResponseDataTaskGroup} for
+   *                      more information.
    *
    *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
    *
    *                      {Response} [response] - The HTTP Response stream if an error did not occur.
    */
-  restDataTaskGroupGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean): Promise<Models.PagedListAnsDataTaskGroup>;
-  restDataTaskGroupGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean, options: Models.IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams): Promise<Models.PagedListAnsDataTaskGroup>;
-  restDataTaskGroupGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean, callback: msRest.ServiceCallback<Models.PagedListAnsDataTaskGroup>): void;
-  restDataTaskGroupGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean, options: Models.IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams, callback: msRest.ServiceCallback<Models.PagedListAnsDataTaskGroup>): void;
-  restDataTaskGroupGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean, options?: Models.IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams, callback?: msRest.ServiceCallback<Models.PagedListAnsDataTaskGroup>): any {
+  restDataTaskGroupGetPagedListPost(): Promise<Models.PagedListResponseDataTaskGroup>;
+  restDataTaskGroupGetPagedListPost(options: Models.IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams): Promise<Models.PagedListResponseDataTaskGroup>;
+  restDataTaskGroupGetPagedListPost(callback: msRest.ServiceCallback<Models.PagedListResponseDataTaskGroup>): void;
+  restDataTaskGroupGetPagedListPost(options: Models.IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams, callback: msRest.ServiceCallback<Models.PagedListResponseDataTaskGroup>): void;
+  restDataTaskGroupGetPagedListPost(options?: Models.IntegratorAPIRestDataTaskGroupGetPagedListPostOptionalParams, callback?: msRest.ServiceCallback<Models.PagedListResponseDataTaskGroup>): any {
     if (!callback && typeof options === 'function') {
       callback = options;
       options = undefined;
     }
-    let cb = callback as msRest.ServiceCallback<Models.PagedListAnsDataTaskGroup>;
+    let cb = callback as msRest.ServiceCallback<Models.PagedListResponseDataTaskGroup>;
     if (!callback) {
-      return this.restDataTaskGroupGetPagedListPostWithHttpOperationResponse(pageNumber, pageSize, sortDesc, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.bodyAsJson as Models.PagedListAnsDataTaskGroup);
+      return this.restDataTaskGroupGetPagedListPostWithHttpOperationResponse(options).then((operationRes: msRest.HttpOperationResponse) => {
+        return Promise.resolve(operationRes.bodyAsJson as Models.PagedListResponseDataTaskGroup);
       }).catch((err: Error) => {
         return Promise.reject(err);
       });
     } else {
-      msRest.promiseToCallback(this.restDataTaskGroupGetPagedListPostWithHttpOperationResponse(pageNumber, pageSize, sortDesc, options))((err: Error, data: msRest.HttpOperationResponse) => {
+      msRest.promiseToCallback(this.restDataTaskGroupGetPagedListPostWithHttpOperationResponse(options))((err: Error, data: msRest.HttpOperationResponse) => {
         if (err) {
           return cb(err);
         }
-        let result = data.bodyAsJson as Models.PagedListAnsDataTaskGroup;
+        let result = data.bodyAsJson as Models.PagedListResponseDataTaskGroup;
         return cb(err, result, data.request, data.response);
       });
     }
@@ -5519,12 +5267,6 @@ class IntegratorAPI extends msRest.ServiceClient {
   }
 
   /**
-   * @param {number} pageNumber
-   *
-   * @param {number} pageSize
-   *
-   * @param {boolean} sortDesc
-   *
    * @param {IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams}
    * [options] Optional Parameters.
    *
@@ -5534,35 +5276,36 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
    *
-   *                      {Models.PagedListAns} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.PagedListAns} for more information.
+   *                      {Models.PagedListResponseEntityStatus} [result]   - The deserialized result object if an error did not occur.
+   *                      See {@link Models.PagedListResponseEntityStatus} for
+   *                      more information.
    *
    *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
    *
    *                      {Response} [response] - The HTTP Response stream if an error did not occur.
    */
-  restEntityStatusGetEntityStatusShortPost(pageNumber: number, pageSize: number, sortDesc: boolean): Promise<Models.PagedListAns>;
-  restEntityStatusGetEntityStatusShortPost(pageNumber: number, pageSize: number, sortDesc: boolean, options: Models.IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams): Promise<Models.PagedListAns>;
-  restEntityStatusGetEntityStatusShortPost(pageNumber: number, pageSize: number, sortDesc: boolean, callback: msRest.ServiceCallback<Models.PagedListAns>): void;
-  restEntityStatusGetEntityStatusShortPost(pageNumber: number, pageSize: number, sortDesc: boolean, options: Models.IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams, callback: msRest.ServiceCallback<Models.PagedListAns>): void;
-  restEntityStatusGetEntityStatusShortPost(pageNumber: number, pageSize: number, sortDesc: boolean, options?: Models.IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams, callback?: msRest.ServiceCallback<Models.PagedListAns>): any {
+  restEntityStatusGetEntityStatusShortPost(): Promise<Models.PagedListResponseEntityStatus>;
+  restEntityStatusGetEntityStatusShortPost(options: Models.IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams): Promise<Models.PagedListResponseEntityStatus>;
+  restEntityStatusGetEntityStatusShortPost(callback: msRest.ServiceCallback<Models.PagedListResponseEntityStatus>): void;
+  restEntityStatusGetEntityStatusShortPost(options: Models.IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams, callback: msRest.ServiceCallback<Models.PagedListResponseEntityStatus>): void;
+  restEntityStatusGetEntityStatusShortPost(options?: Models.IntegratorAPIRestEntityStatusGetEntityStatusShortPostOptionalParams, callback?: msRest.ServiceCallback<Models.PagedListResponseEntityStatus>): any {
     if (!callback && typeof options === 'function') {
       callback = options;
       options = undefined;
     }
-    let cb = callback as msRest.ServiceCallback<Models.PagedListAns>;
+    let cb = callback as msRest.ServiceCallback<Models.PagedListResponseEntityStatus>;
     if (!callback) {
-      return this.restEntityStatusGetEntityStatusShortPostWithHttpOperationResponse(pageNumber, pageSize, sortDesc, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.bodyAsJson as Models.PagedListAns);
+      return this.restEntityStatusGetEntityStatusShortPostWithHttpOperationResponse(options).then((operationRes: msRest.HttpOperationResponse) => {
+        return Promise.resolve(operationRes.bodyAsJson as Models.PagedListResponseEntityStatus);
       }).catch((err: Error) => {
         return Promise.reject(err);
       });
     } else {
-      msRest.promiseToCallback(this.restEntityStatusGetEntityStatusShortPostWithHttpOperationResponse(pageNumber, pageSize, sortDesc, options))((err: Error, data: msRest.HttpOperationResponse) => {
+      msRest.promiseToCallback(this.restEntityStatusGetEntityStatusShortPostWithHttpOperationResponse(options))((err: Error, data: msRest.HttpOperationResponse) => {
         if (err) {
           return cb(err);
         }
-        let result = data.bodyAsJson as Models.PagedListAns;
+        let result = data.bodyAsJson as Models.PagedListResponseEntityStatus;
         return cb(err, result, data.request, data.response);
       });
     }
@@ -5752,12 +5495,6 @@ class IntegratorAPI extends msRest.ServiceClient {
   }
 
   /**
-   * @param {number} pageNumber
-   *
-   * @param {number} pageSize
-   *
-   * @param {boolean} sortDesc
-   *
    * @param {IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams}
    * [options] Optional Parameters.
    *
@@ -5767,36 +5504,36 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
    *
-   *                      {Models.PagedListAnsEntityStatus} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.PagedListAnsEntityStatus} for more
-   *                      information.
+   *                      {Models.PagedListResponseEntityStatus} [result]   - The deserialized result object if an error did not occur.
+   *                      See {@link Models.PagedListResponseEntityStatus} for
+   *                      more information.
    *
    *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
    *
    *                      {Response} [response] - The HTTP Response stream if an error did not occur.
    */
-  restEntityStatusGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean): Promise<Models.PagedListAnsEntityStatus>;
-  restEntityStatusGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean, options: Models.IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams): Promise<Models.PagedListAnsEntityStatus>;
-  restEntityStatusGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean, callback: msRest.ServiceCallback<Models.PagedListAnsEntityStatus>): void;
-  restEntityStatusGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean, options: Models.IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams, callback: msRest.ServiceCallback<Models.PagedListAnsEntityStatus>): void;
-  restEntityStatusGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean, options?: Models.IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams, callback?: msRest.ServiceCallback<Models.PagedListAnsEntityStatus>): any {
+  restEntityStatusGetPagedListPost(): Promise<Models.PagedListResponseEntityStatus>;
+  restEntityStatusGetPagedListPost(options: Models.IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams): Promise<Models.PagedListResponseEntityStatus>;
+  restEntityStatusGetPagedListPost(callback: msRest.ServiceCallback<Models.PagedListResponseEntityStatus>): void;
+  restEntityStatusGetPagedListPost(options: Models.IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams, callback: msRest.ServiceCallback<Models.PagedListResponseEntityStatus>): void;
+  restEntityStatusGetPagedListPost(options?: Models.IntegratorAPIRestEntityStatusGetPagedListPostOptionalParams, callback?: msRest.ServiceCallback<Models.PagedListResponseEntityStatus>): any {
     if (!callback && typeof options === 'function') {
       callback = options;
       options = undefined;
     }
-    let cb = callback as msRest.ServiceCallback<Models.PagedListAnsEntityStatus>;
+    let cb = callback as msRest.ServiceCallback<Models.PagedListResponseEntityStatus>;
     if (!callback) {
-      return this.restEntityStatusGetPagedListPostWithHttpOperationResponse(pageNumber, pageSize, sortDesc, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.bodyAsJson as Models.PagedListAnsEntityStatus);
+      return this.restEntityStatusGetPagedListPostWithHttpOperationResponse(options).then((operationRes: msRest.HttpOperationResponse) => {
+        return Promise.resolve(operationRes.bodyAsJson as Models.PagedListResponseEntityStatus);
       }).catch((err: Error) => {
         return Promise.reject(err);
       });
     } else {
-      msRest.promiseToCallback(this.restEntityStatusGetPagedListPostWithHttpOperationResponse(pageNumber, pageSize, sortDesc, options))((err: Error, data: msRest.HttpOperationResponse) => {
+      msRest.promiseToCallback(this.restEntityStatusGetPagedListPostWithHttpOperationResponse(options))((err: Error, data: msRest.HttpOperationResponse) => {
         if (err) {
           return cb(err);
         }
-        let result = data.bodyAsJson as Models.PagedListAnsEntityStatus;
+        let result = data.bodyAsJson as Models.PagedListResponseEntityStatus;
         return cb(err, result, data.request, data.response);
       });
     }
@@ -6281,14 +6018,8 @@ class IntegratorAPI extends msRest.ServiceClient {
   }
 
   /**
-   * @param {number} pageNumber
-   *
-   * @param {number} pageSize
-   *
-   * @param {boolean} sortDesc
-   *
-   * @param {IntegratorAPIRestSchedulerGetPagedListPostOptionalParams} [options]
-   * Optional Parameters.
+   * @param {IntegratorAPIRestSchedulerGetLogsPagedListPostOptionalParams}
+   * [options] Optional Parameters.
    *
    * @param {ServiceCallback} callback - The callback.
    *
@@ -6302,24 +6033,24 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    *                      {Response} [response] - The HTTP Response stream if an error did not occur.
    */
-  restSchedulerGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean): Promise<void>;
-  restSchedulerGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean, options: Models.IntegratorAPIRestSchedulerGetPagedListPostOptionalParams): Promise<void>;
-  restSchedulerGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean, callback: msRest.ServiceCallback<void>): void;
-  restSchedulerGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean, options: Models.IntegratorAPIRestSchedulerGetPagedListPostOptionalParams, callback: msRest.ServiceCallback<void>): void;
-  restSchedulerGetPagedListPost(pageNumber: number, pageSize: number, sortDesc: boolean, options?: Models.IntegratorAPIRestSchedulerGetPagedListPostOptionalParams, callback?: msRest.ServiceCallback<void>): any {
+  restSchedulerGetLogsPagedListPost(): Promise<void>;
+  restSchedulerGetLogsPagedListPost(options: Models.IntegratorAPIRestSchedulerGetLogsPagedListPostOptionalParams): Promise<void>;
+  restSchedulerGetLogsPagedListPost(callback: msRest.ServiceCallback<void>): void;
+  restSchedulerGetLogsPagedListPost(options: Models.IntegratorAPIRestSchedulerGetLogsPagedListPostOptionalParams, callback: msRest.ServiceCallback<void>): void;
+  restSchedulerGetLogsPagedListPost(options?: Models.IntegratorAPIRestSchedulerGetLogsPagedListPostOptionalParams, callback?: msRest.ServiceCallback<void>): any {
     if (!callback && typeof options === 'function') {
       callback = options;
       options = undefined;
     }
     let cb = callback as msRest.ServiceCallback<void>;
     if (!callback) {
-      return this.restSchedulerGetPagedListPostWithHttpOperationResponse(pageNumber, pageSize, sortDesc, options).then((operationRes: msRest.HttpOperationResponse) => {
+      return this.restSchedulerGetLogsPagedListPostWithHttpOperationResponse(options).then((operationRes: msRest.HttpOperationResponse) => {
         return Promise.resolve(operationRes.bodyAsJson as void);
       }).catch((err: Error) => {
         return Promise.reject(err);
       });
     } else {
-      msRest.promiseToCallback(this.restSchedulerGetPagedListPostWithHttpOperationResponse(pageNumber, pageSize, sortDesc, options))((err: Error, data: msRest.HttpOperationResponse) => {
+      msRest.promiseToCallback(this.restSchedulerGetLogsPagedListPostWithHttpOperationResponse(options))((err: Error, data: msRest.HttpOperationResponse) => {
         if (err) {
           return cb(err);
         }

@@ -1,10 +1,11 @@
+import Vue from 'vue';
 import { HTTP } from '../../util/http-common';
 import { AxiosResponse } from 'axios';
 import { IFilter, FilterFactory, CheckBoxFilter, PagedListReq } from '../../classes/filter';
 import { EnumValues } from 'enum-values';
 import { EntityStatusEnum, FilterTypeEnum } from '../../enums';
 
-import { PagedListAnsEntityStatus } from '../../api/models';
+import { PagedListResponseEntityStatus, EntityStatusesValues } from '../../api/models';
 
 import { IPagedListReq } from '../../interfaces';
 
@@ -32,34 +33,7 @@ const state = {
 
 const getters = {
 
-    getFilters:         state => {
-        return [
-            {
-                fieldName: 'status',
-                existsValues: state.filters.status.toServer()
-            },
-            {
-                fieldName: 'entityType',
-                existsValues: state.filters.entityType.toServer()
-            },
-            {
-                fieldName: 'source',
-                existsValues: state.filters.source.toServer()
-            },
-            {
-                fieldName: 'target',
-                existsValues: state.filters.target.toServer()
-            },
-            {
-                fieldName: 'statusMessage',
-                ignoredValues: state.filters.statusMessage.isDefault() ? null : state.filters.statusMessage.toServer()
-            },
-            {
-                fieldName: 'entityVersion',
-                period: state.filters.entityVersion.isDefault() ? null : state.filters.entityVersion.toServer()
-            },
-        ]
-    },
+    ctx: state => state.ctx,
 
     filterPresets:      state => state.filterPresets,
 
@@ -72,12 +46,12 @@ const getters = {
     },
 
     entityStatuses: state => {
-        let ans: PagedListAnsEntityStatus = state.pagedListAnswer as PagedListAnsEntityStatus;
+        let ans: PagedListResponseEntityStatus = state.pagedListAnswer as PagedListResponseEntityStatus;
         return ans ? ans.entities : [] ; 
     },
 
     pagedListMetaData: state => {
-        let ans: PagedListAnsEntityStatus = state.pagedListAnswer as PagedListAnsEntityStatus;
+        let ans: PagedListResponseEntityStatus = state.pagedListAnswer as PagedListResponseEntityStatus;
         return ans.metadata;
     }
 };
@@ -92,42 +66,74 @@ const mutations = {
         state.ctx.perPage = value;
     },
 
+    changeSort(state, value: { sortBy: string, sortDesc: boolean }) {
+        state.ctx.sortBy = value.sortBy;
+        state.ctx.sortDesc = value.sortDesc;
+    },
+
     updateFilterValue(state, values: { filterName: string, values: any }) {
         state.filters[values.filterName].FilterData = values.values;
+        let temp: PagedListReq = state.ctx;
+        state.ctx = {
+            currentPage: temp.currentPage,
+            perPage: temp.perPage,
+            sortBy: temp.sortBy,
+            sortDesc: temp.sortDesc,
+            filters: [
+                {
+                    fieldName: 'status',
+                    existsValues: state.filters.status.toServer()
+                },
+                {
+                    fieldName: 'entityType',
+                    existsValues: state.filters.entityType.toServer()
+                },
+                {
+                    fieldName: 'source',
+                    existsValues: state.filters.source.toServer()
+                },
+                {
+                    fieldName: 'target',
+                    existsValues: state.filters.target.toServer()
+                },
+                {
+                    fieldName: 'statusMessage',
+                    ignoredValues: state.filters.statusMessage.isDefault() ? null : state.filters.statusMessage.toServer()
+                },
+                {
+                    fieldName: 'entityVersion',
+                    period: state.filters.entityVersion.isDefault() ? null : state.filters.entityVersion.toServer()
+                },
+            ]
+        }
     },
 
-    resetFilter(state, values: { filterName: string, values: any }) {
-        state.filters[values.filterName].reset();
+    resetFilter(state, filterName: string) {
+        state.filters[filterName].reset();
     },
 
-    resetAllFilters(state) {
-        _.forEach(state.filters, (value: IFilter) => {
-            value.reset();
-        });
-    },
-
-    setFilterValues(state, filterPresets: any) {
+    setFilterValues(state, filterPresets: EntityStatusesValues) {
         state.filterPresets = filterPresets;
 
         if (state.filterPresets.statuses.length > 0)
-            state.filters.status.Values = state.filterPresets.statuses;
+            state.filters.status.Values = filterPresets.statuses;
         else
             state.filters.status.Values = EnumValues.getNames(EntityStatusEnum);
 
         if (state.filterPresets.entityTypes.length > 0)
-            state.filters.entityType.Values = state.filterPresets.entityTypes;
+            state.filters.entityType.Values = filterPresets.entityTypes;
 
         if (state.filterPresets.sources.length > 0)
-            state.filters.source.Values = state.filterPresets.sources;
+            state.filters.source.Values = filterPresets.sources;
 
         if (state.filterPresets.targets.length > 0)
-            state.filters.target.Values = state.filterPresets.targets;
+            state.filters.target.Values = filterPresets.targets;
 
         if (state.filterPresets.versions.length > 0)
-            state.filters.entityVersion.Values = state.filterPresets.versions;
+            state.filters.entityVersion.Values = filterPresets.versions;
     },
 
-    setEntityStatuses(state, pagedListAnswer: PagedListAnsEntityStatus) {
+    setEntityStatuses(state, pagedListAnswer: PagedListResponseEntityStatus) {
         state.pagedListAnswer = pagedListAnswer;
     }
 
@@ -139,7 +145,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             HTTP.get('EntityStatus/GetFilterValues')
                 .then((response: AxiosResponse) => {
-                    commit('setFilterValues', response.data);
+                    commit('setFilterValues', response.data as EntityStatusesValues);
                     resolve();
                 })
                 .catch(e => { reject(e); });
@@ -147,12 +153,12 @@ const actions = {
     },
 
     getEntityStatuses({ state, dispatch, commit, getters }) {
-        let ctx: IPagedListReq = state.ctx;
+
         commit('loading', true);
         return new Promise((resolve, reject) => {
-            HTTP.post(`EntityStatus/GetEntityStatusShort?pageSize=${ctx.perPage}&pageNumber=${ctx.currentPage}&sortBy=${ctx.sortBy}&sortDesc=${ctx.sortDesc}`, getters.getFilters) 
+            HTTP.post(`EntityStatus/GetEntityStatusShort`, getters.ctx) 
                 .then((response: AxiosResponse) => {
-                    commit('setEntityStatuses', response.data as PagedListAnsEntityStatus);
+                    commit('setEntityStatuses', response.data as PagedListResponseEntityStatus);
                     commit('loading', false);
                     resolve();
                 })
@@ -172,6 +178,19 @@ const actions = {
         commit('changePerPage', value)
         return dispatch('getEntityStatuses');
     },
+
+    doChangeSort({ commit, dispatch }, value: {sortBy: string, sertDesc: boolean}) {
+        commit('changeSort', value)
+        return dispatch('getEntityStatuses');
+    },
+
+    doResetAllFilters({ state, commit, dispatch }) {
+        _.forEach(state.filters, (value: IFilter, key: string) => {
+            commit('resetFilter', key)
+        });
+        return dispatch('getEntityStatuses');
+    },
+
 
 };
 

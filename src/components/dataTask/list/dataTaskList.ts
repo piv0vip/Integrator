@@ -215,12 +215,16 @@ export class DataTaskListComponent extends Vue {
 
     onEditTaskClick(dataTask: DataTask) {
         this.currentTask = dataTask;
-        this.$store.commit('dataTaskDialogVisible', true);
+        this.$nextTick(() => {
+            this.$store.commit('dataTaskDialogVisible', true);
+        })
     }
 
     onEditGroupClick(dataTaskGroup: DataTaskGroup) {
         this.currentGroup = dataTaskGroup;
-        this.$store.commit('dataTaskGroupDialogVisible', true);
+        this.$nextTick(() => {
+            this.$store.commit('dataTaskGroupDialogVisible', true);
+        })
     }
 
     onDeleteTaskClick(dataTask: DataTask) {
@@ -245,7 +249,6 @@ export class DataTaskListComponent extends Vue {
     }
 
     closeEditGroup(dataTaskGroup?: DataTaskGroup) {
-        this.$store.commit('dataTaskGroupDialogVisible', false);
         if (dataTaskGroup) {
             this.refreshTable();
         }

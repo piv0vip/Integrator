@@ -9,7 +9,7 @@ import { IEnumValues, IPagedList, PagedList, ITableFields } from '../../../inter
 import { EntityStatusService } from '../../../services';
 
 import { FilterComponent, CheckBoxFilterComponent, ContainFilterComponent } from '../../common/filter';
-import { IFilter, DateFilter, CheckBoxFilter, MultiselectFilter, Filters, ContainFilter, EntityStatatusDecorator } from '../../../classes/filter';
+import { IFilter, DateFilter, CheckBoxFilter, MultiselectFilter, Filters, ContainFilter } from '../../../classes/filter';
 import { EnumValues } from 'enum-values';
 
 import Multiselect from 'vue-multiselect';
@@ -27,8 +27,6 @@ import FilterRemoveIcon from 'mdi-vue/FilterRemoveIcon';
 })
 
 export class LogListComponent extends Vue {
-
-    filtersDecorator: EntityStatatusDecorator = new EntityStatatusDecorator();
 
     storeFilters: any = this.$store.getters.filters;
 
@@ -68,7 +66,7 @@ export class LogListComponent extends Vue {
     fields: ITableFields[] = 
     [
         {
-            key: 'Level',
+            key: 'level',
             tdClass: 'py-3',
             label: 'Log Level',
             sortable: true,
@@ -136,7 +134,7 @@ export class LogListComponent extends Vue {
 
     myProvider(ctx) {
         this.$store.commit('loading', true);
-        ctx.filter = this.filtersDecorator.toServer();
+        ctx.filter = this.$store.getters.ctx;
         return EntityStatusService.getPagedList(ctx)
         .then( function(response: {data: EntityStatus[], metadata}) {
             this.pagedList = response.metadata;
@@ -166,8 +164,7 @@ export class LogListComponent extends Vue {
     }
 
     onResetFilter() {
-        this.$store.commit('resetAllFilters');
-        this.onApplyFilter();
+        this.$store.dispatch('doResetAllFilters');
     }
 
 }

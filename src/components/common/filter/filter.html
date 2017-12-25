@@ -15,19 +15,19 @@
                 {{ value.label }}
             </v-card-title>
 
-            <multiselect-filter v-if="isMultiselectFilter()"
-                                :value="filter.FilterData"></multiselect-filter>
+            <!--<multiselect-component v-if="isMultiselectFilter()"
+                                :value="filter.FilterData"></multiselect-component>-->
 
-            <date-filter v-if="isDateFilter()"
+            <date-filter-component v-if="isDateFilter()"
                          :dates="filter.Values"
-                         v-model="filterData"></date-filter>
+                         v-model="filterData"></date-filter-component>
 
-            <checkbox-filter v-if="isCheckBoxFilter()"
+            <check-box-filter-component v-if="isCheckBoxFilter()"
                              :items="filter.Values"
-                             v-model="filterData"></checkbox-filter>
+                             v-model="filterData"></check-box-filter-component=>
 
-            <contain-filter v-if="isContainFilter()"
-                            v-model="filter"></contain-filter>
+            <!--<contain-filter-component v-if="isContainFilter()"
+                            v-model="filter"></contain-filter-component>-->
 
             <v-card-actions class="p-3 grey lighten-3">
                 <v-spacer></v-spacer>

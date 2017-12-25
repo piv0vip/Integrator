@@ -8,7 +8,7 @@ export interface IEntityFilter {
 
 export interface IPagedListReq {
     currentPage: number,
-    filter: IEntityFilter[],
+    filters: IEntityFilter[],
     perPage: number,
     sortBy: string,
     sortDesc: boolean

@@ -113,6 +113,7 @@ export class DataTaskGroupEditComponent extends Vue {
 
     closeEdit(dataTaskGroup?: DataTaskGroup) {
         this.$validator.reset();
+        this.$store.commit('dataTaskGroupDialogVisible', false);
         this.$emit('input', false);
         this.$emit('onClose', dataTaskGroup);
     }

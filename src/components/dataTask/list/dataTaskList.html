@@ -41,11 +41,11 @@
                                        @click.stop='onExecGroupClick(dataTaskGroup)'><i class="material-icons">flash_on</i></v-btn>
 
                                 <!--<v-btn v-if="dataTaskGroup.groupOnly" icon flat
-               class="m-0"
-               color="red lighten-2 white--text"
-               title="Reset group"
-               :disabled="!isGroupRunning(dataTaskGroup)"
-               @click.stop='onResetGroupClick(createDataTaskGroup(dataTaskGroup))'><i class="material-icons">flash_off</i></v-btn>-->
+        class="m-0"
+        color="red lighten-2 white--text"
+        title="Reset group"
+        :disabled="!isGroupRunning(dataTaskGroup)"
+        @click.stop='onResetGroupClick(createDataTaskGroup(dataTaskGroup))'><i class="material-icons">flash_off</i></v-btn>-->
 
                             </v-flex>
 
@@ -66,17 +66,26 @@
 
                             <v-flex xs2 class="my-2">
                                 <template v-if="dataTaskGroup.groupOnly && dataTaskGroup.lastStartTime">
-                                    Last Start Time: {{formatDate(dataTaskGroup.lastStartTime)}}
-                                </template>
+                                    Last Start Time: 
+                                    <span class="blue-grey--text text--lighten-2">{{formatDate(dataTaskGroup.lastStartTime)}}</span>
+</template>
                             </v-flex>
 
-                            <v-flex xs3 class="my-2">
+                            <v-flex xs2 class="my-2">
                                 <template v-if="dataTaskGroup.groupOnly && dataTaskGroup.nextStartTime">
-                                    Next Start Time: {{formatDate(dataTaskGroup.nextStartTime)}}
+                                    Next Start Time: 
+                                    <span class="blue-grey--text text--lighten-2">{{formatDate(dataTaskGroup.nextStartTime)}}</span>
+</template>
+                            </v-flex>
+
+                            <v-flex xs2 class="py-2">
+                                <template v-if="!dataTaskGroup.groupOnly && dataTaskGroup.lastDuration">
+                                    Last duration:
+                                    <span class="blue-grey--text text--lighten-2">{{dataTaskGroup.lastDuration}}</span>
                                 </template>
                             </v-flex>
 
-                            <v-flex xs3 class="text-xs-right py-2">
+                            <v-flex xs2 class="text-xs-right py-2">
                                 <span :class="getStatusColor(getGroupStatus(dataTaskGroup))">{{ getGroupStatus(dataTaskGroup) }}</span>
                             </v-flex>
 
@@ -100,7 +109,7 @@
                                      
                                             <v-layout slot="header" row>
                                                 <v-flex xs1 class="mx-2 text-xs-right">
-                                                    <v-btn v-if="!dataTaskGroup.groupOnly" icon flat
+                                                    <v-btn  icon flat
                                                            class="m-0"
                                                            color="indigo lighten-2 white--text"
                                                            title="Execute task immediately"

@@ -295,42 +295,9 @@ export class Filters extends Dictionary<string, IFilter> implements IServerable,
     }
 }
 
-
-export class EntityStatatusDecorator {
-
-    toServer(): IEntityFilter[] {
-        return [
-            {
-                fieldName: 'status',
-                existsValues: store.getters.filters.status.toServer()
-            },
-            {
-                fieldName: 'entityType',
-                existsValues: store.getters.filters.entityType.toServer()
-            },
-            {
-                fieldName: 'source',
-                existsValues: store.getters.filters.source.toServer()
-            },
-            {
-                fieldName: 'target',
-                existsValues: store.getters.filters.target.toServer()
-            },
-            {
-                fieldName: 'statusMessage',
-                ignoredValues: store.getters.filters.statusMessage.isDefault() ? null : store.getters.filters.statusMessage.toServer()
-            },
-            {
-                fieldName: 'entityVersion',
-                period: store.getters.filters.entityVersion.isDefault() ? null : store.getters.filters.entityVersion.toServer()
-            },
-        ];
-    }
-}
-
 export class PagedListReq implements IPagedListReq {
     currentPage: number = 1;
-    filter: IEntityFilter[] = [];
+    filters: IEntityFilter[] = [];
     perPage: number = 10;
     sortBy: string = 'RecModified';
     sortDesc: boolean = true;
