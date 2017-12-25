@@ -235,6 +235,68 @@ export interface FieldFilterDataTask {
 
 /**
  * @interface
+ * An interface representing IPagedList.
+ */
+export interface IPagedList {
+  /**
+   * @member {number} [pageCount]
+   */
+  readonly pageCount?: number;
+  /**
+   * @member {number} [totalItemCount]
+   */
+  readonly totalItemCount?: number;
+  /**
+   * @member {number} [pageNumber]
+   */
+  readonly pageNumber?: number;
+  /**
+   * @member {number} [pageSize]
+   */
+  readonly pageSize?: number;
+  /**
+   * @member {boolean} [hasPreviousPage]
+   */
+  readonly hasPreviousPage?: boolean;
+  /**
+   * @member {boolean} [hasNextPage]
+   */
+  readonly hasNextPage?: boolean;
+  /**
+   * @member {boolean} [isFirstPage]
+   */
+  readonly isFirstPage?: boolean;
+  /**
+   * @member {boolean} [isLastPage]
+   */
+  readonly isLastPage?: boolean;
+  /**
+   * @member {number} [firstItemOnPage]
+   */
+  readonly firstItemOnPage?: number;
+  /**
+   * @member {number} [lastItemOnPage]
+   */
+  readonly lastItemOnPage?: number;
+}
+
+/**
+ * @interface
+ * An interface representing PagedListAnsDataTask.
+ */
+export interface PagedListAnsDataTask {
+  /**
+   * @member {IPagedList} [metadata]
+   */
+  metadata?: IPagedList;
+  /**
+   * @member {DataTask[]} [entities]
+   */
+  entities?: DataTask[];
+}
+
+/**
+ * @interface
  * An interface representing ContainFilterDataTaskGroup.
  */
 export interface ContainFilterDataTaskGroup {
@@ -306,6 +368,21 @@ export interface FieldFilterDataTaskGroup {
    * @member {PeriodFilterDataTaskGroup} [period]
    */
   period?: PeriodFilterDataTaskGroup;
+}
+
+/**
+ * @interface
+ * An interface representing PagedListAnsDataTaskGroup.
+ */
+export interface PagedListAnsDataTaskGroup {
+  /**
+   * @member {IPagedList} [metadata]
+   */
+  metadata?: IPagedList;
+  /**
+   * @member {DataTaskGroup[]} [entities]
+   */
+  entities?: DataTaskGroup[];
 }
 
 /**
@@ -556,6 +633,36 @@ export interface EntityStatus {
    * @member {string} [entityName]
    */
   readonly entityName?: string;
+}
+
+/**
+ * @interface
+ * An interface representing PagedListAns.
+ */
+export interface PagedListAns {
+  /**
+   * @member {IPagedList} [metadata]
+   */
+  metadata?: IPagedList;
+  /**
+   * @member {EntityStatus[]} [entities]
+   */
+  entities?: EntityStatus[];
+}
+
+/**
+ * @interface
+ * An interface representing PagedListAnsEntityStatus.
+ */
+export interface PagedListAnsEntityStatus {
+  /**
+   * @member {IPagedList} [metadata]
+   */
+  metadata?: IPagedList;
+  /**
+   * @member {EntityStatus[]} [entities]
+   */
+  entities?: EntityStatus[];
 }
 
 /**

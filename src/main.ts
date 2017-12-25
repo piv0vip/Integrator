@@ -66,6 +66,7 @@ new Vue({
       store.dispatch('connectToHub');
       store.dispatch('getProductVersion');
       store.dispatch('getDataTasks');
+      store.dispatch('getSilentDataTasks');
   },
   components: {
     'app': AppComponent

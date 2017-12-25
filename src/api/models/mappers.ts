@@ -426,6 +426,131 @@ export const FieldFilterDataTask = {
   }
 };
 
+export const IPagedList = {
+  required: false,
+  serializedName: 'IPagedList',
+  type: {
+    name: 'Composite',
+    className: 'IPagedList',
+    modelProperties: {
+      pageCount: {
+        required: false,
+        readOnly: true,
+        serializedName: 'pageCount',
+        type: {
+          name: 'Number'
+        }
+      },
+      totalItemCount: {
+        required: false,
+        readOnly: true,
+        serializedName: 'totalItemCount',
+        type: {
+          name: 'Number'
+        }
+      },
+      pageNumber: {
+        required: false,
+        readOnly: true,
+        serializedName: 'pageNumber',
+        type: {
+          name: 'Number'
+        }
+      },
+      pageSize: {
+        required: false,
+        readOnly: true,
+        serializedName: 'pageSize',
+        type: {
+          name: 'Number'
+        }
+      },
+      hasPreviousPage: {
+        required: false,
+        readOnly: true,
+        serializedName: 'hasPreviousPage',
+        type: {
+          name: 'Boolean'
+        }
+      },
+      hasNextPage: {
+        required: false,
+        readOnly: true,
+        serializedName: 'hasNextPage',
+        type: {
+          name: 'Boolean'
+        }
+      },
+      isFirstPage: {
+        required: false,
+        readOnly: true,
+        serializedName: 'isFirstPage',
+        type: {
+          name: 'Boolean'
+        }
+      },
+      isLastPage: {
+        required: false,
+        readOnly: true,
+        serializedName: 'isLastPage',
+        type: {
+          name: 'Boolean'
+        }
+      },
+      firstItemOnPage: {
+        required: false,
+        readOnly: true,
+        serializedName: 'firstItemOnPage',
+        type: {
+          name: 'Number'
+        }
+      },
+      lastItemOnPage: {
+        required: false,
+        readOnly: true,
+        serializedName: 'lastItemOnPage',
+        type: {
+          name: 'Number'
+        }
+      }
+    }
+  }
+};
+
+export const PagedListAnsDataTask = {
+  required: false,
+  serializedName: 'PagedListAns[DataTask]',
+  type: {
+    name: 'Composite',
+    className: 'PagedListAnsDataTask',
+    modelProperties: {
+      metadata: {
+        required: false,
+        serializedName: 'metadata',
+        type: {
+          name: 'Composite',
+          className: 'IPagedList'
+        }
+      },
+      entities: {
+        required: false,
+        serializedName: 'entities',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'DataTaskElementType',
+              type: {
+                name: 'Composite',
+                className: 'DataTask'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const ContainFilterDataTaskGroup = {
   required: false,
   serializedName: 'ContainFilter[DataTaskGroup]',
@@ -570,6 +695,40 @@ export const FieldFilterDataTaskGroup = {
         type: {
           name: 'Composite',
           className: 'PeriodFilterDataTaskGroup'
+        }
+      }
+    }
+  }
+};
+
+export const PagedListAnsDataTaskGroup = {
+  required: false,
+  serializedName: 'PagedListAns[DataTaskGroup]',
+  type: {
+    name: 'Composite',
+    className: 'PagedListAnsDataTaskGroup',
+    modelProperties: {
+      metadata: {
+        required: false,
+        serializedName: 'metadata',
+        type: {
+          name: 'Composite',
+          className: 'IPagedList'
+        }
+      },
+      entities: {
+        required: false,
+        serializedName: 'entities',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'DataTaskGroupElementType',
+              type: {
+                name: 'Composite',
+                className: 'DataTaskGroup'
+              }
+          }
         }
       }
     }
@@ -1065,6 +1224,74 @@ export const EntityStatus = {
         serializedName: 'entityName',
         type: {
           name: 'String'
+        }
+      }
+    }
+  }
+};
+
+export const PagedListAns = {
+  required: false,
+  serializedName: 'PagedListAns',
+  type: {
+    name: 'Composite',
+    className: 'PagedListAns',
+    modelProperties: {
+      metadata: {
+        required: false,
+        serializedName: 'metadata',
+        type: {
+          name: 'Composite',
+          className: 'IPagedList'
+        }
+      },
+      entities: {
+        required: false,
+        serializedName: 'entities',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'EntityStatusElementType',
+              type: {
+                name: 'Composite',
+                className: 'EntityStatus'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const PagedListAnsEntityStatus = {
+  required: false,
+  serializedName: 'PagedListAns[EntityStatus]',
+  type: {
+    name: 'Composite',
+    className: 'PagedListAnsEntityStatus',
+    modelProperties: {
+      metadata: {
+        required: false,
+        serializedName: 'metadata',
+        type: {
+          name: 'Composite',
+          className: 'IPagedList'
+        }
+      },
+      entities: {
+        required: false,
+        serializedName: 'entities',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'EntityStatusElementType',
+              type: {
+                name: 'Composite',
+                className: 'EntityStatus'
+              }
+          }
         }
       }
     }

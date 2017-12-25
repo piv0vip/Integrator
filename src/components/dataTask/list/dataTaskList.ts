@@ -175,7 +175,6 @@ export class DataTaskListComponent extends Vue {
     }
 
     onExecLocalyTaskClick(dataTask: DataTask) {
-        debugger;
         this.currentTask = dataTask;
         this.showExecuteTaskLocaly = true;
     }

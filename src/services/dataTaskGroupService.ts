@@ -6,8 +6,6 @@ import { HandlerTypes } from '../classes/settings/handlerTypes';
 import { BaseService } from './baseService';
 import store from '../store';
 
-import { EntityStatatusDecorator } from '../classes/filter';
-
 import { DataTaskGroup as IDataTaskGroup } from '../api/models';
 
 export class DataTaskGroupService extends BaseService {

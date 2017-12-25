@@ -1,12 +1,10 @@
 import { DataTask } from '../models';
-import { IPagedList, PagedList } from '../interfaces';
+import { IPagedListReq, IPagedList, PagedList } from '../interfaces';
 import { HTTP } from '../util/http-common';
 import { AxiosResponse } from 'axios';
 import { HandlerTypes } from '../classes/settings/handlerTypes';
 import { BaseService } from './baseService';
 import store from '../store';
-
-import { EntityStatatusDecorator } from '../classes/filter';
 
 export class DataTaskService extends BaseService {
     protected setControllerName() {
@@ -32,7 +30,7 @@ export class DataTaskService extends BaseService {
         });
     }
 
-    public static getPagedList(ctx: { currentPage: number, filter: EntityStatatusDecorator, perPage: number, sortBy: string, sortDesc: boolean }): Promise<{ metadata: IPagedList, data: DataTask[] }> {
+    public static getPagedList(ctx: IPagedListReq): Promise<{ metadata: IPagedList, data: DataTask[] }> {
         let service = new DataTaskService();
 
         let dataTasks: DataTask[] = [];

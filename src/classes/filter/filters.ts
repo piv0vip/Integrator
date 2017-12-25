@@ -4,6 +4,8 @@ import { EnumValues } from 'enum-values';
 import _ from 'lodash';
 import moment from 'moment';
 
+import { IEntityFilter, IPagedListReq } from '../../interfaces';
+
 import store from '../../store';
 
 
@@ -293,42 +295,43 @@ export class Filters extends Dictionary<string, IFilter> implements IServerable,
     }
 }
 
-interface IESF {
-    FieldName: string;
-    ContainValues?: { values: string[] };
-    ExistsValues?: { values: string[] };
-    IgnoredValues?: { values: string[] };
-    Period?: { from: string, to: string };
-}
 
 export class EntityStatatusDecorator {
 
-    toServer(): IESF[] {
+    toServer(): IEntityFilter[] {
         return [
             {
-                FieldName: 'Status',
-                ExistsValues: store.getters.filters.Status.toServer()
+                fieldName: 'status',
+                existsValues: store.getters.filters.status.toServer()
             },
             {
-                FieldName: 'EntityType',
-                ExistsValues: store.getters.filters.EntityType.toServer()
+                fieldName: 'entityType',
+                existsValues: store.getters.filters.entityType.toServer()
             },
             {
-                FieldName: 'Source',
-                ExistsValues: store.getters.filters.Source.toServer()
+                fieldName: 'source',
+                existsValues: store.getters.filters.source.toServer()
             },
             {
-                FieldName: 'Target',
-                ExistsValues: store.getters.filters.Target.toServer()
+                fieldName: 'target',
+                existsValues: store.getters.filters.target.toServer()
             },
             {
-                FieldName: 'StatusMessage',
-                IgnoredValues: store.getters.filters.StatusMessage.isDefault() ? null : store.getters.filters.StatusMessage.toServer()
+                fieldName: 'statusMessage',
+                ignoredValues: store.getters.filters.statusMessage.isDefault() ? null : store.getters.filters.statusMessage.toServer()
             },
             {
-                FieldName: 'EntityVersion',
-                Period: store.getters.filters.EntityVersion.isDefault() ? null : store.getters.filters.EntityVersion.toServer()
+                fieldName: 'entityVersion',
+                period: store.getters.filters.entityVersion.isDefault() ? null : store.getters.filters.entityVersion.toServer()
             },
         ];
     }
+}
+
+export class PagedListReq implements IPagedListReq {
+    currentPage: number = 1;
+    filter: IEntityFilter[] = [];
+    perPage: number = 10;
+    sortBy: string = 'RecModified';
+    sortDesc: boolean = true;
 }

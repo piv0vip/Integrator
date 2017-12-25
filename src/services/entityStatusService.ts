@@ -1,9 +1,11 @@
 import { EntityStatus } from '../models';
-import { IPagedList, PagedList } from '../interfaces';
+import { IPagedListReq, IEntityFilter, IPagedList, PagedList } from '../interfaces';
 import { HTTP } from '../util/http-common';
 import { AxiosResponse } from 'axios';
 import { HandlerTypes } from '../classes/settings/handlerTypes';
 import { BaseService } from './baseService';
+
+import { PagedListAnsEntityStatus } from '../api/models'
 
 import { EntityStatatusDecorator } from '../classes/filter';
 
@@ -13,7 +15,7 @@ export class EntityStatusService extends BaseService {
         this.ControllerName = 'EntityStatus';
     }
 
-    public static getPagedList(ctx: { currentPage: number, filter: EntityStatatusDecorator, perPage: number, sortBy: string, sortDesc: boolean }): Promise<{metadata: IPagedList, data: EntityStatus[]}> {
+    public static getPagedList(ctx: IPagedListReq): Promise<{ metadata: IPagedList, data: EntityStatus[] }> {
 
         let service = new EntityStatusService();
 
@@ -21,6 +23,18 @@ export class EntityStatusService extends BaseService {
         let pagedList: PagedList = new PagedList(); 
 
         return new Promise( (resolve, reject) => {
+
+
+            HTTP.post(`EntityStatus/GetPagedList?pageSize=${ctx.perPage}&pageNumber=${ctx.currentPage}&sortBy=${ctx.sortBy}&sortDesc=${ctx.sortDesc}`, ctx.filter)
+                .then(response => {
+                    let data: PagedListAnsEntityStatus = response.data as PagedListAnsEntityStatus
+
+                    resolve();
+                })
+                .catch(error => {
+                    reject(Error);
+                });
+
 
             service.getPagedList(ctx)
             .then( ( response: AxiosResponse ) => {

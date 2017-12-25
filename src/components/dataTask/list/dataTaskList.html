@@ -124,15 +124,20 @@
                                                 </v-flex>
                                                 <v-flex xs2 class="py-2">
                                                     <template v-if="!dataTask.inactive && dataTask.lastStartTime">
-                                                        Last Start Time: {{formatDate(dataTask.lastStartTime)}}
-                                                    </template>
+                                                        Last Start Time: <span class="blue-grey--text text--lighten-2">{{formatDate(dataTask.lastStartTime)}}</span>
+</template>
                                                 </v-flex>
                                                 <v-flex xs2 class="py-2">
                                                     <template v-if="!dataTask.inactive && dataTask.nextStartTime">
-                                                        Next Start Time: {{formatDate(dataTask.nextStartTime)}}
+                                                        Next Start Time: <span class="blue-grey--text text--lighten-2">{{formatDate(dataTask.nextStartTime)}}</span>
                                                     </template>
                                                 </v-flex>
-                                                <v-flex xs3 class="text-xs-right mx-2">
+                                                <v-flex xs2 class="py-2">
+                                                    <template v-if="!dataTask.inactive && dataTask.lastDuration">
+                                                        Last duration: <span class="blue-grey--text text--lighten-2">{{dataTask.lastDuration}}</span>
+</template>
+                                                </v-flex>
+                                                <v-flex xs1 class="text-xs-right mx-2">
                                                     <!--{{ dataTask.executionOrder }}-->
                                                     <v-btn @click="changeOrder(orderDataTasks(dataTaskGroup.dataTaskList), j, j-1)" :disabled="j==0" flat icon class="m-0"><v-icon>arrow_upward</v-icon></v-btn>
                                                     <v-btn @click="changeOrder(orderDataTasks(dataTaskGroup.dataTaskList), j, j+1)" :disabled="j==(dataTaskGroup.dataTaskList.length-1)" flat icon class="m-0"><v-icon>arrow_downward</v-icon></v-btn>
