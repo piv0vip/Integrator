@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import { Component, Watch } from 'vue-property-decorator';
 import { HTTP } from '../../../util/http-common';
-import { EnumValue, CustomEnumValues, Enums, TaskStatusEnum, EntityStatusEnum } from '../../../enums';
+import { EnumValue, CustomEnumValues, Enums, TaskStatusEnum } from '../../../enums';
 import { AxiosResponse } from 'axios';
 import { EntityStatus } from '../../../models';
 import * as helper from '../../../util/helper';
@@ -16,7 +16,7 @@ import { EnumValues } from 'enum-values';
 
 import Multiselect from 'vue-multiselect';
 
-import { EntityStatus as IEntityStatus, ContentType as ContentTypeEnum, IPagedList } from '../../../api/models';
+import { EntityStatus as IEntityStatus, ContentType as ContentTypeEnum, IPagedList, Status2 as EntityStatusEnum } from '../../../api/models';
 
 import FilterRemoveIcon from 'mdi-vue/FilterRemoveIcon';
 
@@ -87,6 +87,12 @@ export class EntityStatusListComponent extends Vue {
             tdClass: 'td-button',
             label: ' '
         },
+        {
+            key: 'entityStatusId',
+            tdClass: 'py-3',
+            label: 'Entity Status ID',
+            sortable: true,
+        }, 
         {
             key: 'status',
             tdClass: 'py-3',
@@ -244,6 +250,17 @@ export class EntityStatusListComponent extends Vue {
             });
     }
 
+    onResedEntityStatus(entityStatus: EntityStatus) {
+        HTTP.post('Scheduler/ResendEntity', entityStatus )
+            .then((response: AxiosResponse) => {
+                this.refreshTable();
+            })
+            .catch(e => {
+                console.log(e);
+                this.refreshTable();
+            });
+    }
+
     onApplyFilter() {
         this.refreshTable();
     }
@@ -266,5 +283,10 @@ export class EntityStatusListComponent extends Vue {
         });
         this.refreshTable();
         console.log(item);
+    }
+
+    isResendBtnVisible(entityStatus: IEntityStatus): boolean {
+        //return true
+        return entityStatus.hasOutContent && (entityStatus.status === EntityStatusEnum.Errored || entityStatus.status === EntityStatusEnum.Ignored)
     }
 }
