@@ -301,4 +301,10 @@ export class PagedListReq implements IPagedListReq {
     perPage: number = 10;
     sortBy: string = 'RecModified';
     sortDesc: boolean = true;
+
+    constructor(params?: IPagedListReq) {
+        if (params) {
+            this.sortBy = params.sortBy;
+        }
+    }
 }

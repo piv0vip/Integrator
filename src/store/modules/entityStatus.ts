@@ -11,24 +11,26 @@ import { IPagedListReq } from '../../interfaces';
 
 import _ from 'lodash';
 
-const state = {
+const state = function(){
+    return {
 
 
-    filterPresets: {
-        statuses: []
-    },
+        filterPresets: {
+            statuses: []
+        },
 
-    filters: {
-        status:         FilterFactory.getFilter(FilterTypeEnum.StringList),
-        entityType:     FilterFactory.getFilter(FilterTypeEnum.StringList),
-        source:         FilterFactory.getFilter(FilterTypeEnum.StringList),
-        target:         FilterFactory.getFilter(FilterTypeEnum.StringList),
-        statusMessage:  FilterFactory.getFilter(FilterTypeEnum.Multiselect),
-        entityVersion:  FilterFactory.getFilter(FilterTypeEnum.Date)
-    },
+        filters: {
+            status: FilterFactory.getFilter(FilterTypeEnum.StringList),
+            entityType: FilterFactory.getFilter(FilterTypeEnum.StringList),
+            source: FilterFactory.getFilter(FilterTypeEnum.StringList),
+            target: FilterFactory.getFilter(FilterTypeEnum.StringList),
+            statusMessage: FilterFactory.getFilter(FilterTypeEnum.Multiselect),
+            entityVersion: FilterFactory.getFilter(FilterTypeEnum.Date)
+        },
 
-    pagedListRequest: new PagedListReq(),
-    pagedListResponse: null
+        pagedListRequest: new PagedListReq(),
+        pagedListResponse: null
+    }
 };
 
 const getters = {
@@ -110,6 +112,40 @@ const mutations = {
 
     resetFilter(state, filterName: string) {
         state.filters[filterName].reset();
+        let temp: PagedListReq = state.pagedListRequest;
+        state.pagedListRequest = {
+            currentPage: temp.currentPage,
+            perPage: temp.perPage,
+            sortBy: temp.sortBy,
+            sortDesc: temp.sortDesc,
+            filters: [
+                {
+                    fieldName: 'status',
+                    existsValues: state.filters.status.toServer()
+                },
+                {
+                    fieldName: 'entityType',
+                    existsValues: state.filters.entityType.toServer()
+                },
+                {
+                    fieldName: 'source',
+                    existsValues: state.filters.source.toServer()
+                },
+                {
+                    fieldName: 'target',
+                    existsValues: state.filters.target.toServer()
+                },
+                {
+                    fieldName: 'statusMessage',
+                    ignoredValues: state.filters.statusMessage.isDefault() ? null : state.filters.statusMessage.toServer()
+                },
+                {
+                    fieldName: 'entityVersion',
+                    period: state.filters.entityVersion.isDefault() ? null : state.filters.entityVersion.toServer()
+                },
+            ]
+        };
+
     },
 
     setFilterValues(state, filterPresets: EntityStatusesValues) {

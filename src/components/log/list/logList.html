@@ -29,7 +29,7 @@
                  :items="logs">
             <template slot="top-row" scope="data" :test="test(data)">
                 <td v-for="field in data.fields">
-                    <!--<ifilter v-if="storeFilters[field.key]" :value="field" @change="refreshTable"></ifilter>-->
+                    <filter-component v-if="storeFilters[field.key]" :filter="storeFilters[field.key]" :value="field" @change="refreshTable"></filter-component>
                 </td>
             </template>
         </b-table>

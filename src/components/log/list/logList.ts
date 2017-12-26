@@ -23,16 +23,16 @@ import FilterRemoveIcon from 'mdi-vue/FilterRemoveIcon';
     components: {
         Multiselect,
         FilterRemoveIcon,
-        'ifilter': FilterComponent
+        FilterComponent
     }
 })
 
 export class LogsListComponent extends Vue {
 
-    storeFilters: any = this.$store.getters.filters;
+    storeFilters: any = this.$store.getters.filtersLogs;
 
     get filtersIsDefault(): boolean {
-        return this.$store.getters.filtersIsDefault;
+        return this.$store.getters.filtersLogsIsDefault;
     }
 
     get logs(): Log[] {
@@ -49,17 +49,11 @@ export class LogsListComponent extends Vue {
     
     statusEnum = new CustomEnumValues();
     
-    currentEntity: EntityStatus = EntityStatus.createNew();
-
-    showContent: boolean = false;
-
     isBusy: boolean = false;  
     sortBy: string =  'EntityVersion';
     sortDesc: boolean = true;
 
     formatDate: Function = helper.formatDate;
-
-    getEnumDescription: Function = (val) => { return this.statusEnum.getEnumValueByCode(val).getDescription(); };
 
     pageOptions: {text: number, value: number}[] = [{text: 5, value: 5}, {text: 10, value: 10}, {text: 15, value: 15}];
 
@@ -106,30 +100,12 @@ export class LogsListComponent extends Vue {
     ];
 
     created() {
+        this.$store.dispatch('getFilterValuesLogs');
         this.$store.dispatch('getLogs');
     }
 
-    myProvider(ctx) {
-        this.$store.commit('loading', true);
-        ctx.filter = this.$store.getters.ctx;
-        return EntityStatusService.getPagedList(ctx)
-        .then( function(response: {data: EntityStatus[], metadata}) {
-            this.pagedList = response.metadata;
-            this.pagesCount = Math.ceil(response.metadata.totalItemCount / this.perPage);
-           
-            this.$store.commit('loading', false);
-            return response.data;
-        }.bind(this) )
-        .catch( (e) => {
-            this.$store.commit('loading', false);
-            console.log(e);
-            return [];
-        });
-    }
-
     refreshTable() {
-        let ttt: any = this.$refs['entityStatusesTable'];
-        ttt.refresh();
+        this.$store.dispatch('getLogs');
     }
     
     onFilterChange(e) {

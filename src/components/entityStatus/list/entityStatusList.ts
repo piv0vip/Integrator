@@ -132,7 +132,6 @@ export class EntityStatusListComponent extends Vue {
             tdClass: 'py-3',
             label: 'Entity version',
             sortable: true,
-            formatter: 'formatDate',    
             thStyle: { width: '180px' },
         },
         {

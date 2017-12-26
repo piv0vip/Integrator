@@ -7,10 +7,10 @@ export interface IEntityFilter {
 }
 
 export interface IPagedListReq {
-    currentPage: number,
-    filters: IEntityFilter[],
-    perPage: number,
-    sortBy: string,
-    sortDesc: boolean
+    currentPage?: number,
+    filters?: IEntityFilter[],
+    perPage?: number,
+    sortBy?: string,
+    sortDesc?: boolean
 }
 

@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Watch } from 'vue-property-decorator';
 
 import { IFilter, Filter } from '../../../classes/filter';
 import { DateFilterComponent, CheckBoxFilterComponent, ContainFilterComponent, MultiSelectComponent } from './';
@@ -30,11 +30,13 @@ export class FilterComponent extends Vue {
     menuActive: boolean = false;
 
     @Prop() value: ITableFields;
+    @Prop() filter: IFilter;
 
-    filterData: any = this.$store.getters.filters[this.value.key].FilterData;
+    filterData: any = null;
 
-    get filter(): IFilter {
-        return this.$store.getters.filters[this.value.key];
+    @Watch('filter')
+    onFilterChanged(value: IFilter) {
+        this.filterData = value.FilterData;
     }
 
     onApplyClick() {
