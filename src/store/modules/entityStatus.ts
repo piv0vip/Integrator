@@ -105,7 +105,7 @@ const mutations = {
                     period: state.filters.entityVersion.isDefault() ? null : state.filters.entityVersion.toServer()
                 },
             ]
-        }
+        };
     },
 
     resetFilter(state, filterName: string) {
@@ -156,7 +156,7 @@ const actions = {
 
         commit('loading', true);
         return new Promise((resolve, reject) => {
-            HTTP.post(`EntityStatus/GetEntityStatusShort`, getters.pagedListRequest) 
+            HTTP.post(`EntityStatus/GetEntityStatusShort`, getters.pagedListRequest)
                 .then((response: AxiosResponse) => {
                     commit('setEntityStatuses', response.data as PagedListResponseEntityStatus);
                     commit('loading', false);
@@ -166,27 +166,27 @@ const actions = {
                     commit('loading', false);
                     reject(e);
                 });
-        })
+        });
     },
 
     doChangeCurrentPage({ commit, dispatch }, value: number) {
-        commit('changeCurrentPage', value)
+        commit('changeCurrentPage', value);
         return dispatch('getEntityStatuses');
     },
 
     doChangePerPage({ commit, dispatch }, value: number) {
-        commit('changePerPage', value)
+        commit('changePerPage', value);
         return dispatch('getEntityStatuses');
     },
 
     doChangeSort({ commit, dispatch }, value: {sortBy: string, sertDesc: boolean}) {
-        commit('changeSort', value)
+        commit('changeSort', value);
         return dispatch('getEntityStatuses');
     },
 
     doResetAllFilters({ state, commit, dispatch }) {
         _.forEach(state.filters, (value: IFilter, key: string) => {
-            commit('resetFilter', key)
+            commit('resetFilter', key);
         });
         return dispatch('getEntityStatuses');
     },

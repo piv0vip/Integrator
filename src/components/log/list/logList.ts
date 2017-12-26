@@ -80,19 +80,6 @@ export class LogsListComponent extends Vue {
             label: 'Log Level',
             sortable: true,
         }, 
-        //{
-        //    key: 'SourceId',
-        //    tdClass: 'py-3',
-        //    label: 'Source Id',
-        //    sortable: true,
-        //},
-
-        //{
-        //    key: 'InContent',
-        //    label: 'In Content',
-        //    sortable: true,
-        //    thStyle: { width: '140px' }
-        //},
         {
             key: 'exception',
             label: 'Exception',
@@ -108,43 +95,14 @@ export class LogsListComponent extends Vue {
             label: 'Properties',
             sortable: true,
         },
-        //{
-        //    key: 'OutContent',
-        //    label: 'Out Content',
-        //    sortable: true,
-        //    thStyle: { width: '140px' }
-        //},
-        //{
-        //    key: 'Source',
-        //    tdClass: 'py-3',
-        //    label: 'Source',
-        //    sortable: true,
-        //},
-        //{
-        //    key: 'Target',
-        //    tdClass: 'py-3',
-        //    label: 'Target',
-        //    sortable: true,
-        //},
-        //{
-        //    key: 'EntityType',
-        //    tdClass: 'py-3',
-        //    label: 'Entity Type',
-        //    sortable: true,
-        //},
         {
             key: 'timestamp',
             tdClass: 'py-3',
             label: 'Timestamp',
             sortable: true,
             formatter: 'formatDate',    
-            //thStyle: { width: '180px' },
+            // thStyle: { width: '180px' },
         },
-        //{
-        //    key: 'StatusMessage',
-        //    label: 'Status Message',
-        //    sortable: true,
-        //},
     ];
 
     created() {
@@ -187,7 +145,7 @@ export class LogsListComponent extends Vue {
     }
 
     onSortClicked(ctx) {
-        this.$store.dispatch('doChangeSortLog', ctx)
+        this.$store.dispatch('doChangeSortLog', ctx);
     }
 
 }

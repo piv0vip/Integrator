@@ -217,14 +217,14 @@ export class DataTaskListComponent extends Vue {
         this.currentTask = dataTask;
         this.$nextTick(() => {
             this.$store.commit('dataTaskDialogVisible', true);
-        })
+        });
     }
 
     onEditGroupClick(dataTaskGroup: DataTaskGroup) {
         this.currentGroup = dataTaskGroup;
         this.$nextTick(() => {
             this.$store.commit('dataTaskGroupDialogVisible', true);
-        })
+        });
     }
 
     onDeleteTaskClick(dataTask: DataTask) {

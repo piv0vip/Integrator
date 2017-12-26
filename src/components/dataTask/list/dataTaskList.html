@@ -79,7 +79,7 @@
                             </v-flex>
 
                             <v-flex xs2 class="py-2">
-                                <template v-if="!dataTaskGroup.groupOnly && dataTaskGroup.lastDuration">
+                                <template v-if="dataTaskGroup.groupOnly && dataTaskGroup.lastDuration">
                                     Last duration:
                                     <span class="blue-grey--text text--lighten-2">{{dataTaskGroup.lastDuration}}</span>
                                 </template>

@@ -144,12 +144,12 @@ export class EntityStatusListComponent extends Vue {
 
     @Watch('currentPage')
     onCurrentPageChanged(value: number) {
-        this.$store.dispatch('doChangeCurrentPage', value)
+        this.$store.dispatch('doChangeCurrentPage', value);
     }
 
     @Watch('perPage')
     onPerPageChanged(value: number) {
-        this.$store.dispatch('doChangePerPage', value)
+        this.$store.dispatch('doChangePerPage', value);
     }
 
     created() {
@@ -179,8 +179,7 @@ export class EntityStatusListComponent extends Vue {
             .catch((error) => {
                 console.log(error);
                 this.$store.commit('loading', false);
-            })
-
+            });
     }
 
 
@@ -221,7 +220,7 @@ export class EntityStatusListComponent extends Vue {
     onResetFilter() {
         this.$store.dispatch('doResetAllFilters');
         // this.filters.reset();
-        //this.onApplyFilter();
+        // this.onApplyFilter();
     }
 
     customLabel(option) {
@@ -239,11 +238,11 @@ export class EntityStatusListComponent extends Vue {
     }
 
     onSortClicked(ctx) {
-        this.$store.dispatch('doChangeSort', ctx)
+        this.$store.dispatch('doChangeSort', ctx);
     }
 
     isResendBtnVisible(entityStatus: IEntityStatus): boolean {
-        //return true
-        return entityStatus.hasOutContent && (entityStatus.status === EntityStatusEnum.Errored || entityStatus.status === EntityStatusEnum.Ignored)
+        // return true
+        return entityStatus.hasOutContent && (entityStatus.status === EntityStatusEnum.Errored || entityStatus.status === EntityStatusEnum.Ignored);
     }
 }

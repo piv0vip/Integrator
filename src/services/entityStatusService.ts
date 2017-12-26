@@ -5,7 +5,7 @@ import { AxiosResponse } from 'axios';
 import { HandlerTypes } from '../classes/settings/handlerTypes';
 import { BaseService } from './baseService';
 
-import { PagedListResponseEntityStatus } from '../api/models'
+import { PagedListResponseEntityStatus } from '../api/models';
 
 export class EntityStatusService extends BaseService {
     
@@ -25,8 +25,7 @@ export class EntityStatusService extends BaseService {
 
             HTTP.post(`EntityStatus/GetPagedList`, ctx)
                 .then(response => {
-                    let data: PagedListResponseEntityStatus = response.data as PagedListResponseEntityStatus
-
+                    let data: PagedListResponseEntityStatus = response.data as PagedListResponseEntityStatus;
                     resolve();
                 })
                 .catch(error => {
