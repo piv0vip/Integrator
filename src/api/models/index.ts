@@ -4,7 +4,7 @@
  * regenerated.
  */
 
-import { RequestOptionsBase } from 'ms-rest-js';
+import { RequestOptionsBase } from "ms-rest-js";
 
 
 /**
@@ -37,10 +37,6 @@ export interface DataTaskGroup {
    */
   enabled?: boolean;
   /**
-   * @member {string} [lastDuration]
-   */
-  lastDuration?: string;
-  /**
    * @member {Date} [lastStartTime]
    */
   lastStartTime?: Date;
@@ -56,6 +52,10 @@ export interface DataTaskGroup {
    * @member {number} [retries]
    */
   retries?: number;
+  /**
+   * @member {string} [lastDuration]
+   */
+  lastDuration?: string;
   /**
    * @member {Date} [recCreated]
    */
@@ -125,6 +125,10 @@ export interface DataTask {
    */
   enabled?: boolean;
   /**
+   * @member {string} [lastDuration]
+   */
+  lastDuration?: string;
+  /**
    * @member {Date} [lastStartTime]
    */
   lastStartTime?: Date;
@@ -140,10 +144,6 @@ export interface DataTask {
    * @member {number} [retries]
    */
   retries?: number;
-  /**
-   * @member {string} [lastDuration]
-   */
-  lastDuration?: string;
   /**
    * @member {Date} [recCreated]
    */
@@ -1129,6 +1129,17 @@ export interface IEntityStatus {
    * @member {string} [targetId]
    */
   targetId?: string;
+}
+
+/**
+ * @interface
+ * An interface representing LogsValues.
+ */
+export interface LogsValues {
+  /**
+   * @member {string[]} [levels]
+   */
+  levels?: string[];
 }
 
 /**

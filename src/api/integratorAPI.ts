@@ -3715,6 +3715,27 @@ class IntegratorAPI extends msRest.ServiceClient {
         }
         return Promise.reject(error);
       }
+      // Deserialize Response
+      if (statusCode === 200) {
+        let parsedResponse = operationRes.bodyAsJson as { [key: string]: any };
+        try {
+          if (parsedResponse !== null && parsedResponse !== undefined) {
+            let resultMapper = {
+              required: false,
+              serializedName: 'parsedResponse',
+              type: {
+                name: 'Boolean'
+              }
+            };
+            operationRes.bodyAsJson = client.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.bodyAsJson');
+          }
+        } catch (error) {
+          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
+          deserializationError.request = msRest.stripRequest(httpRequest);
+          deserializationError.response = msRest.stripResponse(response);
+          return Promise.reject(deserializationError);
+        }
+      }
 
     } catch(err) {
       return Promise.reject(err);
@@ -4258,6 +4279,87 @@ class IntegratorAPI extends msRest.ServiceClient {
                 name: 'String'
               }
             };
+            operationRes.bodyAsJson = client.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.bodyAsJson');
+          }
+        } catch (error) {
+          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
+          deserializationError.request = msRest.stripRequest(httpRequest);
+          deserializationError.response = msRest.stripResponse(response);
+          return Promise.reject(deserializationError);
+        }
+      }
+
+    } catch(err) {
+      return Promise.reject(err);
+    }
+
+    return Promise.resolve(operationRes);
+  }
+  // methods on the client.
+
+  /**
+   * @param {RequestOptionsBase} [options] Optional Parameters.
+   *
+   * @returns {Promise} A promise is returned
+   *
+   * @resolve {HttpOperationResponse} - The deserialized result object.
+   *
+   * @reject {Error|ServiceError} - The error object.
+   */
+  async restSchedulerGetLogsFilterValuesGetWithHttpOperationResponse(options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse> {
+    let client = this;
+
+    // Construct URL
+    let baseUrl = this.baseUri;
+    let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'rest/Scheduler/GetLogsFilterValues';
+
+    // Create HTTP transport objects
+    let httpRequest = new WebResource();
+    httpRequest.method = 'GET';
+    httpRequest.url = requestUrl;
+    httpRequest.headers = {};
+    // Set Headers
+    httpRequest.headers['Content-Type'] = 'application/json; charset=utf-8';
+    if(options && options.customHeaders) {
+      for(let headerName in options.customHeaders) {
+        if (options.customHeaders.hasOwnProperty(headerName)) {
+          httpRequest.headers[headerName] = options.customHeaders[headerName];
+        }
+      }
+    }
+    httpRequest.body = null;
+    // Send Request
+    let operationRes: msRest.HttpOperationResponse;
+    try {
+      operationRes = await client.pipeline(httpRequest);
+      let response = operationRes.response;
+      let statusCode = response.status;
+      if (statusCode !== 200) {
+        let error = new msRest.RestError(operationRes.bodyAsText as string);
+        error.statusCode = response.status;
+        error.request = msRest.stripRequest(httpRequest);
+        error.response = msRest.stripResponse(response);
+        let parsedErrorResponse = operationRes.bodyAsJson as { [key: string]: any };
+        try {
+          if (parsedErrorResponse) {
+            let internalError = null;
+            if (parsedErrorResponse.error) internalError = parsedErrorResponse.error;
+            error.code = internalError ? internalError.code : parsedErrorResponse.code;
+            error.message = internalError ? internalError.message : parsedErrorResponse.message;
+          }
+        } catch (defaultError) {
+          error.message = `Error "${defaultError.message}" occurred in deserializing the responseBody ` +
+                           `- "${operationRes.bodyAsText}" for the default response.`;
+          return Promise.reject(error);
+        }
+        return Promise.reject(error);
+      }
+      // Deserialize Response
+      if (statusCode === 200) {
+        let parsedResponse = operationRes.bodyAsJson as { [key: string]: any };
+        try {
+          if (parsedResponse !== null && parsedResponse !== undefined) {
+            let resultMapper = Mappers.LogsValues;
             operationRes.bodyAsJson = client.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.bodyAsJson');
           }
         } catch (error) {
@@ -5872,25 +5974,25 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
    *
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
+   *                      {boolean} [result]   - The deserialized result object if an error did not occur.
    *
    *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
    *
    *                      {Response} [response] - The HTTP Response stream if an error did not occur.
    */
-  restSchedulerExecuteTaskGroupByDataTaskGroupIdPost(dataTaskGroupId: number): Promise<void>;
-  restSchedulerExecuteTaskGroupByDataTaskGroupIdPost(dataTaskGroupId: number, options: msRest.RequestOptionsBase): Promise<void>;
-  restSchedulerExecuteTaskGroupByDataTaskGroupIdPost(dataTaskGroupId: number, callback: msRest.ServiceCallback<void>): void;
-  restSchedulerExecuteTaskGroupByDataTaskGroupIdPost(dataTaskGroupId: number, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  restSchedulerExecuteTaskGroupByDataTaskGroupIdPost(dataTaskGroupId: number, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
+  restSchedulerExecuteTaskGroupByDataTaskGroupIdPost(dataTaskGroupId: number): Promise<boolean>;
+  restSchedulerExecuteTaskGroupByDataTaskGroupIdPost(dataTaskGroupId: number, options: msRest.RequestOptionsBase): Promise<boolean>;
+  restSchedulerExecuteTaskGroupByDataTaskGroupIdPost(dataTaskGroupId: number, callback: msRest.ServiceCallback<boolean>): void;
+  restSchedulerExecuteTaskGroupByDataTaskGroupIdPost(dataTaskGroupId: number, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<boolean>): void;
+  restSchedulerExecuteTaskGroupByDataTaskGroupIdPost(dataTaskGroupId: number, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<boolean>): any {
     if (!callback && typeof options === 'function') {
       callback = options;
       options = undefined;
     }
-    let cb = callback as msRest.ServiceCallback<void>;
+    let cb = callback as msRest.ServiceCallback<boolean>;
     if (!callback) {
       return this.restSchedulerExecuteTaskGroupByDataTaskGroupIdPostWithHttpOperationResponse(dataTaskGroupId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.bodyAsJson as void);
+        return Promise.resolve(operationRes.bodyAsJson as boolean);
       }).catch((err: Error) => {
         return Promise.reject(err);
       });
@@ -5899,7 +6001,7 @@ class IntegratorAPI extends msRest.ServiceClient {
         if (err) {
           return cb(err);
         }
-        let result = data.bodyAsJson as void;
+        let result = data.bodyAsJson as boolean;
         return cb(err, result, data.request, data.response);
       });
     }
@@ -6158,6 +6260,49 @@ class IntegratorAPI extends msRest.ServiceClient {
           return cb(err);
         }
         let result = data.bodyAsJson as string;
+        return cb(err, result, data.request, data.response);
+      });
+    }
+  }
+
+  /**
+   * @param {RequestOptionsBase} [options] Optional Parameters.
+   *
+   * @param {ServiceCallback} callback - The callback.
+   *
+   * @returns {ServiceCallback} callback(err, result, request, response)
+   *
+   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
+   *
+   *                      {Models.LogsValues} [result]   - The deserialized result object if an error did not occur.
+   *                      See {@link Models.LogsValues} for more information.
+   *
+   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
+   *
+   *                      {Response} [response] - The HTTP Response stream if an error did not occur.
+   */
+  restSchedulerGetLogsFilterValuesGet(): Promise<Models.LogsValues>;
+  restSchedulerGetLogsFilterValuesGet(options: msRest.RequestOptionsBase): Promise<Models.LogsValues>;
+  restSchedulerGetLogsFilterValuesGet(callback: msRest.ServiceCallback<Models.LogsValues>): void;
+  restSchedulerGetLogsFilterValuesGet(options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.LogsValues>): void;
+  restSchedulerGetLogsFilterValuesGet(options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<Models.LogsValues>): any {
+    if (!callback && typeof options === 'function') {
+      callback = options;
+      options = undefined;
+    }
+    let cb = callback as msRest.ServiceCallback<Models.LogsValues>;
+    if (!callback) {
+      return this.restSchedulerGetLogsFilterValuesGetWithHttpOperationResponse(options).then((operationRes: msRest.HttpOperationResponse) => {
+        return Promise.resolve(operationRes.bodyAsJson as Models.LogsValues);
+      }).catch((err: Error) => {
+        return Promise.reject(err);
+      });
+    } else {
+      msRest.promiseToCallback(this.restSchedulerGetLogsFilterValuesGetWithHttpOperationResponse(options))((err: Error, data: msRest.HttpOperationResponse) => {
+        if (err) {
+          return cb(err);
+        }
+        let result = data.bodyAsJson as Models.LogsValues;
         return cb(err, result, data.request, data.response);
       });
     }
