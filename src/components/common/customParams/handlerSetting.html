@@ -21,7 +21,7 @@
                   v-model="editValue"
                   :label="handlerSetting.Name"
                   :error-messages="errors.collect(orderNum, scope)"
-                  combobox
+                  :combobox="isEditableSelectBox"
                   v-validate="validationString"
                   :data-vv-scope="scope"
                   :data-vv-name="handlerSetting.Name"

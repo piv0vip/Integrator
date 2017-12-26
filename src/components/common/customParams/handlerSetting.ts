@@ -73,7 +73,11 @@ export class HandlerSettingComponent extends Vue {
     }
 
     get isSelectBox(): boolean {
-        return this.handlerSetting.Type === Type.SelectBox;
+        return this.handlerSetting.Type === Type.SelectBox || this.handlerSetting.Type === Type.EditableSelectBox;
+    }
+
+    get isEditableSelectBox(): boolean {
+        return this.handlerSetting.Type === Type.EditableSelectBox;
     }
 
     get isNumber(): boolean {
