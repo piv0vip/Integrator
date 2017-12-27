@@ -30,6 +30,14 @@ export enum EntityStatusEnum {
     Ignored         = 'Ignored',
 }
 
+export enum EntityStateEnum {
+    Detached        = 'Detached',
+    Unchanged       = 'Unchanged',
+    Deleted         = 'Deleted',
+    Modified        = 'Modified',
+    Added           = 'Added'
+}
+
 export enum FilterTypeEnum {
     Null = 0,
     EnumCheckBoxes,

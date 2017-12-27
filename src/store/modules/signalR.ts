@@ -8,6 +8,7 @@ const state = {
 };
 
 const getters = {
+    connected: state => state.connected,
     showConsole: state => state.showConsole,
     broadcastMessages: state => state.broadcastMessages
 };
@@ -47,8 +48,11 @@ const actions = {
                     });
 
                     HUB.on('DataTask', (data) => {
-                        console.log(data);
-                        dispatch('getIDataTaskGroups');
+                        dispatch('updateDataTask', data);
+                    });
+
+                    HUB.on('DataTaskGroup', (data) => {
+                        dispatch('updateDataTaskGroup', data);
                     });
 
                     HUB.onclose((data) => {
@@ -63,7 +67,7 @@ const actions = {
 
                     commit('connected', false);
 
-                    setTimeout(() => { dispatch('tryToStartHubConnection'); }, 10000);
+                    setTimeout(() => { dispatch('tryToStartHubConnection'); }, 1000);
 
                 });
         }); 

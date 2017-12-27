@@ -65,10 +65,11 @@ new Vue({
   router,
   store,
   created() {
-      store.dispatch('connectToHub');
-      store.dispatch('getProductVersion');
-      store.dispatch('getDataTasks');
-      store.dispatch('getSilentDataTasks');
+      store.dispatch('connectToHub')
+          .then(() => {
+              store.dispatch('getProductVersion');
+              store.dispatch('getDataTasks');
+          });
   },
   components: {
     'app': AppComponent

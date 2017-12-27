@@ -82,92 +82,8 @@ export class DataTaskListComponent extends Vue {
 
     chance: chance;
 
-    fieldds: ITableFields[] = 
-    [
-        {
-            key: 'ExecLoc',
-            tdClass: 'td-button',
-            label: ' ',
-        },
-        {
-            key: 'ExecSch',
-            tdClass: 'td-button',
-            label: ' '
-        },
-        {
-            key: 'Reset',
-            tdClass: 'td-button',
-            label: ' '
-        },
-        {
-            key: 'Config',
-            tdClass: 'td-button',
-            label: ' '
-        },
-        {
-            key: 'DisplayName', 
-            label: 'Task Name',
-            tdClass: 'py-3',
-            sortable: true,
-        },
-        {
-            key: 'Status',
-            tdClass: 'py-3',
-            label: 'Task Status',
-            sortable: true,
-        }, 
-        {
-            key: 'LastStartTime',
-            tdClass: 'py-3',
-            label: 'Task Start Time',
-            sortable: true,
-            formatter: 'formatDate'
-        },
-        {
-            key: 'LastEndTime',
-            tdClass: 'py-3',
-            label: 'Task End Time',
-            sortable: true,
-            formatter: 'formatDate'
-        },
-        {
-            key: 'NextStartTime',
-            tdClass: 'py-3',
-            label: 'Next Start Time',
-            sortable: true,
-            formatter: 'formatDate'
-        },
-        {
-            key: 'LastExecutionTime',
-            tdClass: 'py-3',
-            label: 'Last Execution Time',
-            sortable: true,
-        },
-        {
-            key: 'Delete',
-            tdClass: 'td-button',
-            label: ' '
-        },
-    ];
-
     created() {
-
         this.refreshTable();
-
-    }
-
-    get dataTasks(): DataTask[] {
-        let arr: DataTask[] = [];
-        this.dataTaskGroups.forEach((group: DataTaskGroup) => {
-            group.DataTasks.forEach((task: DataTask) => {
-                arr.push(task);
-            });
-        });
-        return arr;
-    }
-
-    get dataTaskGroups(): DataTaskGroup[] {
-        return this.$store.getters.dataTaskGroupsArray;
     }
 
     get iDataTaskGroups(): IDataTaskGroup[] {
@@ -245,12 +161,12 @@ export class DataTaskListComponent extends Vue {
     closeEditTask(e) {
         this.currentTask = new DataTask();
         this.$store.commit('dataTaskDialogVisible', false);
-        this.refreshTable();
+        //this.refreshTable();
     }
 
     closeEditGroup(dataTaskGroup?: DataTaskGroup) {
         if (dataTaskGroup) {
-            this.refreshTable();
+            //this.refreshTable();
         }
         this.currentGroup = new DataTaskGroup();
     }
@@ -347,23 +263,11 @@ export class DataTaskListComponent extends Vue {
     changeOrder(dataTasks: IDataTask[], index1: number, index2: number): void {
 
         let i = 0;
+
         _.forEach(dataTasks, dataTask => {
             dataTasks[i].executionOrder = (i === index1) ? index2 : (i === (index2)) ? index1 : i;
             i++;
         });
-
-        // let d1: IDataTask = dataTasks[index - 1];
-        // let d2: IDataTask = dataTasks[index];
-        // if (d1.executionOrder == 0 && d2.executionOrder == 0) {
-        //    d2.executionOrder = 1;
-        // } else if (d1.executionOrder == 0) {
-        //    d2.executionOrder = 0;
-        //    d1.executionOrder = index;
-        // } else {
-        //    let order: number = d1.executionOrder;
-        //    d1.executionOrder = d2.executionOrder;
-        //    d2.executionOrder = order 
-        // }
 
         HTTP.put('DataTask/UpdateArray', dataTasks);
 

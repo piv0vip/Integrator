@@ -11,6 +11,7 @@ export class AppComponent extends Vue {
 
     get consoleMessages(): string[] { return this.$store.getters.broadcastMessages; }
     get showConsole(): boolean { return this.$store.getters.showConsole; }
+    get isDisconnect(): boolean { return !this.$store.getters.connected; }
 
     items: {
         icon: string,
