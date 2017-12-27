@@ -61,6 +61,9 @@ const actions = {
 
                     commit('connected', true);
 
+                    dispatch('getProductVersion');
+                    dispatch('getDataTasks');
+
                     resolve();
                 })
                 .catch((error) => {
@@ -75,7 +78,7 @@ const actions = {
 
     connectToHub({ commit, dispatch }) {
 
-        dispatch('tryToStartHubConnection');
+        return dispatch('tryToStartHubConnection');
     },
 };
 

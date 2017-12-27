@@ -48,7 +48,7 @@ export class AppComponent extends Vue {
     }
 
     onAddGroupClick() {
-        this.$store.commit('dataTaskGroupDialogVisible', true);
+        this.$store.commit('editDataTaskGroup', true);
     }
 
     get isDataTasks(): boolean {

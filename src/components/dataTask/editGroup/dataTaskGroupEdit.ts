@@ -36,15 +36,13 @@ export class DataTaskGroupEditComponent extends Vue {
     showSaveConfirmation: boolean = false;
     showDiscardConfirmation: boolean = false;
 
-    @Prop()
-    value: boolean;
-
     get showModal(): boolean {
-        return this.$store.state['dataTask'].showEditDataTaskGroupDialog;
+        return this.$store.getters.requestGroup.showEditDialog;
     }
 
-    @Prop()
-    dataTaskGroup: DataTaskGroup;
+    get dataTaskGroup(): DataTaskGroup {
+        return this.$store.getters.requestGroup.currentGroup;
+    }
 
     @Watch('dataTaskGroup')
     onDataTaskChanged(value: DataTaskGroup) {
@@ -67,8 +65,8 @@ export class DataTaskGroupEditComponent extends Vue {
             {url: 'DataTaskGroup/Update', method: 'put'} ;
         HTTP[request.method](request.url, this.dataTaskGroup.toServer())
             .then(function (response: AxiosResponse) {
+                this.closeEdit(response.data as IDataTaskGroup);
                 this.$store.commit('loading', false);
-                this.closeEdit(new DataTaskGroup(response.data as IDataTaskGroup));
             }.bind(this))
             .catch(e => {
                 this.$store.commit('loading', false);
@@ -105,20 +103,13 @@ export class DataTaskGroupEditComponent extends Vue {
         this.closeEdit();
     }
 
-    onShowModal() { }
-
     onCloseSaveConfirmation() {
         this.showSaveConfirmation = false;
     }
 
-    closeEdit(dataTaskGroup?: DataTaskGroup) {
+    closeEdit(dataTaskGroup?: IDataTaskGroup) {
         this.$validator.reset();
-        this.$store.commit('dataTaskGroupDialogVisible', false);
-        this.$emit('input', false);
-        this.$emit('onClose', dataTaskGroup);
+        this.$store.getters.requestGroup.onClose(dataTaskGroup);
     }
 
-    refreshList() {
-        this.mut = !this.mut;
-    }
 }

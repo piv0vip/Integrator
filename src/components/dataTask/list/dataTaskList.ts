@@ -83,7 +83,7 @@ export class DataTaskListComponent extends Vue {
     chance: chance;
 
     created() {
-        this.refreshTable();
+        //this.refreshTable();
     }
 
     get iDataTaskGroups(): IDataTaskGroup[] {
@@ -137,16 +137,15 @@ export class DataTaskListComponent extends Vue {
     }
 
     onEditGroupClick(dataTaskGroup: DataTaskGroup) {
-        this.currentGroup = dataTaskGroup;
-        this.$nextTick(() => {
-            this.$store.commit('dataTaskGroupDialogVisible', true);
+        this.$store.commit('editDataTaskGroup', {
+            currentGroup: dataTaskGroup
         });
     }
 
     onDeleteTaskClick(dataTask: DataTask) {
         HTTP.delete('DataTask/Delete/' + dataTask.DataTaskId)
         .then((response: AxiosResponse) => {
-            this.refreshTable();
+            //this.refreshTable();
         })
         .catch(e => {
             this.isBusy = false;
@@ -172,13 +171,13 @@ export class DataTaskListComponent extends Vue {
     }
 
     onFilterChange(e) {
-        this.refreshTable();
+        //this.refreshTable();
     }
 
     onDeleteGroupClick(dataTaskGroup: DataTaskGroup) {
         HTTP.delete('DataTaskGroup/Delete/' + dataTaskGroup.DataTaskGroupId)
             .then((response: AxiosResponse) => {
-                this.refreshTable();
+                //this.refreshTable();
             })
             .catch(e => {
                 this.isBusy = false;
@@ -252,7 +251,8 @@ export class DataTaskListComponent extends Vue {
         error: number,
         isRunning: number
     } {
-        let dataTasks: IDataTask[] = group.dataTaskList;
+        console.log(group)
+        let dataTasks: IDataTask[] = group.dataTaskList || [];
         return {
             total: dataTasks.length,
             error: _.filter(dataTasks, dataTask => dataTask.status === TaskStatusEnum.Error).length,

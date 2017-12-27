@@ -15,8 +15,19 @@ import _ from 'lodash';
 
 const state = {
 
+    requestGroup: {
+        showEditDialog: false,
+        currentGroup: {},
+        onClose: function () { }
+    },
+
+    requestDataTask: {
+        showEditDialog: false,
+        currentTask: {},
+        onClose: function () { }
+    },
+
     showEditDataTaskDialog: false,
-    showEditDataTaskGroupDialog: false,
 
     handlerTypes: new HandlerTypes(),
 
@@ -26,6 +37,8 @@ const state = {
 };
 
 const getters = {
+
+    requestGroup: state => state.requestGroup,
 
     handlerTypes: state => state.handlerTypes,
 
@@ -43,12 +56,21 @@ const getters = {
 
 const mutations = {
 
+    editDataTaskGroup(state, payload: { currentGroup?: DataTaskGroup, onClose?: Function }) {
+        state.requestGroup.currentGroup = payload.currentGroup || new DataTaskGroup();
+        state.requestGroup.onClose = function (data) {
+            if (payload.onClose) payload.onClose(data);
+            state.requestGroup.showEditDialog = false;
+        };
+        state.requestGroup.showEditDialog = true;
+    },
+
     dataTaskDialogVisible(state, payLoad: boolean) {
         state.showEditDataTaskDialog = payLoad;
     },
 
     dataTaskGroupDialogVisible(state, payLoad: boolean) {
-        state.showEditDataTaskGroupDialog = payLoad;
+        state.requestGroup.showEditDialog = payLoad;
     },
 
     setCronPresets(state, cronPresets: string[]) {
@@ -75,11 +97,13 @@ const mutations = {
 
     removeDataTask(state, entity: IDataTask) {
         let group: IDataTaskGroup = _.find(state.iDataTaskGroups, (group: IDataTaskGroup) => group.dataTaskGroupId == entity.dataTaskGroupId);
-        _.remove(group.dataTaskList, (dataTask: IDataTask) => dataTask.dataTaskId === entity.dataTaskId);
+        let index = _.findIndex(group.dataTaskList, (dataTask: IDataTask) => dataTask.dataTaskId === entity.dataTaskId);
+        Vue.delete(group.dataTaskList, index);
     },
 
     modifyDataTaskGroup(state, entity: IDataTaskGroup) {
         let index = _.findIndex(state.iDataTaskGroups, function (o: IDataTaskGroup) { return o.dataTaskGroupId === entity.dataTaskGroupId })
+        if (!entity.dataTaskList) { entity.dataTaskList = [] }
         if (index < 0) {
             Vue.set(state.iDataTaskGroups, state.iDataTaskGroups.length, entity);
         } else {
@@ -88,7 +112,8 @@ const mutations = {
     },
 
     removeDataTaskGroup(state, entity: IDataTaskGroup) {
-        _.remove(state.iDataTaskGroups, (dataTaskGroup: IDataTaskGroup) => dataTaskGroup.dataTaskGroupId === entity.dataTaskGroupId);
+        let index = _.findIndex(state.iDataTaskGroups, (dataTaskGroup: IDataTaskGroup) => dataTaskGroup.dataTaskGroupId === entity.dataTaskGroupId);
+        Vue.delete(state.iDataTaskGroups, index);
     }
 };
 

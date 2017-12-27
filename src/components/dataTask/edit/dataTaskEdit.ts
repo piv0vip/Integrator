@@ -10,6 +10,8 @@ import { CronPresetsComponent } from './cronPresets';
 
 import { DataTaskGroupEditComponent } from '../editGroup';
 
+import { DataTaskGroup as IDataTaskGroup } from '../../../api/models'
+
 import $ from 'jquery';
 import _ from 'lodash';
 
@@ -179,19 +181,14 @@ export class DataTaskEditComponent extends Vue {
     }
 
     createNewGroup() {
-        this.currentGroup = new DataTaskGroup();
-        this.showEditGroup = true;
-    }
-
-    closeEditGroup(dataTaskGroup?: DataTaskGroup) {
-        this.showEditGroup = false;
-        if (dataTaskGroup) {
-            this.$store.dispatch('getDataTasks')
-                .then(() => {
-                    this.selectedGroup = dataTaskGroup.DataTaskGroupId;
-                });
-        } else {
-            this.selectedGroup = this.dataTask.DataTaskGroupId;
-        }
+        this.$store.commit('editDataTaskGroup', {
+            onClose: (dataTaskGroup?: IDataTaskGroup) => {
+                if (dataTaskGroup) {
+                    this.selectedGroup = dataTaskGroup.dataTaskGroupId;
+                } else {
+                    this.selectedGroup = this.dataTask.DataTaskGroupId;
+                }
+            }
+        });
     }
 }
