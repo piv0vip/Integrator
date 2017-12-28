@@ -55,14 +55,10 @@ export class EntityStatusListComponent extends Vue {
 
     formatDate: Function = helper.formatDate;
 
-    pageOptions: {text: number, value: number}[] = [{text: 5, value: 5}, {text: 10, value: 10}, {text: 15, value: 15}];
-
     pagedList: IPagedList = null; 
 
     pagesCount: number = 1;
     
-    perPage: number = 10;
-
     currentPage: number = 1;
     filter: string = '';
 
@@ -144,11 +140,6 @@ export class EntityStatusListComponent extends Vue {
     @Watch('currentPage')
     onCurrentPageChanged(value: number) {
         this.$store.dispatch('doChangeCurrentPage', value);
-    }
-
-    @Watch('perPage')
-    onPerPageChanged(value: number) {
-        this.$store.dispatch('doChangePerPage', value);
     }
 
     created() {

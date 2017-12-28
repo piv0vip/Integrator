@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import { Dictionary } from 'typescript-collections';
 import { FilterTypeEnum, EntityStatusEnum } from '../../enums';
 import { EnumValues } from 'enum-values';
@@ -33,6 +34,8 @@ export class FilterFactory {
                 return new MultiselectFilter();
             case FilterTypeEnum.Date:
                 return new DateFilter();
+            case FilterTypeEnum.Period:
+                return new PeriodFilter();
             case FilterTypeEnum.StringContains:
                 return new ContainFilter();
             default:
@@ -52,7 +55,7 @@ export abstract class Filter<T> implements IFilter {
     constructor() {
         this.setType();
         this.init();
-        this.reset();
+        //this.reset();
     }
 
     get Type(): FilterTypeEnum { return this._type; }
@@ -89,12 +92,11 @@ export class NullFilter extends Filter<string> {
 
 export class ContainFilter extends Filter<string> {
 
-    get FilterData(): string {
-        return this._filterData || '';
-    };
+    FilterData: string = ''
 
-    set FilterData(value: string) {
-        this._filterData = value;
+    constructor() {
+        super();
+        this.reset();
     }
 
     setType() {
@@ -106,7 +108,7 @@ export class ContainFilter extends Filter<string> {
     }
 
     setToDefault(): void {
-        this.FilterData = '';
+        Vue.set(this, 'FilterData', '');
     }
 
     isDefault(): boolean {
@@ -118,19 +120,12 @@ export class CheckBoxFilter extends Filter<string[]> {
 
     public Values: string[] = [];
 
+    FilterData: string[] = [];
+
     constructor(values?: string[]) {
         super();
-        this.Values = values || [];
-        this.FilterData = [];
+        this.reset();
     }
-
-    get FilterData(): string[] {
-        return this._filterData || [];
-    };
-
-    set FilterData(value: string[]) {
-        this._filterData = value;
-    };
 
     setType() {
         this._type = FilterTypeEnum.StringList;
@@ -141,7 +136,7 @@ export class CheckBoxFilter extends Filter<string[]> {
     }
 
     setToDefault(): void {
-        this.FilterData = [];
+        Vue.set(this, 'FilterData',  []);
     }
 
     isDefault(): boolean {
@@ -160,48 +155,16 @@ export class PeriodFilter extends Filter<{From: string, To: string}> {
 
     readonly format: string = 'YYYY-MM-DD';
 
-    private _from: Date;
-    private _to: Date;
+    FilterData: { From: string, To: string } = {From: '', To: ''};
 
     public Values: string[] = [];
 
     constructor() {
         super();
+        this.reset();
     }
-
-    get FilterData(): {
-        From: string;
-        To: string;
-    } {
-        return { From: this.From, To: this.To };
-    };
-
-    set FilterData(value: {
-        From: string;
-        To: string;
-    }) {
-        this.From = value.From;
-        this.To = value.To;
-    };
 
     get FormatStr(): string { return this.format; }
-
-    set From(value: string) {
-        console.log(value);
-        this._from = moment(value).hour(0).minute(0).second(0).toDate();
-    }
-
-    get From(): string {
-        return moment(this._from).format('YYYY-MM-DD');
-    }
-
-    set To(value: string) {
-        this._to = moment(value).hour(23).minute(59).second(59).toDate();
-    }
-
-    get To(): string {
-        return moment(this._to).format('YYYY-MM-DD');
-    }
 
     setType() {
         this._type = FilterTypeEnum.Period;
@@ -209,20 +172,20 @@ export class PeriodFilter extends Filter<{From: string, To: string}> {
 
     toServer() {
         return {
-            from: moment(this._from).hour(0).minute(0).second(0).format(`YYYY-MM-DD HH:mm:ss`),
-            to: moment(this._to).hour(23).minute(59).second(59).format(`YYYY-MM-DD HH:mm:ss`)
+            from: moment(this.FilterData.From).hour(0).minute(0).second(0).format(`YYYY-MM-DD HH:mm:ss`),
+            to: moment(this.FilterData.To).hour(23).minute(59).second(59).format(`YYYY-MM-DD HH:mm:ss`)
         };
     }
 
     setToDefault() {
         let curDate = moment(new Date()).utc().format('YYYY-MM-DD');
-        this.From = curDate;
-        this.To = curDate;
+        Vue.set(this.FilterData, 'From', curDate);
+        Vue.set(this.FilterData, 'To', curDate);
     }
 
     isDefault(): boolean {
         let curDate = moment(new Date()).utc().format('YYYY-MM-DD');
-        return this.From === curDate && this.To === curDate;
+        return this.FilterData['From'] === curDate && this.FilterData['To'] === curDate;
     }
 }
 

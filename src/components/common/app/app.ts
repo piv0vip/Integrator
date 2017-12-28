@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Component from 'vue-class-component';
+import { Component, Watch } from 'vue-property-decorator';
 
 @Component({
     template: require('./app.html')
@@ -12,6 +12,9 @@ export class AppComponent extends Vue {
     get consoleMessages(): string[] { return this.$store.getters.broadcastMessages; }
     get showConsole(): boolean { return this.$store.getters.showConsole; }
     get isDisconnect(): boolean { return !this.$store.getters.connected; }
+
+    pageOptions: { text: number, value: number }[] = [{ text: 5, value: 5 }, { text: 10, value: 10 }, { text: 15, value: 15 }];
+    perPage: number = 10;
 
     items: {
         icon: string,
@@ -54,4 +57,22 @@ export class AppComponent extends Vue {
     get isDataTasks(): boolean {
         return this.$route['name'] && this.$route['name'] === 'dataTasks';
     }
+
+    get isEntityStatuses(): boolean {
+        return this.$route['name'] && this.$route['name'] === 'entityStatuses';
+    }
+
+    @Watch('perPage')
+    onPerPageChanged(value: number) {
+        this.$store.dispatch('doChangePerPage', value);
+    }
+
+    onResetEntityStatusFilter() {
+        this.$store.dispatch('doResetAllFilters');
+    }
+
+    get entityStatusFilterIsDefault(): boolean {
+        return this.$store.getters.filtersIsDefault;
+    }
+
 }

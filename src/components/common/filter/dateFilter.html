@@ -1,18 +1,38 @@
-<v-card-text>
-    <v-menu lazy
-            :close-on-content-click="true"
-            transition="scale-transition"
-            offset-y
-            full-width
-            :nudge-right="40"
-            max-width="290px"
-            min-width="290px">
-        <v-text-field slot="activator" prepend-icon="event"
-                      label="Select Entity Version"
-                      :value="value"
-                      readonly></v-text-field>
-        <v-date-picker v-model="calDate"
-                       :allowedDates="dates"
-                       no-title scrollable actions> </v-date-picker>
-    </v-menu>
-</v-card-text>
+<v-layout row wrap>
+    <v-flex xs6 class="pl-4 pr-2">
+        <v-card-text>
+            <v-menu lazy
+                    :close-on-content-click="true"
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    :nudge-right="40"
+                    max-width="290px"
+                    min-width="290px">
+                <v-text-field slot="activator" prepend-icon="event"
+                              label="From Date"
+                              :value="value.From"></v-text-field>
+                <v-date-picker v-model="calDate.From"
+                               no-title scrollable actions></v-date-picker>
+            </v-menu>
+        </v-card-text>
+    </v-flex>
+    <v-flex xs6 class="pl-2 pr-4">
+        <v-card-text>
+            <v-menu lazy
+                    :close-on-content-click="true"
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    :nudge-right="40"
+                    max-width="290px"
+                    min-width="290px">
+                <v-text-field slot="activator" prepend-icon="event"
+                              label="To Date"
+                              :value="value.To"></v-text-field>
+                <v-date-picker v-model="calDate.To"
+                               no-title scrollable actions></v-date-picker>
+            </v-menu>
+        </v-card-text>
+    </v-flex>
+</v-layout>

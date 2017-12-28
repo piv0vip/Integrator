@@ -8,15 +8,26 @@ import moment from 'moment';
 })
 export class DateFilterComponent extends Vue {
 
-    calDate: string = moment().format('YYYY-MM-DD');
+    calDate: { From: string, To: string } = {
+        From: moment().format('YYYY-MM-DD'),
+        To: moment().format('YYYY-MM-DD')
+    }
 
     @Prop() dates: string[];
 
-    @Prop() value: string;
+    @Prop({
+        default: {
+            From: moment().format('YYYY-MM-DD'),
+            To: moment().format('YYYY-MM-DD')
+        }}) value: {From: string, To: string};
 
-    @Watch('calDate')
-    onWatchCalldate(value) {
-        this.$emit('input', value);
+    @Watch('calDate.From')
+    onWatchFromCalldate(value) {
+        this.$emit('input', this.calDate);
     }
 
+    @Watch('calDate.To')
+    onWatchToCalldate(value) {
+        this.$emit('input', this.calDate);
+    }
 }

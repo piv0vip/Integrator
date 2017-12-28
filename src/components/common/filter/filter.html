@@ -5,7 +5,7 @@
             :nudge-width="600"
             :max-width="600"
             v-model="menuActive">
-        <v-btn icon slot="activator">
+        <v-btn icon slot="activator" @click="onFilterClick">
             <filter-icon v-if="!filter.isDefault()" />
             <filter-outline-icon v-if="filter.isDefault()" />
         </v-btn>
@@ -16,18 +16,18 @@
             </v-card-title>
 
             <!--<multiselect-component v-if="isMultiselectFilter()"
-                                :value="filter.FilterData"></multiselect-component>-->
+                            :value="filter.FilterData"></multiselect-component>-->
 
             <date-filter-component v-if="isDateFilter()"
-                         :dates="filter.Values"
-                         v-model="filterData"></date-filter-component>
+                                   :dates="filter.Values"
+                                   v-model="filterData"></date-filter-component>
 
             <check-box-filter-component v-if="isCheckBoxFilter()"
-                             :items="filter.Values"
-                             v-model="filterData"></check-box-filter-component=>
+                                        :items="filter.Values"
+                                        v-model="filterData"></check-box-filter-component>
 
             <!--<contain-filter-component v-if="isContainFilter()"
-                            v-model="filter"></contain-filter-component>-->
+                        v-model="filter"></contain-filter-component>-->
 
             <v-card-actions class="p-3 grey lighten-3">
                 <v-spacer></v-spacer>
@@ -37,5 +37,5 @@
             </v-card-actions>
         </v-card>
     </v-menu>
-    
+
 </span>

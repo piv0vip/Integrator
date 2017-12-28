@@ -32,11 +32,11 @@ export class FilterComponent extends Vue {
     @Prop() value: ITableFields;
     @Prop() filter: IFilter;
 
-    filterData: any = null;
+    filterData: any = this.filter.FilterData;
 
     @Watch('filter')
     onFilterChanged(value: IFilter) {
-        this.filterData = value.FilterData;
+        Vue.set(this, 'filterData', value.FilterData);
     }
 
     onApplyClick() {
@@ -49,12 +49,8 @@ export class FilterComponent extends Vue {
         this.closeDialog();
     }
 
-    mounted() {
-        this.filterData = this.filter.FilterData;
-    }
-
     closeDialog() {
-        this.filterData = this.filter.FilterData;
+        Vue.set(this, 'filterData', this.filter.FilterData);
         this.menuActive = false;
     }
 
@@ -79,6 +75,11 @@ export class FilterComponent extends Vue {
     }
 
     isDateFilter(): boolean {
-        return this.filter.Type === FilterTypeEnum.Date;
+        return this.filter.Type === FilterTypeEnum.Period;
+    }
+
+    onFilterClick() {
+        console.log('fd-' + this.filter.FilterData);
+        Vue.set(this, 'filterData', this.filter.FilterData);
     }
 }

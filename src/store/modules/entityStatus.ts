@@ -25,7 +25,7 @@ const state = function(){
             source: FilterFactory.getFilter(FilterTypeEnum.StringList),
             target: FilterFactory.getFilter(FilterTypeEnum.StringList),
             statusMessage: FilterFactory.getFilter(FilterTypeEnum.Multiselect),
-            entityVersion: FilterFactory.getFilter(FilterTypeEnum.Date)
+            entityVersion: FilterFactory.getFilter(FilterTypeEnum.Period)
         },
 
         pagedListRequest: new PagedListReq(),
@@ -74,78 +74,73 @@ const mutations = {
     },
 
     updateFilterValue(state, values: { filterName: string, values: any }) {
-        state.filters[values.filterName].FilterData = values.values;
+        Vue.set(state.filters[values.filterName], 'FilterData', values.values);
         let temp: PagedListReq = state.pagedListRequest;
-        state.pagedListRequest = {
-            currentPage: temp.currentPage,
-            perPage: temp.perPage,
-            sortBy: temp.sortBy,
-            sortDesc: temp.sortDesc,
-            filters: [
-                {
-                    fieldName: 'status',
-                    existsValues: state.filters.status.toServer()
-                },
-                {
-                    fieldName: 'entityType',
-                    existsValues: state.filters.entityType.toServer()
-                },
-                {
-                    fieldName: 'source',
-                    existsValues: state.filters.source.toServer()
-                },
-                {
-                    fieldName: 'target',
-                    existsValues: state.filters.target.toServer()
-                },
-                {
-                    fieldName: 'statusMessage',
-                    ignoredValues: state.filters.statusMessage.isDefault() ? null : state.filters.statusMessage.toServer()
-                },
-                {
-                    fieldName: 'entityVersion',
-                    period: state.filters.entityVersion.isDefault() ? null : state.filters.entityVersion.toServer()
-                },
-            ]
-        };
+        Vue.set(state.pagedListRequest, 'currentPage', temp.currentPage);
+        Vue.set(state.pagedListRequest, 'perPage', temp.perPage);
+        Vue.set(state.pagedListRequest, 'sortBy', temp.sortBy);
+        Vue.set(state.pagedListRequest, 'sortDesc', temp.sortDesc);
+        Vue.set(state.pagedListRequest, 'filters', [
+            {
+                fieldName: 'status',
+                existsValues: state.filters.status.toServer()
+            },
+            {
+                fieldName: 'entityType',
+                existsValues: state.filters.entityType.toServer()
+            },
+            {
+                fieldName: 'source',
+                existsValues: state.filters.source.toServer()
+            },
+            {
+                fieldName: 'target',
+                existsValues: state.filters.target.toServer()
+            },
+            {
+                fieldName: 'statusMessage',
+                ignoredValues: state.filters.statusMessage.isDefault() ? null : state.filters.statusMessage.toServer()
+            },
+            {
+                fieldName: 'entityVersion',
+                period: state.filters.entityVersion.isDefault() ? null : state.filters.entityVersion.toServer()
+            },
+        ]);
     },
 
     resetFilter(state, filterName: string) {
         state.filters[filterName].reset();
         let temp: PagedListReq = state.pagedListRequest;
-        state.pagedListRequest = {
-            currentPage: temp.currentPage,
-            perPage: temp.perPage,
-            sortBy: temp.sortBy,
-            sortDesc: temp.sortDesc,
-            filters: [
-                {
-                    fieldName: 'status',
-                    existsValues: state.filters.status.toServer()
-                },
-                {
-                    fieldName: 'entityType',
-                    existsValues: state.filters.entityType.toServer()
-                },
-                {
-                    fieldName: 'source',
-                    existsValues: state.filters.source.toServer()
-                },
-                {
-                    fieldName: 'target',
-                    existsValues: state.filters.target.toServer()
-                },
-                {
-                    fieldName: 'statusMessage',
-                    ignoredValues: state.filters.statusMessage.isDefault() ? null : state.filters.statusMessage.toServer()
-                },
-                {
-                    fieldName: 'entityVersion',
-                    period: state.filters.entityVersion.isDefault() ? null : state.filters.entityVersion.toServer()
-                },
-            ]
-        };
-
+        Vue.set(state.pagedListRequest, 'currentPage', temp.currentPage);
+        Vue.set(state.pagedListRequest, 'perPage', temp.perPage);
+        Vue.set(state.pagedListRequest, 'sortBy', temp.sortBy);
+        Vue.set(state.pagedListRequest, 'sortDesc', temp.sortDesc);
+        Vue.set(state.pagedListRequest, 'filters', [
+            {
+                fieldName: 'status',
+                existsValues: state.filters.status.toServer()
+            },
+            {
+                fieldName: 'entityType',
+                existsValues: state.filters.entityType.toServer()
+            },
+            {
+                fieldName: 'source',
+                existsValues: state.filters.source.toServer()
+            },
+            {
+                fieldName: 'target',
+                existsValues: state.filters.target.toServer()
+            },
+            {
+                fieldName: 'statusMessage',
+                ignoredValues: state.filters.statusMessage.isDefault() ? null : state.filters.statusMessage.toServer()
+            },
+            {
+                fieldName: 'entityVersion',
+                period: state.filters.entityVersion.isDefault() ? null : state.filters.entityVersion.toServer()
+            },
+        ]);
     },
 
     setFilterValues(state, filterPresets: EntityStatusesValues) {

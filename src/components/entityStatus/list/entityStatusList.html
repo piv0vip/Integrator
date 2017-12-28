@@ -1,22 +1,16 @@
 <div>
-    <v-container>
+    <!--<v-container>
         <v-layout row wrap>
-            <v-flex xs1 class="mr-4">
+            <v-flex xs2>
                 <v-select v-bind:items="pageOptions"
                           v-model="perPage"
                           label="Rows per page"></v-select>
             </v-flex>
-            <v-flex xs2 class="mx-4">
-                <v-text-field v-model="search"
-                              label="Search"
-                              @keyup.native.enter="onFilterChange"></v-text-field>
-            </v-flex>
-            <v-flex xs8>
-                <!--<v-btn @click="onApplyFilter">Apply filter</v-btn>-->
+            <v-flex xs9  class="mx-4">
                 <v-btn @click="onResetFilter" :disabled="filtersIsDefault">Reset all filters</v-btn>
             </v-flex>
         </v-layout>
-    </v-container>
+    </v-container>-->
     <div style="overflow-x:auto">
         <b-table id="entity-statuses"
                  ref="entityStatusesTable"
@@ -65,7 +59,7 @@
                 </span>
             </template>
             <template slot="statusMessage" scope="data">
-                <v-btn icon flat
+                <v-btn v-if="data.item.statusMessage" icon flat
                        color="indigo lighten-2 white--text"
                        title="In Content"
                        @click='onStatusMessageClick(data.item)'><filter-remove-icon /></v-btn>{{ data.item.statusMessage }}
