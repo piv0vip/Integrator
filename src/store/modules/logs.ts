@@ -1,3 +1,4 @@
+dimport Vue from 'vue';
 import { HTTP } from '../../util/http-common';
 import { IFilter, FilterFactory, CheckBoxFilter, PagedListReq } from '../../classes/filter';
 import { EnumValues } from 'enum-values';
@@ -17,6 +18,7 @@ const state = function () {
 
         filtersLogs: {
             level: FilterFactory.getFilter(FilterTypeEnum.StringList),
+            timestamp: FilterFactory.getFilter(FilterTypeEnum.Period),
         },
 
         pagedListRequestLogs: new PagedListReq({ sortBy: 'timestamp' }),
@@ -32,7 +34,7 @@ const getters = {
     filtersLogs: state => state.filtersLogs,
 
     filtersLogsIsDefault: state => {
-        return _.every(state.filters, (value: IFilter) => {
+        return _.every(state.filtersLogs, (value: IFilter) => {
             return value.isDefault();
         });
     },
@@ -53,6 +55,44 @@ const getters = {
 
 const mutations = {
 
+    updateFilterLogsValue(state, values: { filterName: string, values: any }) {
+        Vue.set(state.filtersLogs[values.filterName], 'FilterData', values.values);
+        let temp: PagedListReq = state.pagedListRequestLogs;
+        Vue.set(state.pagedListRequestLogs, 'currentPage', temp.currentPage);
+        Vue.set(state.pagedListRequestLogs, 'perPage', temp.perPage);
+        Vue.set(state.pagedListRequestLogs, 'sortBy', temp.sortBy);
+        Vue.set(state.pagedListRequestLogs, 'sortDesc', temp.sortDesc);
+        Vue.set(state.pagedListRequestLogs, 'filters', [
+            {
+                fieldName: 'level',
+                existsValues: state.filtersLogs.level.toServer()
+            },
+            {
+                fieldName: 'timestamp',
+                period: state.filtersLogs.timestamp.isDefault() ? null : state.filtersLogs.timestamp.toServer()
+            },
+        ]);
+    },
+
+    resetFilterLogs(state, filterName: string) {
+        state.filtersLogs[filterName].reset();
+        let temp: PagedListReq = state.pagedListRequestLogs;
+        Vue.set(state.pagedListRequestLogs, 'currentPage', temp.currentPage);
+        Vue.set(state.pagedListRequestLogs, 'perPage', temp.perPage);
+        Vue.set(state.pagedListRequestLogs, 'sortBy', temp.sortBy);
+        Vue.set(state.pagedListRequestLogs, 'sortDesc', temp.sortDesc);
+        Vue.set(state.pagedListRequestLogs, 'filters', [
+            {
+                fieldName: 'level',
+                existsValues: state.filtersLogs.level.toServer()
+            },
+            {
+                fieldName: 'timestamp',
+                period: state.filtersLogs.timestamp.isDefault() ? null : state.filtersLogs.timestamp.toServer()
+            },
+        ]);
+    },
+
     setFilterValuesLogs(state, filterPresets: LogsValues) {
         state.filterPresetsLogs = filterPresets;
 
@@ -61,6 +101,14 @@ const mutations = {
         else
             state.filtersLogs.level.Values = EnumValues.getNames(LevelEnum);
 
+    },
+
+    changeCurrentPageLog(state, value: number) {
+        state.pagedListRequestLogs.currentPage = value;
+    },
+
+    changePerPageLog(state, value: number) {
+        state.pagedListRequestLogs.perPage = value;
     },
 
     changeSortLog(state, value: { sortBy: string, sortDesc: boolean }) {
@@ -110,11 +158,27 @@ const actions = {
         });
     },
 
+    doChangeCurrentPageLog({ commit, dispatch }, value: number) {
+        commit('changeCurrentPageLog', value);
+        return dispatch('getLogs');
+    },
+
+    doChangePerPageLog({ commit, dispatch }, value: number) {
+        commit('changePerPageLog', value);
+        return dispatch('getLogs');
+    },
+
     doChangeSortLog({ commit, dispatch }, value: { sortBy: string, sertDesc: boolean }) {
         commit('changeSortLog', value);
         return dispatch('getLogs');
     },
 
+    doResetAllLogsFilters({ state, commit, dispatch }) {
+        _.forEach(state.filtersLogs, (value: IFilter, key: string) => {
+            commit('resetFilterLogs', key);
+        });
+        return dispatch('getLogs');
+    },
 
 };
 

@@ -31,6 +31,8 @@ export class FilterComponent extends Vue {
 
     @Prop() value: ITableFields;
     @Prop() filter: IFilter;
+    @Prop() updateFilterMethod: string;
+    @Prop() resetFilterMethod: string;
 
     filterData: any = this.filter.FilterData;
 
@@ -40,7 +42,7 @@ export class FilterComponent extends Vue {
     }
 
     onApplyClick() {
-        this.$store.commit('updateFilterValue', { filterName: this.value.key, values: this.filterData });
+        this.$store.commit(this.updateFilterMethod, { filterName: this.value.key, values: this.filterData });
         this.$emit('change', this.filter);
         this.closeDialog();
     }
@@ -55,7 +57,7 @@ export class FilterComponent extends Vue {
     }
 
     onResetClick() {
-        this.$store.commit('resetFilter', this.value.key);
+        this.$store.commit(this.resetFilterMethod, this.value.key);
         this.$nextTick(() => {
             this.$emit('change', this.filter);
             this.closeDialog();

@@ -22,7 +22,10 @@
             <template slot="top-row" scope="data" :test="test(data)">
                 <td v-for="field in data.fields">
 
-                    <filter-component v-if="storeFilters[field.key]" :filter="storeFilters[field.key]" :value="field" @change="refreshTable"></filter-component>
+                    <filter-component v-if="storeFilters[field.key]" 
+                                      updateFilterMethod="updateFilterValue"
+                                      resetFilterMethod="resetFilter"
+                                      :filter="storeFilters[field.key]" :value="field" @change="refreshTable"></filter-component>
 
                 </td>
             </template>

@@ -66,7 +66,17 @@ export class LogsListComponent extends Vue {
     currentPage: number = 1;
     filter: string = '';
 
-    fields: ITableFields[] = 
+    @Watch('currentPage')
+    onCurrentPageChanged(value: number) {
+        this.$store.dispatch('doChangeCurrentPageLog', value);
+    }
+
+    @Watch('perPage')
+    onPerPageChanged(value: number) {
+        this.$store.dispatch('doChangePerPageLog', value);
+    }
+
+    fields: ITableFields[] =
     [
         {
             key: 'level',
@@ -117,7 +127,7 @@ export class LogsListComponent extends Vue {
     }
 
     onResetFilter() {
-        this.$store.dispatch('doResetAllFilters');
+        this.$store.dispatch('doResetAllLogsFilters');
     }
 
     onSortClicked(ctx) {
