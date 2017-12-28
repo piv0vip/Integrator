@@ -2,7 +2,7 @@ import _ from 'lodash';
 import * as signalR from '@aspnet/signalr-client';
 
 const state = {
-    connected: false,
+    connected: true,
     showConsole: false,
     broadcastMessages: []
 };
