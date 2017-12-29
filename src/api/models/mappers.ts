@@ -215,13 +215,6 @@ export const DataTask = {
           name: 'Boolean'
         }
       },
-      lastDuration: {
-        required: false,
-        serializedName: 'lastDuration',
-        type: {
-          name: 'String'
-        }
-      },
       lastStartTime: {
         required: false,
         serializedName: 'lastStartTime',
@@ -248,6 +241,13 @@ export const DataTask = {
         serializedName: 'retries',
         type: {
           name: 'Number'
+        }
+      },
+      lastDuration: {
+        required: false,
+        serializedName: 'lastDuration',
+        type: {
+          name: 'String'
         }
       },
       recCreated: {
@@ -2192,6 +2192,34 @@ export const LogsValues = {
       levels: {
         required: false,
         serializedName: 'levels',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      },
+      sourceSystem: {
+        required: false,
+        serializedName: 'sourceSystem',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      },
+      sourceContext: {
+        required: false,
+        serializedName: 'sourceContext',
         type: {
           name: 'Sequence',
           element: {

@@ -42,7 +42,7 @@ export class FilterComponent extends Vue {
     }
 
     onApplyClick() {
-        this.$store.commit(this.updateFilterMethod, { filterName: this.value.key, values: this.filterData });
+        this.$store.dispatch(this.updateFilterMethod, { filterName: this.value.key, values: this.filterData });
         this.$emit('change', this.filter);
         this.closeDialog();
     }
@@ -57,7 +57,7 @@ export class FilterComponent extends Vue {
     }
 
     onResetClick() {
-        this.$store.commit(this.resetFilterMethod, this.value.key);
+        this.$store.dispatch(this.resetFilterMethod, this.value.key);
         this.$nextTick(() => {
             this.$emit('change', this.filter);
             this.closeDialog();

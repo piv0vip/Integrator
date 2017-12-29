@@ -26,6 +26,7 @@
                   :data-vv-scope="scope"
                   :data-vv-name="handlerSetting.Name"
                   :data-vv-as="handlerSetting.Name"
+                  :clearable="!handlerSetting.IsRequired"
                   :required="handlerSetting.IsRequired"></v-select>
 
         <date-handler-setting v-else-if="isDateTime||isDate" 

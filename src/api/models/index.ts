@@ -4,7 +4,7 @@
  * regenerated.
  */
 
-import { RequestOptionsBase } from "ms-rest-js";
+import { RequestOptionsBase } from 'ms-rest-js';
 
 
 /**
@@ -125,10 +125,6 @@ export interface DataTask {
    */
   enabled?: boolean;
   /**
-   * @member {string} [lastDuration]
-   */
-  lastDuration?: string;
-  /**
    * @member {Date} [lastStartTime]
    */
   lastStartTime?: Date;
@@ -144,6 +140,10 @@ export interface DataTask {
    * @member {number} [retries]
    */
   retries?: number;
+  /**
+   * @member {string} [lastDuration]
+   */
+  lastDuration?: string;
   /**
    * @member {Date} [recCreated]
    */
@@ -1140,6 +1140,14 @@ export interface LogsValues {
    * @member {string[]} [levels]
    */
   levels?: string[];
+  /**
+   * @member {string[]} [sourceSystem]
+   */
+  sourceSystem?: string[];
+  /**
+   * @member {string[]} [sourceContext]
+   */
+  sourceContext?: string[];
 }
 
 /**

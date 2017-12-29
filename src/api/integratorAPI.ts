@@ -50,7 +50,7 @@ class IntegratorAPI extends msRest.ServiceClient {
   // methods on the client.
 
   /**
-   * @param {string} id
+   * @param {string} userEmail
    *
    * @param {RequestOptionsBase} [options] Optional Parameters.
    *
@@ -60,12 +60,12 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    * @reject {Error|ServiceError} - The error object.
    */
-  async accountAuthorizeByIdGetWithHttpOperationResponse(id: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse> {
+  async accountCreateLoginByUserEmailPostWithHttpOperationResponse(userEmail: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse> {
     let client = this;
     // Validate
     try {
-      if (id === null || id === undefined || typeof id.valueOf() !== 'string') {
-        throw new Error('id cannot be null or undefined and it must be of type string.');
+      if (userEmail === null || userEmail === undefined || typeof userEmail.valueOf() !== 'string') {
+        throw new Error('userEmail cannot be null or undefined and it must be of type string.');
       }
     } catch (error) {
       return Promise.reject(error);
@@ -73,8 +73,74 @@ class IntegratorAPI extends msRest.ServiceClient {
 
     // Construct URL
     let baseUrl = this.baseUri;
-    let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'Account/Authorize/{id}';
-    requestUrl = requestUrl.replace('{id}', encodeURIComponent(id));
+    let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'Account/CreateLogin/{userEmail}';
+    requestUrl = requestUrl.replace('{userEmail}', encodeURIComponent(userEmail));
+
+    // Create HTTP transport objects
+    let httpRequest = new WebResource();
+    httpRequest.method = 'POST';
+    httpRequest.url = requestUrl;
+    httpRequest.headers = {};
+    // Set Headers
+    httpRequest.headers['Content-Type'] = 'application/json; charset=utf-8';
+    if(options && options.customHeaders) {
+      for(let headerName in options.customHeaders) {
+        if (options.customHeaders.hasOwnProperty(headerName)) {
+          httpRequest.headers[headerName] = options.customHeaders[headerName];
+        }
+      }
+    }
+    httpRequest.body = null;
+    // Send Request
+    let operationRes: msRest.HttpOperationResponse;
+    try {
+      operationRes = await client.pipeline(httpRequest);
+      let response = operationRes.response;
+      let statusCode = response.status;
+      if (statusCode !== 200) {
+        let error = new msRest.RestError(operationRes.bodyAsText as string);
+        error.statusCode = response.status;
+        error.request = msRest.stripRequest(httpRequest);
+        error.response = msRest.stripResponse(response);
+        let parsedErrorResponse = operationRes.bodyAsJson as { [key: string]: any };
+        try {
+          if (parsedErrorResponse) {
+            let internalError = null;
+            if (parsedErrorResponse.error) internalError = parsedErrorResponse.error;
+            error.code = internalError ? internalError.code : parsedErrorResponse.code;
+            error.message = internalError ? internalError.message : parsedErrorResponse.message;
+          }
+        } catch (defaultError) {
+          error.message = `Error "${defaultError.message}" occurred in deserializing the responseBody ` +
+                           `- "${operationRes.bodyAsText}" for the default response.`;
+          return Promise.reject(error);
+        }
+        return Promise.reject(error);
+      }
+
+    } catch(err) {
+      return Promise.reject(err);
+    }
+
+    return Promise.resolve(operationRes);
+  }
+  // methods on the client.
+
+  /**
+   * @param {RequestOptionsBase} [options] Optional Parameters.
+   *
+   * @returns {Promise} A promise is returned
+   *
+   * @resolve {HttpOperationResponse} - The deserialized result object.
+   *
+   * @reject {Error|ServiceError} - The error object.
+   */
+  async accountAuthorizeGetWithHttpOperationResponse(options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse> {
+    let client = this;
+
+    // Construct URL
+    let baseUrl = this.baseUri;
+    let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'Account/Authorize';
 
     // Create HTTP transport objects
     let httpRequest = new WebResource();
@@ -127,8 +193,6 @@ class IntegratorAPI extends msRest.ServiceClient {
   // methods on the client.
 
   /**
-   * @param {string} id
-   *
    * @param {RequestOptionsBase} [options] Optional Parameters.
    *
    * @returns {Promise} A promise is returned
@@ -137,21 +201,12 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    * @reject {Error|ServiceError} - The error object.
    */
-  async accountAuthorizeByIdPostWithHttpOperationResponse(id: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse> {
+  async accountAuthorizePostWithHttpOperationResponse(options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse> {
     let client = this;
-    // Validate
-    try {
-      if (id === null || id === undefined || typeof id.valueOf() !== 'string') {
-        throw new Error('id cannot be null or undefined and it must be of type string.');
-      }
-    } catch (error) {
-      return Promise.reject(error);
-    }
 
     // Construct URL
     let baseUrl = this.baseUri;
-    let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'Account/Authorize/{id}';
-    requestUrl = requestUrl.replace('{id}', encodeURIComponent(id));
+    let requestUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') + 'Account/Authorize';
 
     // Create HTTP transport objects
     let httpRequest = new WebResource();
@@ -4378,7 +4433,7 @@ class IntegratorAPI extends msRest.ServiceClient {
   }
 
   /**
-   * @param {string} id
+   * @param {string} userEmail
    *
    * @param {RequestOptionsBase} [options] Optional Parameters.
    *
@@ -4394,24 +4449,24 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    *                      {Response} [response] - The HTTP Response stream if an error did not occur.
    */
-  accountAuthorizeByIdGet(id: string): Promise<void>;
-  accountAuthorizeByIdGet(id: string, options: msRest.RequestOptionsBase): Promise<void>;
-  accountAuthorizeByIdGet(id: string, callback: msRest.ServiceCallback<void>): void;
-  accountAuthorizeByIdGet(id: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  accountAuthorizeByIdGet(id: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
+  accountCreateLoginByUserEmailPost(userEmail: string): Promise<void>;
+  accountCreateLoginByUserEmailPost(userEmail: string, options: msRest.RequestOptionsBase): Promise<void>;
+  accountCreateLoginByUserEmailPost(userEmail: string, callback: msRest.ServiceCallback<void>): void;
+  accountCreateLoginByUserEmailPost(userEmail: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  accountCreateLoginByUserEmailPost(userEmail: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
     if (!callback && typeof options === 'function') {
       callback = options;
       options = undefined;
     }
     let cb = callback as msRest.ServiceCallback<void>;
     if (!callback) {
-      return this.accountAuthorizeByIdGetWithHttpOperationResponse(id, options).then((operationRes: msRest.HttpOperationResponse) => {
+      return this.accountCreateLoginByUserEmailPostWithHttpOperationResponse(userEmail, options).then((operationRes: msRest.HttpOperationResponse) => {
         return Promise.resolve(operationRes.bodyAsJson as void);
       }).catch((err: Error) => {
         return Promise.reject(err);
       });
     } else {
-      msRest.promiseToCallback(this.accountAuthorizeByIdGetWithHttpOperationResponse(id, options))((err: Error, data: msRest.HttpOperationResponse) => {
+      msRest.promiseToCallback(this.accountCreateLoginByUserEmailPostWithHttpOperationResponse(userEmail, options))((err: Error, data: msRest.HttpOperationResponse) => {
         if (err) {
           return cb(err);
         }
@@ -4422,8 +4477,6 @@ class IntegratorAPI extends msRest.ServiceClient {
   }
 
   /**
-   * @param {string} id
-   *
    * @param {RequestOptionsBase} [options] Optional Parameters.
    *
    * @param {ServiceCallback} callback - The callback.
@@ -4438,24 +4491,66 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    *                      {Response} [response] - The HTTP Response stream if an error did not occur.
    */
-  accountAuthorizeByIdPost(id: string): Promise<void>;
-  accountAuthorizeByIdPost(id: string, options: msRest.RequestOptionsBase): Promise<void>;
-  accountAuthorizeByIdPost(id: string, callback: msRest.ServiceCallback<void>): void;
-  accountAuthorizeByIdPost(id: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  accountAuthorizeByIdPost(id: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
+  accountAuthorizeGet(): Promise<void>;
+  accountAuthorizeGet(options: msRest.RequestOptionsBase): Promise<void>;
+  accountAuthorizeGet(callback: msRest.ServiceCallback<void>): void;
+  accountAuthorizeGet(options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  accountAuthorizeGet(options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
     if (!callback && typeof options === 'function') {
       callback = options;
       options = undefined;
     }
     let cb = callback as msRest.ServiceCallback<void>;
     if (!callback) {
-      return this.accountAuthorizeByIdPostWithHttpOperationResponse(id, options).then((operationRes: msRest.HttpOperationResponse) => {
+      return this.accountAuthorizeGetWithHttpOperationResponse(options).then((operationRes: msRest.HttpOperationResponse) => {
         return Promise.resolve(operationRes.bodyAsJson as void);
       }).catch((err: Error) => {
         return Promise.reject(err);
       });
     } else {
-      msRest.promiseToCallback(this.accountAuthorizeByIdPostWithHttpOperationResponse(id, options))((err: Error, data: msRest.HttpOperationResponse) => {
+      msRest.promiseToCallback(this.accountAuthorizeGetWithHttpOperationResponse(options))((err: Error, data: msRest.HttpOperationResponse) => {
+        if (err) {
+          return cb(err);
+        }
+        let result = data.bodyAsJson as void;
+        return cb(err, result, data.request, data.response);
+      });
+    }
+  }
+
+  /**
+   * @param {RequestOptionsBase} [options] Optional Parameters.
+   *
+   * @param {ServiceCallback} callback - The callback.
+   *
+   * @returns {ServiceCallback} callback(err, result, request, response)
+   *
+   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
+   *
+   *                      {void} [result]   - The deserialized result object if an error did not occur.
+   *
+   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
+   *
+   *                      {Response} [response] - The HTTP Response stream if an error did not occur.
+   */
+  accountAuthorizePost(): Promise<void>;
+  accountAuthorizePost(options: msRest.RequestOptionsBase): Promise<void>;
+  accountAuthorizePost(callback: msRest.ServiceCallback<void>): void;
+  accountAuthorizePost(options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  accountAuthorizePost(options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
+    if (!callback && typeof options === 'function') {
+      callback = options;
+      options = undefined;
+    }
+    let cb = callback as msRest.ServiceCallback<void>;
+    if (!callback) {
+      return this.accountAuthorizePostWithHttpOperationResponse(options).then((operationRes: msRest.HttpOperationResponse) => {
+        return Promise.resolve(operationRes.bodyAsJson as void);
+      }).catch((err: Error) => {
+        return Promise.reject(err);
+      });
+    } else {
+      msRest.promiseToCallback(this.accountAuthorizePostWithHttpOperationResponse(options))((err: Error, data: msRest.HttpOperationResponse) => {
         if (err) {
           return cb(err);
         }

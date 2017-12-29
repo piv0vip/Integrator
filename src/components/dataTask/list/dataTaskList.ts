@@ -83,7 +83,7 @@ export class DataTaskListComponent extends Vue {
     chance: chance;
 
     created() {
-        //this.refreshTable();
+        // this.refreshTable();
     }
 
     get iDataTaskGroups(): IDataTaskGroup[] {
@@ -144,44 +144,33 @@ export class DataTaskListComponent extends Vue {
 
     onDeleteTaskClick(dataTask: DataTask) {
         HTTP.delete('DataTask/Delete/' + dataTask.DataTaskId)
-        .then((response: AxiosResponse) => {
-            //this.refreshTable();
-        })
+        .then((response: AxiosResponse) => { })
         .catch(e => {
-            this.isBusy = false;
             console.log(e);
         });
     }
 
     closeExecuteTaskLocaly(e) {
-        // this.refreshTable();
     }
 
     closeEditTask(e) {
         this.currentTask = new DataTask();
         this.$store.commit('dataTaskDialogVisible', false);
-        //this.refreshTable();
     }
 
     closeEditGroup(dataTaskGroup?: DataTaskGroup) {
         if (dataTaskGroup) {
-            //this.refreshTable();
         }
         this.currentGroup = new DataTaskGroup();
     }
 
     onFilterChange(e) {
-        //this.refreshTable();
     }
 
     onDeleteGroupClick(dataTaskGroup: DataTaskGroup) {
         HTTP.delete('DataTaskGroup/Delete/' + dataTaskGroup.DataTaskGroupId)
-            .then((response: AxiosResponse) => {
-                //this.refreshTable();
-            })
-            .catch(e => {
-                this.isBusy = false;
-            });
+            .then((response: AxiosResponse) => { })
+            .catch(e => { });
     }
 
     onDeleteTask(dataTask: DataTask) {
@@ -251,7 +240,7 @@ export class DataTaskListComponent extends Vue {
         error: number,
         isRunning: number
     } {
-        console.log(group)
+        console.log(group);
         let dataTasks: IDataTask[] = group.dataTaskList || [];
         return {
             total: dataTasks.length,

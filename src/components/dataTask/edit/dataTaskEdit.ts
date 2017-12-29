@@ -10,7 +10,7 @@ import { CronPresetsComponent } from './cronPresets';
 
 import { DataTaskGroupEditComponent } from '../editGroup';
 
-import { DataTaskGroup as IDataTaskGroup } from '../../../api/models'
+import { DataTaskGroup as IDataTaskGroup } from '../../../api/models';
 
 import $ from 'jquery';
 import _ from 'lodash';

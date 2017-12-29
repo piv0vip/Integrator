@@ -45,5 +45,6 @@ export enum FilterTypeEnum {
     Date,
     Period,
     StringContains,
+    StringsContains,
     Multiselect
 }

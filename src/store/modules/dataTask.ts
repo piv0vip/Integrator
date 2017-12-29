@@ -86,24 +86,27 @@ const mutations = {
     },
 
     modifyDataTask(state, entity: IDataTask) {
-        let group: IDataTaskGroup = _.find(state.iDataTaskGroups, (group: IDataTaskGroup) => group.dataTaskGroupId == entity.dataTaskGroupId);
-        let index = _.findIndex(group.dataTaskList, function (o: IDataTask) { return o.dataTaskId === entity.dataTaskId })
-        if (index < 0) {
-            Vue.set(group.dataTaskList, group.dataTaskList.length, entity);
-        } else {
-            Vue.set(group.dataTaskList, index, entity);
+        let group: IDataTaskGroup = _.find(state.iDataTaskGroups, (group: IDataTaskGroup) => group.dataTaskGroupId === entity.dataTaskGroupId);
+        if (group) {
+            let index = _.findIndex(group.dataTaskList, function (o: IDataTask) { return o.dataTaskId === entity.dataTaskId; });
+            if (index < 0) {
+                Vue.set(group.dataTaskList, group.dataTaskList.length, entity);
+            } else {
+                Vue.set(group.dataTaskList, index, entity);
+            }
         }
     },
 
     removeDataTask(state, entity: IDataTask) {
-        let group: IDataTaskGroup = _.find(state.iDataTaskGroups, (group: IDataTaskGroup) => group.dataTaskGroupId == entity.dataTaskGroupId);
+        let group: IDataTaskGroup = _.find(state.iDataTaskGroups, (group: IDataTaskGroup) => group.dataTaskGroupId === entity.dataTaskGroupId);
         let index = _.findIndex(group.dataTaskList, (dataTask: IDataTask) => dataTask.dataTaskId === entity.dataTaskId);
         Vue.delete(group.dataTaskList, index);
     },
 
     modifyDataTaskGroup(state, entity: IDataTaskGroup) {
-        let index = _.findIndex(state.iDataTaskGroups, function (o: IDataTaskGroup) { return o.dataTaskGroupId === entity.dataTaskGroupId })
-        if (!entity.dataTaskList) { entity.dataTaskList = [] }
+        let dataTaskList = state.iDataTaskGroups.dataTaskList;
+        let index = _.findIndex(state.iDataTaskGroups, function (o: IDataTaskGroup) { return o.dataTaskGroupId === entity.dataTaskGroupId; });
+        if (!entity.dataTaskList) { entity.dataTaskList = dataTaskList; }
         if (index < 0) {
             Vue.set(state.iDataTaskGroups, state.iDataTaskGroups.length, entity);
         } else {

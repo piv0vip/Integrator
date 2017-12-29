@@ -30,7 +30,7 @@ const state = function(){
 
         pagedListRequest: new PagedListReq(),
         pagedListResponse: null
-    }
+    };
 };
 
 const getters = {
@@ -73,8 +73,7 @@ const mutations = {
         state.pagedListRequest.sortDesc = value.sortDesc;
     },
 
-    updateFilterValue(state, values: { filterName: string, values: any }) {
-        Vue.set(state.filters[values.filterName], 'FilterData', values.values);
+    updatePagedList(state) {
         let temp: PagedListReq = state.pagedListRequest;
         Vue.set(state.pagedListRequest, 'currentPage', temp.currentPage);
         Vue.set(state.pagedListRequest, 'perPage', temp.perPage);
@@ -108,39 +107,12 @@ const mutations = {
         ]);
     },
 
+    updateFilterValue(state, values: { filterName: string, values: any }) {
+        Vue.set(state.filters[values.filterName], 'FilterData', values.values);
+    },
+
     resetFilter(state, filterName: string) {
         state.filters[filterName].reset();
-        let temp: PagedListReq = state.pagedListRequest;
-        Vue.set(state.pagedListRequest, 'currentPage', temp.currentPage);
-        Vue.set(state.pagedListRequest, 'perPage', temp.perPage);
-        Vue.set(state.pagedListRequest, 'sortBy', temp.sortBy);
-        Vue.set(state.pagedListRequest, 'sortDesc', temp.sortDesc);
-        Vue.set(state.pagedListRequest, 'filters', [
-            {
-                fieldName: 'status',
-                existsValues: state.filters.status.toServer()
-            },
-            {
-                fieldName: 'entityType',
-                existsValues: state.filters.entityType.toServer()
-            },
-            {
-                fieldName: 'source',
-                existsValues: state.filters.source.toServer()
-            },
-            {
-                fieldName: 'target',
-                existsValues: state.filters.target.toServer()
-            },
-            {
-                fieldName: 'statusMessage',
-                ignoredValues: state.filters.statusMessage.isDefault() ? null : state.filters.statusMessage.toServer()
-            },
-            {
-                fieldName: 'entityVersion',
-                period: state.filters.entityVersion.isDefault() ? null : state.filters.entityVersion.toServer()
-            },
-        ]);
     },
 
     setFilterValues(state, filterPresets: EntityStatusesValues) {
@@ -171,6 +143,16 @@ const mutations = {
 };
 
 const actions = {
+
+    updateFilterValue({ commit }, value: { filterName: string, values: any }) {
+        commit('updateFilterValue', value);
+        commit('updatePagedList');
+    },
+
+    resetFilter({ commit }, filterName: string) {
+        commit('resetFilter', filterName);
+        commit('updatePagedList');
+    },
 
     getFilterValues({ dispatch, commit }) {
         return new Promise((resolve, reject) => {
@@ -217,7 +199,7 @@ const actions = {
 
     doResetAllFilters({ state, commit, dispatch }) {
         _.forEach(state.filters, (value: IFilter, key: string) => {
-            commit('resetFilter', key);
+            dispatch('resetFilter', key);
         });
         return dispatch('getEntityStatuses');
     },

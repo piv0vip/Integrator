@@ -11,7 +11,7 @@ export class DateFilterComponent extends Vue {
     calDate: { From: string, To: string } = {
         From: moment().format('YYYY-MM-DD'),
         To: moment().format('YYYY-MM-DD')
-    }
+    };
 
     @Prop() dates: string[];
 

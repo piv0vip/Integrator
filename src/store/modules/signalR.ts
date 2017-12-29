@@ -62,7 +62,8 @@ const actions = {
                     commit('connected', true);
 
                     dispatch('getProductVersion');
-                    dispatch('getDataTasks');
+
+                    dispatch('refreshCurrentList    ');
 
                     resolve();
                 })

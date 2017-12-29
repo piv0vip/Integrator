@@ -75,23 +75,25 @@
                    @click="onAddGroupClick"><v-icon class="mr-2">link</v-icon>Add Group</v-btn>
         </div>
 
-                <v-select v-if="isEntityStatuses"
-                          v-bind:items="pageOptions"
-                          v-model="perPage"
-                          hide-details
-                          label="Rows per page"></v-select>
-                <v-btn v-if="isEntityStatuses" @click="onResetEntityStatusFilter" :disabled="entityStatusFilterIsDefault">Reset all filters</v-btn>
-                <v-btn v-if="isDataTasks" round flat color="indigo lighten-2 white--text"
-                       title="Refresh Table"
-                       @click="onRefreshTableClick"><v-icon class="mr-2">autorenew</v-icon>Refresh table</v-btn>
-                <v-btn round flat color="green lighten-2 white--text"
-                       title="Show Console"
-                       @click="setShowConsole"><v-icon class="mr-2">clear_all</v-icon>Show console</v-btn>
+        <v-select v-if="isEntityStatuses"
+                  v-bind:items="pageOptions"
+                  v-model="perPage"
+                  hide-details
+                  style="width: 50px"
+                  label="Rows per page"></v-select>
+        <v-btn v-if="isEntityStatuses" @click="onResetEntityStatusFilter" :disabled="entityStatusFilterIsDefault">Reset all filters</v-btn>
+        <v-spacer></v-spacer>
+        <v-btn v-if="isDataTasks" round flat color="indigo lighten-2 white--text"
+               title="Refresh Table"
+               @click="onRefreshTableClick"><v-icon class="mr-2">autorenew</v-icon>Refresh table</v-btn>
+        <v-btn round flat color="green lighten-2 white--text"
+               title="Show Console"
+               @click="setShowConsole"><v-icon class="mr-2">clear_all</v-icon>Show console</v-btn>
         <!--<v-text-field light
-      solo
-      prepend-icon="search"
-      placeholder="Search"
-      style="max-width: 500px; min-width: 128px"></v-text-field>-->
+    solo
+    prepend-icon="search"
+    placeholder="Search"
+    style="max-width: 500px; min-width: 128px"></v-text-field>-->
         <!--<div class="d-flex align-center" style="margin-left: auto">
         <v-btn icon>
             <v-icon>apps</v-icon>

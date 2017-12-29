@@ -55,7 +55,6 @@ export abstract class Filter<T> implements IFilter {
     constructor() {
         this.setType();
         this.init();
-        //this.reset();
     }
 
     get Type(): FilterTypeEnum { return this._type; }
@@ -92,7 +91,7 @@ export class NullFilter extends Filter<string> {
 
 export class ContainFilter extends Filter<string> {
 
-    FilterData: string = ''
+    FilterData: string = '';
 
     constructor() {
         super();

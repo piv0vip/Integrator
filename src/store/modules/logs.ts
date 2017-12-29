@@ -1,4 +1,4 @@
-dimport Vue from 'vue';
+import Vue from 'vue';
 import { HTTP } from '../../util/http-common';
 import { IFilter, FilterFactory, CheckBoxFilter, PagedListReq } from '../../classes/filter';
 import { EnumValues } from 'enum-values';
@@ -13,12 +13,14 @@ const state = function () {
     return {
 
         filterPresetsLogs: {
-            level: []
+            level: [],
+            properties: [],
         },
 
         filtersLogs: {
             level: FilterFactory.getFilter(FilterTypeEnum.StringList),
             timestamp: FilterFactory.getFilter(FilterTypeEnum.Period),
+            properties: FilterFactory.getFilter(FilterTypeEnum.StringList),
         },
 
         pagedListRequestLogs: new PagedListReq({ sortBy: 'timestamp' }),
@@ -55,8 +57,7 @@ const getters = {
 
 const mutations = {
 
-    updateFilterLogsValue(state, values: { filterName: string, values: any }) {
-        Vue.set(state.filtersLogs[values.filterName], 'FilterData', values.values);
+    updatePagedListLogs(state) {
         let temp: PagedListReq = state.pagedListRequestLogs;
         Vue.set(state.pagedListRequestLogs, 'currentPage', temp.currentPage);
         Vue.set(state.pagedListRequestLogs, 'perPage', temp.perPage);
@@ -70,36 +71,31 @@ const mutations = {
             {
                 fieldName: 'timestamp',
                 period: state.filtersLogs.timestamp.isDefault() ? null : state.filtersLogs.timestamp.toServer()
+            },
+            {
+                fieldName: 'properties',
+                containValues: state.filtersLogs.properties.toServer()
             },
         ]);
     },
 
+    updateFilterLogsValue(state, values: { filterName: string, values: any }) {
+        Vue.set(state.filtersLogs[values.filterName], 'FilterData', values.values);
+    },
+
     resetFilterLogs(state, filterName: string) {
         state.filtersLogs[filterName].reset();
-        let temp: PagedListReq = state.pagedListRequestLogs;
-        Vue.set(state.pagedListRequestLogs, 'currentPage', temp.currentPage);
-        Vue.set(state.pagedListRequestLogs, 'perPage', temp.perPage);
-        Vue.set(state.pagedListRequestLogs, 'sortBy', temp.sortBy);
-        Vue.set(state.pagedListRequestLogs, 'sortDesc', temp.sortDesc);
-        Vue.set(state.pagedListRequestLogs, 'filters', [
-            {
-                fieldName: 'level',
-                existsValues: state.filtersLogs.level.toServer()
-            },
-            {
-                fieldName: 'timestamp',
-                period: state.filtersLogs.timestamp.isDefault() ? null : state.filtersLogs.timestamp.toServer()
-            },
-        ]);
     },
 
     setFilterValuesLogs(state, filterPresets: LogsValues) {
         state.filterPresetsLogs = filterPresets;
 
         if (filterPresets.levels.length > 0)
-            state.filtersLogs.level.Values = filterPresets.levels;
+            Vue.set(state.filtersLogs.level, 'Values', filterPresets.levels);
         else
-            state.filtersLogs.level.Values = EnumValues.getNames(LevelEnum);
+            Vue.set(state.filtersLogs.level, 'Values', EnumValues.getNames(LevelEnum));
+
+        Vue.set(state.filtersLogs.properties, 'Values', state.filterPresetsLogs.properties.length ? state.filterPresetsLogs.properties : []);
 
     },
 
@@ -129,6 +125,16 @@ const mutations = {
 };
 
 const actions = {
+
+    updateFilterLogsValue({ commit }, value: { filterName: string, values: any }) {
+        commit('updateFilterLogsValue', value);
+        commit('updatePagedListLogs');
+    },
+
+    resetFilterLogs({ commit }, filterName: string) {
+        commit('resetFilterLogs', filterName);
+        commit('updatePagedListLogs');
+    },
 
     getFilterValuesLogs({ dispatch, commit }) {
         return new Promise((resolve, reject) => {
@@ -175,7 +181,7 @@ const actions = {
 
     doResetAllLogsFilters({ state, commit, dispatch }) {
         _.forEach(state.filtersLogs, (value: IFilter, key: string) => {
-            commit('resetFilterLogs', key);
+            dispatch('resetFilterLogs', key);
         });
         return dispatch('getLogs');
     },
