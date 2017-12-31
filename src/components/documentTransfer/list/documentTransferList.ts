@@ -120,29 +120,6 @@ export class DocumentTransferListComponent extends Vue {
             label: 'content',
             sortable: true,
         }, 
-        //{
-        //    key: 'exception',
-        //    label: 'Exception',
-        //    sortable: true,
-        //},
-        //{
-        //    key: 'renderedMessage',
-        //    label: 'Rendered Message',
-        //    sortable: true,
-        //},
-        //{
-        //    key: 'properties',
-        //    label: 'Properties',
-        //    sortable: true,
-        //},
-        //{
-        //    key: 'timestamp',
-        //    tdClass: 'py-3',
-        //    label: 'Timestamp',
-        //    sortable: true,
-        //    formatter: 'formatDate',    
-        //    // thStyle: { width: '180px' },
-        //},
     ];
 
     created() {
@@ -172,7 +149,6 @@ export class DocumentTransferListComponent extends Vue {
 
     showContentPopup(entityId: number) {
         this.$store.commit('loading', true);
-        debugger;
         HTTP.get(`DocumentTransfer/GetContentOfDocumentTransfer/${entityId}`)
             .then((response: AxiosResponse) => {
                 let documentTransfer: DocumentTransfer = response.data as DocumentTransfer;
