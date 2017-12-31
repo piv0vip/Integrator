@@ -266,7 +266,8 @@ export class PagedListReq implements IPagedListReq {
 
     constructor(params?: IPagedListReq) {
         if (params) {
-            this.sortBy = params.sortBy;
+            this.sortBy = params.sortBy || 'RecModified';
+            this.sortDesc = params.sortDesc || true;
         }
     }
 }

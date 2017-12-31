@@ -63,7 +63,7 @@ const actions = {
 
                     dispatch('getProductVersion');
 
-                    dispatch('refreshCurrentList    ');
+                    dispatch('refreshCurrentList');
 
                     resolve();
                 })

@@ -1,38 +1,29 @@
 <div>
 
-    <!--<v-container>
-        <v-layout row wrap>
-            <v-flex xs1 class="mr-4">
-                <v-select v-bind:items="pageOptions"
-                          v-model="perPage"
-                          label="Rows per page"></v-select>
-            </v-flex>
-            <v-flex xs2 class="mx-4">
-                <v-text-field v-model="search"
-                              label="Search"
-                              @keyup.native.enter="onFilterChange"></v-text-field>
-            </v-flex>
-            <v-flex xs8>
-                <v-btn @click="onResetFilter" :disabled="filtersIsDefault">Reset all filters</v-btn>
-            </v-flex>
-        </v-layout>
-    </v-container>-->
-
     <div style="overflow-x:auto">
-        <b-table id="logs"
-                 ref="logsTable"
+        <b-table id="documentTransfers"
+                 ref="documentTransfersTable"
                  hover
                  @sort-changed="onSortClicked"
                  no-local-sorting
                  :fields="fields"
-                 :items="logs">
+                 :items="documentTransfers">
             <template slot="top-row" scope="data" :test="test(data)">
                 <td v-for="field in data.fields">
                     <filter-component v-if="storeFilters[field.key]"
-                                      updateFilterMethod="updateFilterLogsValue"
-                                      resetFilterMethod="resetFilterLogs"
+                                      updateFilterMethod="updateFilterDTsValue"
+                                      resetFilterMethod="resetFilterDTs"
                                       :filter="storeFilters[field.key]" :value="field" @change="refreshTable"></filter-component>
                 </td>
+            </template>
+            <template slot="content" scope="data">
+                <span v-if="data.item.hasContent">
+                    <v-btn flat round
+                           color="indigo lighten-2 white--text"
+                           title="Content"
+                           value="assignment"
+                           @click='onViewContentClick(data.item)'><v-icon class="mr-1">assignment</v-icon>doc</v-btn>
+                </span>
             </template>
         </b-table>
     </div>
@@ -51,6 +42,6 @@
         </v-layout>
     </v-container>
 
-   <!-- <content-view :show="showContent" :content="content"></content-view>-->
+    <content-view-component :show="showContent" :content="content"></content-view-component>
 
 </div>

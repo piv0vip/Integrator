@@ -125,6 +125,10 @@ export interface DataTask {
    */
   enabled?: boolean;
   /**
+   * @member {string} [lastDuration]
+   */
+  lastDuration?: string;
+  /**
    * @member {Date} [lastStartTime]
    */
   lastStartTime?: Date;
@@ -140,10 +144,6 @@ export interface DataTask {
    * @member {number} [retries]
    */
   retries?: number;
-  /**
-   * @member {string} [lastDuration]
-   */
-  lastDuration?: string;
   /**
    * @member {Date} [recCreated]
    */
@@ -441,6 +441,206 @@ export interface PagedListResponseDataTaskGroup {
 
 /**
  * @interface
+ * An interface representing DocumentTransferValues.
+ */
+export interface DocumentTransferValues {
+  /**
+   * @member {string[]} [statuses]
+   */
+  statuses?: string[];
+  /**
+   * @member {string[]} [documentTypes]
+   */
+  documentTypes?: string[];
+  /**
+   * @member {string[]} [sources]
+   */
+  sources?: string[];
+  /**
+   * @member {string[]} [targets]
+   */
+  targets?: string[];
+}
+
+/**
+ * @interface
+ * An interface representing ContainFilterDocumentTransfer.
+ */
+export interface ContainFilterDocumentTransfer {
+  /**
+   * @member {string[]} [values]
+   */
+  values?: string[];
+}
+
+/**
+ * @interface
+ * An interface representing ExistsFilterDocumentTransfer.
+ */
+export interface ExistsFilterDocumentTransfer {
+  /**
+   * @member {string[]} [values]
+   */
+  values?: string[];
+}
+
+/**
+ * @interface
+ * An interface representing IgnoredFilterDocumentTransfer.
+ */
+export interface IgnoredFilterDocumentTransfer {
+  /**
+   * @member {string[]} [values]
+   */
+  values?: string[];
+}
+
+/**
+ * @interface
+ * An interface representing PeriodFilterDocumentTransfer.
+ */
+export interface PeriodFilterDocumentTransfer {
+  /**
+   * @member {Date} [from]
+   */
+  from?: Date;
+  /**
+   * @member {Date} [to]
+   */
+  to?: Date;
+}
+
+/**
+ * @interface
+ * An interface representing FieldFilterDocumentTransfer.
+ */
+export interface FieldFilterDocumentTransfer {
+  /**
+   * @member {ContainFilterDocumentTransfer} [containValues]
+   */
+  containValues?: ContainFilterDocumentTransfer;
+  /**
+   * @member {ExistsFilterDocumentTransfer} [existsValues]
+   */
+  existsValues?: ExistsFilterDocumentTransfer;
+  /**
+   * @member {string} [fieldName]
+   */
+  fieldName?: string;
+  /**
+   * @member {IgnoredFilterDocumentTransfer} [ignoredValues]
+   */
+  ignoredValues?: IgnoredFilterDocumentTransfer;
+  /**
+   * @member {PeriodFilterDocumentTransfer} [period]
+   */
+  period?: PeriodFilterDocumentTransfer;
+}
+
+/**
+ * @interface
+ * An interface representing PagedListRequestDocumentTransfer.
+ */
+export interface PagedListRequestDocumentTransfer {
+  /**
+   * @member {number} [currentPage]
+   */
+  currentPage?: number;
+  /**
+   * @member {FieldFilterDocumentTransfer[]} [filters]
+   */
+  filters?: FieldFilterDocumentTransfer[];
+  /**
+   * @member {number} [perPage]
+   */
+  perPage?: number;
+  /**
+   * @member {string} [sortBy]
+   */
+  sortBy?: string;
+  /**
+   * @member {boolean} [sortDesc]
+   */
+  sortDesc?: boolean;
+}
+
+/**
+ * @interface
+ * An interface representing DocumentTransfer.
+ */
+export interface DocumentTransfer {
+  /**
+   * @member {boolean} [hasContent]
+   */
+  hasContent?: boolean;
+  /**
+   * @member {string} [content]
+   */
+  content?: string;
+  /**
+   * @member {number} [documentTransferId]
+   */
+  documentTransferId?: number;
+  /**
+   * @member {string} [documentType]
+   */
+  documentType?: string;
+  /**
+   * @member {string} [errorMessage]
+   */
+  errorMessage?: string;
+  /**
+   * @member {string} [source]
+   */
+  source?: string;
+  /**
+   * @member {string} [sourceId]
+   */
+  sourceId?: string;
+  /**
+   * @member {Status1} [status] Possible values include: 'New', 'Processing',
+   * 'Processed', 'Failed', 'Ignored'
+   */
+  status?: Status1;
+  /**
+   * @member {string} [target]
+   */
+  target?: string;
+  /**
+   * @member {string} [targetId]
+   */
+  targetId?: string;
+  /**
+   * @member {Date} [recCreated]
+   */
+  recCreated?: Date;
+  /**
+   * @member {Date} [recModified]
+   */
+  recModified?: Date;
+  /**
+   * @member {string} [entityName]
+   */
+  readonly entityName?: string;
+}
+
+/**
+ * @interface
+ * An interface representing PagedListResponseDocumentTransfer.
+ */
+export interface PagedListResponseDocumentTransfer {
+  /**
+   * @member {IPagedList} [metadata]
+   */
+  metadata?: IPagedList;
+  /**
+   * @member {DocumentTransfer[]} [entities]
+   */
+  entities?: DocumentTransfer[];
+}
+
+/**
+ * @interface
  * An interface representing EntityStatusesValues.
  */
 export interface EntityStatusesValues {
@@ -570,62 +770,6 @@ export interface PagedListRequestEntityStatus {
    * @member {boolean} [sortDesc]
    */
   sortDesc?: boolean;
-}
-
-/**
- * @interface
- * An interface representing DocumentTransfer.
- */
-export interface DocumentTransfer {
-  /**
-   * @member {string} [content]
-   */
-  content?: string;
-  /**
-   * @member {number} [documentTransferId]
-   */
-  documentTransferId?: number;
-  /**
-   * @member {string} [documentType]
-   */
-  documentType?: string;
-  /**
-   * @member {string} [errorMessage]
-   */
-  errorMessage?: string;
-  /**
-   * @member {string} [source]
-   */
-  source?: string;
-  /**
-   * @member {string} [sourceId]
-   */
-  sourceId?: string;
-  /**
-   * @member {Status1} [status] Possible values include: 'New', 'Processing',
-   * 'Processed', 'Failed', 'Ignored'
-   */
-  status?: Status1;
-  /**
-   * @member {string} [target]
-   */
-  target?: string;
-  /**
-   * @member {string} [targetId]
-   */
-  targetId?: string;
-  /**
-   * @member {Date} [recCreated]
-   */
-  recCreated?: Date;
-  /**
-   * @member {Date} [recModified]
-   */
-  recModified?: Date;
-  /**
-   * @member {string} [entityName]
-   */
-  readonly entityName?: string;
 }
 
 /**
@@ -1141,13 +1285,9 @@ export interface LogsValues {
    */
   levels?: string[];
   /**
-   * @member {string[]} [sourceSystem]
+   * @member {string[]} [properties]
    */
-  sourceSystem?: string[];
-  /**
-   * @member {string[]} [sourceContext]
-   */
-  sourceContext?: string[];
+  properties?: string[];
 }
 
 /**
@@ -1288,6 +1428,90 @@ export interface IntegratorAPIRestDataTaskGroupUpdateArrayPutOptionalParams exte
    * @member {DataTaskGroup[]} [entities]
    */
   entities?: DataTaskGroup[];
+}
+
+/**
+ * @interface
+ * An interface representing IntegratorAPIRestDocumentTransferGetDocumentTransferShortPostOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface IntegratorAPIRestDocumentTransferGetDocumentTransferShortPostOptionalParams extends RequestOptionsBase {
+  /**
+   * @member {PagedListRequestDocumentTransfer} [pagedListRequest]
+   */
+  pagedListRequest?: PagedListRequestDocumentTransfer;
+}
+
+/**
+ * @interface
+ * An interface representing IntegratorAPIRestDocumentTransferGetPagedListPostOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface IntegratorAPIRestDocumentTransferGetPagedListPostOptionalParams extends RequestOptionsBase {
+  /**
+   * @member {PagedListRequestDocumentTransfer} [pagedListRequest]
+   */
+  pagedListRequest?: PagedListRequestDocumentTransfer;
+}
+
+/**
+ * @interface
+ * An interface representing IntegratorAPIRestDocumentTransferInsertPostOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface IntegratorAPIRestDocumentTransferInsertPostOptionalParams extends RequestOptionsBase {
+  /**
+   * @member {DocumentTransfer} [entity]
+   */
+  entity?: DocumentTransfer;
+}
+
+/**
+ * @interface
+ * An interface representing IntegratorAPIRestDocumentTransferInsertArrayPostOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface IntegratorAPIRestDocumentTransferInsertArrayPostOptionalParams extends RequestOptionsBase {
+  /**
+   * @member {DocumentTransfer[]} [entities]
+   */
+  entities?: DocumentTransfer[];
+}
+
+/**
+ * @interface
+ * An interface representing IntegratorAPIRestDocumentTransferUpdatePutOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface IntegratorAPIRestDocumentTransferUpdatePutOptionalParams extends RequestOptionsBase {
+  /**
+   * @member {DocumentTransfer} [entity]
+   */
+  entity?: DocumentTransfer;
+}
+
+/**
+ * @interface
+ * An interface representing IntegratorAPIRestDocumentTransferUpdateArrayPutOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface IntegratorAPIRestDocumentTransferUpdateArrayPutOptionalParams extends RequestOptionsBase {
+  /**
+   * @member {DocumentTransfer[]} [entities]
+   */
+  entities?: DocumentTransfer[];
 }
 
 /**

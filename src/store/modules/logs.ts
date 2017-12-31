@@ -179,11 +179,11 @@ const actions = {
         return dispatch('getLogs');
     },
 
-    doResetAllLogsFilters({ state, commit, dispatch }) {
-        _.forEach(state.filtersLogs, (value: IFilter, key: string) => {
-            dispatch('resetFilterLogs', key);
+    doResetAllLogsFilters(context) {
+        _.forEach(context.state.filtersLogs, (value: IFilter, key: string) => {
+            context.dispatch('resetFilterLogs', key);
         });
-        return dispatch('getLogs');
+        return context.dispatch('getLogs');
     },
 
 };

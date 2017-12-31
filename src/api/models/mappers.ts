@@ -215,6 +215,13 @@ export const DataTask = {
           name: 'Boolean'
         }
       },
+      lastDuration: {
+        required: false,
+        serializedName: 'lastDuration',
+        type: {
+          name: 'String'
+        }
+      },
       lastStartTime: {
         required: false,
         serializedName: 'lastStartTime',
@@ -241,13 +248,6 @@ export const DataTask = {
         serializedName: 'retries',
         type: {
           name: 'Number'
-        }
-      },
-      lastDuration: {
-        required: false,
-        serializedName: 'lastDuration',
-        type: {
-          name: 'String'
         }
       },
       recCreated: {
@@ -843,6 +843,414 @@ export const PagedListResponseDataTaskGroup = {
   }
 };
 
+export const DocumentTransferValues = {
+  required: false,
+  serializedName: 'DocumentTransferValues',
+  type: {
+    name: 'Composite',
+    className: 'DocumentTransferValues',
+    modelProperties: {
+      statuses: {
+        required: false,
+        serializedName: 'statuses',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      },
+      documentTypes: {
+        required: false,
+        serializedName: 'documentTypes',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      },
+      sources: {
+        required: false,
+        serializedName: 'sources',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      },
+      targets: {
+        required: false,
+        serializedName: 'targets',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const ContainFilterDocumentTransfer = {
+  required: false,
+  serializedName: 'ContainFilter[DocumentTransfer]',
+  type: {
+    name: 'Composite',
+    className: 'ContainFilterDocumentTransfer',
+    modelProperties: {
+      values: {
+        required: false,
+        serializedName: 'values',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const ExistsFilterDocumentTransfer = {
+  required: false,
+  serializedName: 'ExistsFilter[DocumentTransfer]',
+  type: {
+    name: 'Composite',
+    className: 'ExistsFilterDocumentTransfer',
+    modelProperties: {
+      values: {
+        required: false,
+        serializedName: 'values',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const IgnoredFilterDocumentTransfer = {
+  required: false,
+  serializedName: 'IgnoredFilter[DocumentTransfer]',
+  type: {
+    name: 'Composite',
+    className: 'IgnoredFilterDocumentTransfer',
+    modelProperties: {
+      values: {
+        required: false,
+        serializedName: 'values',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const PeriodFilterDocumentTransfer = {
+  required: false,
+  serializedName: 'PeriodFilter[DocumentTransfer]',
+  type: {
+    name: 'Composite',
+    className: 'PeriodFilterDocumentTransfer',
+    modelProperties: {
+      from: {
+        required: false,
+        serializedName: 'from',
+        type: {
+          name: 'DateTime'
+        }
+      },
+      to: {
+        required: false,
+        serializedName: 'to',
+        type: {
+          name: 'DateTime'
+        }
+      }
+    }
+  }
+};
+
+export const FieldFilterDocumentTransfer = {
+  required: false,
+  serializedName: 'FieldFilter[DocumentTransfer]',
+  type: {
+    name: 'Composite',
+    className: 'FieldFilterDocumentTransfer',
+    modelProperties: {
+      containValues: {
+        required: false,
+        serializedName: 'containValues',
+        type: {
+          name: 'Composite',
+          className: 'ContainFilterDocumentTransfer'
+        }
+      },
+      existsValues: {
+        required: false,
+        serializedName: 'existsValues',
+        type: {
+          name: 'Composite',
+          className: 'ExistsFilterDocumentTransfer'
+        }
+      },
+      fieldName: {
+        required: false,
+        serializedName: 'fieldName',
+        type: {
+          name: 'String'
+        }
+      },
+      ignoredValues: {
+        required: false,
+        serializedName: 'ignoredValues',
+        type: {
+          name: 'Composite',
+          className: 'IgnoredFilterDocumentTransfer'
+        }
+      },
+      period: {
+        required: false,
+        serializedName: 'period',
+        type: {
+          name: 'Composite',
+          className: 'PeriodFilterDocumentTransfer'
+        }
+      }
+    }
+  }
+};
+
+export const PagedListRequestDocumentTransfer = {
+  required: false,
+  serializedName: 'PagedListRequest[DocumentTransfer]',
+  type: {
+    name: 'Composite',
+    className: 'PagedListRequestDocumentTransfer',
+    modelProperties: {
+      currentPage: {
+        required: false,
+        serializedName: 'currentPage',
+        type: {
+          name: 'Number'
+        }
+      },
+      filters: {
+        required: false,
+        serializedName: 'filters',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'FieldFilterDocumentTransferElementType',
+              type: {
+                name: 'Composite',
+                className: 'FieldFilterDocumentTransfer'
+              }
+          }
+        }
+      },
+      perPage: {
+        required: false,
+        serializedName: 'perPage',
+        type: {
+          name: 'Number'
+        }
+      },
+      sortBy: {
+        required: false,
+        serializedName: 'sortBy',
+        type: {
+          name: 'String'
+        }
+      },
+      sortDesc: {
+        required: false,
+        serializedName: 'sortDesc',
+        type: {
+          name: 'Boolean'
+        }
+      }
+    }
+  }
+};
+
+export const DocumentTransfer = {
+  required: false,
+  serializedName: 'DocumentTransfer',
+  type: {
+    name: 'Composite',
+    className: 'DocumentTransfer',
+    modelProperties: {
+      hasContent: {
+        required: false,
+        serializedName: 'hasContent',
+        type: {
+          name: 'Boolean'
+        }
+      },
+      content: {
+        required: false,
+        serializedName: 'content',
+        type: {
+          name: 'String'
+        }
+      },
+      documentTransferId: {
+        required: false,
+        serializedName: 'documentTransferId',
+        type: {
+          name: 'Number'
+        }
+      },
+      documentType: {
+        required: false,
+        serializedName: 'documentType',
+        type: {
+          name: 'String'
+        }
+      },
+      errorMessage: {
+        required: false,
+        serializedName: 'errorMessage',
+        type: {
+          name: 'String'
+        }
+      },
+      source: {
+        required: false,
+        serializedName: 'source',
+        type: {
+          name: 'String'
+        }
+      },
+      sourceId: {
+        required: false,
+        serializedName: 'sourceId',
+        type: {
+          name: 'String'
+        }
+      },
+      status: {
+        required: false,
+        serializedName: 'status',
+        type: {
+          name: 'String'
+        }
+      },
+      target: {
+        required: false,
+        serializedName: 'target',
+        type: {
+          name: 'String'
+        }
+      },
+      targetId: {
+        required: false,
+        serializedName: 'targetId',
+        type: {
+          name: 'String'
+        }
+      },
+      recCreated: {
+        required: false,
+        serializedName: 'recCreated',
+        type: {
+          name: 'DateTime'
+        }
+      },
+      recModified: {
+        required: false,
+        serializedName: 'recModified',
+        type: {
+          name: 'DateTime'
+        }
+      },
+      entityName: {
+        required: false,
+        readOnly: true,
+        serializedName: 'entityName',
+        type: {
+          name: 'String'
+        }
+      }
+    }
+  }
+};
+
+export const PagedListResponseDocumentTransfer = {
+  required: false,
+  serializedName: 'PagedListResponse[DocumentTransfer]',
+  type: {
+    name: 'Composite',
+    className: 'PagedListResponseDocumentTransfer',
+    modelProperties: {
+      metadata: {
+        required: false,
+        serializedName: 'metadata',
+        type: {
+          name: 'Composite',
+          className: 'IPagedList'
+        }
+      },
+      entities: {
+        required: false,
+        serializedName: 'entities',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'DocumentTransferElementType',
+              type: {
+                name: 'Composite',
+                className: 'DocumentTransfer'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const EntityStatusesValues = {
   required: false,
   serializedName: 'EntityStatusesValues',
@@ -1136,102 +1544,6 @@ export const PagedListRequestEntityStatus = {
         serializedName: 'sortDesc',
         type: {
           name: 'Boolean'
-        }
-      }
-    }
-  }
-};
-
-export const DocumentTransfer = {
-  required: false,
-  serializedName: 'DocumentTransfer',
-  type: {
-    name: 'Composite',
-    className: 'DocumentTransfer',
-    modelProperties: {
-      content: {
-        required: false,
-        serializedName: 'content',
-        type: {
-          name: 'String'
-        }
-      },
-      documentTransferId: {
-        required: false,
-        serializedName: 'documentTransferId',
-        type: {
-          name: 'Number'
-        }
-      },
-      documentType: {
-        required: false,
-        serializedName: 'documentType',
-        type: {
-          name: 'String'
-        }
-      },
-      errorMessage: {
-        required: false,
-        serializedName: 'errorMessage',
-        type: {
-          name: 'String'
-        }
-      },
-      source: {
-        required: false,
-        serializedName: 'source',
-        type: {
-          name: 'String'
-        }
-      },
-      sourceId: {
-        required: false,
-        serializedName: 'sourceId',
-        type: {
-          name: 'String'
-        }
-      },
-      status: {
-        required: false,
-        serializedName: 'status',
-        type: {
-          name: 'String'
-        }
-      },
-      target: {
-        required: false,
-        serializedName: 'target',
-        type: {
-          name: 'String'
-        }
-      },
-      targetId: {
-        required: false,
-        serializedName: 'targetId',
-        type: {
-          name: 'String'
-        }
-      },
-      recCreated: {
-        required: false,
-        serializedName: 'recCreated',
-        type: {
-          name: 'DateTime'
-        }
-      },
-      recModified: {
-        required: false,
-        serializedName: 'recModified',
-        type: {
-          name: 'DateTime'
-        }
-      },
-      entityName: {
-        required: false,
-        readOnly: true,
-        serializedName: 'entityName',
-        type: {
-          name: 'String'
         }
       }
     }
@@ -2203,23 +2515,9 @@ export const LogsValues = {
           }
         }
       },
-      sourceSystem: {
+      properties: {
         required: false,
-        serializedName: 'sourceSystem',
-        type: {
-          name: 'Sequence',
-          element: {
-              required: false,
-              serializedName: 'stringElementType',
-              type: {
-                name: 'String'
-              }
-          }
-        }
-      },
-      sourceContext: {
-        required: false,
-        serializedName: 'sourceContext',
+        serializedName: 'properties',
         type: {
           name: 'Sequence',
           element: {
@@ -2445,6 +2743,134 @@ export const IntegratorAPIRestDataTaskGroupUpdateArrayPutOptionalParams = {
               type: {
                 name: 'Composite',
                 className: 'DataTaskGroup'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const IntegratorAPIRestDocumentTransferGetDocumentTransferShortPostOptionalParams = {
+  required: false,
+  serializedName: 'RestDocumentTransferGetDocumentTransferShortPostOptions',
+  type: {
+    name: 'Composite',
+    className: 'IntegratorAPIRestDocumentTransferGetDocumentTransferShortPostOptionalParams',
+    modelProperties: {
+      pagedListRequest: {
+        required: false,
+        serializedName: 'pagedListRequest',
+        type: {
+          name: 'Composite',
+          className: 'PagedListRequestDocumentTransfer'
+        }
+      }
+    }
+  }
+};
+
+export const IntegratorAPIRestDocumentTransferGetPagedListPostOptionalParams = {
+  required: false,
+  serializedName: 'RestDocumentTransferGetPagedListPostOptions',
+  type: {
+    name: 'Composite',
+    className: 'IntegratorAPIRestDocumentTransferGetPagedListPostOptionalParams',
+    modelProperties: {
+      pagedListRequest: {
+        required: false,
+        serializedName: 'pagedListRequest',
+        type: {
+          name: 'Composite',
+          className: 'PagedListRequestDocumentTransfer'
+        }
+      }
+    }
+  }
+};
+
+export const IntegratorAPIRestDocumentTransferInsertPostOptionalParams = {
+  required: false,
+  serializedName: 'RestDocumentTransferInsertPostOptions',
+  type: {
+    name: 'Composite',
+    className: 'IntegratorAPIRestDocumentTransferInsertPostOptionalParams',
+    modelProperties: {
+      entity: {
+        required: false,
+        serializedName: 'entity',
+        type: {
+          name: 'Composite',
+          className: 'DocumentTransfer'
+        }
+      }
+    }
+  }
+};
+
+export const IntegratorAPIRestDocumentTransferInsertArrayPostOptionalParams = {
+  required: false,
+  serializedName: 'RestDocumentTransferInsertArrayPostOptions',
+  type: {
+    name: 'Composite',
+    className: 'IntegratorAPIRestDocumentTransferInsertArrayPostOptionalParams',
+    modelProperties: {
+      entities: {
+        required: false,
+        serializedName: 'entities',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'DocumentTransferElementType',
+              type: {
+                name: 'Composite',
+                className: 'DocumentTransfer'
+              }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const IntegratorAPIRestDocumentTransferUpdatePutOptionalParams = {
+  required: false,
+  serializedName: 'RestDocumentTransferUpdatePutOptions',
+  type: {
+    name: 'Composite',
+    className: 'IntegratorAPIRestDocumentTransferUpdatePutOptionalParams',
+    modelProperties: {
+      entity: {
+        required: false,
+        serializedName: 'entity',
+        type: {
+          name: 'Composite',
+          className: 'DocumentTransfer'
+        }
+      }
+    }
+  }
+};
+
+export const IntegratorAPIRestDocumentTransferUpdateArrayPutOptionalParams = {
+  required: false,
+  serializedName: 'RestDocumentTransferUpdateArrayPutOptions',
+  type: {
+    name: 'Composite',
+    className: 'IntegratorAPIRestDocumentTransferUpdateArrayPutOptionalParams',
+    modelProperties: {
+      entities: {
+        required: false,
+        serializedName: 'entities',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'DocumentTransferElementType',
+              type: {
+                name: 'Composite',
+                className: 'DocumentTransfer'
               }
           }
         }

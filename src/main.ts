@@ -13,6 +13,7 @@ import * as helper from './util/helper';
 import { AppComponent } from './components/common/';
 import { DataTaskListComponent } from './components/dataTask';
 import { EntityStatusListComponent } from './components/entityStatus';
+import { DocumentTransferListComponent } from './components/documentTransfer';
 import { LogsListComponent } from './components/log';
 
 // import VueDragAndDropList from 'vue-drag-and-drop-list';
@@ -52,10 +53,11 @@ Vue.use(VeeValidate, {
 
 Vue.use(VueHighlightJS);
 
-let router = new VueRouter({
+export const router = new VueRouter({
   routes: [
       { name: 'dataTasks', path: '/', components: { default: DataTaskListComponent } },
       { name: 'entityStatuses', path: '/entity-statuses', components: { default: EntityStatusListComponent } },
+      { name: 'documentTransfers', path: '/document-transfers', components: { default: DocumentTransferListComponent } },
       { name: 'logs', path: '/logs', components: { default: LogsListComponent } },
  ]
 });

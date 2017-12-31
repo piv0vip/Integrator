@@ -79,16 +79,36 @@
                   v-bind:items="pageOptions"
                   v-model="perPage"
                   hide-details
-                  style="width: 50px"
                   label="Rows per page"></v-select>
+
+        <v-select v-if="isDTs"
+                  v-bind:items="pageOptions"
+                  v-model="perPageDTs"
+                  hide-details
+                  label="Rows per page"></v-select>
+
+        <v-select v-if="isLogs"
+                  v-bind:items="pageOptions"
+                  v-model="perPageLogs"
+                  hide-details
+                  label="Rows per page"></v-select>
+
         <v-btn v-if="isEntityStatuses" @click="onResetEntityStatusFilter" :disabled="entityStatusFilterIsDefault">Reset all filters</v-btn>
+        
+        <v-btn v-if="isDTs" @click="onResetDTsFilter" :disabled="documentTransfersFilterIsDefault">Reset all filters</v-btn>
+
+        <v-btn v-if="isLogs" @click="onResetLogsFilter" :disabled="logsFilterIsDefault">Reset all filters</v-btn>
+
         <v-spacer></v-spacer>
+        
         <v-btn v-if="isDataTasks" round flat color="indigo lighten-2 white--text"
                title="Refresh Table"
                @click="onRefreshTableClick"><v-icon class="mr-2">autorenew</v-icon>Refresh table</v-btn>
+        
         <v-btn round flat color="green lighten-2 white--text"
                title="Show Console"
                @click="setShowConsole"><v-icon class="mr-2">clear_all</v-icon>Show console</v-btn>
+        
         <!--<v-text-field light
     solo
     prepend-icon="search"

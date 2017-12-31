@@ -83,7 +83,7 @@ export class DataTaskListComponent extends Vue {
     chance: chance;
 
     created() {
-        // this.refreshTable();
+        this.refreshTable();
     }
 
     get iDataTaskGroups(): IDataTaskGroup[] {
@@ -122,7 +122,7 @@ export class DataTaskListComponent extends Vue {
     }
 
     refreshTable() {
-        this.$store.dispatch('getIDataTaskGroups');
+        this.$store.dispatch('getDataTasks');
     }
 
     onRefreshTableClick() {

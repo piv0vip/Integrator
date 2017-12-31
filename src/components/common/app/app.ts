@@ -14,7 +14,10 @@ export class AppComponent extends Vue {
     get isDisconnect(): boolean { return !this.$store.getters.connected; }
 
     pageOptions: { text: number, value: number }[] = [{ text: 5, value: 5 }, { text: 10, value: 10 }, { text: 15, value: 15 }];
+
     perPage: number = 10;
+    perPageDTs: number = 10;
+    perPageLogs: number = 10;
 
     items: {
         icon: string,
@@ -24,8 +27,9 @@ export class AppComponent extends Vue {
         children?: any[],
         routeTo?: string
     }[] = [
-        { icon: 'contacts', text: 'Scheduling Task Configuration', routeTo: '/' },
+        { icon: 'gavel', text: 'Scheduling Task Configuration', routeTo: '/' },
         { icon: 'history', text: 'Entity statuses', routeTo: '/entity-statuses' },
+        { icon: 'assignment', text: 'Document Transfers', routeTo: '/document-transfers' },
         { icon: 'filter_list', text: 'Logs', routeTo: '/logs' }
     ];
 
@@ -62,9 +66,27 @@ export class AppComponent extends Vue {
         return this.$route['name'] && this.$route['name'] === 'entityStatuses';
     }
 
+    get isDTs(): boolean {
+        return this.$route['name'] && this.$route['name'] === 'documentTransfers';
+    }
+
+    get isLogs(): boolean {
+        return this.$route['name'] && this.$route['name'] === 'logs';
+    }
+
     @Watch('perPage')
     onPerPageChanged(value: number) {
         this.$store.dispatch('doChangePerPage', value);
+    }
+
+    @Watch('perPageLogs')
+    onPerPageLogsChanged(value: number) {
+        this.$store.dispatch('doChangePerPageLog', value);
+    }
+
+    @Watch('perPageDTs')
+    onPerPageDTsChanged(value: number) {
+        this.$store.dispatch('doChangePerPageDT', value);
     }
 
     onResetEntityStatusFilter() {
@@ -73,6 +95,22 @@ export class AppComponent extends Vue {
 
     get entityStatusFilterIsDefault(): boolean {
         return this.$store.getters.filtersIsDefault;
+    }
+
+    onResetLogsFilter() {
+        this.$store.dispatch('doResetAllLogsFilters');
+    }
+
+    get logsFilterIsDefault(): boolean {
+        return this.$store.getters.filtersLogsIsDefault;
+    }
+
+    onResetDTsFilter() {
+        this.$store.dispatch('doResetAllDTsFilters');
+    }
+
+    get documentTransfersFilterIsDefault(): boolean {
+        return this.$store.getters.filtersDTsIsDefault;
     }
 
 }

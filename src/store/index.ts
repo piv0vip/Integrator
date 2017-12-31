@@ -4,9 +4,11 @@ import Vuex from 'vuex';
 import getters from './getters';
 import dataTask from './modules/dataTask';
 import entityStatus from './modules/entityStatus';
+import documentTransfer from './modules/documentTransfers';
 import signalR from './modules/signalR';
 import log from './modules/logs';
 import auth from './modules/auth';
+import { router } from '../main';
 // import createLogger from '../../../src/plugins/logger'
 
 Vue.use(Vuex);
@@ -17,7 +19,20 @@ export default new Vuex.Store({
 
     actions: {  
         refreshCurrentList({ dispatch }) {
-            if (Vue.)
+            switch (router.app.$route.name) {
+                case 'dataTasks':
+                    dispatch('getDataTasks');
+                    break;
+                case 'entityStatuses':
+                    dispatch('getEntityStatuses');
+                    break;
+                case 'documentTransfers':
+                    dispatch('getDTs');
+                    break;
+                case 'logs':
+                    dispatch('getLogs');
+                    break;
+            }
         }
     },
 
@@ -42,6 +57,7 @@ export default new Vuex.Store({
     modules: {
         dataTask,
         entityStatus,
+        documentTransfer,
         signalR,
         log,
         auth
