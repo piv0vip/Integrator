@@ -116,7 +116,6 @@ export class DocumentTransferListComponent extends Vue {
         }, 
         {
             key: 'content',
-            tdClass: 'py-3',
             label: 'content',
             sortable: true,
         }, 
@@ -153,7 +152,7 @@ export class DocumentTransferListComponent extends Vue {
             .then((response: AxiosResponse) => {
                 let documentTransfer: DocumentTransfer = response.data as DocumentTransfer;
                 let contentValue = documentTransfer.content;
-                let factory = ContentFactory.getFactory(contentValue);
+                let factory = ContentFactory.getFactory(contentValue.toString());
                 this.content = factory.createContent();
                 this.showContent = !this.showContent;
                 this.$store.commit('loading', false);

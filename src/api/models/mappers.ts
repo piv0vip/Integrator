@@ -1121,18 +1121,11 @@ export const DocumentTransfer = {
     name: 'Composite',
     className: 'DocumentTransfer',
     modelProperties: {
-      hasContent: {
-        required: false,
-        serializedName: 'hasContent',
-        type: {
-          name: 'Boolean'
-        }
-      },
       content: {
         required: false,
         serializedName: 'content',
         type: {
-          name: 'String'
+          name: 'ByteArray'
         }
       },
       documentTransferId: {
@@ -1154,6 +1147,13 @@ export const DocumentTransfer = {
         serializedName: 'errorMessage',
         type: {
           name: 'String'
+        }
+      },
+      hasContent: {
+        required: false,
+        serializedName: 'hasContent',
+        type: {
+          name: 'Boolean'
         }
       },
       source: {
@@ -1578,11 +1578,25 @@ export const EntityStatus = {
           name: 'DateTime'
         }
       },
+      hasInContent: {
+        required: false,
+        serializedName: 'hasInContent',
+        type: {
+          name: 'Boolean'
+        }
+      },
+      hasOutContent: {
+        required: false,
+        serializedName: 'hasOutContent',
+        type: {
+          name: 'Boolean'
+        }
+      },
       inContent: {
         required: false,
         serializedName: 'inContent',
         type: {
-          name: 'String'
+          name: 'ByteArray'
         }
       },
       inDocTransfer: {
@@ -1600,25 +1614,11 @@ export const EntityStatus = {
           name: 'Number'
         }
       },
-      hasInContent: {
-        required: false,
-        serializedName: 'hasInContent',
-        type: {
-          name: 'Boolean'
-        }
-      },
-      hasOutContent: {
-        required: false,
-        serializedName: 'hasOutContent',
-        type: {
-          name: 'Boolean'
-        }
-      },
       outContent: {
         required: false,
         serializedName: 'outContent',
         type: {
-          name: 'String'
+          name: 'ByteArray'
         }
       },
       outDocTransfer: {
@@ -2055,9 +2055,9 @@ export const Log = {
           name: 'String'
         }
       },
-      renderedMessage: {
+      message: {
         required: false,
-        serializedName: 'renderedMessage',
+        serializedName: 'message',
         type: {
           name: 'String'
         }
@@ -2322,7 +2322,7 @@ export const IDocumentTransfer = {
         required: false,
         serializedName: 'content',
         type: {
-          name: 'String'
+          name: 'ByteArray'
         }
       },
       documentTransferId: {
@@ -2420,7 +2420,7 @@ export const IEntityStatus = {
         required: false,
         serializedName: 'inContent',
         type: {
-          name: 'String'
+          name: 'ByteArray'
         }
       },
       inDocTransfer: {
@@ -2436,7 +2436,7 @@ export const IEntityStatus = {
         required: false,
         serializedName: 'outContent',
         type: {
-          name: 'String'
+          name: 'ByteArray'
         }
       },
       outDocTransfer: {

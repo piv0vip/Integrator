@@ -570,13 +570,9 @@ export interface PagedListRequestDocumentTransfer {
  */
 export interface DocumentTransfer {
   /**
-   * @member {boolean} [hasContent]
+   * @member {Buffer} [content]
    */
-  hasContent?: boolean;
-  /**
-   * @member {string} [content]
-   */
-  content?: string;
+  content?: Buffer;
   /**
    * @member {number} [documentTransferId]
    */
@@ -589,6 +585,10 @@ export interface DocumentTransfer {
    * @member {string} [errorMessage]
    */
   errorMessage?: string;
+  /**
+   * @member {boolean} [hasContent]
+   */
+  hasContent?: boolean;
   /**
    * @member {string} [source]
    */
@@ -790,9 +790,17 @@ export interface EntityStatus {
    */
   entityVersion?: Date;
   /**
-   * @member {string} [inContent]
+   * @member {boolean} [hasInContent]
    */
-  inContent?: string;
+  hasInContent?: boolean;
+  /**
+   * @member {boolean} [hasOutContent]
+   */
+  hasOutContent?: boolean;
+  /**
+   * @member {Buffer} [inContent]
+   */
+  inContent?: Buffer;
   /**
    * @member {DocumentTransfer} [inDocTransfer]
    */
@@ -802,17 +810,9 @@ export interface EntityStatus {
    */
   inDocTransferId?: number;
   /**
-   * @member {boolean} [hasInContent]
+   * @member {Buffer} [outContent]
    */
-  hasInContent?: boolean;
-  /**
-   * @member {boolean} [hasOutContent]
-   */
-  hasOutContent?: boolean;
-  /**
-   * @member {string} [outContent]
-   */
-  outContent?: string;
+  outContent?: Buffer;
   /**
    * @member {DocumentTransfer} [outDocTransfer]
    */
@@ -1045,9 +1045,9 @@ export interface Log {
    */
   exception?: string;
   /**
-   * @member {string} [renderedMessage]
+   * @member {string} [message]
    */
-  renderedMessage?: string;
+  message?: string;
   /**
    * @member {string} [properties]
    */
@@ -1177,9 +1177,9 @@ export interface PagedListResponseLog {
  */
 export interface IDocumentTransfer {
   /**
-   * @member {string} [content]
+   * @member {Buffer} [content]
    */
-  content?: string;
+  content?: Buffer;
   /**
    * @member {number} [documentTransferId]
    */
@@ -1233,17 +1233,17 @@ export interface IEntityStatus {
    */
   readonly entityVersion?: Date;
   /**
-   * @member {string} [inContent]
+   * @member {Buffer} [inContent]
    */
-  inContent?: string;
+  inContent?: Buffer;
   /**
    * @member {IDocumentTransfer} [inDocTransfer]
    */
   readonly inDocTransfer?: IDocumentTransfer;
   /**
-   * @member {string} [outContent]
+   * @member {Buffer} [outContent]
    */
-  outContent?: string;
+  outContent?: Buffer;
   /**
    * @member {IDocumentTransfer} [outDocTransfer]
    */

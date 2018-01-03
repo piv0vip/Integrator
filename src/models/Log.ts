@@ -36,12 +36,12 @@ export class Log extends TEntity<ILog> {
         this.model.exception = v;
     }
 
-    get RenderedMessage(): string {
-        return this.model.renderedMessage;
+    get Message(): string {
+        return this.model.message;
     }
 
-    set RenderedMessage(v: string) {
-        this.model.renderedMessage = v;
+    set Message(v: string) {
+        this.model.message = v;
     }
 
     get Properties(): string {

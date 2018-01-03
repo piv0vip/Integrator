@@ -161,7 +161,7 @@ export class EntityStatusListComponent extends Vue {
             .then((response: AxiosResponse) => {
                 let entityStatus: IEntityStatus = response.data as IEntityStatus;
                 let contentValue = contentType === ContentTypeEnum.InContent ? entityStatus.inContent : entityStatus.outContent;
-                let factory = ContentFactory.getFactory(contentValue);
+                let factory = ContentFactory.getFactory(contentValue.toString());
                 this.content = factory.createContent();
                 this.showContent = !this.showContent;
                 this.$store.commit('loading', false);

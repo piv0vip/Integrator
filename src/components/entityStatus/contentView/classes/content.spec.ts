@@ -4,9 +4,9 @@ import { IContent, IContentFactory } from '../../../../interfaces';
 import { Content, CSVContent, JSONContent, TEXTContent, XMLContent } from './content';
 import { ContentFactory, TEXTContentFactory, XMLContentFactory, JSONContentFactory } from './contentFactory';
 
-let textContent = 'simple content testing...';
+let textContent = window.btoa('simple content testing...');
 
-let xmlContent = `<?xml version="1.0" encoding="utf-8"?>
+let xmlContent = window.btoa(`<?xml version="1.0" encoding="utf-8"?>
                     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
                     xmlns="urn:enterprise.soap.sforce.com">
                     <soapenv:Body>
@@ -21,12 +21,12 @@ let xmlContent = `<?xml version="1.0" encoding="utf-8"?>
                             </result>
                         </createResponse>
                     </soapenv:Body>
-                    </soapenv:Envelope>`;
+                    </soapenv:Envelope>`);
 
-let jsonContent = '{"metadata":{"$type":"PagedList.Core.PagedListMetaData, PagedList.Core","pageCount":1,"totalItemCount":2,"pageNumber":1,"pageSize":5,"isFirstPage":true,"isLastPage":true,"firstItemOnPage":1,"lastItemOnPage":2}}';
+let jsonContent = window.btoa('{"metadata":{"$type":"PagedList.Core.PagedListMetaData, PagedList.Core","pageCount":1,"totalItemCount":2,"pageNumber":1,"pageSize":5,"isFirstPage":true,"isLastPage":true,"firstItemOnPage":1,"lastItemOnPage":2}}');
 
 describe('Content class testing', () => {
-    let emptyContentFactory: IContentFactory = ContentFactory.getFactory('');
+    let emptyContentFactory: IContentFactory = ContentFactory.getFactory(window.btoa(''));
     let textContentFactory: IContentFactory = ContentFactory.getFactory(textContent);
     let xmlContentFactory: IContentFactory = ContentFactory.getFactory(xmlContent);
     let jsonContentFactory: IContentFactory = ContentFactory.getFactory(jsonContent);
@@ -69,7 +69,7 @@ describe('Content class testing', () => {
         })
 
         it('getContent() should return correct content', () => {
-            expect(content.getContent()).to.equal(textContent)
+            expect(content.getContent()).to.equal(window.atob(textContent))
         })
 
         it('getType() should be TEXT', () => {
@@ -92,7 +92,7 @@ describe('Content class testing', () => {
         })
 
         it('getContent() should return correct content', () => {
-            expect(content.getContent()).to.equal(xmlContent)
+            expect(content.getContent()).to.equal(window.atob(xmlContent))
         })
 
         it('getType() should be XML', () => {
@@ -100,9 +100,9 @@ describe('Content class testing', () => {
         })
 
         it('isValid() should be valid results', () => {
-            expect(content.isValid(xmlContent)).to.be.true;
-            expect(content.isValid(textContent)).to.be.false;
-            expect(content.isValid(jsonContent)).to.be.false;
+            expect(content.isValid(window.atob(xmlContent))).to.be.true;
+            expect(content.isValid(window.atob(textContent))).to.be.false;
+            expect(content.isValid(window.atob(jsonContent))).to.be.false;
         })
     })
 
@@ -115,7 +115,7 @@ describe('Content class testing', () => {
         })
 
         it('getContent() should return correct content', () => {
-            expect(content.getContent()).to.equal(jsonContent)
+            expect(content.getContent()).to.equal(window.atob(jsonContent))
         })
 
         it('getType() should be JSON', () => {
@@ -123,9 +123,9 @@ describe('Content class testing', () => {
         })
 
         it('isValid() should be valid results', () => {
-            expect(content.isValid(jsonContent)).to.be.true;
-            expect(content.isValid(textContent)).to.be.false;
-            expect(content.isValid(xmlContent)).to.be.false;
+            expect(content.isValid(window.atob(jsonContent))).to.be.true;
+            expect(content.isValid(window.atob(textContent))).to.be.false;
+            expect(content.isValid(window.atob(xmlContent))).to.be.false;
         })
     })
 

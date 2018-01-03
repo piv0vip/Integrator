@@ -7,20 +7,20 @@ export abstract class ContentFactory implements IContentFactory {
     content: string;
 
     constructor(content: string) {
-        this.content = content;
+        this.content = window.atob(content);
     }
 
     abstract createContent(): Contents.Content;
     abstract createValidator(): IValidator;
 
     static getFactory(content: string): IContentFactory {
-        if (content && Contents.Validator.isXML(content)) {
+        if (content && Contents.Validator.isXML(window.atob(content))) {
             return new XMLContentFactory(content);
         }
-        if (content && Contents.Validator.isJSON(content)) {
+        if (content && Contents.Validator.isJSON(window.atob(content))) {
             return new JSONContentFactory(content);
         }
-        return new TEXTContentFactory(content); 
+        return new TEXTContentFactory(content);
     }
 
 }

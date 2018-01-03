@@ -117,6 +117,27 @@ class IntegratorAPI extends msRest.ServiceClient {
         }
         return Promise.reject(error);
       }
+      // Deserialize Response
+      if (statusCode === 200) {
+        let parsedResponse = operationRes.bodyAsJson as { [key: string]: any };
+        try {
+          if (parsedResponse !== null && parsedResponse !== undefined) {
+            let resultMapper = {
+              required: false,
+              serializedName: 'parsedResponse',
+              type: {
+                name: 'Boolean'
+              }
+            };
+            operationRes.bodyAsJson = client.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.bodyAsJson');
+          }
+        } catch (error) {
+          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
+          deserializationError.request = msRest.stripRequest(httpRequest);
+          deserializationError.response = msRest.stripResponse(response);
+          return Promise.reject(deserializationError);
+        }
+      }
 
     } catch(err) {
       return Promise.reject(err);
@@ -5532,25 +5553,25 @@ class IntegratorAPI extends msRest.ServiceClient {
    *
    *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
    *
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
+   *                      {boolean} [result]   - The deserialized result object if an error did not occur.
    *
    *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
    *
    *                      {Response} [response] - The HTTP Response stream if an error did not occur.
    */
-  accountCreateLoginByUserEmailPost(userEmail: string): Promise<void>;
-  accountCreateLoginByUserEmailPost(userEmail: string, options: msRest.RequestOptionsBase): Promise<void>;
-  accountCreateLoginByUserEmailPost(userEmail: string, callback: msRest.ServiceCallback<void>): void;
-  accountCreateLoginByUserEmailPost(userEmail: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  accountCreateLoginByUserEmailPost(userEmail: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
+  accountCreateLoginByUserEmailPost(userEmail: string): Promise<boolean>;
+  accountCreateLoginByUserEmailPost(userEmail: string, options: msRest.RequestOptionsBase): Promise<boolean>;
+  accountCreateLoginByUserEmailPost(userEmail: string, callback: msRest.ServiceCallback<boolean>): void;
+  accountCreateLoginByUserEmailPost(userEmail: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<boolean>): void;
+  accountCreateLoginByUserEmailPost(userEmail: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<boolean>): any {
     if (!callback && typeof options === 'function') {
       callback = options;
       options = undefined;
     }
-    let cb = callback as msRest.ServiceCallback<void>;
+    let cb = callback as msRest.ServiceCallback<boolean>;
     if (!callback) {
       return this.accountCreateLoginByUserEmailPostWithHttpOperationResponse(userEmail, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.bodyAsJson as void);
+        return Promise.resolve(operationRes.bodyAsJson as boolean);
       }).catch((err: Error) => {
         return Promise.reject(err);
       });
@@ -5559,7 +5580,7 @@ class IntegratorAPI extends msRest.ServiceClient {
         if (err) {
           return cb(err);
         }
-        let result = data.bodyAsJson as void;
+        let result = data.bodyAsJson as boolean;
         return cb(err, result, data.request, data.response);
       });
     }

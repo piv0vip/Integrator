@@ -70,8 +70,8 @@ export class EntityStatus extends TEntity<IEntityStatus> {
             sourceId: this.SourceId,
             target: this.Target,
             targetId: this.TargetId,
-            inContent: this.InContent,
-            outContent: this.OutContent
+            inContent: Buffer.from(this.InContent),
+            outContent: Buffer.from(this.OutContent)
         };
     }
 
