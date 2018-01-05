@@ -44,14 +44,17 @@ const actions = {
                 .then((data) => {
 
                     HUB.on('Broadcast', (data) => {
+                        console.log('Hub -> Broadcast -> ', data);
                         commit('setBroadcastMessage', data);
                     });
 
                     HUB.on('DataTask', (data) => {
+                        console.log('Hub -> DataTask -> ', data);
                         dispatch('updateDataTask', data);
                     });
 
                     HUB.on('DataTaskGroup', (data) => {
+                        console.log('Hub -> DataTaskGroup -> ', data);
                         dispatch('updateDataTaskGroup', data);
                     });
 

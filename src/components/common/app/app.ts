@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import { Component, Watch } from 'vue-property-decorator';
+import { DataTask, DataTaskGroup } from '../../../models';
 
 @Component({
     template: require('./app.html')
@@ -51,11 +52,15 @@ export class AppComponent extends Vue {
     }
 
     onAddDatataskClick() {
-        this.$store.commit('dataTaskDialogVisible', true);
+        this.$store.commit('editDataTask', {
+            current: new DataTask()
+        });
     }
 
     onAddGroupClick() {
-        this.$store.commit('editDataTaskGroup', true);
+        this.$store.commit('editDataTaskGroup', {
+            current: new DataTaskGroup()
+        });
     }
 
     get isDataTasks(): boolean {

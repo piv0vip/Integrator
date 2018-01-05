@@ -31,8 +31,6 @@ export enum EntityStatusEnum {
 }
 
 export enum EntityStateEnum {
-    Detached        = 'Detached',
-    Unchanged       = 'Unchanged',
     Deleted         = 'Deleted',
     Modified        = 'Modified',
     Added           = 'Added'

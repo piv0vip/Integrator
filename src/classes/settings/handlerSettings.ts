@@ -74,7 +74,7 @@ export class HandlerSetting implements IHandlerSetting, IValidable, IClonable<Ha
         this.IsRequired && resArr.push('required');
         (this.Type === Type.Guid) && resArr.push('guid');
         (this.Type === Type.Url) && resArr.push('url');
-        (this.Type === Type.Number) && resArr.push('numeric');
+        (this.Type === Type.Number) && resArr.push('decimal');
         (this.Type === Type.Date || this.Type === Type.DateTime) && resArr.push('date_format:YYYY-MM-DD');
         return resArr.join('|');
     }

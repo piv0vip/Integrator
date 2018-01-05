@@ -130,15 +130,14 @@ export class DataTaskListComponent extends Vue {
     }
 
     onEditTaskClick(dataTask: DataTask) {
-        this.currentTask = dataTask;
-        this.$nextTick(() => {
-            this.$store.commit('dataTaskDialogVisible', true);
+        this.$store.commit('editDataTask', {
+            current: dataTask
         });
     }
 
     onEditGroupClick(dataTaskGroup: DataTaskGroup) {
         this.$store.commit('editDataTaskGroup', {
-            currentGroup: dataTaskGroup
+            current: dataTaskGroup
         });
     }
 
@@ -151,17 +150,6 @@ export class DataTaskListComponent extends Vue {
     }
 
     closeExecuteTaskLocaly(e) {
-    }
-
-    closeEditTask(e) {
-        this.currentTask = new DataTask();
-        this.$store.commit('dataTaskDialogVisible', false);
-    }
-
-    closeEditGroup(dataTaskGroup?: DataTaskGroup) {
-        if (dataTaskGroup) {
-        }
-        this.currentGroup = new DataTaskGroup();
     }
 
     onFilterChange(e) {
@@ -240,7 +228,6 @@ export class DataTaskListComponent extends Vue {
         error: number,
         isRunning: number
     } {
-        console.log(group);
         let dataTasks: IDataTask[] = group.dataTaskList || [];
         return {
             total: dataTasks.length,

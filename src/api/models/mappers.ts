@@ -55,6 +55,13 @@ export const DataTaskGroup = {
           name: 'String'
         }
       },
+      durationTicks: {
+        required: false,
+        serializedName: 'durationTicks',
+        type: {
+          name: 'Number'
+        }
+      },
       enabled: {
         required: false,
         serializedName: 'enabled',
@@ -208,18 +215,18 @@ export const DataTask = {
           name: 'String'
         }
       },
+      durationTicks: {
+        required: false,
+        serializedName: 'durationTicks',
+        type: {
+          name: 'Number'
+        }
+      },
       enabled: {
         required: false,
         serializedName: 'enabled',
         type: {
           name: 'Boolean'
-        }
-      },
-      lastDuration: {
-        required: false,
-        serializedName: 'lastDuration',
-        type: {
-          name: 'String'
         }
       },
       lastStartTime: {
@@ -248,6 +255,13 @@ export const DataTask = {
         serializedName: 'retries',
         type: {
           name: 'Number'
+        }
+      },
+      lastDuration: {
+        required: false,
+        serializedName: 'lastDuration',
+        type: {
+          name: 'String'
         }
       },
       recCreated: {

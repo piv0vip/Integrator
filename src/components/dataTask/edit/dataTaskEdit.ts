@@ -7,10 +7,11 @@ import { HTTP } from '../../../util/http-common';
 import { HandlerSettingComponent, ConfirmationComponent } from '../../common/';
 import { IEnumValues } from '../../../interfaces';
 import { CronPresetsComponent } from './cronPresets';   
+import { AxiosResponse } from 'axios';
 
 import { DataTaskGroupEditComponent } from '../editGroup';
 
-import { DataTaskGroup as IDataTaskGroup } from '../../../api/models';
+import { DataTaskGroup as IDataTaskGroup, DataTask as IDataTask } from '../../../api/models';
 
 import $ from 'jquery';
 import _ from 'lodash';
@@ -32,6 +33,14 @@ export class DataTaskEditComponent extends Vue {
 
     scope: string = 'dataTaskEditScope';
 
+    get showModal(): boolean {
+        return this.$store.getters.requestTask.showEditDialog;
+    }
+
+    get dataTask(): DataTask {
+        return this.$store.getters.requestTask.current || new DataTask();
+    }
+
     currentGroup: DataTaskGroup = new DataTaskGroup();
     showEditGroup: boolean = false;
 
@@ -51,13 +60,6 @@ export class DataTaskEditComponent extends Vue {
 
     @Prop()
     value: boolean;
-
-    @Prop()
-    dataTask: DataTask;
-
-    get showModal(): boolean {
-        return this.$store.state['dataTask'].showEditDataTaskDialog;
-    }
 
     get handlerTypes(): HandlerTypes {
         return this.$store.state['dataTask'].handlerTypes;
@@ -125,9 +127,9 @@ export class DataTaskEditComponent extends Vue {
             {url: 'DataTask/Insert', method: 'post'} : 
             {url: 'DataTask/Update', method: 'put'} ;
         HTTP[request.method](request.url, this.dataTask.toServer())
-            .then(function(response) {
+            .then(function (response: AxiosResponse) {
                 this.$store.commit('loading', false);
-                this.closeEditTask();
+                this.closeEdit(response.data as IDataTask);
             }.bind(this))
             .catch(e => {
                 this.$store.commit('loading', false);
@@ -161,7 +163,7 @@ export class DataTaskEditComponent extends Vue {
     }
 
     onDiscardOkClicked(e) {
-        this.closeEditTask();
+        this.closeEdit();
     }
 
     onShowModal() { }
@@ -170,10 +172,9 @@ export class DataTaskEditComponent extends Vue {
         this.showSaveConfirmation = false;
     }
 
-    closeEditTask() {
+    closeEdit(dataTask?: IDataTask) {
         this.$validator.reset();
-        this.$emit('input', false);
-        this.$emit('onClose');
+        this.$store.getters.requestTask.onClose(dataTask);
     }
 
     refreshList() {
@@ -182,6 +183,7 @@ export class DataTaskEditComponent extends Vue {
 
     createNewGroup() {
         this.$store.commit('editDataTaskGroup', {
+            current: new DataTaskGroup(),
             onClose: (dataTaskGroup?: IDataTaskGroup) => {
                 if (dataTaskGroup) {
                     this.selectedGroup = dataTaskGroup.dataTaskGroupId;

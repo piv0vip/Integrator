@@ -47,6 +47,14 @@ export class DataTaskGroup extends TEntity<IDataTaskGroup> {
 
     toServer(): IDataTaskGroup {
         return {
+            dataTaskList: this.model && this.model.dataTaskList,
+            entityName: this.model && this.model.entityName,
+            lastDuration: this.model && this.model.lastDuration,
+            lastStartTime: this.model && this.model.lastStartTime,
+            nextStartTime: this.model && this.model.nextStartTime,
+            recCreated: this.model && this.model.recCreated,
+            recModified: this.model && this.model.recModified,
+
             cronSchedule: this.CronSchedule,
             dataTaskGroupId: this.DataTaskGroupId,
             name: this.Name,

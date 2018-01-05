@@ -186,9 +186,9 @@
         </v-flex>
     </v-layout>
 
-    <edit-task :dataTask="currentTask" @onClose="closeEditTask"> </edit-task>
+    <edit-task :dataTask="currentTask"> </edit-task>
 
-    <edit-group scope="fromList" :dataTaskGroup="currentGroup" @onClose="closeEditGroup"> </edit-group>
+    <edit-group scope="fromList" :dataTaskGroup="currentGroup"> </edit-group>
 
     <execute-task-localy v-model="showExecuteTaskLocaly" :dataTask="currentTask" @onClose="closeExecuteTaskLocaly"> </execute-task-localy>
 

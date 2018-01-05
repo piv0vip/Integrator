@@ -33,6 +33,10 @@ export interface DataTaskGroup {
    */
   cronSchedule?: string;
   /**
+   * @member {number} [durationTicks]
+   */
+  durationTicks?: number;
+  /**
    * @member {boolean} [enabled]
    */
   enabled?: boolean;
@@ -121,13 +125,13 @@ export interface DataTask {
    */
   cronSchedule?: string;
   /**
+   * @member {number} [durationTicks]
+   */
+  durationTicks?: number;
+  /**
    * @member {boolean} [enabled]
    */
   enabled?: boolean;
-  /**
-   * @member {string} [lastDuration]
-   */
-  lastDuration?: string;
   /**
    * @member {Date} [lastStartTime]
    */
@@ -144,6 +148,10 @@ export interface DataTask {
    * @member {number} [retries]
    */
   retries?: number;
+  /**
+   * @member {string} [lastDuration]
+   */
+  lastDuration?: string;
   /**
    * @member {Date} [recCreated]
    */

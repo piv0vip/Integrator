@@ -41,7 +41,7 @@ export class DataTaskGroupEditComponent extends Vue {
     }
 
     get dataTaskGroup(): DataTaskGroup {
-        return this.$store.getters.requestGroup.currentGroup;
+        return this.$store.getters.requestGroup.current || new DataTaskGroup();
     }
 
     @Watch('dataTaskGroup')

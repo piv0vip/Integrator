@@ -91,6 +91,15 @@ export class DataTask extends TEntity<IDataTask> {
 
     toServer(): IDataTask {
         return {
+            dataTaskGroup: this.model && this.model.dataTaskGroup,
+            entityName: this.model && this.model.entityName,
+            executionOrder: this.model && this.model.executionOrder,
+            lastDuration: this.model && this.model.lastDuration,
+            lastStartTime: this.model && this.model.lastStartTime,
+            nextStartTime: this.model && this.model.nextStartTime,
+            recCreated: this.model && this.model.recCreated,
+            recModified: this.model && this.model.recCreated,
+
             cronSchedule: this.CronSchedule,
             dataTaskId: this.DataTaskId,
             displayName: this.DisplayName,
