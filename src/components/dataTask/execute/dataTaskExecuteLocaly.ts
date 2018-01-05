@@ -38,13 +38,8 @@ export class DataTaskExecuteLocalyComponent extends Vue {
             headers: {
                 'Content-Type': 'application/json',
             }
-        })
-            .then(response => {
-                this.hideModal();
-            })
-            .catch(e => {
-                console.log(e);
-            });
+        });
+        this.hideModal();
     }
 
     onExecuteClick() {
