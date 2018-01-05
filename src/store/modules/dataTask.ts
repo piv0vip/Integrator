@@ -104,13 +104,17 @@ const mutations = {
 
         let group: IDataTaskGroup = null;
 
-        if (oldGroupOfDataTask.dataTaskGroupId === entity.dataTaskGroupId) {
-            group = oldGroupOfDataTask;
-        } else {
-            let index = _.findIndex(oldGroupOfDataTask.dataTaskList, function (o: IDataTask) { return o.dataTaskId === entity.dataTaskId; });
-            if (index >= 0) {
-                _.remove(oldGroupOfDataTask.dataTaskList, (dataTask: IDataTask) => dataTask.dataTaskId === entity.dataTaskId);
+        if (oldGroupOfDataTask) {
+            if (oldGroupOfDataTask.dataTaskGroupId === entity.dataTaskGroupId) {
+                group = oldGroupOfDataTask;
+            } else {
+                let index = _.findIndex(oldGroupOfDataTask.dataTaskList, function (o: IDataTask) { return o.dataTaskId === entity.dataTaskId; });
+                if (index >= 0) {
+                    _.remove(oldGroupOfDataTask.dataTaskList, (dataTask: IDataTask) => dataTask.dataTaskId === entity.dataTaskId);
+                }
+                group = _.find(state.iDataTaskGroups, (group: IDataTaskGroup) => group.dataTaskGroupId === entity.dataTaskGroupId);
             }
+        } else {
             group = _.find(state.iDataTaskGroups, (group: IDataTaskGroup) => group.dataTaskGroupId === entity.dataTaskGroupId);
         }
 
@@ -131,6 +135,7 @@ const mutations = {
     },
 
     modifyDataTaskGroup(state, entity: IDataTaskGroup) {
+        debugger;
         let index = _.findIndex(state.iDataTaskGroups, function (o: IDataTaskGroup) { return o.dataTaskGroupId === entity.dataTaskGroupId; });
         let dataTaskList = (index < 0) ? [] : state.iDataTaskGroups[index].dataTaskList || [];
         if (!entity.dataTaskList) { entity.dataTaskList = dataTaskList; }
@@ -151,7 +156,10 @@ const actions = {
 
     updateDataTask({ commit }, entity: { state: EntityStateEnum, entity: IDataTask }) {
         switch (entity.state) {
-            case EntityStateEnum.Modified || EntityStateEnum.Added:
+            case EntityStateEnum.Modified:
+                commit('modifyDataTask', entity.entity);
+                break;
+            case EntityStateEnum.Added:
                 commit('modifyDataTask', entity.entity);
                 break;
             case EntityStateEnum.Deleted:
@@ -163,7 +171,10 @@ const actions = {
 
     updateDataTaskGroup({ commit }, entity: { state: EntityStateEnum, entity: IDataTaskGroup }) {
         switch (entity.state) {
-            case EntityStateEnum.Modified || EntityStateEnum.Added:
+            case EntityStateEnum.Modified:
+                commit('modifyDataTaskGroup', entity.entity);
+                break;
+            case EntityStateEnum.Added:
                 commit('modifyDataTaskGroup', entity.entity);
                 break;
             case EntityStateEnum.Deleted:

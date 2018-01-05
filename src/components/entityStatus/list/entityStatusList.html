@@ -30,19 +30,19 @@
                 </td>
             </template>
             <template slot="Reset" scope="data">
-                <span style="min-width: 98px; display:block; text-align:right">
-                <v-btn icon flat
-                       class="m-0"
-                       color="red lighten-2 white--text"
-                       title="Reset entity status"
-                       @click='onResetEntityStatus(data.item)'><i class="material-icons">compare_arrows</i></v-btn>
+                <!--<span style="min-width: 98px; display:block; text-align:right">-->
+                <!--<v-btn icon flat
+                   class="m-0"
+                   color="red lighten-2 white--text"
+                   title="Reset entity status"
+                   @click='onResetEntityStatus(data.item)'><i class="material-icons">compare_arrows</i></v-btn>-->
                 <v-btn icon flat
                        v-if="isResendBtnVisible(data.item)"
                        class="m-0"
                        color="indigo lighten-2"
-                       title="Resed entity status"
+                       title="Resend entity status"
                        @click='onResedEntityStatus(data.item)'><i class="material-icons">send</i></v-btn>
-                </span>
+                <!--</span>-->
             </template>
             <template slot="inContent" scope="data">
                 <span v-if="data.item.hasInContent">
