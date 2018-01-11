@@ -90,13 +90,20 @@ export class LogsListComponent extends Vue {
             sortable: true,
         },
         {
-            key: 'renderedMessage',
-            label: 'Rendered Message',
+            key: 'message',
+            label: 'Message',
             sortable: true,
         },
         {
-            key: 'properties',
-            label: 'Properties',
+            key: 'authenticatedUser',
+            tdClass: 'py-3',
+            label: 'Authenticated User',
+            sortable: true,
+        },
+        {
+            key: 'sourceSystem',
+            tdClass: 'py-3',
+            label: 'Source System',
             sortable: true,
         },
         {
@@ -106,6 +113,12 @@ export class LogsListComponent extends Vue {
             sortable: true,
             formatter: 'formatDate',    
             // thStyle: { width: '180px' },
+        },
+        {
+            key: 'sourceSystemInformationalVersion',
+            tdClass: 'py-3',
+            label: 'Version',
+            sortable: true,
         },
     ];
 

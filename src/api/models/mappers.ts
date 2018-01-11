@@ -55,13 +55,6 @@ export const DataTaskGroup = {
           name: 'String'
         }
       },
-      durationTicks: {
-        required: false,
-        serializedName: 'durationTicks',
-        type: {
-          name: 'Number'
-        }
-      },
       enabled: {
         required: false,
         serializedName: 'enabled',
@@ -215,18 +208,18 @@ export const DataTask = {
           name: 'String'
         }
       },
-      durationTicks: {
-        required: false,
-        serializedName: 'durationTicks',
-        type: {
-          name: 'Number'
-        }
-      },
       enabled: {
         required: false,
         serializedName: 'enabled',
         type: {
           name: 'Boolean'
+        }
+      },
+      lastDuration: {
+        required: false,
+        serializedName: 'lastDuration',
+        type: {
+          name: 'String'
         }
       },
       lastStartTime: {
@@ -255,13 +248,6 @@ export const DataTask = {
         serializedName: 'retries',
         type: {
           name: 'Number'
-        }
-      },
-      lastDuration: {
-        required: false,
-        serializedName: 'lastDuration',
-        type: {
-          name: 'String'
         }
       },
       recCreated: {
@@ -1159,6 +1145,9 @@ export const DocumentTransfer = {
       errorMessage: {
         required: false,
         serializedName: 'errorMessage',
+        constraints: {
+          MaxLength: 4000
+        },
         type: {
           name: 'String'
         }
@@ -1674,6 +1663,9 @@ export const EntityStatus = {
       statusMessage: {
         required: false,
         serializedName: 'statusMessage',
+        constraints: {
+          MaxLength: 512
+        },
         type: {
           name: 'String'
         }
@@ -1746,78 +1738,6 @@ export const PagedListResponseEntityStatus = {
                 className: 'EntityStatus'
               }
           }
-        }
-      }
-    }
-  }
-};
-
-export const Stream = {
-  required: false,
-  serializedName: 'Stream',
-  type: {
-    name: 'Composite',
-    className: 'Stream',
-    modelProperties: {
-      canRead: {
-        required: false,
-        readOnly: true,
-        serializedName: 'canRead',
-        type: {
-          name: 'Boolean'
-        }
-      },
-      canSeek: {
-        required: false,
-        readOnly: true,
-        serializedName: 'canSeek',
-        type: {
-          name: 'Boolean'
-        }
-      },
-      canTimeout: {
-        required: false,
-        readOnly: true,
-        serializedName: 'canTimeout',
-        type: {
-          name: 'Boolean'
-        }
-      },
-      canWrite: {
-        required: false,
-        readOnly: true,
-        serializedName: 'canWrite',
-        type: {
-          name: 'Boolean'
-        }
-      },
-      length: {
-        required: false,
-        readOnly: true,
-        serializedName: 'length',
-        type: {
-          name: 'Number'
-        }
-      },
-      position: {
-        required: false,
-        serializedName: 'position',
-        type: {
-          name: 'Number'
-        }
-      },
-      readTimeout: {
-        required: false,
-        serializedName: 'readTimeout',
-        type: {
-          name: 'Number'
-        }
-      },
-      writeTimeout: {
-        required: false,
-        serializedName: 'writeTimeout',
-        type: {
-          name: 'Number'
         }
       }
     }
@@ -2079,6 +1999,34 @@ export const Log = {
       properties: {
         required: false,
         serializedName: 'properties',
+        type: {
+          name: 'String'
+        }
+      },
+      authenticatedUser: {
+        required: false,
+        serializedName: 'authenticatedUser',
+        type: {
+          name: 'String'
+        }
+      },
+      sourceSystem: {
+        required: false,
+        serializedName: 'sourceSystem',
+        type: {
+          name: 'String'
+        }
+      },
+      sourceContext: {
+        required: false,
+        serializedName: 'sourceContext',
+        type: {
+          name: 'String'
+        }
+      },
+      sourceSystemInformationalVersion: {
+        required: false,
+        serializedName: 'sourceSystemInformationalVersion',
         type: {
           name: 'String'
         }
@@ -2532,6 +2480,34 @@ export const LogsValues = {
       properties: {
         required: false,
         serializedName: 'properties',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      },
+      authenticatedUsers: {
+        required: false,
+        serializedName: 'authenticatedUsers',
+        type: {
+          name: 'Sequence',
+          element: {
+              required: false,
+              serializedName: 'stringElementType',
+              type: {
+                name: 'String'
+              }
+          }
+        }
+      },
+      versions: {
+        required: false,
+        serializedName: 'versions',
         type: {
           name: 'Sequence',
           element: {

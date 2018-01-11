@@ -33,10 +33,6 @@ export interface DataTaskGroup {
    */
   cronSchedule?: string;
   /**
-   * @member {number} [durationTicks]
-   */
-  durationTicks?: number;
-  /**
    * @member {boolean} [enabled]
    */
   enabled?: boolean;
@@ -125,13 +121,13 @@ export interface DataTask {
    */
   cronSchedule?: string;
   /**
-   * @member {number} [durationTicks]
-   */
-  durationTicks?: number;
-  /**
    * @member {boolean} [enabled]
    */
   enabled?: boolean;
+  /**
+   * @member {string} [lastDuration]
+   */
+  lastDuration?: string;
   /**
    * @member {Date} [lastStartTime]
    */
@@ -148,10 +144,6 @@ export interface DataTask {
    * @member {number} [retries]
    */
   retries?: number;
-  /**
-   * @member {string} [lastDuration]
-   */
-  lastDuration?: string;
   /**
    * @member {Date} [recCreated]
    */
@@ -885,45 +877,6 @@ export interface PagedListResponseEntityStatus {
 
 /**
  * @interface
- * An interface representing Stream.
- */
-export interface Stream {
-  /**
-   * @member {boolean} [canRead]
-   */
-  readonly canRead?: boolean;
-  /**
-   * @member {boolean} [canSeek]
-   */
-  readonly canSeek?: boolean;
-  /**
-   * @member {boolean} [canTimeout]
-   */
-  readonly canTimeout?: boolean;
-  /**
-   * @member {boolean} [canWrite]
-   */
-  readonly canWrite?: boolean;
-  /**
-   * @member {number} [length]
-   */
-  readonly length?: number;
-  /**
-   * @member {number} [position]
-   */
-  position?: number;
-  /**
-   * @member {number} [readTimeout]
-   */
-  readTimeout?: number;
-  /**
-   * @member {number} [writeTimeout]
-   */
-  writeTimeout?: number;
-}
-
-/**
- * @interface
  * An interface representing SettingDescription.
  */
 export interface SettingDescription {
@@ -1060,6 +1013,22 @@ export interface Log {
    * @member {string} [properties]
    */
   properties?: string;
+  /**
+   * @member {string} [authenticatedUser]
+   */
+  authenticatedUser?: string;
+  /**
+   * @member {string} [sourceSystem]
+   */
+  sourceSystem?: string;
+  /**
+   * @member {string} [sourceContext]
+   */
+  sourceContext?: string;
+  /**
+   * @member {string} [sourceSystemInformationalVersion]
+   */
+  sourceSystemInformationalVersion?: string;
 }
 
 /**
@@ -1296,6 +1265,14 @@ export interface LogsValues {
    * @member {string[]} [properties]
    */
   properties?: string[];
+  /**
+   * @member {string[]} [authenticatedUsers]
+   */
+  authenticatedUsers?: string[];
+  /**
+   * @member {string[]} [versions]
+   */
+  versions?: string[];
 }
 
 /**

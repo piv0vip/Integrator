@@ -14,13 +14,17 @@ const state = function () {
 
         filterPresetsLogs: {
             level: [],
-            properties: [],
+            authenticatedUser: [],
+            sourceSystem: [],
+            sourceSystemInformationalVersion: [],
         },
 
         filtersLogs: {
             level: FilterFactory.getFilter(FilterTypeEnum.StringList),
             timestamp: FilterFactory.getFilter(FilterTypeEnum.Period),
-            properties: FilterFactory.getFilter(FilterTypeEnum.StringList),
+            authenticatedUser: FilterFactory.getFilter(FilterTypeEnum.StringList),
+            sourceSystem: FilterFactory.getFilter(FilterTypeEnum.StringList),
+            sourceSystemInformationalVersion: FilterFactory.getFilter(FilterTypeEnum.StringList),
         },
 
         pagedListRequestLogs: new PagedListReq({ sortBy: 'timestamp' }),
@@ -73,8 +77,16 @@ const mutations = {
                 period: state.filtersLogs.timestamp.isDefault() ? null : state.filtersLogs.timestamp.toServer()
             },
             {
-                fieldName: 'properties',
-                containValues: state.filtersLogs.properties.toServer()
+                fieldName: 'authenticatedUser',
+                containValues: state.filtersLogs.authenticatedUser.toServer()
+            },
+            {
+                fieldName: 'sourceSystem',
+                containValues: state.filtersLogs.sourceSystem.toServer()
+            },
+            {
+                fieldName: 'sourceSystemInformationalVersion',
+                containValues: state.filtersLogs.sourceSystemInformationalVersion.toServer()
             },
         ]);
     },
@@ -95,8 +107,11 @@ const mutations = {
         else
             Vue.set(state.filtersLogs.level, 'Values', EnumValues.getNames(LevelEnum));
 
-        Vue.set(state.filtersLogs.properties, 'Values', state.filterPresetsLogs.properties.length ? state.filterPresetsLogs.properties : []);
+        Vue.set(state.filtersLogs.authenticatedUser, 'Values', state.filterPresetsLogs.authenticatedUsers.length ? state.filterPresetsLogs.authenticatedUsers : []);
 
+        Vue.set(state.filtersLogs.sourceSystem, 'Values', state.filterPresetsLogs.sourceSystems.length ? state.filterPresetsLogs.sourceSystems : []);
+
+        Vue.set(state.filtersLogs.sourceSystemInformationalVersion, 'Values', state.filterPresetsLogs.versions.length ? state.filterPresetsLogs.versions : []);
     },
 
     changeCurrentPageLog(state, value: number) {
