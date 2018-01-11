@@ -23,4 +23,8 @@ export class ContentViewComponent extends Vue {
     onShowChange() {
         this.dialogShow = true;
     }
+
+    onCopy(e) {
+        alert('Content was copied to clipboard');
+    }
 }

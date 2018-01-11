@@ -12,6 +12,9 @@
                 </pre>
             </v-card-text>
             <v-card-actions class="p-3 grey lighten-3">
+                <v-btn color="blue darken-1  white--text" round 
+                       v-clipboard:copy="content.toHTML()"
+                       v-clipboard:success="onCopy"><v-icon class="mr-2">content_copy</v-icon>Copy to clipboard</v-btn>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1  white--text" round @click.native="dialogShow = false">Close</v-btn>
             </v-card-actions>

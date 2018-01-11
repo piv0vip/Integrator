@@ -5,6 +5,7 @@ import VueRouter from 'vue-router';
 import Vuetify from 'vuetify';
 import VeeValidate, { Validator } from 'vee-validate';
 import VueHighlightJS from 'vue-highlightjs';
+import VueClipboard from 'vue-clipboard2';
 
 import * as helper from './util/helper';
 
@@ -52,6 +53,8 @@ Vue.use(VeeValidate, {
 });
 
 Vue.use(VueHighlightJS);
+
+Vue.use(VueClipboard);
 
 export const router = new VueRouter({
   routes: [
